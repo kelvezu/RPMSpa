@@ -13,7 +13,7 @@
         echo $_SESSION['username'];
         endif
          ?>
-        <form action="includes/signup.inc.php" method="post">
+        <form action="includes/signup.inc.php" method="post" >
         <fieldset class="form-group">
             <legend class="form-legend">Add Account</legend>
             <?php
@@ -100,23 +100,25 @@
              ?>
 
              <?php
-             
+             echo '<label for="surname" class="form-control-label ">Surname:</label>';
             if (!isset($_GET['surname'])){
                 echo '<input type="text" class="form-control my-1" name="surname"  placeholder="Enter your Surname...">';
                
             }else{
               $surname = $_GET['surname'];
               echo '<input type="text" class="form-control my-1" name="surname"  placeholder="Enter your Surname..." value="'.$surname.'">';
-            }   
-             
+            }
+
+            echo '<label for="firstname" class="form-control-label ">Firstname:</label>';
              if (!isset($_GET['firstname'])){
                  echo '<input type="text" class="form-control my-1" name="firstname"  placeholder="Enter your Firstname...">'; 
                 
              }else{
                $firstname = $_GET['firstname'];
                 echo '<input type="text" class="form-control my-1" name="firstname"  placeholder="Enter your Firstname..." value="'.$firstname.'">';
-             }   
-             
+             }
+
+             echo '<label for="middlename" class="form-control-label ">Middlename:</label>';
              if (!isset($_GET['middlename'])){
                   
                  echo '<input type="text" class="form-control my-1" name="middlename"  placeholder="Enter your Middlename...">';
@@ -124,15 +126,8 @@
                 $middlename = $_GET['middlename'];
                echo '<input type="text" class="form-control my-1" name="middlename"  placeholder="Enter your Middlename..." value="'.$middlename.'">';
               }
-
-            //   if (!isset($_GET['position'])){
-            //     echo '<input type="text" class="form-control my-1" name="position"  placeholder="Enter the Position...">';    
-            //   }else{
-            //     $position = $_GET['position'];
-            //     echo '<input type="text" class="form-control my-1" name="position"  placeholder="Enter the Position..." value="'.$position.'">';  
-            //   } 
             ?>
-
+            <label for="position" class="form-control-label ">Position:</label>
             <select name="position" id="" class="form-control">
                   <option>--Select Position--</option>
                 <?php  
@@ -146,13 +141,15 @@
                           </option>
             </select>
             <?php
+            echo '<label for="email" class="form-control-label ">Email Address:</label>';
              if (!isset($_GET['email'])){
                 echo '<input type="email" class="form-control my-1" name="email"  placeholder="Enter your Email Address...">';    
               }else{
                 $email = $_GET['email'];
                 echo '<input type="email" class="form-control my-1" name="email"  placeholder="Enter your Email Address..." value="'.$email.'">';  
               }
-             
+
+            echo '<label for="contact" class="form-control-label ">Contact Number:</label>';
             if (!isset($_GET['contact'])){     
                 echo '<input type="text" class="form-control my-1" name="contact" placeholder="Enter your Contact number..." maxlength="11" >';
               }else{
@@ -160,32 +157,26 @@
                 echo '<input type="text" class="form-control my-1" name="contact"  placeholder="Enter your Contact number..." value="'.$contact.'" maxlength="11">';
               }
 
+              echo '<label for="gender" class="form-control-label ">Gender:</label>';
               if (!isset($_GET['gender'])){     
-                echo '<input type="text" class="form-control my-1" name="gender" placeholder="Enter Gender..."  >';
+                echo '
+                <input type="text" class="form-control my-1" name="gender" placeholder="Enter Gender..."  >';
               }else{
                 $gender = $_GET['gender'];
                 echo '<input type="text" class="form-control my-1" name="gender"  placeholder="Enter gender..." value="'.$gender.'" >';
               }
 
+              echo '<label for="date" class="form-control-label ">Birth date:</label>';
               if (!isset($_GET['birthdate'])){     
-                echo '<div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Birth date:</div>
-                </div>
-                    <input type="date"  class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..."  >
-                </div>';
+                echo '
+                    <input type="date"  class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..."  >';
               }else{
                 $birthdate = $_GET['birthdate'];
                 echo '
-                <div class="input-group mb-2 mr-sm-2">
-                <div class="input-group-prepend">
-                <div class="input-group-text">Birth date:</div>
-                </div>
-                
-                    <input type="date" class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..." value="'.$birthdate.'">
-                </div>';
+                <input type="date" class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..." value="'.$birthdate.'">';
               }
               ?>
+            <label for="school" class="form-control-label ">Select School:</label>
             <select name="school" id="" class="form-control">
                   <option>--Select school--</option>
                 <?php  
@@ -199,11 +190,14 @@
                           </option>
                 </select>
 
-             
-             <input type="password" class="form-control my-1" name="pwd" placeholder="Enter your Password...">
-              <input type="password" class="form-control my-1" name="pwd-repeat" placeholder="Re-type Password">
-              <button type="submit" class="btn btn-primary btn-block" name="signup-submit"> Submit</button>
-              <a href="usercsv.php" role="button" class="btn btn-success btn-block" name="signup-submit"> Mass Upload</a>
+                <label for="pwd" class="form-control-label ">Password:</label>
+                <input type="password" class="form-control my-1" name="pwd" placeholder="Enter your Password...">
+                <label for="pwd-repeat" class="form-control-label ">Re-type Password:</label>
+                <input type="password" class="form-control my-1" name="pwd-repeat" placeholder="Re-type Password">
+                <br>
+                <button type="submit" class="btn btn-primary btn-block" name="signup-submit"> Submit</button>
+                <br>
+                <a href="usercsv.php" role="button" class="btn btn-success btn-block" name="signup-submit"> Mass Upload</a>
             
             
             

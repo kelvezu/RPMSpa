@@ -6,13 +6,15 @@ include 'conn.inc.php';
 
 $user_id = $_SESSION['user_id'];
 
+if(!empty($user_id)):
 $query = mysqli_query($conn,"SELECT * FROM account_tbl WHERE user_id=$user_id");
     while($row = mysqli_fetch_array($query)){
         $firstname = $row['firstname'];
         $lastname = $row['surname'];
-       
     }
     $fullname = $firstname." ".$lastname;
+
+endif;
 ?>
 
 <!doctype html>
@@ -79,7 +81,13 @@ $query = mysqli_query($conn,"SELECT * FROM account_tbl WHERE user_id=$user_id");
                 <div class="sidebar-header">
                     <a href="#"><img src="img/message/1.jpg" alt="img/message/2.jpg" />
                     </a>
-                    <h3><?php echo $fullname ; ?></h3>
+                    <h3><?php
+                        if(isset($fullname)):
+                        echo 'Welcome, '.$fullname;
+                        else:
+                        echo 'Welcome, Guest';
+                        endif;
+                    ?></h3>
                     <p><?php echo $_SESSION['position']; ?></p>
                     <strong><i class="fa big-icon fa-institution"></i> </strong>
                 </div>
@@ -252,7 +260,14 @@ $query = mysqli_query($conn,"SELECT * FROM account_tbl WHERE user_id=$user_id");
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
                                                 <span class="adminpro-icon adminpro-user-rounded header-riht-inf"></span>
-                                                <span class="admin-name"><?php echo $fullname ; ?></span>
+                                                <span class="admin-name">
+                                                    <?php
+                                                     if(isset($fullname)):
+                                                        echo 'Welcome, '.$fullname;
+                                                     else:
+                                                        echo 'Welcome, Guest';
+                                                     endif;
+                                                     ?></span>
                                                 <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
                                             </a>
                                             <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">

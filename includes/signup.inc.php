@@ -12,6 +12,7 @@ if (isset($_POST['signup-submit'])){
     $gender = $_POST['gender'];
     $birthdate = $_POST['birthdate'];
     $username = usernameGen($firstname,$surname,$contact);
+    $school = $_POST['school'];
     $password = $_POST['pwd'];
     $passwordRepeat = $_POST['pwd-repeat']; 
     //CHECK IF THE FIELDS ARE EMPTY 
@@ -115,7 +116,7 @@ if (isset($_POST['signup-submit'])){
                 exit();
             }
             else{
-                $sql = "INSERT INTO account_tbl(surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                $sql = "INSERT INTO account_tbl(surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,school_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
                 $stmt = mysqli_stmt_init($conn);
                 if(!mysqli_stmt_prepare($stmt,$sql)){
                     header("Location:../signup.php?error=sqlerror");
@@ -123,7 +124,7 @@ if (isset($_POST['signup-submit'])){
                 }
                 else{
                     $hashedPwd=password_hash($password,PASSWORD_DEFAULT);            
-                    mysqli_stmt_bind_param($stmt,"ssssssssss", ucwords($surname),ucwords($firstname),ucwords($middlename),ucwords($position),$email,$contact,ucwords($gender),$birthdate,$username,$hashedPwd);
+                    mysqli_stmt_bind_param($stmt,"ssssssssssi", ucwords($surname),ucwords($firstname),ucwords($middlename),ucwords($position),$email,$contact,ucwords($gender),$birthdate,$username,$hashedPwd,$school);
                     mysqli_stmt_execute($stmt);
                     header("Location:../signup.php?signup=success&uname=".$username);
                     
