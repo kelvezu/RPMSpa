@@ -21,22 +21,22 @@ if (isset($_POST['signup-submit'])){
         exit();
     }
     //CHECK IF THE SURNAME FIRSTNAME MIDNAME CONTAINS SPECIAL CHARACTERS
-    elseif(!preg_match("/^[a-zA-Z]*$/",$surname) && !preg_match("/^[a-zA-Z]*$/",$firstname) && !preg_match("/^[a-zA-Z]*$/",$middlename)){
+    elseif(!preg_match("/^[a-zA-Z ]*$/",$surname) && !preg_match("/^[a-zA-Z ]*$/",$firstname) && !preg_match("/^[a-zA-Z]*$/",$middlename)){
         header("Location:../signup.php?error=nospeccharnames&email=".$email."&contact=".$contact);
         exit();
     }
     //CHECK IF SURNAME AND FIRSTNAME CONTAINS SPECIAL CHARS
-    elseif(!preg_match("/^[a-zA-Z]*$/",$surname) && !preg_match("/^[a-zA-Z]*$/",$firstname)){
+    elseif(!preg_match("/^[a-zA-Z ]*$/",$surname) && !preg_match("/^[a-zA-Z ]*$/",$firstname)){
         header("Location:../signup.php?error=nospeccharsnamefname&middlename=".$middlename."&email=".$email."&contact=".$contact);
         exit();
     }
     //CHECK IF FIRSTNAME AND MIDDLENAME CONTAINS SPECIAL CHARS
-    elseif(!preg_match("/^[a-zA-Z]*$/",$firstname) && !preg_match("/^[a-zA-Z]*$/",$middlename)){
+    elseif(!preg_match("/^[a-zA-Z ]*$/",$firstname) && !preg_match("/^[a-zA-Z ]*$/",$middlename)){
         header("Location:../signup.php?error=nospeccharfnamemname&surname=".$surname."&email=".$email."&contact=".$contact);
         exit();
     }
     //CHECK IF SURNAME AND MIDDLENAME CONTAINS SPECIAL CHARS
-    elseif(!preg_match("/^[a-zA-Z]*$/",$surname) && !preg_match("/^[a-zA-Z]*$/",$middlename)){
+    elseif(!preg_match("/^[a-zA-Z ]*$/",$surname) && !preg_match("/^[a-zA-Z ]*$/",$middlename)){
         header("Location:../signup.php?error=nospeccharsnamemname&firstname=".$firstname."&email=".$email."&contact=".$contact);
         exit();
     }
@@ -46,17 +46,17 @@ if (isset($_POST['signup-submit'])){
         exit();
     }
     //CHECK IF THE SURNAME CONTAINS SPECIAL CHARACTERS
-    elseif(!preg_match("/^[a-zA-Z]*$/",$surname)){
+    elseif(!preg_match("/^[a-zA-Z ]*$/",$surname)){
         header("Location:../signup.php?error=invalidsurname&firstname=".$firstname."&middlename=".$middlename."&email=".$email."&contact=".$contact);
         exit();
     }
     //CHECK IF THE FIRSTNAME CONTAINS SPECIAL CHARACTERS
-    elseif(!preg_match("/^[a-zA-Z]*$/",$firstname)){
+    elseif(!preg_match("/^[a-zA-Z ]*$/",$firstname)){
         header("Location:../signup.php?error=invalidfirstname&surname=".$surname."&middlename=".$middlename."&email=".$email."&contact=".$contact);
         exit();
     }
     //CHECK IF THE MIDDLENAME CONTAINS SPECIAL CHARACTERS
-    elseif(!preg_match("/^[a-zA-Z]*$/",$middlename)){
+    elseif(!preg_match("/^[a-zA-Z ]*$/",$middlename)){
         header("Location:../signup.php?error=invalidmiddlename&surname=".$surname."&firstname=".$firstname."&email=".$email."&contact=".$contact);
         exit();
     }
@@ -116,18 +116,28 @@ if (isset($_POST['signup-submit'])){
                 exit();
             }
             else{
-                $sql = "INSERT INTO account_tbl(surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,school_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                
+                if(!empty($school)){
+                    $sql = "INSERT INTO account_tbl(surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,school_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                }else{
+                    $sql = "INSERT INTO account_tbl(surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword) VALUES(?,?,?,?,?,?,?,?,?,?)";
+                }
+               
                 $stmt = mysqli_stmt_init($conn);
                 if(!mysqli_stmt_prepare($stmt,$sql)){
                     header("Location:../signup.php?error=sqlerror");
                     exit();
                 }
                 else{
-                    $hashedPwd=password_hash($password,PASSWORD_DEFAULT);            
+                    $hashedPwd=password_hash($password,PASSWORD_DEFAULT);
+                    if(!empty($school)){        
                     mysqli_stmt_bind_param($stmt,"ssssssssssi", ucwords($surname),ucwords($firstname),ucwords($middlename),ucwords($position),$email,$contact,ucwords($gender),$birthdate,$username,$hashedPwd,$school);
+                }else{
+                    mysqli_stmt_bind_param($stmt,"ssssssssss", ucwords($surname),ucwords($firstname),ucwords($middlename),ucwords($position),$email,$contact,ucwords($gender),$birthdate,$username,$hashedPwd);
+
+                }
                     mysqli_stmt_execute($stmt);
                     header("Location:../signup.php?signup=success&uname=".$username);
-                    
                     exit();
                 }
             }

@@ -4,7 +4,7 @@
  include_once 'includes/header.php';
  
 ?>
-<main>
+<main class="center">
 <div class="container">
 <div class="breadcome-list shadow-reset">
        
@@ -158,15 +158,22 @@
               }
 
               echo '<label for="gender" class="form-control-label ">Gender:</label>';
-              if (!isset($_GET['gender'])){     
-                echo '
-                <input type="text" class="form-control my-1" name="gender" placeholder="Enter Gender..."  >';
-              }else{
-                $gender = $_GET['gender'];
-                echo '<input type="text" class="form-control my-1" name="gender"  placeholder="Enter gender..." value="'.$gender.'" >';
-              }
+              ?>
+              <label for="gender" class="form-control-label ">Gender:</label>
+              <select name="gender" id="" class="form-control">
+                    <option>--Select Gender--</option>
+                  <?php  
+                       $genderresult = $conn->query('SELECT * FROM gender_tbl')  or die($conn->error);
+                        while($genrow = $genderresult->fetch_assoc()):
+                              $gender_name = $genrow['gender_name'];
+                    ?>
+                              <option value="<?php echo $gender_name ?>"><?php echo $gender_name; ?>
+                              <?php endwhile ?> 
+                            </option>
+              </select>
 
-              echo '<label for="date" class="form-control-label ">Birth date:</label>';
+              <?php
+              echo '<label for="date" class="form-control-label ">Birth date: <small><i>Day/Month/Year</i></small></label>';
               if (!isset($_GET['birthdate'])){     
                 echo '
                     <input type="date"  class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..."  >';
@@ -176,7 +183,7 @@
                 <input type="date" class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..." value="'.$birthdate.'">';
               }
               ?>
-            <label for="school" class="form-control-label ">Select School:</label>
+            <label for="school" class="form-control-label ">Select School or Division:</label>
             <select name="school" id="" class="form-control">
                   <option>--Select school--</option>
                 <?php  

@@ -74,6 +74,7 @@ $(document).ready(function(){
                                     <option value="">--Select--</option>
                                     <option value="Elementary School">Elementary School</option>
                                     <option value="Secondary School">Secondary School</option>
+                                    <option value="Division Office">Division Office</option>
                                   </select>
                             </div>
                             </div>
