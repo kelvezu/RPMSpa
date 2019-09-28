@@ -3,11 +3,10 @@
 <?php
   include_once 'includes/conn.inc.php';
   include_once 'includes/header.php';
+  
  
    $connection=mysqli_connect("localhost","root","");
    mysqli_select_db($connection,"rpms");
-
- 
  ?>
  
  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -105,7 +104,6 @@ $(document).ready(function(){
                             <?php
                                 
                                 include('includes/conn.inc.php');
-
                                 $query = $conn->query("SELECT * FROM region_tbl");
                                 
                                 $rowCount = $query->num_rows;

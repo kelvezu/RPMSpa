@@ -22,19 +22,34 @@ include 'includes/header.php';
           src="https://code.jquery.com/jquery-2.2.4.min.js"
           integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
           crossorigin="anonymous"></script>
- <!-- <script src="js/jquery-3.4.1.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/> -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <div class="container">
    <br/>
-   <h3 align="center">Enter CSV information</h3>
+   <h3 align="center">Enter CSV Account Information</h3>
+   <hr/>
+   <div class="card m-4 p-5">
+     <div class="card-body">
+       <p><strong>Directions:</strong></p>
+   <ol type="i">
+      <strong>
+        <li>If user doesnt have position yet, place <u class="text-danger">N/A.</u></li>
+        <li>The date format must be numeric and must follow the ISO date format: <u class="text-danger">dd/mm/yyyy.</u> </li>
+        <li><u class="text-danger">Email address </u>and <u class="text-danger">Contact Number</u> must be filled up. This will serve as the main part for account retrieval.</li>
+        <li>Excel file must be <u class="text-danger">save as CSV.</u> </li>
+      </strong>
+   </ol>
+
+
+     </div>
+   </div>
+  
+   <hr class="bg-dark">
    <br />
    <form id="upload_csv" method="post" enctype="multipart/form-data">
     <div class="col-md-3">  
      <br />
      <?php 
-     //
+     
       ?>
      <label>Select CSV File</label>
     </div>  
