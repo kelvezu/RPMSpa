@@ -27,15 +27,16 @@ include 'includes/header.php';
    <br/>
    <h3 align="center">Enter CSV Account Information</h3>
    <hr/>
-   <div class="card m-4 p-5">
+   <div class="card col-md-6 m-4 p-5">
      <div class="card-body">
        <p><strong>Directions:</strong></p>
    <ol type="i">
       <strong>
         <li>If user doesnt have position yet, place <u class="text-danger">N/A.</u></li>
-        <li>The date format must be numeric and must follow the ISO date format: <u class="text-danger">dd/mm/yyyy.</u> </li>
+        <li>The date format must be numeric and must follow the ISO date format: <u class="text-danger">YYYY/MM/DD.</u> </li>
         <li><u class="text-danger">Email address </u>and <u class="text-danger">Contact Number</u> must be filled up. This will serve as the main part for account retrieval.</li>
         <li>Excel file must be <u class="text-danger">save as CSV.</u> </li>
+        <li>Position must be <u class="text-danger">Master Teacher IV</u> and <u class="text-danger">Teacher I-III only</u>.</li>
       </strong>
    </ol>
 
@@ -43,9 +44,8 @@ include 'includes/header.php';
      </div>
    </div>
   
-   <hr class="bg-dark">
-   <br />
-   <form id="upload_csv" method="post" enctype="multipart/form-data">
+ <div> 
+ <form id="upload_csv" method="post" enctype="multipart/form-data">
     <div class="col-md-3">  
      <br />
      <?php 
@@ -61,6 +61,8 @@ include 'includes/header.php';
                 </div>  
                 <div style="clear:both"></div>
    </form>
+ </div>
+   
    <br />
    <br />
    <div id="csv_file_data"></div>
@@ -181,7 +183,7 @@ $(document).ready(function(){
    data:{surname:surname,firstname:firstname,middlename:middlename,position:position,email:email,contact:contact,gender:gender,birthdate:birthdate},
    success:function(data)
    {
-    $('#csv_file_data').html('<div class="alert alert-success">Data Imported Successfully</div>');
+    $('#csv_file_data').html('<div class="alert alert-success"><strong> Data Imported Successfully</strong></div>');
  
    }
   });
