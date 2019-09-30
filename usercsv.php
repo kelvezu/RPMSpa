@@ -18,11 +18,8 @@ include 'includes/header.php';
   </style>
 
  <body>
- <script
-          src="https://code.jquery.com/jquery-2.2.4.min.js"
-          integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-          crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src='css/bootstrap3.min.js'></script>
   <div class="container">
    <br/>
    <h3 align="center">Enter CSV Account Information</h3>

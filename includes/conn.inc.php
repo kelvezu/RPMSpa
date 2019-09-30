@@ -4,10 +4,10 @@ $dbUsername = "root";
 $dbPassword = "";
 $dbName = "rpms";
 
-$conn = mysqli_connect($servername,$dbUsername,$dbPassword,$dbName);
+$conn = mysqli_connect($servername, $dbUsername, $dbPassword, $dbName);
 
-if(!$conn) {
-    die("Connection Failed: ".mysqli_connect_error());
+if (!$conn) {
+    die("Connection Failed: " . mysqli_connect_error());
 }
 
-include_once 'func.lib.php';
+include_once 'libraries/func.lib.php';
