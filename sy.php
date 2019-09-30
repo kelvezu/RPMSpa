@@ -13,7 +13,7 @@ include_once 'includes/header.php';
         <div>
             <div class="row">
                 <div class="col-sm-6">
-                    <label for="start-month" class="form-group mb-2"><strong>Enter the start date: </strong></label>
+                    <label for="start-month" class="form-control-label"><strong>Enter the start date: </strong></label>
                     <select name="start-month" class="form-control">
                         <option value="">--Choose Month--</option>
                         <option value="01">January</option>
@@ -92,10 +92,15 @@ include_once 'includes/header.php';
 
                 </div>
 
-                <div class="row">
-                    <button type="submit" class="btn btn-success btn-block col-md-6" name="sy-set" id="sy-set">Set </button>
-                </div>
+
             </div>
+            <center>
+                <div class="col-sm mx-auto">
+                    <button type="submit" class="btn btn-success" name="sy-set" id="sy-set">Set </button>
+                </div>
+
+            </center>
+
 
         </div>
 

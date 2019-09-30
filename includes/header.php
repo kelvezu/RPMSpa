@@ -1,18 +1,19 @@
-<?php 
+<?php
 session_start();
-require_once 'security.php'; 
-include 'conn.inc.php'; 
+require_once 'security.php';
+include_once 'conn.inc.php';
+
 
 
 $user_id = $_SESSION['user_id'];
 
-if(!empty($user_id)):
-$query = mysqli_query($conn,"SELECT * FROM account_tbl WHERE user_id=$user_id");
-    while($row = mysqli_fetch_array($query)){
+if (!empty($user_id)) :
+    $query = mysqli_query($conn, "SELECT * FROM account_tbl WHERE user_id=$user_id");
+    while ($row = mysqli_fetch_array($query)) {
         $firstname = $row['firstname'];
         $lastname = $row['surname'];
     }
-    $fullname = $firstname." ".$lastname;
+    $fullname = $firstname . " " . $lastname;
 
 endif;
 ?>
@@ -82,12 +83,12 @@ endif;
                     <a href="#"><img src="img/message/1.jpg" alt="img/message/2.jpg" />
                     </a>
                     <h3><?php
-                        if(isset($fullname)):
-                        echo 'Welcome, '.$fullname;
-                        else:
-                        echo 'Welcome, Guest';
+                        if (isset($fullname)) :
+                            echo 'Welcome, ' . $fullname;
+                        else :
+                            echo 'Welcome, Guest';
                         endif;
-                    ?></h3>
+                        ?></h3>
                     <p><?php echo $_SESSION['position']; ?></p>
                     <strong><i class="fa big-icon fa-institution"></i> </strong>
                 </div>
@@ -162,163 +163,163 @@ endif;
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-edit"></i> <span class="mini-dn">Reports</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
-                                    <a href="#" class="dropdown-item">Teacher KRA Challenges</a>    
-                                    <a href="#" class="dropdown-item">Master Teacher KRA Challenges</a> 
-                                    <a href="#" class="dropdown-item">Teacher Performance Summary </a>
-                                    <a href="#" class="dropdown-item">Master Teacher Performance Summary </a>
-                                    <a href="#" class="dropdown-item">Teacher IPCRF with MOV Rating</a>
-                                    <a href="#" class="dropdown-item">Master Teacher IPCRF with MOV Rating</a>
-                                    <a href="#" class="dropdown-item">Teacher IPCRF Summary Rating</a>
-                                    <a href="#" class="dropdown-item">Master Teacher IPCRF Summary Rating</a>
-                                    <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
-                                    <a href="#" class="dropdown-item">Master Teacher Recommended for Promotion</a>
-                                    <a href="#" class="dropdown-item">Seminar List</a>
+                                <a href="#" class="dropdown-item">Teacher KRA Challenges</a>
+                                <a href="#" class="dropdown-item">Master Teacher KRA Challenges</a>
+                                <a href="#" class="dropdown-item">Teacher Performance Summary </a>
+                                <a href="#" class="dropdown-item">Master Teacher Performance Summary </a>
+                                <a href="#" class="dropdown-item">Teacher IPCRF with MOV Rating</a>
+                                <a href="#" class="dropdown-item">Master Teacher IPCRF with MOV Rating</a>
+                                <a href="#" class="dropdown-item">Teacher IPCRF Summary Rating</a>
+                                <a href="#" class="dropdown-item">Master Teacher IPCRF Summary Rating</a>
+                                <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
+                                <a href="#" class="dropdown-item">Master Teacher Recommended for Promotion</a>
+                                <a href="#" class="dropdown-item">Seminar List</a>
                             </div>
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-cogs"></i> <span class="mini-dn">Settings</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
-                                    <a href="sy.php" class="dropdown-item">School Year</a>    
-                                    <a href="school.php" class="dropdown-item">School Info</a> 
-                                    <a href="displaypolicy.php" class="dropdown-item">Policy</a>
-                                    <a href="ESAT.php" class="dropdown-item">ESAT Details </a>
-                                    <a href="displaycbc.php " class="dropdown-item">ESAT Core Behavioral Settings </a>
-                                    <a href="displaytRubric.php" class="dropdown-item">Teacher COT Rubrics</a>
-                                    <a href="displaymtRubric.php" class="dropdown-item">Master Teacher COT Rubrics</a>
-                                    <a href="displaytindicator.php" class="dropdown-item">Teacher COT Indicator List</a>
-                                    <a href="displaymtindicator.php" class="dropdown-item">Master Teacher COT Indicator List</a>
-                                    <a href="displayperftindicator.php" class="dropdown-item">Teacher Performance Indicator List</a>
-                                    <a href="displayperfmtindicator.php" class="dropdown-item">Master Teacher Performance Indicator List</a>
-                                    <a href="displaytkramov.php" class="dropdown-item">Teacher KRA and Objective Details</a>
-                                    <a href="displaymtkramov.php" class="dropdown-item">Master Teacher Objective Details</a>
-                                    <a href="displaytmov.php" class="dropdown-item">Teacher MOV Details</a>
-                                    <a href="displaymtmov.php" class="dropdown-item">Master Teacher MOV Details</a>
-                                    <a href="displayseminar.php" class="dropdown-item">Seminar List</a>
+                                <a href="sy.php" class="dropdown-item">School Year</a>
+                                <a href="school.php" class="dropdown-item">School Info</a>
+                                <a href="displaypolicy.php" class="dropdown-item">Policy</a>
+                                <a href="ESAT.php" class="dropdown-item">ESAT Details </a>
+                                <a href="displaycbc.php " class="dropdown-item">ESAT Core Behavioral Settings </a>
+                                <a href="displaytRubric.php" class="dropdown-item">Teacher COT Rubrics</a>
+                                <a href="displaymtRubric.php" class="dropdown-item">Master Teacher COT Rubrics</a>
+                                <a href="displaytindicator.php" class="dropdown-item">Teacher COT Indicator List</a>
+                                <a href="displaymtindicator.php" class="dropdown-item">Master Teacher COT Indicator List</a>
+                                <a href="displayperftindicator.php" class="dropdown-item">Teacher Performance Indicator List</a>
+                                <a href="displayperfmtindicator.php" class="dropdown-item">Master Teacher Performance Indicator List</a>
+                                <a href="displaytkramov.php" class="dropdown-item">Teacher KRA and Objective Details</a>
+                                <a href="displaymtkramov.php" class="dropdown-item">Master Teacher Objective Details</a>
+                                <a href="displaytmov.php" class="dropdown-item">Teacher MOV Details</a>
+                                <a href="displaymtmov.php" class="dropdown-item">Master Teacher MOV Details</a>
+                                <a href="displayseminar.php" class="dropdown-item">Seminar List</a>
                             </div>
                         </li>
                     </ul>
                 </div>
-             
-            </nav>
-         </div>
-    </div>
-       
 
-        <div class="content-inner-all">
-            <div class="header-top-area">
-                <div class="fixed-header-top">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12">
-                                <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-                                    <i class="fa fa-bars"></i>
-                                </button>
-                                <div class="admin-logo logo-wrap-pro">
-                                    <a href="#"><img src="img/logo/log.png" alt="" />
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-1 col-sm-1 col-xs-12">
-                                <div class="header-top-menu tabl-d-n">
-                                    <ul class="nav navbar-nav mai-top-nav">
-                                        <li class="nav-item"><a href="#" class="nav-link">Home</a>
-                                        </li>
-                                        <li class="nav-item"><a href="#" class="nav-link">About</a>
-                                        </li>
-                                        <li class="nav-item"><a href="#" class="nav-link">Contact Us</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-                                <div class="header-right-info">
-                                    <ul class="nav navbar-nav mai-top-nav header-right-menu">
-                                       
-                                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="indicator-nt"></span></a>
-                                            <div role="menu" class="notification-author dropdown-menu animated flipInX">
-                                                <div class="notification-single-top">
-                                                    <h1>Notifications</h1>
-                                                </div>
-                                                <ul class="notification-menu">
-                                                    <li>
-                                                        <a href="#">
-                                                            <div class="notification-icon">
-                                                                <span class="adminpro-icon adminpro-cloud-computing-down"></span>
-                                                            </div>
-                                                            <div class="notification-content">
-                                                                <span class="notification-date">13 Sept</span>
-                                                                <h5>Archie Salas</h5>
-                                                                <p>Your IPCRF Rating has been approved.</p>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <div class="notification-view">
-                                                    <a href="#">View All Notification</a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-                                                <span class="adminpro-icon adminpro-user-rounded header-riht-inf"></span>
-                                                <span class="admin-name">
-                                                    <?php
-                                                     if(isset($fullname)):
-                                                        echo 'Welcome, '.$fullname;
-                                                     else:
-                                                        echo 'Welcome, Guest';
-                                                     endif;
-                                                     ?></span>
-                                                <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
-                                            </a>
-                                            <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
-                                                <li><a href="#"><span class="adminpro-icon adminpro-home-admin author-log-ic"></span>My Account</a>
-                                                </li>
-                                                <li><a href="#"><span class="adminpro-icon adminpro-user-rounded author-log-ic"></span>My Profile</a>
-                                                </li>
-                                                <li><a href="#"><span class="adminpro-icon adminpro-settings author-log-ic"></span>Settings</a>
-                                                </li>
-                                                <li><a href="includes/logout.inc.php"><span class="adminpro-icon adminpro-locked author-log-ic"></span>Log Out</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-         
-            <!-- Header top area end-->
-             <!-- Breadcome start-->
-                        <div class="breadcome-area mg-b-30 small-dn">
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="content-inner-all">
+        <div class="header-top-area">
+            <div class="fixed-header-top">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-lg-12">
-                            <div class="breadcome-list map-mg-t-40-gl shadow-reset">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-										<div class="breadcome-heading">
-											<form role="search" class="">
-												<input type="text" placeholder="Search..." class="form-control">
-												<a href=""><i class="fa fa-search"></i></a>
-											</form>
-										</div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                        <ul class="breadcome-menu">
-                                            <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                        <div class="col-lg-1 col-md-6 col-sm-6 col-xs-12">
+                            <button type="button" id="sidebarCollapse" class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <div class="admin-logo logo-wrap-pro">
+                                <a href="#"><img src="img/logo/log.png" alt="" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-1 col-sm-1 col-xs-12">
+                            <div class="header-top-menu tabl-d-n">
+                                <ul class="nav navbar-nav mai-top-nav">
+                                    <li class="nav-item"><a href="#" class="nav-link">Home</a>
+                                    </li>
+                                    <li class="nav-item"><a href="#" class="nav-link">About</a>
+                                    </li>
+                                    <li class="nav-item"><a href="#" class="nav-link">Contact Us</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                            <div class="header-right-info">
+                                <ul class="nav navbar-nav mai-top-nav header-right-menu">
+
+                                    <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="indicator-nt"></span></a>
+                                        <div role="menu" class="notification-author dropdown-menu animated flipInX">
+                                            <div class="notification-single-top">
+                                                <h1>Notifications</h1>
+                                            </div>
+                                            <ul class="notification-menu">
+                                                <li>
+                                                    <a href="#">
+                                                        <div class="notification-icon">
+                                                            <span class="adminpro-icon adminpro-cloud-computing-down"></span>
+                                                        </div>
+                                                        <div class="notification-content">
+                                                            <span class="notification-date">13 Sept</span>
+                                                            <h5>Archie Salas</h5>
+                                                            <p>Your IPCRF Rating has been approved.</p>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="notification-view">
+                                                <a href="#">View All Notification</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+                                            <span class="adminpro-icon adminpro-user-rounded header-riht-inf"></span>
+                                            <span class="admin-name">
+                                                <?php
+                                                if (isset($fullname)) :
+                                                    echo 'Welcome, ' . $fullname;
+                                                else :
+                                                    echo 'Welcome, Guest';
+                                                endif;
+                                                ?></span>
+                                            <span class="author-project-icon adminpro-icon adminpro-down-arrow"></span>
+                                        </a>
+                                        <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated flipInX">
+                                            <li><a href="#"><span class="adminpro-icon adminpro-home-admin author-log-ic"></span>My Account</a>
                                             </li>
-                                            <li><span class="bread-blod">Dashboard</span>
+                                            <li><a href="#"><span class="adminpro-icon adminpro-user-rounded author-log-ic"></span>My Profile</a>
+                                            </li>
+                                            <li><a href="#"><span class="adminpro-icon adminpro-settings author-log-ic"></span>Settings</a>
+                                            </li>
+                                            <li><a href="includes/logout.inc.php"><span class="adminpro-icon adminpro-locked author-log-ic"></span>Log Out</a>
                                             </li>
                                         </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Header top area end-->
+        <!-- Breadcome start-->
+        <div class="breadcome-area mg-b-30 small-dn">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcome-list map-mg-t-40-gl shadow-reset">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="breadcome-heading">
+                                        <form role="search" class="">
+                                            <input type="text" placeholder="Search..." class="form-control">
+                                            <a href=""><i class="fa fa-search"></i></a>
+                                        </form>
                                     </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ul class="breadcome-menu">
+                                        <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                        </li>
+                                        <li><span class="bread-blod">Dashboard</span>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Breadcome End-->
+        </div>
+
+        <!-- Breadcome End-->

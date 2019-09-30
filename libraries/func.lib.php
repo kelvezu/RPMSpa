@@ -2,14 +2,14 @@
 //GET THE START
 function getStartYear()
 {
-    return $startYear = date('Y');
+    return date('Y');
 }
 
 function getEndYear()
 {
     $currentYear =  date('Y');
     $nextYear = strtotime('next Year');
-    return $endYear = date('Y', $nextYear);
+    return date('Y', $nextYear);
 }
 
 

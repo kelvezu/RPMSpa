@@ -7,7 +7,7 @@ include_once 'includes/constants.inc.php';
 //THIS WILL AUTOLOAD THE CLASSESS
 include_once 'includes/classautoloader.inc.php';
 include_once 'libraries/db.library.php';
-include_once 'includes/func.lib.php';
+include_once 'libraries/func.lib.php';
 $conn = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 $query = 'SELECT * FROM account_tbl ';
 $results = fetchAll($conn, $query);

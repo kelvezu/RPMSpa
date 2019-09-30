@@ -11,12 +11,12 @@ function connect($dbHost, $dbUsername, $dbPassword, $dbName)
     return $conn;
 }
 
-//FETCH ALL DATA
 
-function fetchAll(mysqli $conn)
+// FETCH ALL DATA must INCLUDE THE DB CONNECTION AND QUERY 
+
+function fetchAll(mysqli $conn, $query)
 {
     $data = [];
-    $query = 'SELECT * FROM account_tbl WHERE rater IS NULL';
     $results = $conn->query($query);
     if ($results->num_rows > 0) {
         while ($row = $results->fetch_assoc()) {

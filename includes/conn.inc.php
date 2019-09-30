@@ -1,4 +1,6 @@
 <?php
+
+
 $servername = "localhost";
 $dbUsername = "root";
 $dbPassword = "";
@@ -9,5 +11,3 @@ $conn = mysqli_connect($servername, $dbUsername, $dbPassword, $dbName);
 if (!$conn) {
     die("Connection Failed: " . mysqli_connect_error());
 }
-
-include_once 'libraries/func.lib.php';
