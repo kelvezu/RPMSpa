@@ -1,34 +1,24 @@
 <?php
 include_once 'includes/header.php';
-//FILE FOR ALL CONSTANTS
 include_once 'includes/constants.inc.php';
-//THIS WILL AUTOLOAD THE CLASSESS
 include_once 'includes/classautoloader.inc.php';
 include_once 'libraries/db.library.php';
 include_once 'libraries/func.lib.php';
-include_once 'includes/security.php';
+//include_once 'includes/security.php';
 
 $conn = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 $queryRater = 'SELECT * FROM account_tbl WHERE rater IS NULL';
 $results = fetchAll($conn, $queryRater);
 
-$queryRatee = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III","Principal")';
+$queryRatee = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III")';
 $rateeResults = fetchAll($conn, $queryRatee);
 pre_r($rateeResults);
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
 
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sample OOP database</title>
 
-    <script src="js/jquery.min.js"></script>
-</head>
+
 
 <body>
     <div class="container p-5">

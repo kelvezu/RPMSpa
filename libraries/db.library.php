@@ -25,3 +25,12 @@ function fetchAll(mysqli $conn, $query)
     }
     return $data;
 }
+
+function updateAll(mysqli $conn, $query)
+{
+    if ($conn->query($query)) {
+        $conn->query($query);
+    } else {
+        echo 'Update Failed';
+    }
+}
