@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php
+include_once 'includes/header.php';
 //FILE FOR ALL CONSTANTS
 include_once 'includes/constants.inc.php';
 //THIS WILL AUTOLOAD THE CLASSESS
 include_once 'includes/classautoloader.inc.php';
 include_once 'libraries/db.library.php';
 include_once 'libraries/func.lib.php';
+include_once 'includes/security.php';
+
 $conn = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-$query = 'SELECT * FROM account_tbl ';
-$results = fetchAll($conn, $query);
+$queryRater = 'SELECT * FROM account_tbl WHERE rater IS NULL';
+$results = fetchAll($conn, $queryRater);
+
+$queryRatee = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III","Principal")';
+$rateeResults = fetchAll($conn, $queryRatee);
+pre_r($rateeResults);
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
+
 
 <head>
     <meta charset="UTF-8">
@@ -20,9 +28,6 @@ $results = fetchAll($conn, $query);
     <title>Sample OOP database</title>
 
     <script src="js/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
 </head>
 
 <body>
