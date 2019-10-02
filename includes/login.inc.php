@@ -1,7 +1,7 @@
 <?php
 $sy_desc = "";
-include "conn.inc.php";
-include "../libraries/func.lib.php";
+include_once "conn.inc.php";
+include_once "../libraries/func.lib.php";
 
 $current_date = date('Y-m-d');
 

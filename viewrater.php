@@ -4,7 +4,7 @@ include_once 'includes/constants.inc.php';
 include_once 'includes/classautoloader.inc.php';
 include_once 'libraries/db.library.php';
 include_once 'libraries/func.lib.php';
-//include_once 'includes/security.php';
+include_once 'includes/security.php';
 
 $conn = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 $queryRater = 'SELECT * FROM account_tbl WHERE rater IS NULL';
@@ -14,10 +14,6 @@ $queryRatee = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher
 $rateeResults = fetchAll($conn, $queryRatee);
 pre_r($rateeResults);
 ?>
-
-
-
-
 
 
 <body>

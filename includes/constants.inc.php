@@ -7,6 +7,4 @@ const DB_NAME = 'rpms';
 const DB_USERNAME = 'root';
 const DB_PASSWORD = '';
 
-//QUERIES
-
-const POSITION_ALL = 'position_tbl';
+//
