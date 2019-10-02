@@ -7,20 +7,18 @@
     include_once 'includes/security.php';
     ?>
 
-
-
-
-
-
-
     <body>
         <form action="includes/processratee.php" method="POST">
             <div class="container">
                 <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?> />
                 <div class="breadcome-list shadow-reset">
 
-                    <div class="text-white h4"><strong>Click Checkbox ☑ to select the Teacher(s) you want to Rate for SY <?php echo !empty($sy = $_SESSION['sy']) ?  $sy : $sy = ''; ?></div>
-                    <table class="table table-dark">
+                    <div class="text-center h3"><strong>
+                            <u>
+
+                                Click Checkbox ☑ to select the Teacher(s) you want to Rate for SY <?php echo !empty($sy = $_SESSION['sy']) ?  $sy : $sy = ''; ?> </u>
+                    </div>
+                    <table class="table table-hover table-borderless">
                         <thead>
                             <tr>
                                 <th>Teacher's Name</th>
