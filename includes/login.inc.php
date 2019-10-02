@@ -53,7 +53,7 @@ if (isset($_POST['login-submit'])) {
                     $_SESSION['school_id'] = $row['school_id'];
                     $position = $_SESSION['position'];
 
-                    //CHECK IF THE SCHOOL YEAR IS SET
+                    //CHECK IF THE SCHOOL YEAR IS SET   
                     if (!empty($sy_desc)) :
                         echo $_SESSION['sy'] = $sy_desc;
                         echo $_SESSION['sy_id'] = $sy_id;
