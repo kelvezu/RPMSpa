@@ -17,7 +17,6 @@ if (!empty($user_id)) :
 
 endif;
 ?>
-
 <!doctype html>
 <html class="no-js" lang="en">
 
