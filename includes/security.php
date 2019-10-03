@@ -11,15 +11,15 @@
     else :
 
       if (isset($_SESSION['user_id'])) :
-        echo ' <b>USER_ID: </b>' . $_SESSION['user_id'];
-        echo ' <b>FIRSTNAME: </b>' . $_SESSION['uname'];
-        echo ' <b>POSITION: </b>' . $_SESSION['position'];
-        echo ' <b>SY: </b>' . $_SESSION['sy'];
-        echo ' <b>SY_ID: </b>' . $_SESSION['sy_id'];
-        echo ' <b>SCHOOL_ID: </b>' . $_SESSION['school_id'];
+        ' <b>USER_ID: </b>' . $_SESSION['user_id'];
+        ' <b>FULLNAME: </b>' . $_SESSION['fullname'];
+        ' <b>POSITION: </b>' . $_SESSION['position'];
+        ' <b>SY: </b>' . $_SESSION['sy'];
+        ' <b>SY_ID: </b>' . $_SESSION['sy_id'];
+        ' <b>SCHOOL_ID: </b>' . $_SESSION['school_id'];
       else :
         $_SESSION['user_id'] = "";
-        $_SESSION['uname'] = "";
+        $_SESSION['fullname'] = "";
         $_SESSION['position'] = "";
         $_SESSION['sy'] = "";
         $_SESSION['sy_id'] = "";
