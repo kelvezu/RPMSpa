@@ -42,9 +42,10 @@ hr {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid black;
     margin: 1em 0;
     padding: 0;
+    color: #000;
 }
 
 /*
@@ -293,4 +294,28 @@ table.fixed td {
 
 .textarea {
     resize: none;
+}
+
+.bg-black {
+    background-color: #000;
+    color: white;
+    margin: 1em 0;
+    padding: 1;
+    font-weight: bold;
+    font-size-adjust: inherit;
+    font-weight: bold;
+    font-size: larger;
+    text-indent: 10px;
+    text-align: justify;
+}
+
+.ul {
+    list-style-type: disc;
+
+    padding-left: 5%;
+    ;
+}
+
+contentIndent {
+    padding-left: 5px;
 }
