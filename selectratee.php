@@ -40,6 +40,7 @@
                                         <td><?php echo $teacher['position']; ?></td>
                                         <td><?php echo $teacher['email']; ?></td>
                                         <td><?php echo $teacher['contact']; ?></td>
+
                                 <?php
                                     endforeach;
                                 else :
