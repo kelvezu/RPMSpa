@@ -33,7 +33,7 @@
                             <?php
                             $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-                            $query = 'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I","Master Teacher II","Master Teacher III","Master Teacher IV")AND rater IS NULL  AND school_id = "' . $school_id . ' "  AND `user_id` <> " ' . $user_id . ' "';
+                            $query = 'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I","Master Teacher II","Master Teacher III","Master Teacher IV")AND rater IS NULL  AND school_id = "' . $school_id . ' "  AND user_id != " ' . $user_id . ' "';
                             $teacherresults = fetchAll($dbcon, $query);
                             if (count($teacherresults)) :
                                 foreach ($teacherresults as $teacher) :
