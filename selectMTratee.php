@@ -5,6 +5,8 @@
     include_once 'libraries/db.library.php';
     include_once 'libraries/func.lib.php';
     include_once 'includes/security.php';
+    $school_id = $_SESSION['school_id'];
+    $user_id = $_SESSION['user_id'];
     ?>
 
     <body>
@@ -21,7 +23,7 @@
                     <table class="table table-hover table-borderless">
                         <thead>
                             <tr>
-                                <th>Teacher's Name</th>
+                                <th>Master Teacher's Name</th>
                                 <th>Position</th>
                                 <th>Email</th>
                                 <th>Contact</th>
@@ -30,7 +32,8 @@
                         <div class="card-body text-dark">
                             <?php
                             $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-                            $query = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL';
+
+                            $query = 'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I","Master Teacher II","Master Teacher III","Master Teacher IV")AND rater IS NULL  AND school_id = "' . $school_id . ' "  AND `user_id` <> " ' . $user_id . ' "';
                             $teacherresults = fetchAll($dbcon, $query);
                             if (count($teacherresults)) :
                                 foreach ($teacherresults as $teacher) :
@@ -40,7 +43,6 @@
                                         <td><?php echo $teacher['position']; ?></td>
                                         <td><?php echo $teacher['email']; ?></td>
                                         <td><?php echo $teacher['contact']; ?></td>
-
                                 <?php
                                     endforeach;
                                 else :
@@ -51,7 +53,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="4" align="center"><button name="btn" class="btn btn-info btn-block"><b>Submit</b></button></td>
+                                        <td colspan="4" align="center"><button name="btn-mt" class="btn btn-info btn-block"><b>Submit</b></button></td>
                                     </tr>
 
                         </div>

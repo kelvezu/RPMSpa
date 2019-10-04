@@ -50,7 +50,7 @@
                 <br>
                 SUBJECT
                 <!-- <select name="" id=""> -->
-                <?php selectSubject($conn); ?>
+                <?php ?>
 
 
                 <!-- </select> -->
