@@ -67,7 +67,7 @@
                 </td>
                 <td>
                   <select name="lvlcap[]" id="" class="form-control bg-primary text-white font-weight-bold">
-                    <option value="">--Select--</option>
+                    <option value="" disabled selected>--Select--</option>
                     <option value="4">Very High</option>
                     <option value="3">High</option>
                     <option value="2">Moderate</option>
@@ -77,7 +77,7 @@
                 
                 <td>
                   <select name="priodev[]" id="" class="form-control bg-danger text-white font-weight-bold">
-                    <option value="">--Select--</option>
+                    <option value="" disabled selected>--Select--</option>
                     <option value="4">Very High</option>
                     <option value="3">High</option>
                     <option value="2">Moderate</option>
