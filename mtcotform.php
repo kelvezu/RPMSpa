@@ -4,15 +4,15 @@
     include_once 'libraries/func.lib.php';
 
     $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
-    $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
+    $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
     ?>
 
     <div class="container text-center">
         <div class="breadcome-list shadow-reset">
-            <form action="includes/processtcotform.php" method="POST">
+            <form action="includes/processmtcotform.php" method="POST">
                 <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br><br>
                     <h5><strong>COT-RPMS</strong></h5>
-                        <div class="h3 bg-success">Teacher I-III</div>
+                        <div class="h3 bg-info">Master Teacher I-IV</div>
                         <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>"/>
                         <input type="hidden" name="sy" value="<?php echo $_SESSION['sy_id']; ?>"/>
                         <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>"/>
@@ -33,14 +33,14 @@
               
                <div class="form-control">
                    <label>
-                    TEACHER OBSERVED:
+                    MASTER TEACHER OBSERVED:
                    </label>
-                        <select name="tobserved">
-                            <option value="" disabled selected>--Select Teacher--</option>
+                        <select name="mtobserved">
+                            <option value="" disabled selected>--Select Master Teacher--</option>
                             <?php
                             $school = $_SESSION['school_id'];
                             $rater = $_SESSION['user_id'];
-                            $queryObserved = $conn->query('SELECT * FROM account_tbl WHERE  rater =  ' . $rater . '  AND  position  IN ("Teacher I","Teacher II","Teacher III") ') or die($conn->error);
+                            $queryObserved = $conn->query('SELECT * FROM account_tbl WHERE  rater =  ' . $rater . '  AND  position  IN ("Master Teacher I","Master Teacher II","Master Teacher III","Master Teacher IV") ') or die($conn->error);
 
                             if ($queryObserved) :
                                 while ($row = $queryObserved->fetch_assoc()) :
@@ -61,7 +61,7 @@
                     <label>
                         SUBJECT:
                     </label>
-                        <select name="tsubject">
+                        <select name="mtsubject">
                         <option value="" disabled selected>--Select Subject--</option>
                             <?php
                             $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
@@ -77,7 +77,7 @@
                     <label for="gradeleveltaught">
                         GRADE LEVEL TAUGHT:
                     </label>
-                        <select name="tgradelvltaught">
+                        <select name="mtgradelvltaught">
                         <option value="" disabled selected>--Select Grade Level Taught--</option>
                             <?php
                             $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
@@ -93,7 +93,7 @@
                     <label for="obs_period" class="col-form-label">
                         OBSERVATION PERIOD:
                     </label>
-                        <select name="obsperiod">
+                        <select name="mtobsperiod">
                             <option value="" disabled selected>--Select Period--</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -105,7 +105,7 @@
             </h4>
             
             <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-                <thead class="legend-control bg-success text-white ">
+                <thead class="legend-control bg-info text-white ">
                     <tr>
                         <th>Indicator No</th>
                         <th>Indicator Name</th>
@@ -116,14 +116,14 @@
                 if ($resultquery) {
                     while ($row = mysqli_fetch_array($resultquery)) {
                         ?>
-                        <input type="hidden" name = "indicator_id[]" value="<?php echo $row['indicator_id']; ?>"/>
-                        <input type="hidden" name = "indicator_name[]" value="<?php echo $row['indicator_name']; ?>"/>
+                        <input type="hidden" name = "mtindicator_id[]" value="<?php echo $row['mtindicator_id']; ?>"/>
+                        <input type="hidden" name = "mtindicator_name[]" value="<?php echo $row['mtindicator_name']; ?>"/>
                         <tbody>
                             <tr>
-                                <th><?php echo $row['indicator_id']; ?></th>
-                                <th><?php echo $row['indicator_name']; ?></th>
+                                <th><?php echo $row['mtindicator_id']; ?></th>
+                                <th><?php echo $row['mtindicator_name']; ?></th>
                                 <th>
-                                    <select name="rating[]">
+                                    <select name="mtrating[]">
                                         <option value="" disabled selected>--Select--</option>
                                         <option value="3">3</option>
                                         <option value="4">4</option>
@@ -144,7 +144,7 @@
                 ?>
 
             </table>
-            <textarea class="form-control" name="cot_comment" rows="5" placeholder="OTHER COMMENTS"></textarea><br>
+            <textarea class="form-control" name="mtcot_comment" rows="5" placeholder="OTHER COMMENTS"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
         </div>
