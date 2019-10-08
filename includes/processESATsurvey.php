@@ -48,9 +48,10 @@
             $tobj_id = $_POST['tobj_id'];
             $lvlcap = $_POST['lvlcap'];
             $priodev = $_POST['priodev'];
+            $position = $_POST['position'];
 
             for ($count = 0; $count < count($kra_id); $count++) {
-                $conn->query('INSERT INTO esat2_objectivest_tbl(user_id,kra_id, tobj_id, lvlcap, priodev,sy,school)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $tobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $school . '")') or die($conn->error);
+                $conn->query('INSERT INTO esat2_objectivest_tbl(user_id,kra_id, tobj_id, lvlcap, priodev,sy,position,school)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $tobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '")') or die($conn->error);
             }
             header('location:../ESATform3.php');
 
