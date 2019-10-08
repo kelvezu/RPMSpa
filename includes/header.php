@@ -6,16 +6,10 @@ include_once 'conn.inc.php';
 
 
 $user_id = $_SESSION['user_id'];
+$fullname = $_SESSION['fullname'];
+$position = $_SESSION['position'];
 
-if (!empty($user_id)) :
-    $query = mysqli_query($conn, "SELECT * FROM account_tbl WHERE user_id=$user_id");
-    while ($row = mysqli_fetch_array($query)) {
-        $firstname = $row['firstname'];
-        $lastname = $row['surname'];
-    }
-    $fullname = $firstname . " " . $lastname;
 
-endif;
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -72,6 +66,8 @@ endif;
     <!-- modernizr JS
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body class="materialdesign">
@@ -94,7 +90,7 @@ endif;
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro ">
                         <li class="nav-item ">
-                            <a href="dashboard.php" role="button"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span></a>
+                            <a href="?i_love_you_so_much_baby_<3" role="button"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span></a>
                         </li>
                         <li class="nav-item">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-list"></i> <span class="mini-dn">ESAT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>

@@ -49,10 +49,12 @@ if (isset($_POST['login-submit'])) {
                     session_start();
                     $_SESSION['user_id'] = $row['user_id'];
                     $_SESSION['uname'] = $row['firstname'];
+                    $_SESSION['mname'] = $row['middlename'];
+                    $_SESSION['sname'] = $row['surname'];
                     $_SESSION['position'] = $row['position'];
                     $_SESSION['school_id'] = $row['school_id'];
                     $position = $_SESSION['position'];
-
+                    $_SESSION['fullname'] = $_SESSION['uname'] . ' ' . substr($_SESSION['mname'], 0, 1,) . '. ' . $_SESSION['sname'];
                     //CHECK IF THE SCHOOL YEAR IS SET   
                     if (!empty($sy_desc)) :
                         echo $_SESSION['sy'] = $sy_desc;

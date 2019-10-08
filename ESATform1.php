@@ -15,7 +15,6 @@
           <h3> Self Assessment Tool Form / Part I / Demographic Profile </h3>
         </strong>
     </div>
-
   </div>
   </div>
 
@@ -235,7 +234,6 @@
             <option value="<?php echo $reg_id ?>"><?php echo $region_name ?></option>
           <?php endwhile ?>
         </select>
-
       </div>
     </div>
 
@@ -245,12 +243,12 @@
 
     <button class="btn btn-success btn-block my-2" name="submitESAT1">Submit</button>
     <button class="btn btn-danger btn-block my-2" name="cancelb">Cancel</button>
-  </div>
-  </div>
+
 
   </div><!-- End tag of card -->
-  </div>
+
   </form>
+
   </div><!-- End tag of container -->
 
 
