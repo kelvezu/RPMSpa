@@ -90,7 +90,7 @@
             $cbc_id = $_POST['cbc_id'];
             $cbc_ind_id = $_POST['cbc_ind_id'];
             $cbc_score = $_POST['cbc_score'];
-
+            
 
 
 
@@ -99,6 +99,27 @@
 
                 $conn->query('DELETE FROM esat3_core_behavioral_tbl WHERE cbc_score = 0') or die($conn->error);
             }
-            header('location:../../../masterteacher/dashboard/dashboard.php');
+           // header('location:../../../masterteacher/dashboard/dashboard.php');
+            session_start();
+            $position = $_SESSION['position'];  
+    
+            switch ($position) {
+                case 'Teacher I':
+                case 'Teacher II':
+                case 'Teacher III':
+                header('location:../displaytchart.php');
+                break;
+                
+                case 'Master Teacher I':
+                case 'Master Teacher II':
+                case 'Master Teacher III':
+                case 'Master Teacher IV':
 
+                header('location:../displaymtchart.php');
+                break;
+                
+                default:
+                echo "Error ";
+                break;
+            }
         endif;
