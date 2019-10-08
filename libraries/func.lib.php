@@ -1,18 +1,12 @@
 
             <?php
+
+
             //GET THE START
             function getStartYear()
             {
                 return date('Y');
             }
-
-    <?php
-
-    //GET THE START
-    function getStartYear()
-    {
-        return date('Y');
-    }
 
             function getEndYear()
             {
@@ -46,14 +40,14 @@
             }
 
 
-    function directToDashboard(string $position)
-    {
-        try {
-            switch ($position) {
-                case 'Admin':
-                    header('location:../dbAdmin.php');
-                    exit();
-                    break;
+            function directToDashboard(string $position)
+            {
+                try {
+                    switch ($position) {
+                        case 'Admin':
+                            header('location:../dbAdmin.php');
+                            exit();
+                            break;
 
                         case 'Asst. Superintendent':
                             header('location:../dbAsstSuperintendent.php');
@@ -99,8 +93,3 @@
                     echo 'Error', $th->getMessage();
                 }
             }
-        
-           
-
-
-            
