@@ -2,7 +2,6 @@
 include_once 'includes/conn.inc.php';
 include_once 'includes/header.php';
 
-
 $kra_num = 0;
 $tobj_num = 1;
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
@@ -13,7 +12,6 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 <div class="container">
   <div class="breadcome-list shadow-reset">
     <form action="includes/processESATsurvey.php" method="POST">
-
       <input type="hidden" name="sy" value=<?php echo $_SESSION['sy_id']; ?>>
       <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?>>
       <strong>
@@ -35,13 +33,10 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
         <thead class="thead-dark text-nowrap">
           <!-- ASSIGN THE VALUE FROM THE DB  -->
           <th class="bg-success"><?php echo "KRA " . $kra_num . ": " . $row['kra_name'] ?></th>
-
           <th class="bg-success">Level of Capability</th>
           <th class="bg-success">Priority for Development</th>
           </tr>
         </thead>
-
-
         <tbody class="text-dark">
           <tr>
             <!-- START OF LOOP FROM OBJECTIVE -->
@@ -53,20 +48,15 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
               while ($rows = $indresult->fetch_assoc()) :
                 ?>
               <td>
-
                 <?php
                     //ASSIGN THE VALUE FROM THE DB
-
                     echo '<strong>' . $tobj_num++ . ".</strong> " . $tobj_name = $rows['tobj_name'];
-
                     ?>
                 <input type="hidden" name="user_id[]" value="<?php echo $_SESSION['user_id']; ?>">
                 <input type="hidden" name="kra_id[]" value="<?php echo $row['kra_id'] ?>">
                 <input type="hidden" name="tobj_id[]" value="<?php echo $rows['tobj_id'] ?>">
               </td>
               <td>
-
-
 
                 <select name="lvlcap[]" id="" class="form-control bg-primary text-white font-weight-bold">
                   <option value="">--Select--</option>

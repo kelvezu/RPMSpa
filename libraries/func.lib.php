@@ -39,7 +39,6 @@
 
     function directToDashboard(string $position)
     {
-
         try {
             switch ($position) {
                 case 'Admin':
@@ -90,15 +89,4 @@
         } catch (\Throwable $th) {
             echo 'Error', $th->getMessage();
         }
-    }
-
-
-    function selectSubject(mysqli $conn)
-    {
-        $output = "";
-
-        $query = "SELECT * FROM subject_tbl";
-        $subjectResults = fetchAll($conn, $query);
-
-        pre_r($subjectResults);
     }

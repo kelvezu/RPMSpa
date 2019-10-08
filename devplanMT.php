@@ -22,32 +22,13 @@
     $form3_cbc_devneeds_query = 'SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) WHERE esat3_core_behavioral_tbl.user_id = ' . $_SESSION['user_id'] . ' AND esat3_core_behavioral_tbl.school = ' . $_SESSION['school_id'] . ' group by core_behavioral_tbl.cbc_name HAVING SUM(esat3_core_behavioral_tbl.cbc_score) <= 2 ORDER BY esat3_core_behavioral_tbl.cbc_id';
     $esatForm3_devneeds_results = fetchAll($dbcon, $form3_cbc_devneeds_query);
 
-
-
-
-    // getting the score of core behavioral compentencies
-    // SELECT esat3_core_behavioral_tbl.cbc_id, COUNT(esat3_core_behavioral_tbl.cbc_score) as CBC_scores FROM esat3_core_behavioral_tbl group by esat3_core_behavioral_tbl.cbc_id
-
-    //GET THE SCORE FOR COMPETENCIES
-    // SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) group by core_behavioral_tbl.cbc_name ORDER BY esat3_core_behavioral_tbl.cbc_id
-
-
-
-    //pre_r($esatForm2_LvlCap_results);
-    // echo '<hr>';
-    // pre_r($esatForm2_priodev_results);
-
-
     $form3query = 'SELECT * FROM esat3_core_behavioral_tbl WHERE user_id = "' . $_SESSION['user_id'] . '"';
     $esatForm3results = fetchAll($dbcon, $form3query);
     ?>
 
     <main>
         <div class="container">
-
             <div class="row">
-
-
             </div>
 
 
@@ -92,10 +73,8 @@
                                 else :
                                     echo 'No record!';
                                 endif; ?>
-
                                     </li>
                         </ol>
-
                     </td>
 
 
@@ -234,20 +213,16 @@
                                     <?php
                                     if (count($esatForm2_LvlCap_results)) :
                                         foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
-                                            $userLvlCap = '<li><b>KRA name: </b><br/>'  . $LvlCap_result['kra_name'] . '<br/>' . '<b>Objective name: </b><br/>'  . $LvlCap_result['mtobj_name'] . '</br></br>';
-                                            trim($userLvlCap);
                                             ?>
-                                            <input type="hidden" name="kra_id[]" value="<?php echo  $LvlCap_result['kra_id'] ?>">
-                                            <input type="hidden" name="mtobj_id[]" value="<?php echo $LvlCap_result['mtobj_id'] ?>">
-
-                                            <?php echo $userLvlCap; ?>
-
+                                            <li><b>Key Result Area: </b> <?php echo $LvlCap_result['kra_name'] ?></li>
+                                            <ul class="ul-square">
+                                                <li><b>Objective: </b><i><?php echo $LvlCap_result['mtobj_name']  ?></i></li>
+                                            </ul><br>
+                                            <input type="hidden" name="kra_id[]" value="<?php echo  $LvlCap_result['kra_id'] ?>" />
+                                            <input type="hidden" name="mtobj_id[]" value="<?php echo $LvlCap_result['mtobj_id'] ?>" />
                                         <?php
                                             endforeach;
                                             ?>
-
-
-
                                 </ul>
                             <?php
                             else :
@@ -263,19 +238,20 @@
                                 <?php
                                 if (count($esatForm2_priodev_results)) :
                                     foreach ($esatForm2_priodev_results as $PrioDev_result) :
-                                        $userPrioDev = '<li><b>KRA name: </b></br>'  . $PrioDev_result['kra_name'] . '</li>' . '<b>Objective name: </b></br>&nbsp'  . $PrioDev_result['mtobj_name'] . '</br></br>';
-                                        trim($userPrioDev);
                                         ?>
+                                        <li><b>Key Result Area: </b> <?php echo $PrioDev_result['kra_name'] ?></li>
+                                        <ul class="ul-square">
+                                            <li><b>Objective: </b><i><?php echo $PrioDev_result['mtobj_name']  ?></i></li>
+                                        </ul><br>
                                         <input type="hidden" name="kra_id[]" value="<?php echo  $PrioDev_result['kra_id'] ?>">
                                         <input type="hidden" name="mtobj_id[]" value="<?php echo $PrioDev_result['mtobj_id'] ?>">
-                                        <?php echo $userPrioDev; ?>
                                     <?php
                                         endforeach;
                                         ?>
                             </ul>
                         <?php
                         else :
-                            echo '<p text-danger>No record!</p>';
+                            echo '<p class="text-danger">No record!</p>';
                         endif;
                         ?>
                     </div>
@@ -374,7 +350,6 @@
         </div>
         <!--end breadcome -->
         </div><!-- end of container -->
-
 
         <br>
         <main>

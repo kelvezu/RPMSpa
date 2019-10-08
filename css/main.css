@@ -311,7 +311,12 @@ table.fixed td {
 
 .ul {
     list-style-type: disc;
+    padding-left: 5%;
+    ;
+}
 
+.ul-square {
+    list-style-type: symbols('—');
     padding-left: 5%;
     ;
 }
