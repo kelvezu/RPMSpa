@@ -22,6 +22,9 @@ function fetchAll(mysqli $conn, $query)
         while ($row = $results->fetch_assoc()) {
             $data[] = $row;
         }
+    } else {
+        echo $query;
+        exit();
     }
     return $data;
 }
