@@ -229,7 +229,7 @@ $position = $_SESSION['position'];
                             <div class="header-right-info">
                                 <ul class="nav navbar-nav mai-top-nav header-right-menu">
 
-                                    <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-bell-o" aria-hidden="true"></i><span class="indicator-nt"></span></a>
+                                    <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa fa-bell-o" aria-hidden="true"></i><!-- <span class="indicator-nt"></span> --></a>
                                         <div role="menu" class="notification-author dropdown-menu animated flipInX">
                                             <div class="notification-single-top">
                                                 <h1>Notifications</h1>
@@ -241,6 +241,7 @@ $position = $_SESSION['position'];
                                                             <span class="adminpro-icon adminpro-cloud-computing-down"></span>
                                                         </div>
                                                         <div class="notification-content">
+                                                            <!-- NOTIFICATION AREA! -->
                                                             <span class="notification-date">13 Sept</span>
                                                             <h5>Archie Salas</h5>
                                                             <p>Your IPCRF Rating has been approved.</p>
