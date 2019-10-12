@@ -14,10 +14,10 @@ if(isset($_POST['save'])){
     $user_id = $_POST['tobserved'];
     $subject = $_POST['tsubject'];
     $gradelvltaught = $_POST['tgradelvltaught'];
-    $obs_period = $_POST['tobsperiod'];
+    $obs_period = $_POST['obsperiod'];
     $indicator_id = $_POST['indicator_id'];
     $tcotrating = $_POST['rating'];
-    $comment = $_POST['cot_comment'];
+    $comment = $_POST['ioaf_comment'];
     $sy_id = $_POST['sy'];
     $school_id = $_POST['school_id'];
 
