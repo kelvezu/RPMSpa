@@ -31,6 +31,15 @@ include 'includes/header.php';
                                 <textarea name="indicator_name" id="indicator-name" cols="5" rows="5" class="form-control" placeholder="Enter the indicator name..."></textarea>
                             </div>
                             </div>
+                            <div class="row">
+                            <div class="col-lg">
+                                <label for="obs" class="control-label w-25 "><strong>Observation Period</strong></label>
+                                <input type="checkbox" name="obs1" id="" class="form-control-sm" value="1">1st
+                                <input type="checkbox" name="obs2" id="" class="form-control-sm" value="1">2nd
+                                <input type="checkbox" name="obs3" id="" class="form-control-sm" value="1">3rd
+                                <input type="checkbox" name="obs4" id="" class="form-control-sm" value="1">4th
+                            </div>
+                            </div>
                             <div class="m-2">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" name="save">Add Indicator</button>
@@ -64,7 +73,7 @@ include 'includes/header.php';
         <div class="col-sm-10">
                  <?php 
                     $conn = new mysqli('localhost','root','','rpms') or die(mysqli_error($conn));
-                    $result = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);       
+                    $result = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);   
                 ?>
 
             <table class="table table-responsive-sm">
@@ -73,6 +82,7 @@ include 'includes/header.php';
                 <tr>
                     <th>Indicator No</th>
                     <th>Indicator Name</th>
+                    <th colspan="4">Observation Period</th>
                     <th colspan="2" >Action</th>
                 </tr>
                 </thead>
@@ -83,11 +93,35 @@ include 'includes/header.php';
                     <tr>
                         <td><?php echo $row['indicator_no']; ?></td>
                         <td><?php echo $row['indicator_name']; ?></td>
+                        
+                            
+                        <td><?php if ($row['period1'] == 0 ){
+                            echo "-";
+                        }else{
+                            echo "1st";
+                        }?></td>
+                        <td><?php if ($row['period2'] == 0 ){
+                            echo "-";
+                        }else{
+                            echo "2nd";
+                        }?></td>
+                        <td><?php if ($row['period3'] == 0 ){
+                            echo "-";
+                        }else{
+                            echo "3rd";
+                        }?></td>
+                        <td><?php if ($row['period4'] == 0 ){
+                            echo "-";
+                        }else{
+                            echo "4th";
+                        }?></td>
+                      
                         <td><a href="update/updatetindicator.php?edit=<?php echo $row['indicator_id']; ?>" class="btn btn-outline-primary">Update</a></td>
                         <td><a href="delete/deletetindicator.php?delete=<?php echo $row['indicator_id'];?>" class="btn btn-outline-danger" >Delete</a>
                                                     
                         </td>
                     </tr>
+                    
                     <?php endwhile; ?>
                 </tbody>              
             </table>

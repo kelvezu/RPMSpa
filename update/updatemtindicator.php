@@ -10,7 +10,10 @@ include '../includes/header.php';
         $record = mysqli_fetch_array($query);
         $mtindicator_no = $record['mtindicator_no'];
         $mtindicator_name = $record['mtindicator_name'];
-        
+        $obs1_period = $record['period1'];
+        $obs2_period = $record['period2'];
+        $obs3_period = $record['period3'];
+        $obs4_period = $record['period4'];
     }
     
 ?>
@@ -33,6 +36,13 @@ include '../includes/header.php';
                     <div>
                         <label for="indicator-name" class="control-label w-25 "><strong>Indicator Name</strong></label>
                         <textarea name="newmtindicator_name" value="" id="indicator-name" cols="5" rows="5" class="form-control"><?php echo $mtindicator_name; ?></textarea>
+                    </div>
+                    <div>
+                        <label for="obs" class="control-label w-25 "><strong>Observation Period</strong></label>
+                            <input type="checkbox" name="new_obs1" id="" class="form-control-sm" value="1" <?php if ($obs1_period == 1) echo 'checked="checked"'; ?>>1st
+                            <input type="checkbox" name="new_obs2" id="" class="form-control-sm" value="1" <?php if ($obs2_period == 1) echo 'checked="checked"'; ?>>2nd
+                            <input type="checkbox" name="new_obs3" id="" class="form-control-sm" value="1" <?php if ($obs3_period == 1) echo 'checked="checked"'; ?>>3rd
+                            <input type="checkbox" name="new_obs4" id="" class="form-control-sm" value="1" <?php if ($obs4_period == 1) echo 'checked="checked"'; ?>>4th
                     </div>
                     <div class="row">
                         <button type="submit" class="btn btn-primary my-4" name="update">Update</button>&nbsp
