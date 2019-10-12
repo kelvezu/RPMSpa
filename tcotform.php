@@ -9,7 +9,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
 <div class="container text-center">
     <div class="breadcome-list shadow-reset">
-        <form action="includes/processtcotform.php" method="POST">
+        <form action="includes/processtcotform.php" method="POST" name="myForm">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br><br>
             <h5><strong>COT-RPMS</strong></h5>
             <div class="h3 bg-success">Teacher I-III</div>
@@ -90,19 +90,23 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                     </div>
 
                     <div class="form-control">
-                        <label for="obs_period" class="col-form-label">
+                        <label for="obsperiod" class="col-form-label">
                             OBSERVATION PERIOD:
                         </label>
-                        <select name="obsperiod">
+                        <select name="obs_period" onchange="showObs(this.value)">
                             <option value="" disabled selected>--Select Period--</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
-                            <option value="4">4</option>
+                            <option value="4">4</option> 
                         </select>
                     </div>
 
+
             </h4>
+
+            
+
 
             <table class="table table-bordered" style="background-color: white; table-layout: 10;">
                 <thead class="legend-control bg-success text-white ">
@@ -115,12 +119,12 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                 <?php
                 if ($resultquery) {
                     while ($row = mysqli_fetch_array($resultquery)) {
-                        ?>
+                ?>
                         <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
                         <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
                         <tbody>
                             <tr>
-                                <th><?php echo $row['indicator_id']; ?></th>
+                                <th><div id="observation"><?php echo $row['indicator_id']; ?></th>
                                 <th><?php echo $row['indicator_name']; ?></th>
                                 <th>
                                     <select name="rating[]">
