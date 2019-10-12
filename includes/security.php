@@ -18,6 +18,7 @@
         ' <b>SY: </b>' . $_SESSION['sy'];
         ' <b>SY_ID: </b>' . $_SESSION['sy_id'];
         ' <b>SCHOOL_ID: </b>' . $_SESSION['school_id'];
+        $_SESSION['rater'];
 
       else :
         $_SESSION['user_id'] = "";
@@ -26,6 +27,7 @@
         $_SESSION['sy'] = "";
         $_SESSION['sy_id'] = "";
         $_SESSION['school_id'] = "";
+        $_SESSION['rater'] = "";
       endif;
     endif;
 

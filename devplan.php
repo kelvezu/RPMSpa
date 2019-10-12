@@ -22,17 +22,21 @@
 
     $form3query = 'SELECT * FROM esat3_core_behavioral_tbl WHERE user_id = "' . $_SESSION['user_id'] . '" AND school =  "' . $_SESSION['school_id'] . '"';
     $esatForm3results = fetchAll($dbcon, $form3query);
+
+    echo pre_r($_POST['submit']);
     ?>
 
     <main>
         <div class="container ">
             <div class="breadcome-list shadow-reset">
                 <h2 class="text-center"><strong>PART IV: Development Plan</strong></h2>
-                <form action="includes/processdevplant.php" method="post" class="form-group">
+                <!-- action="includes/processdevplant.php" -->
+                <form action="" method="post" class="form-group">
                     <input type="hidden" name="sy" value=<?php echo $_SESSION['sy_id']; ?> />
                     <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
                     <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>" />
                     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>" />
+                    <input type="hidden" name="rater" value="<?php echo $_SESSION['rater'] ?>" />
                     <div id="A">
                         <fieldset>
                             <legend><strong>A. Functional Competencies</strong></legend>
@@ -54,8 +58,8 @@
                                                     <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjLvlcap['mtobj_name'] ?></i></li><br />
                                                 <?php endforeach; ?>
                                             </ul><br>
-                                            <input type="hidden" name="kra_id[]" value="<?php echo  $LvlCap_result['kra_id'] ?>" />
-                                            <input type="hidden" name="mtobj_id[]" value="<?php echo $LvlCap_result['mtobj_id'] ?>" />
+                                            <input type="hidden" name="lvlcapkra_id[]" value="<?php echo  $LvlCap_result['kra_id'] ?>" />
+                                            <input type="hidden" name="lvlcapmtobj_id[]" value="<?php echo $LvlCap_result['mtobj_id'] ?>" />
                                         <?php
                                             endforeach;
                                             ?>
@@ -85,8 +89,8 @@
                                                 <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjPriodev['mtobj_name']  ?></i></li><br />
                                             <?php endforeach; ?>
                                         </ul><br>
-                                        <input type="hidden" name="kra_id[]" value="<?php echo  $PrioDev_result['kra_id'] ?>">
-                                        <input type="hidden" name="mtobj_id[]" value="<?php echo $PrioDev_result['mtobj_id'] ?>">
+                                        <input type="hidden" name="priodevkra_id[]" value="<?php echo  $PrioDev_result['kra_id'] ?>">
+                                        <input type="hidden" name="priodevmtobj_id[]" value="<?php echo $PrioDev_result['mtobj_id'] ?>">
                                     <?php
                                         endforeach;
                                         ?>
@@ -105,12 +109,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="learning_objectives">Learning Objectives:</label>
-                                <textarea name="" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
+                                <textarea name="a_action_plan" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="intervention">Interventions:</label>
-                                <textarea name="" id="" cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"></textarea>
+                                <label for="a_intervention">Interventions:</label>
+                                <textarea name="a_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"></textarea>
                             </div>
                         </div>
                     </div>
@@ -122,29 +126,25 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="timelines">Timelines:</label>
-                                <textarea name="" id="" cols="30" rows="10" placeholder="Enter Timelines." class="form-control textarea"></textarea>
+                                <textarea name="a_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." class="form-control textarea"></textarea>
                             </div>
-
                             <div class="col-md-6">
                                 <label for="resources_needed">Resources needed:</label>
-                                <textarea name="" id="" cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"></textarea>
+                                <textarea name="a_resources_needed" id="" cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"></textarea>
                             </div>
                         </div>
                     </div>
                     <hr>
                     <legend><strong>B. Core Behavioral Competencies</strong></legend>
-
-
                     <div id="B">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Strengths</label></div>
+                                <div class="bg-black"><label for="b_strength" class="form-control-label bg-black">Strengths</label></div>
                                 <ul class="ul">
                                     <?php
                                     if (count($esatForm3_strength_results)) :
                                         foreach ($esatForm3_strength_results as $cbc_strength) :
                                             ?>
-                                            <input type="hidden" name="kra_id[]" value="<?php echo  $cbc_strength['cbc_id'] ?>">
                                             <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
                                             <ul class="ul-square">
                                                 <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioral_tbl.cbc_score = 1';
@@ -203,12 +203,12 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="learning_objectives">Learning Objectives:</label>
-                            <textarea name="" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
+                            <textarea name="b_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
                         </div>
 
                         <div class="col-md-6">
                             <label for="intervention">Interventions:</label>
-                            <textarea name="" id="" cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"></textarea>
+                            <textarea name="b_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"></textarea>
                         </div>
                     </div>
                     <div>
@@ -218,12 +218,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="timelines">Timelines:</label>
-                                <textarea name="" id="" cols="30" rows="10" placeholder="Enter Timelines." class="form-control textarea"></textarea>
+                                <textarea name="b_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." class="form-control textarea"></textarea>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="resources_needed">Resources needed:</label>
-                                <textarea name="" id="" cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"></textarea>
+                                <textarea name="b_resources_needed" id="" cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"></textarea>
                             </div>
                         </div>
                     </div>
@@ -231,7 +231,10 @@
                     </fieldset>
 
             </div>
-
+            <br>
+            <div align="center">
+                <input type="button" name="submit" class="btn btn-primary" value="Submit" />
+            </div>
             </form>
         </div>
         <!--end breadcome -->
