@@ -1,3 +1,9 @@
 .vscode/settings.json
 css/Learning PHP, MySQL & JavaScript_ with jQuery, CSS & HTML5 (4th ed.) [Nixon 2014-12-14].pdf
 .vscode/launch.json
+.idea/misc.xml
+.idea/modules.xml
+.idea/php.xml
+.idea/rpms.iml
+.idea/vcs.xml
+.idea/.gitignore
