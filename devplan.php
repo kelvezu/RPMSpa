@@ -23,15 +23,14 @@
     $form3query = 'SELECT * FROM esat3_core_behavioral_tbl WHERE user_id = "' . $_SESSION['user_id'] . '" AND school =  "' . $_SESSION['school_id'] . '"';
     $esatForm3results = fetchAll($dbcon, $form3query);
 
-    echo pre_r($_POST['submit']);
     ?>
 
     <main>
         <div class="container ">
             <div class="breadcome-list shadow-reset">
                 <h2 class="text-center"><strong>PART IV: Development Plan</strong></h2>
-                <!-- action="includes/processdevplant.php" -->
-                <form action="" method="post" class="form-group">
+                <!--  -->
+                <form action="includes/processdevplan.php" method="post" class="form-group">
                     <input type="hidden" name="sy" value=<?php echo $_SESSION['sy_id']; ?> />
                     <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
                     <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>" />
@@ -109,7 +108,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="learning_objectives">Learning Objectives:</label>
-                                <textarea name="a_action_plan" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
+                                <textarea name="a_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
                             </div>
 
                             <div class="col-md-6">
@@ -134,110 +133,15 @@
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <legend><strong>B. Core Behavioral Competencies</strong></legend>
-                    <div id="B">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="bg-black"><label for="b_strength" class="form-control-label bg-black">Strengths</label></div>
-                                <ul class="ul">
-                                    <?php
-                                    if (count($esatForm3_strength_results)) :
-                                        foreach ($esatForm3_strength_results as $cbc_strength) :
-                                            ?>
-                                            <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
-                                            <ul class="ul-square">
-                                                <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioral_tbl.cbc_score = 1';
-                                                        $indicatorStrengthResults = fetchAll($dbcon, $queryIndicatorStrength);
-                                                        foreach ($indicatorStrengthResults as $indicatorStrength) :
-                                                            ?>
-                                                    <li><?php echo $indicatorStrength['indicator']  ?></li>
-                                                <?php endforeach; ?>
-                                            </ul><br>
-                                        <?php
-                                            endforeach;
-                                            ?>
-                                </ul>
-                            <?php
-                            else :
-                                echo '<p class="no-record">No record!</p>';
-                            endif;
-                            ?>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Development Needs</label></div>
-                                <ul class="ul">
-                                    <?php
-                                    if (count($esatForm3_devneeds_results)) :
-                                        foreach ($esatForm3_devneeds_results as $cbc_devneeds) :
-                                            ?>
-                                            <input type="hidden" name="cbc_id[]" value="<?php echo  $cbc_devneeds['cbc_id'] ?>" />
-                                            <li><b><?php echo $cbc_devneeds['cbc_name'] ?></b></li>
-                                            <ul class="ul-square">
-                                                <?php
-                                                        $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioral_tbl.cbc_score = 0';
-                                                        $IndicatorDevNeedsResults = fetchAll($dbcon, $queryIndicatorDevneeds);
-                                                        foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
-                                                            ?>
-                                                    <li><?php echo $indicatorDevneeds['indicator'] ?></li>
-                                                <?php endforeach;
-                                                        ?>
-                                            </ul><br>
-                                        <?php
-                                            endforeach;
-                                            ?>
-                                </ul>
-                            <?php
-                            else :
-                                echo '<p class="no-record">No record!</p>';
-                            endif;
-                            ?>
-                            </div>
-                        </div>
 
+                    <br>
+                    <div align="center">
+                        <input type="submit" name="submit" class="btn btn-primary" value="Submit" />
 
                     </div>
-                    <div class="form-control-label bg-black">
-                        <label for="learn-objectives" class="form-control-label bg-black">Action Plan</label>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="learning_objectives">Learning Objectives:</label>
-                            <textarea name="b_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="intervention">Interventions:</label>
-                            <textarea name="b_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"></textarea>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-control-label bg-black">
-                            <label for="learn-objectives" class="form-control-label bg-black">Timelines and Resources needed</label>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="timelines">Timelines:</label>
-                                <textarea name="b_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." class="form-control textarea"></textarea>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="resources_needed">Resources needed:</label>
-                                <textarea name="b_resources_needed" id="" cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    </fieldset>
-
+                </form>
             </div>
-            <br>
-            <div align="center">
-                <input type="button" name="submit" class="btn btn-primary" value="Submit" />
-            </div>
-            </form>
-        </div>
-        <!--end breadcome -->
+            <!--end breadcome -->
         </div><!-- end of container -->
 
         <br>
