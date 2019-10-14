@@ -340,3 +340,14 @@ table.fixed td {
     text-align: center;
     font-size: medium;
 }
+
+.error-catcher {
+    color: red;
+    text-align: center;
+}
+
+#ul-red {
+    list-style-type: disc;
+    padding-left: 5%;
+    ;
+}

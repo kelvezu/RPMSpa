@@ -1,5 +1,4 @@
 <?php
-include 'includes/conn.inc.php';
 include 'includes/header.php';
 
 //includes/processESATsurvey.php
@@ -8,7 +7,6 @@ $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $result = $conn->query('SELECT * FROM core_behavioral_tbl')  or die($conn->error);
 $numcbc = 1;
 $numind = 1;
-
 ?>
 <div class="container">
     <div class="breadcome-list shadow-reset">

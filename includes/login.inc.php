@@ -54,6 +54,7 @@ if (isset($_POST['login-submit'])) {
                     $_SESSION['position'] = $row['position'];
                     $_SESSION['school_id'] = $row['school_id'];
                     $_SESSION['rater'] = $row['rater'];
+                    $_SESSION['approving_authority'] = $row['approving_authority'];
                     $position = $_SESSION['position'];
                     $_SESSION['fullname'] = $_SESSION['uname'] . ' ' . substr($_SESSION['mname'], 0, 1) . '. ' . $_SESSION['sname'];
                     //CHECK IF THE SCHOOL YEAR IS SET   

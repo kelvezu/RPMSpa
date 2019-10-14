@@ -1,9 +1,5 @@
   <?php
-  include_once 'includes/conn.inc.php';
   include_once 'includes/header.php';
-  include_once 'libraries/db.library.php';
-  include_once 'includes/constants.inc.php';
-  include_once 'libraries/func.lib.php';
   ?>
 
 

@@ -1,42 +1,39 @@
     <?php
     include_once 'includes/header.php';
-    include_once 'includes/constants.inc.php';
-    include_once 'includes/classautoloader.inc.php';
-    include_once 'libraries/db.library.php';
-    include_once 'libraries/func.lib.php';
-    include_once 'includes/security.php';
 
-    //QUERIES FOR FETCHING DATA
-    $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $form2_lvlcap_query = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE esat2_objectivesmt_tbl.user_id = "' . $_SESSION['user_id'] . '" AND esat2_objectivesmt_tbl.lvlcap >= 3 AND esat2_objectivesmt_tbl.priodev  <= 2   GROUP by kra_tbl.kra_id';
-    $esatForm2_LvlCap_results = fetchAll($dbcon, $form2_lvlcap_query);
+    // echo isSubmit($conn);
 
-    $form2_priodev_query = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE esat2_objectivesmt_tbl.user_id = "' . $_SESSION['user_id'] . '" AND esat2_objectivesmt_tbl.priodev >= 3 AND esat2_objectivesmt_tbl.lvlcap  <= 2 GROUP by kra_tbl.kra_id';
-    $esatForm2_priodev_results = fetchAll($dbcon, $form2_priodev_query);
+    // errorCatcher($tite);
 
-    $form3_cbc_strength_query = 'SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) WHERE esat3_core_behavioral_tbl.user_id = ' . $_SESSION['user_id'] . ' AND esat3_core_behavioral_tbl.school = ' . $_SESSION['school_id'] . ' group by core_behavioral_tbl.cbc_name HAVING SUM(esat3_core_behavioral_tbl.cbc_score) >= 3 ORDER BY esat3_core_behavioral_tbl.cbc_id';
-    $esatForm3_strength_results = fetchAll($dbcon, $form3_cbc_strength_query);
-
-    $form3_cbc_devneeds_query = 'SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) WHERE esat3_core_behavioral_tbl.user_id = ' . $_SESSION['user_id'] . ' AND esat3_core_behavioral_tbl.school = ' . $_SESSION['school_id'] . ' group by core_behavioral_tbl.cbc_name HAVING SUM(esat3_core_behavioral_tbl.cbc_score) <= 2 ORDER BY esat3_core_behavioral_tbl.cbc_id';
-    $esatForm3_devneeds_results = fetchAll($dbcon, $form3_cbc_devneeds_query);
-
-    $form3query = 'SELECT * FROM esat3_core_behavioral_tbl WHERE user_id = "' . $_SESSION['user_id'] . '" AND school =  "' . $_SESSION['school_id'] . '"';
-    $esatForm3results = fetchAll($dbcon, $form3query);
+    //     echo ' <ul>
+    //     <li class="error-catcher">' . $error . '</li>
+    // </ul>';
 
     ?>
+    <ul></ul>
+
+
 
     <main>
+        <ul class="no-record">
+            <?php $errors = ['tae', 'ka'];
+            $eror = (errorCatcher($errors));
+            foreach ($eror as $mali) {
+                echo '<li>' . $mali . '</li>';
+            } ?>
+        </ul>
+
         <div class="container ">
             <div class="breadcome-list shadow-reset">
                 <h2 class="text-center"><strong>PART IV: Development Plan</strong></h2>
-                <!--  -->
+
                 <form action="includes/processdevplan.php" method="post" class="form-group">
                     <input type="hidden" name="sy" value=<?php echo $_SESSION['sy_id']; ?> />
                     <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
                     <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>" />
                     <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>" />
                     <input type="hidden" name="rater" value="<?php echo $_SESSION['rater'] ?>" />
-
+                    <input type="hidden" name="approving_authority" value="<?php echo $_SESSION['approving_authority'] ?>" />
                     <div id="A">
                         <fieldset>
                             <legend><strong>A. Functional Competencies</strong></legend>
@@ -49,7 +46,6 @@
                                         foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
                                             ?>
                                             <li><b class="tomato-color">Key Result Area: </b><u><?php echo $LvlCap_result['kra_name'] ?></u> </li>
-
                                             <ul class="ul-square">
                                                 <?php
                                                         $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '"';
@@ -234,10 +230,10 @@
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <!-- <div>
                         <label for="learn-objectives" class="form-control-label">Feedback: </label>
                         <textarea name="feedback" id="" cols="30" rows="10" class="form-control textarea" placeholder=" ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"></textarea>
-                    </div>
+                    </div> -->
 
 
 
@@ -248,9 +244,17 @@
 
 
                     <br>
-                    <div align="center">
-                        <input type="submit" name="submit" class="btn btn-primary" placeholder="Submit" />
-                    </div>
+                    <center>
+                        <div class="row">
+                            <div>
+                                <input type="submit" name="submit" class="btn btn-primary" value="Submit" />
+                                <input type="submit" name="save" class="btn btn-success" value="Save" />
+                                <a href="includes/processdevplan.php?pos=<?php echo $_SESSION['position']; ?>" name="cancel" class="btn btn-danger">Cancel </a>
+                            </div>
+                        </div>
+
+                    </center>
+
                 </form>
             </div>
             <!--end breadcome -->

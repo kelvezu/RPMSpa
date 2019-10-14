@@ -1,10 +1,9 @@
 <?php
-
-
 include_once '../libraries/db.library.php';
 include_once '../libraries/func.lib.php';
 include_once 'constants.inc.php';
 include_once 'conn.inc.php';
+
 
 if (isset($_POST['submit'])) :
     $user_id = $_POST['user_id'];
@@ -12,6 +11,7 @@ if (isset($_POST['submit'])) :
     $sy = $_POST['sy'];
     $school_id = $_POST['school_id'];
     $position = $_POST['position'];
+    $approving_authority = $_POST['approving_authority'];
 
     $a_lvlcapkra_id = $_POST['lvlcapkra_id'];
     $a_lvlcapmtobj_id = $_POST['lvlcapmtobj_id'];
@@ -31,6 +31,8 @@ if (isset($_POST['submit'])) :
     $b_intervention = $_POST['b_intervention'];
     $b_timeline = $_POST['b_timeline'];
     $b_resources_needed = $_POST['b_resources_needed'];
+    $status = $_POST['submit'];
+
 
 
     for ($count = 0; $count < count($a_lvlcapmtobj_id); $count++) {
@@ -54,12 +56,20 @@ if (isset($_POST['submit'])) :
 
     $conn->query('INSERT INTO `devplanmt_b3_actionplan_tbl`(`user_id`, `rater_id`, `sy`, `school`, `position`, `b_learning_objectives`, `b_intervention`, `b_timeline`, `b_resources_needed`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $b_learning_objectives . '","' . $b_intervention . '","' . $b_timeline . '","' . $b_resources_needed . '")') or die($conn->error);
 
+    $conn->query('INSERT INTO `devplan_c_tbl`(`user_id`, `position`, `rater_id`, `approving_authority`, `sy`, `school_id`, `status`) VALUES ("' . $user_id . '","' . $position . '","' . $rater . '","' . $approving_authority . '","' . $sy . '","' . $school_id . '","' . $status . '")') or die($conn->error . "error in devplan_c_tbl");
 
-    // echo count($devplanmt_b3_actionplan_tbl);
     echo 'complete!';
     pre_r($_POST['submit']);
+endif;
 
 
+// IF USER PRESSED save BUTTON 
+if (isset($_POST['save'])) :
+    echo 'na save hihi';
+endif;
 
 
+// IF USER PRESSED CANCEL BUTTON 
+if (isset($_GET['pos'])) :
+    directToDashboard($_GET['pos']);
 endif;

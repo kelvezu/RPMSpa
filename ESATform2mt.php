@@ -1,5 +1,4 @@
 <?php
-include 'includes/conn.inc.php';
 include 'includes/header.php';
 
 $kra_num = 0;
@@ -94,7 +93,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
     </form>
   </div>
 </div>
-</div>
+
 <br>
 <?php
 

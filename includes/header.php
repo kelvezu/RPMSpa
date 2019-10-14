@@ -2,7 +2,11 @@
 session_start();
 require_once 'security.php';
 include_once 'conn.inc.php';
-
+include_once 'includes/constants.inc.php';
+include_once 'includes/classautoloader.inc.php';
+include_once 'libraries/db.library.php';
+include_once 'libraries/func.lib.php';
+include_once 'includes/security.php';
 
 
 $user_id = $_SESSION['user_id'];
@@ -67,8 +71,9 @@ $position = $_SESSION['position'];
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="./css/main.css">
 </head>
+<?php include_once 'libraries/queries.library.php'; ?>
 
 <body class="materialdesign">
     <div class="wrapper-pro">
