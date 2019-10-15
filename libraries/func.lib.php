@@ -194,3 +194,21 @@
                     endif;
                 endif;
             }
+
+            function directToCharts($position)
+            {
+                if (isset($position)) :
+                    if (strpos(($position), 'aster')) :
+                        header('location:../displaymtchart.php');
+                        exit();
+                    elseif (strpos(($position), 'eacher')) :
+                        header('location:../displaytchart.php');
+                        exit();
+                    else :
+                        return false;
+                        exit();
+                    endif;
+                else :
+                    return false;
+                endif;
+            }
