@@ -54,7 +54,6 @@
                 $conn->query('INSERT INTO esat2_objectivest_tbl(user_id,kra_id, tobj_id, lvlcap, priodev,sy,position,school)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $tobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '")') or die($conn->error);
             }
             header('location:../ESATform3.php');
-
         endif;
 
         //-------ESAT FORM 2 master teacher objectives------//
@@ -90,6 +89,5 @@
             for ($count = 0; $count < count($user_id); $count++) {
                 $conn->query('INSERT INTO esat3_core_behavioral_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '")') or die($conn->error);
             }
-            header("location:");
-
+            directToCharts($position);
         endif;

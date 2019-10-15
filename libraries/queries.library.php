@@ -6,8 +6,12 @@ $form2_lvlcap_query = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_obje
 
 
 //this will check if the query return some values
-
-
+// if (!$form2_lvlcap_query) :
+//     $esatForm2_LvlCap_results = fetchAll($dbcon, $form2_lvlcap_query);
+//     echo !$form2_lvlcap_query;
+// else :
+//     echo 'no record of level of capability! :D';
+// endif;
 
 $form2_priodev_query = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE esat2_objectivesmt_tbl.user_id = "' . $_SESSION['user_id'] . '" AND esat2_objectivesmt_tbl.priodev >= 3 AND esat2_objectivesmt_tbl.lvlcap  <= 2 GROUP by kra_tbl.kra_id';
 $esatForm2_priodev_results = fetchAll($dbcon, $form2_priodev_query);

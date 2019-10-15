@@ -12,7 +12,6 @@
 
     //A.2 DISPLAY THE DEVPLAN IF USER HAS TAKEN ESAT
     else :
-
         /* THIS CONDITION WILL HIDE THE DEVELOPMENT PLAN IF USER ALREADY SUBMITTED  */
         $notifsss = (isSubmit($conn));
         if (!$notifsss) :
@@ -36,15 +35,7 @@
                                         <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Strengths</label></div>
                                         <ul class="ul">
                                             <?php
-
                                                     /* TURN THIS INTO FUNCTION */
-                                                    if (!$form2_lvlcap_query) :
-                                                        $esatForm2_LvlCap_results = fetchAll($dbcon, $form2_lvlcap_query);
-                                                        echo !$form2_lvlcap_query;
-                                                    else :
-                                                        echo 'no record of level of capability! :D';
-                                                    endif;
-
                                                     if (isset($esatForm2_LvlCap_results)) :
                                                         foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
                                                             ?>
@@ -270,9 +261,6 @@
                 /* END IF */
                 endif;
             /*--------------------------------------*/
-
-
-
             endif;
             include 'includes/footer.php';
             ?>
