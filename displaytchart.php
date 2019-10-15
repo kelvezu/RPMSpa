@@ -16,7 +16,7 @@ $query = "SELECT a.CBC_NAME,sum(b.cbc_score)
 			INNER JOIN 
 			esat3_core_behavioral_tbl b  on a.cbc_id = b.cbc_id 
 			WHERE b.user_id = $user_id 
-			group by a.cbc_name ORDER BY a.cbc_id;";
+			group by a.cbc_name order by a.cbc_id;";
 $statement = $connect->prepare($query);
 $statement->execute();
 $result = $statement->fetchAll();
@@ -25,13 +25,14 @@ $result = $statement->fetchAll();
 <html>
 
 <head>
-	<script src="includes/chart/jquery.min.js"></script>
-	<link rel="stylesheet" href="includes/chart/bootstrap.min.css" />
-	<link rel="stylesheet" href="includes/chart/jquery-ui.css">
-	<script src="includes/chart/bootstrap.min.js"></script>
-	<script src="includes/chart/jquery.highchartTable.js"></script>
-	<script src="includes/chart/highcharts.js"></script>
-	<script src="includes/chart/jquery-ui.js"></script>
+	<script src="js/charts/jquery.min.js"></script>
+	<link rel="stylesheet" href="js/charts/bootstrap.min.css" />
+	<link rel="stylesheet" href="js/charts/jquery-ui.css">
+	<script src="js/charts/bootstrap.min.js"></script>
+	<script src="js/charts/jquery.highchartTable.js"></script>
+	<script src="js/charts/highcharts.js"></script>
+	<script src="js/charts/jquery-ui.js"></script>
+
 </head>
 
 <body>
@@ -52,14 +53,16 @@ $result = $statement->fetchAll();
 					</thead>
 					<?php
 
-					foreach ($result as $row) :
-						?>
-						<tr>
-							<td><?php $row['CBC_NAME'] ?></td>
-							<td><?php $row['cbc_score'] ?></td>
-						</tr>
-					<?php
-					endforeach;
+					foreach ($result as $row) {
+
+						echo '
+								<tr>
+
+									<td>' . $row['CBC_NAME'] . '</td>
+									<td>' . $row['cbc_score'] . '</td>
+								</tr>
+								';
+					}
 
 					?>
 				</table>
@@ -87,7 +90,8 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.tobj_id, b.tobj_name, lvlcap as lvlcap, priodev 
+	$query = "SELECT CONCAT(a.kra_id,'.',a.tobj_id) 
+			AS OBJECTIVES, lvlcap, priodev 
 			FROM esat2_objectivest_tbl a INNER JOIN tobj_tbl b on a.tobj_id = b.tobj_id
 			WHERE a.user_id = $user_id 
 			group by a.tobj_id,b.tobj_name;";
@@ -114,21 +118,25 @@ $result = $statement->fetchAll();
 						</tr>
 					</thead>
 					<?php
-					foreach ($result as $row) :
-						?>
-						<tr>
-							<td><?php echo $row["tobj_id"] . ' ' . $row['tobj_name'] ?></td>
-							<td><?php $row['lvlcap'] ?></td>
-							<td><?php $row['priodev'] ?></td>
-						</tr>
-					<?php
-					endforeach;
+
+					foreach ($result as $row) {
+
+						echo '
+									<tr>
+
+										<td>' . $row['OBJECTIVES'] . '</td>
+										<td>' . $row['lvlcap'] . '</td>
+										<td>' . $row['priodev'] . '</td>
+									</tr>
+									';
+					}
 
 					?>
 				</table>
 			</div>
 			<br />
 			<div id="chart_area2" title="The Assessment of Capabilities and Priorities">
+
 			</div>
 			<br />
 			<div align="center">
@@ -140,26 +148,29 @@ $result = $statement->fetchAll();
 
 		</div>
 	</div>
-
 </body>
 
 </html>
 
 <script>
 	$(document).ready(function() {
+
 		$('#view_chart1').click(function() {
 			$('#for_chart1').data('graph-container', '#chart_area1');
 			$('#for_chart1').data('graph-type', 'column');
 			$("#chart_area1").dialog('open');
 			$('#for_chart1').highchartTable();
+
 			$('#remove_chart').attr('disabled', false);
 		});
+
 		$('#remove_chart').click(function() {
 			$('#chart_area1').html('');
 		});
+
 		$("#chart_area1").dialog({
 			autoOpen: false,
-			width: 1000,
+			width: 900,
 			height: 600
 		});
 	});
@@ -182,8 +193,39 @@ $result = $statement->fetchAll();
 
 		$("#chart_area2").dialog({
 			autoOpen: false,
-			width: 2000,
+			width: 1000,
 			height: 600
 		});
+
+		Highcharts.setOptions({
+			chart: {
+				backgroundColor: {
+					linearGradient: [0, 0, 500, 500],
+					stops: [
+						[0, 'rgb(255, 255, 255)'],
+						[1, 'rgb(240, 240, 255)']
+					]
+				},
+				borderWidth: 2,
+				plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+				plotShadow: false,
+				plotBorderWidth: 2,
+					
+
+			},
+
+			plotOptions: {
+            series: {
+                	pointWidth: 30,
+					dataLabels: 
+					{enabled: true}
+								
+            		
+					}
+        	
+			},
+        			
+		});
+		
 	});
 </script>
