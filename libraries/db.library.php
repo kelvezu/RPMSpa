@@ -13,7 +13,6 @@ function connect($dbHost, $dbUsername, $dbPassword, $dbName)
 
 
 // FETCH ALL DATA must INCLUDE THE DB CONNECTION AND QUERY 
-
 function fetchAll(mysqli $conn, $query)
 {
     $data = [];
@@ -23,8 +22,9 @@ function fetchAll(mysqli $conn, $query)
             $data[] = $row;
         }
     } else {
-        echo $query;
-        exit();
+        //echo '<b>No Result in this Query:</b> ' . $query;
+        //echo ('<b> db.library.php: </b>No_Result_in_this_Query= . ' . $query . '<br/>');
+        return false;
     }
     return $data;
 }
@@ -34,26 +34,6 @@ function updateAll(mysqli $conn, $query)
     if ($conn->query($query)) {
         $conn->query($query);
     } else {
-        echo 'Update Failed';
+        echo 'Update Failed' . $query;
     }
-}
-
-function isSubmit($dbcon)
-{
-    $submit_result = $dbcon->query(' SELECT * FROM `devplan_c_tbl` WHERE `user_id` ="' . $_SESSION['user_id'] . '" AND status = "Submit" ');
-    $result = mysqli_num_rows($submit_result);
-    if ($result === 2) {
-        echo 'Youve already submitted your Development Plan!';
-    } else {
-        echo "You dont have a Development Plan yet!";
-    }
-}
-
-function errorCatcher($errors)
-{
-    $error_array = [];
-    foreach ($errors as $error) :
-        array_push($error_array, $error);
-    endforeach;
-    return $error_array;
 }

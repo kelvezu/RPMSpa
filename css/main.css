@@ -341,13 +341,38 @@ table.fixed td {
     font-size: medium;
 }
 
-.error-catcher {
+.err-catch {
     color: red;
     text-align: center;
+    font-weight: bold;
 }
 
-#ul-red {
+.mid-red {
     list-style-type: disc;
     padding-left: 5%;
-    ;
 }
+
+.red-notif-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    background-color: pink;
+    color: red;
+    padding: 20px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+
+.green-notif-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    background-color: lightcyan;
+    color: green;
+    padding: 20px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+/* .li-nostyle {
+    list-style-type: none;
+} */

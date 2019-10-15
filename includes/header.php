@@ -71,7 +71,7 @@ $position = $_SESSION['position'];
 		============================================ -->
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <?php include_once 'libraries/queries.library.php'; ?>
 
