@@ -20,18 +20,23 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
             <h4>Rating Sheet</h4>
             <h4 class="text-left">
 
-                <div class="form-group">
-                    <div class="form-control">
+            <div class="breadcome-list shadow-reset">
+                <div class="row">
+                    <div class="col-lg-6">
                         <label>OBSERVER:</label>&nbsp;
                         <?php echo $fullname; ?>
                     </div>
-
-                    <div class="form-control">
+                   
+                    <div class="col-lg-6">
                         <label>DATE:</label>
                         <?php echo date("Y/m/d"); ?>
                     </div>
-
-                    <div class="form-control">
+                    
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                       
                         <label>
                             TEACHER OBSERVED:
                         </label>
@@ -56,8 +61,11 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             endif; ?>
                         </select>
                     </div>
+                    
+                    
 
-                    <div class="form-control">
+               
+                    <div class="col-lg-6">
                         <label>
                             SUBJECT:
                         </label>
@@ -72,8 +80,11 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <?php endwhile; ?>
                         </select>
                     </div>
+                    </div>
+                    
 
-                    <div class="form-control">
+                    <div class="row">
+                    <div class="col-lg-6">
                         <label for="gradeleveltaught">
                             GRADE LEVEL TAUGHT:
                         </label>
@@ -87,23 +98,49 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 <option value="<?php echo $glt; ?>"><?php echo $glt; ?></option>
                             <?php endwhile; ?>
                         </select>
-                    </div>
+                    
+            <?php
+                if(isset($_GET['period'])):
+                    $period = $_GET['period'];
+                    if($period == 1 ):
+                        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period1=1';
+                    elseif($period == 2 ):
+                        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period2=1';
+                    elseif($period == 3 ):
+                        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period3=1';
+                    elseif($period == 4 ):
+                        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period4=1';
+                    endif;
+                else :
+                    $periodqry = 'SELECT * FROM tindicator_tbl';
+                endif;
 
-                    <div class="form-control">
+                $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+                $resultqry = $conn->query($periodqry)  or die($conn->error);
+            ?>
+                    </div>
+            
+                <div class="col-lg-6">
+                    <div class="dropdown">
                         <label for="obsperiod" class="col-form-label">
                             OBSERVATION PERIOD:
                         </label>
-                        <select name="obs_period" onchange="showObs(this.value)">
-                            <option value="" disabled selected>--Select Period--</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option> 
-                        </select>
+                           <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Observation Period
+                               <span class="caret"></span>
+                           </button>
+
+                            <ul name="obs_period" class="dropdown-menu">
+                                <li><a href="?period=1" value="1">1st</a></li>&nbsp
+                                <li><a href="?period=2" value="2">2nd</a></li>&nbsp
+                                <li><a href="?period=3" value="3">3rd</a></li>&nbsp
+                                <li><a href="?period=4" value="4">4th</a></li>&nbsp
+                            </ul>
                     </div>
-
-
+                    </div>
+                    </div>
             </h4>
+
+
 
             
 
@@ -117,8 +154,8 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                     </tr>
                 </thead>
                 <?php
-                if ($resultquery) {
-                    while ($row = mysqli_fetch_array($resultquery)) {
+              
+                    while ($row = $resultqry->fetch_assoc()) :
                 ?>
                         <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
                         <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
@@ -141,10 +178,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             </tr>
                         </tbody>
                 <?php
-                    }
-                } else {
-                    echo "No record found";
-                }
+                    endwhile;
                 ?>
 
             </table>
@@ -152,7 +186,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
     </div>
-</div>
+</div> 
 </form>
 <br>
 
