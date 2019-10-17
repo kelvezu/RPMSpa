@@ -1163,7 +1163,7 @@ $user_id = $_SESSION['user_id'];
 
 	<div class="container">
 		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>CORE BEHAVIORAL - Innovaion</strong></h3>
+			<h3 align="center"><strong>CORE BEHAVIORAL - Innovation</strong></h3>
 			<br />
 
 			<div class="table-responsive">
