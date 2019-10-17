@@ -27,7 +27,7 @@ $resultqry = $conn->query($periodqry)  or die($conn->error);
 ?>
 
 <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-<thead class="legend-control bg-success text-white ">
+<thead class="legend-control bg-info text-white ">
     <tr>
         <th>Indicator No</th>
         <th>Indicator Name</th>
