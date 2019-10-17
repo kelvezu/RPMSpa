@@ -50,7 +50,7 @@
                                     
                         <div class="col-lg-4">
                             <div class="dashboard-line-chart shadow-reset mg-b-30">
-                                <h4><b>Teacher IPCRF Summary Rating</b> <span class="bar">5,3,9,6,5,9,7,3,5,2</span></h4><br><br>
+                                <h4><b>Teacher IPCRF Summary Rating</b> <span class="bar">5,3,9,6,5,9,7,3,5,9</span></h4><br><br>
                                     <div class="text-center">
                                         <div id="sparkline24">
                                         </div>
@@ -81,93 +81,204 @@
                             
 
                         <div class="col-lg-4" >
+
                             <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                                <div class="dash-adminpro-project-title">
-                                    <h4><b>Teacher Ranking Summary </b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp;<a href="#">View</a></h4> 
+                                <div class="dash-adminpro-project-title"> 
+                                    <h4><b>Teacher Masterlist</b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
+                                    
                                 </div>
                                     <div class="sparkline9-graph">
                                     <div class="static-table-list">
-                                        <table class="table sparkle-table">
+                                    <div class= "pre-scrollable">
+                                        
+                                        
+
+                                        <table class="table sparkle-table ">
+                                            
+                                               
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                  
                                                     <th>Name</th>
                                                     <th>Position</th>
-                                                    <th>Rating</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
+                                            <?php
+                                            if(isset($teacherMasterlist_results)):
+                                                foreach($teacherMasterlist_results as $teacher):
+                                                    $teachername = $teacher['firstname'].' '.substr($teacher['middlename'],0,1).'. '.$teacher['surname'];
+                                                    ?>
                                             <tbody>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Madelene Guerra</td>
-                                                    <td>Teacher I</td>
-                                                    <td> 5</td>
+                                                    
+                                                    <td><?php echo $teachername; ?></td>
+                                                    <td><?php echo $teacher['position']; ?></td>
+                                                    <td><?php echo $teacher['status']; ?></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Rose Tan</td>
-                                                    <td>Teacher III</td>
-                                                    <td> 5</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Rafael Chavez</td>
-                                                    <td>Teacher II</td>
-                                                    <td> 5</td>
-                                                </tr>
+                                                <?php
+                                                endforeach;
+                                            else:
+                                                echo 'no record';
+
+                                            endif;
+                                        ?>
+                                        
                                             </tbody>
                                         </table>
+                                        
+                                    </div><br>
+                                    <b>
+                                        <?php if(isset($teacherTotal)):?>
+                                                   <p>Total of Teachers: </b><?php
+                                                   foreach($teacherTotal as $tCount):
+                                                    echo $tCount['Total_Count_Teacher'];
+                                                endforeach;
+                                                    ?></p>
+                                                    <?php
+                                                else:
+                                                echo 'No total of teachers!';
+                                                endif;
+                                                 ?>
+                                        
                                     </div>
                                 </div>
                             </div>
-                        <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                            <div class="dash-adminpro-project-title">
-                                    <h4><b>Master Teacher Ranking Summary </b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span> &nbsp;&nbsp;&nbsp;<a href="#">View</a></h4> 
-                            </div>
+
+                            <div class="dashone-adminprowrap shadow-reset mg-b-30">
+                                <div class="dash-adminpro-project-title"> 
+                                    <h4><b>Master Teacher Masterlist</b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
+                                    
+                                </div>
                                     <div class="sparkline9-graph">
                                     <div class="static-table-list">
-                                        <table class="table sparkle-table">
+                                    <div class= "pre-scrollable">
+                                        
+                                        
+
+                                        <table class="table sparkle-table ">
+                                            
+                                               
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                  
                                                     <th>Name</th>
                                                     <th>Position</th>
-                                                    <th>Rating</th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
+                                            <?php
+                                            if(isset($masterteacherMasterlist_results)):
+                                                foreach($masterteacherMasterlist_results as $masterteacher):
+                                                    $masterteachername = $masterteacher['firstname'].' '.substr($masterteacher['middlename'],0,1).'. '.$masterteacher['surname'];
+                                                    ?>
                                             <tbody>
                                                 <tr>
-                                                    <td>1</td>
-                                                    <td>Archie Salas</td>
-                                                    <td>Master Teacher I</td>  
-                                                    <td> 7</td>
+                                                    
+                                                    <td><?php echo $masterteachername; ?></td>
+                                                    <td><?php echo $masterteacher['position']; ?></td>
+                                                    <td><?php echo $masterteacher['status']; ?></td>
                                                 </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Raymond Cunanan</td>
-                                                    <td>Master Teacher III</td>
-                                                    <td> 7</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Marlon Gelito</td>
-                                                    <td>Master Teacher II</td>
-                                                    <td> 7</td>
-                                                </tr>
+                                                <?php
+                                                endforeach;
+                                            else:
+                                                echo 'no record';
+
+                                            endif;
+                                        ?>
+                                        
                                             </tbody>
                                         </table>
+                                        
+                                    </div><br>
+                                    <b>
+                                        <?php if(isset($masterteacherTotal)):?>
+                                                   <p>Total of Master Teachers: </b><?php
+                                                   foreach($masterteacherTotal as $mtCount):
+                                                    echo $mtCount['Total_Count_MasterTeacher'];
+                                                endforeach;
+                                                    ?></p>
+                                                    <?php
+                                                else:
+                                                echo 'No total of Master teachers!';
+                                                endif;
+                                                 ?>
+                                        
                                     </div>
                                 </div>
                             </div>
-                             
+
                             <div class="dashone-adminprowrap shadow-reset mg-b-30">
+                                <div class="dash-adminpro-project-title"> 
+                                    <h4><b>School Heads Masterlist</b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
+                                    
+                                </div>
+                                    <div class="sparkline9-graph">
+                                    <div class="static-table-list">
+                                    <div class= "pre-scrollable">
+                                        
+                                        
+
+                                        <table class="table sparkle-table ">
+                                            
+                                               
+                                            <thead>
+                                                <tr>
+                                                  
+                                                    <th>Name</th>
+                                                    <th>Position</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <?php
+                                            if(isset($schoolheadMasterlist_results)):
+                                                foreach($schoolheadMasterlist_results as $schoolhead):
+                                                    $schoolheadname = $schoolhead['firstname'].' '.substr($schoolhead['middlename'],0,1).'. '.$schoolhead['surname'];
+                                                    ?>
+                                            <tbody>
+                                                <tr>
+                                                    
+                                                    <td><?php echo $schoolheadname; ?></td>
+                                                    <td><?php echo $schoolhead['position']; ?></td>
+                                                    <td><?php echo $schoolhead['status']; ?></td>
+                                                </tr>
+                                                <?php
+                                                endforeach;
+                                            else:
+                                                echo 'no record';
+
+                                            endif;
+                                        ?>
+                                        
+                                            </tbody>
+                                        </table>
+                                        
+                                    </div><br>
+                                    <b>
+                                        <?php if(isset($schoolheadTotal)):?>
+                                                   <p>Total of School Head: </b><?php
+                                                   foreach($schoolheadTotal as $shCount):
+                                                    echo $shCount['Total_Count_SchoolHead'];
+                                                endforeach;
+                                                    ?></p>
+                                                    <?php
+                                                else:
+                                                echo 'No total of School Head!';
+                                                endif;
+                                                 ?>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div class="dashone-adminprowrap shadow-reset mg-b-30">
                                 <h3><b>Recommended Seminar</b></h3> <br>
                                 <div class="dashone-adminprowrap shadow-reset mg-b-30">
                                     <h4><center>International Seminar Workshop on Special Education (SPEd) <br>
                                     Theme: The Changing Landscape of Special Education Worldwide: Its Impact on the Current Practices in the K to 12 Program
                                     </center></h4>
                                 </div>
-                            </div>
+                            </div> -->
     </div>
 </div>
 <?php include 'includes/footer.php'; ?>
