@@ -12,7 +12,7 @@ if(isset($_POST['save'])){
     $user_id = $_POST['mtobserved'];
     $subject = $_POST['mtsubject'];
     $gradelvltaught = $_POST['mtgradelvltaught'];
-    $obs_period = $_POST['mtobsperiod'];
+    $obs_period = $_POST['mtobs'];
     $indicator_id = $_POST['mtindicator_id'];
     $mtcotrating = $_POST['mtrating'];
     $comment = $_POST['mtcot_comment'];
