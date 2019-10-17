@@ -9,22 +9,6 @@ $user_id = $_SESSION['user_id'];
 
 ?>
 
-
-<?php
-$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-$query = "SELECT a.cbc_name,count(b.cbc_score) 
-			AS cbc_score FROM core_behavioral_tbl a 
-			INNER JOIN 
-			esat3_core_behavioral_tbl b  on a.cbc_id = b.cbc_id 
-			group by a.cbc_name ORDER BY a.cbc_id;";
-$statement = $connect->prepare($query);
-$statement->execute();
-$result = $statement->fetchAll();
-?>
-
-
-
-
 <!DOCTYPE html>
 <html>
 
@@ -41,66 +25,27 @@ $result = $statement->fetchAll();
 
 <body>
 
-
-	<!-- Core Behavioral Competencies -->
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>Core Behavioral Competencies</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart10">
-					<thead>
-						<tr>
-							<th width="20%">CBC Name</th>
-							<th width="20%">CBC Score</th>
-
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-								<tr>
-
-									<td>' . $row['cbc_name'] . '</td>
-									<td>' . $row['cbc_score'] . '</td>
-								</tr>
-								';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area10" title="The Rating of Core Behavioral Competencies">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart10" id="view_chart10" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-
-		</div>
-	</div>
-
-	<br />
-	<br />
-
-	<!-- End of Core Behavioral Competencies -->
+	<!--Demographic Age -->
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT age_name,COUNT(age) as age_count from age_tbl 
-					a LEFT JOIN esat1_demographics_tbl b on 
-					a.age_id = b.age group by a.age_name";
+	$query = "SELECT a.age_name,
+				b.age_no FROM age_tbl a 
+				LEFT JOIN 
+				(
+					SELECT DISTINCT age, 
+						COUNT(user_id) age_no
+						FROM 
+						esat1_demographics_tbl a
+					GROUP BY age
+				) as b on a.age_id = b.age
+			";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
 	?>
 
-	<!-- Demographic Age -->
+
 	<div class="container">
 		<div class="breadcome-list shadow-reset">
 			<h3 align="center"><strong>Age</strong></h3>
@@ -110,7 +55,7 @@ $result = $statement->fetchAll();
 					<thead>
 						<tr>
 							<th width="10%">Age</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -122,7 +67,7 @@ $result = $statement->fetchAll();
 								<tr>
 
 									<td>' . $row['age_name'] . '</td>
-									<td>' . $row['age_count'] . '</td>
+									<td>' . $row['age_no'] . '</td>
 								</tr>
 								';
 					}
@@ -150,9 +95,16 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.gender_name,COUNT(b.gender) as gender_count from gender_tbl a 
-					LEFT JOIN esat1_demographics_tbl b 
-					on a.gender_id = b.gender group by a.gender_name";
+	$query = "SELECT DISTINCT a.gender_name,
+				b.gcount FROM gender_tbl a 
+				LEFT JOIN 
+				(
+					SELECT DISTINCT gender, 
+						COUNT(user_id) gcount
+						FROM 
+						esat1_demographics_tbl a
+					GROUP BY gender
+				) as b on a.gender_id = b.gender";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -181,7 +133,7 @@ $result = $statement->fetchAll();
 								<tr>
 
 									<td>' . $row['gender_name'] . '</td>
-									<td>' . $row['gender_count'] . '</td>
+									<td>' . $row['gcount'] . '</td>
 								</tr>
 								';
 					}
@@ -208,8 +160,12 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT employment_status,COUNT(employment_status) as emp_count from 
-					esat1_demographics_tbl GROUP by employment_status";
+	$query = "SELECT DISTINCT a.employment_status, 
+								COUNT(b.user_id)emp_stat 
+								FROM esat1_demographics_tbl a
+			  LEFT JOIN esat1_demographics_tbl b 
+								on a.employment_status like CONCAT('%', b.employment_status, '%')
+								GROUP BY b.employment_status";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -237,7 +193,7 @@ $result = $statement->fetchAll();
 										<tr>
 
 											<td>' . $row['employment_status'] . '</td>
-											<td>' . $row['emp_count'] . '</td>
+											<td>' . $row['emp_stat'] . '</td>
 										</tr>
 										';
 					}
@@ -265,10 +221,13 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.position_name,COUNT(b.position) as position_count from  
-					position_tbl a LEFT JOIN esat1_demographics_tbl b on a.position_id = b.position 
-					WHERE A.position_id NOT IN (1,2)
-					GROUP by a.position_name;";
+	$query = "SELECT DISTINCT position, 
+								COUNT(user_id)pos_count 
+								from  
+							esat1_demographics_tbl 
+								WHERE 
+								position LIKE '%Master%' or position LIKE 'Teacher%'
+							GROUP by position";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -295,8 +254,8 @@ $result = $statement->fetchAll();
 						echo '
 										<tr>
 
-											<td>' . $row['position_name'] . '</td>
-											<td>' . $row['position_count'] . '</td>
+											<td>' . $row['position'] . '</td>
+											<td>' . $row['pos_count'] . '</td>
 										</tr>
 										';
 					}
@@ -324,9 +283,15 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT highest_degree,COUNT(highest_degree) as deg_count 
-					from esat1_demographics_tbl
-					GROUP by highest_degree;";
+	$query = "SELECT DISTINCT highest_degree,
+								COUNT(user_id) deg_count 
+								from 
+							esat1_demographics_tbl
+								WHERE 
+								highest_degree LIKE '%Bachelor%' 
+								or highest_degree LIKE 'Master%' 
+								or highest_degree LIKE '%Doctorate%'
+							GROUP by highest_degree";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -386,10 +351,12 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.totalyear_name,COUNT(b.totalyear) as totalyear 
-					from totalyear_tbl a LEFT JOIN esat1_demographics_tbl
-					b on a.totalyear_id = b.totalyear
-					GROUP by a.totalyear_name;";
+	$query = "SELECT a.totalyear_name,
+							COUNT(b.user_id)totalyear 
+									from totalyear_tbl a 
+				LEFT JOIN esat1_demographics_tbl
+						b on a.totalyear_id = b.totalyear
+								GROUP by a.totalyear_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -448,10 +415,12 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.subject_name,COUNT(b.subject_taught) as total 
-					from subject_tbl a LEFT JOIN esat1_demographics_tbl
-					b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') 
-					GROUP by a.subject_name;";
+	$query = "SELECT a.subject_name,
+							COUNT(b.user_id)subtotal 
+									from subject_tbl a 
+			LEFT JOIN esat1_demographics_tbl
+						b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') 
+									GROUP by a.subject_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -469,8 +438,8 @@ $result = $statement->fetchAll();
 				<table class="table table-bordered table-striped table-hover" id="for_chart7">
 					<thead>
 						<tr>
-							<th width="10%">Subject Taught</th>
-							<th width="10%">Total</th>
+							<th width="50%">Subject Taught</th>
+							<th width="auto">Total</th>
 
 						</tr>
 					</thead>
@@ -482,7 +451,7 @@ $result = $statement->fetchAll();
 										<tr>
 
 											<td>' . $row['subject_name'] . '</td>
-											<td>' . $row['total'] . '</td>
+											<td>' . $row['subtotal'] . '</td>
 										</tr>
 										';
 					}
@@ -510,10 +479,12 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.gradelvltaught_name,COUNT(b.grade_lvl_taught) as total 
-					from gradelvltaught_tbl a LEFT JOIN esat1_demographics_tbl
-					b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
-					GROUP by a.gradelvltaught_id;";
+	$query = "SELECT a.gradelvltaught_name,
+							COUNT(b.user_id)grdtotal 
+								from gradelvltaught_tbl a 
+						LEFT JOIN esat1_demographics_tbl
+								b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
+								GROUP by a.gradelvltaught_id";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -544,7 +515,7 @@ $result = $statement->fetchAll();
 										<tr>
 
 											<td>' . $row['gradelvltaught_name'] . '</td>
-											<td>' . $row['total'] . '</td>
+											<td>' . $row['grdtotal'] . '</td>
 										</tr>
 										';
 					}
@@ -574,9 +545,11 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.region_name,COUNT(b.region) as total 
-					from region_tbl a LEFT JOIN esat1_demographics_tbl b on a.reg_id = b.region 
-					GROUP by a.region_name;";
+	$query = "SELECT a.region_name,
+						COUNT(b.user_id)rtotal 
+								from region_tbl a 
+					LEFT JOIN esat1_demographics_tbl b on a.reg_id = b.region 
+								GROUP by a.region_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -606,7 +579,7 @@ $result = $statement->fetchAll();
 										<tr>
 
 											<td>' . $row['region_name'] . '</td>
-											<td>' . $row['total'] . '</td>
+											<td>' . $row['rtotal'] . '</td>
 										</tr>
 										';
 					}
@@ -670,15 +643,15 @@ $result = $statement->fetchAll();
 							</th>
 						</tr>
 						<tr>
-							<th width="30%">OBJECTIVES</th>
-							<th width="10%">LOW</th>
-							<th width="10%">MODERATE</th>
-							<th width="10%">HIGH</th>
-							<th width="10%">VERY HIGH</th>
-							<th width="10%">LOW</th>
-							<th width="10%">MODERATE</th>
-							<th width="10%">HIGH</th>
-							<th width="10%">VERY HIGH</th>
+							<th width="auto">OBJECTIVES</th>
+							<th width="auto">LOW</th>
+							<th width="auto">MODERATE</th>
+							<th width="auto">HIGH</th>
+							<th width="auto">VERY HIGH</th>
+							<th width="auto">LOW</th>
+							<th width="auto">MODERATE</th>
+							<th width="auto">HIGH</th>
+							<th width="auto	">VERY HIGH</th>
 
 
 						</tr>
@@ -760,15 +733,15 @@ $result = $statement->fetchAll();
 							</th>
 						</tr>
 						<tr>
-							<th width="30%">OBJECTIVES</th>
-							<th width="10%">LOW</th>
-							<th width="10%">MODERATE</th>
-							<th width="10%">HIGH</th>
-							<th width="10%">VERY HIGH</th>
-							<th width="10%">LOW</th>
-							<th width="10%">MODERATE</th>
-							<th width="10%">HIGH</th>
-							<th width="10%">VERY HIGH</th>
+							<th width="auto">OBJECTIVES</th>
+							<th width="auto">LOW</th>
+							<th width="auto">MODERATE</th>
+							<th width="auto">HIGH</th>
+							<th width="auto">VERY HIGH</th>
+							<th width="auto">LOW</th>
+							<th width="auto">MODERATE</th>
+							<th width="auto">HIGH</th>
+							<th width="auto">VERY HIGH</th>
 
 
 						</tr>
@@ -811,6 +784,436 @@ $result = $statement->fetchAll();
 
 
 	<!-- End Master Teacher Objective-->
+
+	<!--Start of Core Behavioral Self Assessment-->
+
+	<?php
+	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
+	$query = "SELECT cbc_name, 
+						score1,
+							score2,
+								score3,
+									score4,
+										score5 
+											FROM tblcbc_selfassessment";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	?>
+
+
+
+	<div class="container">
+		<div class="breadcome-list shadow-reset">
+			<h3 align="center"><strong>CORE BEHAVIORAL - SELF ASSESSMENT</strong></h3>
+			<br />
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover" id="for_chart10">
+					<thead>
+						<tr>
+							<th width="auto">CBC_NAME</th>
+							<th width="auto">1-SCALE</th>
+							<th width="auto">2-SCALE</th>
+							<th width="auto">3-SCALE</th>
+							<th width="auto">4-SCALE</th>
+							<th width="auto">5-SCALE</th>
+						</tr>
+					</thead>
+					<?php
+
+					foreach ($result as $row) {
+
+						echo '
+										<tr>
+											<td>' . $row['cbc_name'] . '</td>
+											<td>' . $row['score1'] . '</td>
+											<td>' . $row['score2'] . '</td>
+											<td>' . $row['score3'] . '</td>
+											<td>' . $row['score4'] . '</td>
+											<td>' . $row['score5'] . '</td>
+										</tr>
+										';
+					}
+
+					?>
+				</table>
+			</div>
+			<br />
+			<div id="chart_area10" title="Objectives">
+
+			</div>
+			<br />
+			<div align="center">
+				<button type="button" name="view_chart10" id="view_chart10" class="btn btn-info btn-lg">View Data in Chart</button>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+
+
+	<!--end of Core Behavioral Self Assessment-->
+
+	<!--Start of Core Behavioral Professionalism and Ethics-->
+
+	<?php
+	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
+	$query = "SELECT cbc_name, 
+						score1,
+							score2,
+								score3,
+									score4,
+										score5 
+											FROM tblcbc_professionalism";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	?>
+
+
+
+	<div class="container">
+		<div class="breadcome-list shadow-reset">
+			<h3 align="center"><strong>CORE BEHAVIORAL - Professionalism and Ethics</strong></h3>
+			<br />
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover" id="for_chart13">
+					<thead>
+						<tr>
+							<th width="auto">CBC_NAME</th>
+							<th width="auto">1-SCALE</th>
+							<th width="auto">2-SCALE</th>
+							<th width="auto">3-SCALE</th>
+							<th width="auto">4-SCALE</th>
+							<th width="auto">5-SCALE</th>
+						</tr>
+					</thead>
+					<?php
+
+					foreach ($result as $row) {
+
+						echo '
+										<tr>
+											<td>' . $row['cbc_name'] . '</td>
+											<td>' . $row['score1'] . '</td>
+											<td>' . $row['score2'] . '</td>
+											<td>' . $row['score3'] . '</td>
+											<td>' . $row['score4'] . '</td>
+											<td>' . $row['score5'] . '</td>
+										</tr>
+										';
+					}
+
+					?>
+				</table>
+			</div>
+			<br />
+			<div id="chart_area13" title="Objectives">
+
+			</div>
+			<br />
+			<div align="center">
+				<button type="button" name="view_chart13" id="view_chart13" class="btn btn-info btn-lg">View Data in Chart</button>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+
+
+	<!--end of Core Behavioral Professionalism and Ethics-->
+
+	<!--Start of Core Behavioral Results Focus-->
+
+	<?php
+	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
+	$query = "SELECT cbc_name, 
+						score1,
+							score2,
+								score3,
+									score4,
+										score5 
+											FROM tblcbc_result_focus";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	?>
+
+
+
+	<div class="container">
+		<div class="breadcome-list shadow-reset">
+			<h3 align="center"><strong>CORE BEHAVIORAL - Results Focus</strong></h3>
+			<br />
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover" id="for_chart14">
+					<thead>
+						<tr>
+							<th width="auto">CBC_NAME</th>
+							<th width="auto">1-SCALE</th>
+							<th width="auto">2-SCALE</th>
+							<th width="auto">3-SCALE</th>
+							<th width="auto">4-SCALE</th>
+							<th width="auto">5-SCALE</th>
+						</tr>
+					</thead>
+					<?php
+
+					foreach ($result as $row) {
+
+						echo '
+										<tr>
+											<td>' . $row['cbc_name'] . '</td>
+											<td>' . $row['score1'] . '</td>
+											<td>' . $row['score2'] . '</td>
+											<td>' . $row['score3'] . '</td>
+											<td>' . $row['score4'] . '</td>
+											<td>' . $row['score5'] . '</td>
+										</tr>
+										';
+					}
+
+					?>
+				</table>
+			</div>
+			<br />
+			<div id="chart_area14" title="Objectives">
+
+			</div>
+			<br />
+			<div align="center">
+				<button type="button" name="view_chart14" id="view_chart14" class="btn btn-info btn-lg">View Data in Chart</button>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+
+
+	<!--end of Core Behavioral Results Focus-->
+
+	<!--Start of Core Behavioral Teamwork-->
+
+	<?php
+	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
+	$query = "SELECT cbc_name, 
+						score1,
+							score2,
+								score3,
+									score4,
+										score5 
+											FROM tblcbc_teamwork";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	?>
+
+
+
+	<div class="container">
+		<div class="breadcome-list shadow-reset">
+			<h3 align="center"><strong>CORE BEHAVIORAL - Teamwork</strong></h3>
+			<br />
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover" id="for_chart15">
+					<thead>
+						<tr>
+							<th width="auto">CBC_NAME</th>
+							<th width="auto">1-SCALE</th>
+							<th width="auto">2-SCALE</th>
+							<th width="auto">3-SCALE</th>
+							<th width="auto">4-SCALE</th>
+							<th width="auto">5-SCALE</th>
+						</tr>
+					</thead>
+					<?php
+
+					foreach ($result as $row) {
+
+						echo '
+										<tr>
+											<td>' . $row['cbc_name'] . '</td>
+											<td>' . $row['score1'] . '</td>
+											<td>' . $row['score2'] . '</td>
+											<td>' . $row['score3'] . '</td>
+											<td>' . $row['score4'] . '</td>
+											<td>' . $row['score5'] . '</td>
+										</tr>
+										';
+					}
+
+					?>
+				</table>
+			</div>
+			<br />
+			<div id="chart_area15" title="Objectives">
+
+			</div>
+			<br />
+			<div align="center">
+				<button type="button" name="view_chart15" id="view_chart15" class="btn btn-info btn-lg">View Data in Chart</button>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+
+
+	<!--end of Core Behavioral Teamwork-->
+
+	<!--Start of Core Behavioral Service Orientation-->
+
+	<?php
+	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
+	$query = "SELECT cbc_name, 
+						score1,
+							score2,
+								score3,
+									score4,
+										score5 
+											FROM tblcbc_service_orientation";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	?>
+
+
+
+	<div class="container">
+		<div class="breadcome-list shadow-reset">
+			<h3 align="center"><strong>CORE BEHAVIORAL - Service Orientation</strong></h3>
+			<br />
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover" id="for_chart16">
+					<thead>
+						<tr>
+							<th width="auto">CBC_NAME</th>
+							<th width="auto">1-SCALE</th>
+							<th width="auto">2-SCALE</th>
+							<th width="auto">3-SCALE</th>
+							<th width="auto">4-SCALE</th>
+							<th width="auto">5-SCALE</th>
+						</tr>
+					</thead>
+					<?php
+
+					foreach ($result as $row) {
+
+						echo '
+										<tr>
+											<td>' . $row['cbc_name'] . '</td>
+											<td>' . $row['score1'] . '</td>
+											<td>' . $row['score2'] . '</td>
+											<td>' . $row['score3'] . '</td>
+											<td>' . $row['score4'] . '</td>
+											<td>' . $row['score5'] . '</td>
+										</tr>
+										';
+					}
+
+					?>
+				</table>
+			</div>
+			<br />
+			<div id="chart_area16" title="Objectives">
+
+			</div>
+			<br />
+			<div align="center">
+				<button type="button" name="view_chart16" id="view_chart16" class="btn btn-info btn-lg">View Data in Chart</button>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+	<!--end of Core Behavioral Service Orientation-->
+
+	<!--Start of Core Behavioral Innovation-->
+
+	<?php
+	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
+	$query = "SELECT cbc_name, 
+					score1,
+						score2,
+							score3,
+								score4,
+									score5 
+										FROM tblcbc_innovation";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	?>
+
+
+
+	<div class="container">
+		<div class="breadcome-list shadow-reset">
+			<h3 align="center"><strong>CORE BEHAVIORAL - Innovaion</strong></h3>
+			<br />
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover" id="for_chart17">
+					<thead>
+						<tr>
+							<th width="auto">CBC_NAME</th>
+							<th width="auto">1-SCALE</th>
+							<th width="auto">2-SCALE</th>
+							<th width="auto">3-SCALE</th>
+							<th width="auto">4-SCALE</th>
+							<th width="auto">5-SCALE</th>
+						</tr>
+					</thead>
+					<?php
+
+					foreach ($result as $row) {
+
+						echo '
+										<tr>
+											<td>' . $row['cbc_name'] . '</td>
+											<td>' . $row['score1'] . '</td>
+											<td>' . $row['score2'] . '</td>
+											<td>' . $row['score3'] . '</td>
+											<td>' . $row['score4'] . '</td>
+											<td>' . $row['score5'] . '</td>
+										</tr>
+										';
+					}
+
+					?>
+				</table>
+			</div>
+			<br />
+			<div id="chart_area17" title="Objectives">
+
+			</div>
+			<br />
+			<div align="center">
+				<button type="button" name="view_chart17" id="view_chart17" class="btn btn-info btn-lg">View Data in Chart</button>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+
+
+	<!--end of Core Behavioral Innovation-->
 
 
 </body>
@@ -1096,6 +1499,117 @@ $result = $statement->fetchAll();
 
 
 		});
+
+		$(document).ready(function() {
+
+			$('#view_chart13').click(function() {
+				$('#for_chart13').data('graph-container', '#chart_area13');
+				$('#for_chart13').data('graph-type', 'column');
+				$("#chart_area13").dialog('open');
+				$('#for_chart13').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area13').html('');
+			});
+
+			$("#chart_area13").dialog({
+				autoOpen: false,
+				width: 900,
+				height: 600
+			});
+		});
+
+		$(document).ready(function() {
+
+			$('#view_chart14').click(function() {
+				$('#for_chart14').data('graph-container', '#chart_area14');
+				$('#for_chart14').data('graph-type', 'column');
+				$("#chart_area14").dialog('open');
+				$('#for_chart14').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area14').html('');
+			});
+
+			$("#chart_area14").dialog({
+				autoOpen: false,
+				width: 900,
+				height: 600
+			});
+		});
+
+		$(document).ready(function() {
+
+			$('#view_chart15').click(function() {
+				$('#for_chart15').data('graph-container', '#chart_area15');
+				$('#for_chart15').data('graph-type', 'column');
+				$("#chart_area15").dialog('open');
+				$('#for_chart15').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area15').html('');
+			});
+
+			$("#chart_area15").dialog({
+				autoOpen: false,
+				width: 900,
+				height: 600
+			});
+		});
+
+		$(document).ready(function() {
+
+			$('#view_chart16').click(function() {
+				$('#for_chart16').data('graph-container', '#chart_area16');
+				$('#for_chart16').data('graph-type', 'column');
+				$("#chart_area16").dialog('open');
+				$('#for_chart16').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area16').html('');
+			});
+
+			$("#chart_area16").dialog({
+				autoOpen: false,
+				width: 900,
+				height: 600
+			});
+		});
+
+		$(document).ready(function() {
+
+			$('#view_chart17').click(function() {
+				$('#for_chart17').data('graph-container', '#chart_area17');
+				$('#for_chart17').data('graph-type', 'column');
+				$("#chart_area17").dialog('open');
+				$('#for_chart17').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area17').html('');
+			});
+
+			$("#chart_area17").dialog({
+				autoOpen: false,
+				width: 900,
+				height: 600
+			});
+		});
+
 		Highcharts.setOptions({
 			chart: {
 				backgroundColor: {
