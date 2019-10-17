@@ -230,3 +230,21 @@
                     'You dont have a Position Yet';
                 endif;
             }
+
+            function activeSY(mysqli $dbcon)
+            {
+                $syQry = 'SELECT * FROM sy_tbl WHERE `status` = "Active" ';
+                $syResult = fetchAll($dbcon, $syQry);
+
+                if ($syResult) :
+                    foreach ($syResult as $sy_item) :
+                        $_SESSION['active_sy_id'] = $_SESSION['sy_id'];
+                        $_SESSION['start_date'] = $sy_item['startDate'] . '<br>';
+                        $_SESSION['end_date'] = $sy_item['end_date'] . '<br>';
+                        $_SESSION['active_sy'] = $sy_item['sy_desc'] . '<br>';
+                        $_SESSION['sy_status'] = $sy_item['status'] . '<br>';
+                    endforeach;
+                else :
+                    echo '<p class="red-notif-border" >No Active School Year!</p> ';
+                endif;
+            }

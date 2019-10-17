@@ -5,6 +5,7 @@
 
 <head>
     <?php include 'includes/conn.inc.php'; ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
 </head>
@@ -12,9 +13,34 @@
 <body>
     <div id="user_data" class="table table-responsive-sm"></div>
 
+    <h2>Select from 1 to 4</h2>
+    <h2>Dont hide me</h2>
+    <!-- <select id="period">
+        <option id="choices">--Select--</option>
+        <option id="choices" value="1">1</option>
+        <option id="choices" value="2">2</option>
+        <option id="choices" value="3">3</option>
+        <option id="choices" value="4">4</option>
+    </select> -->
 
+    <input type="button" id="button" value="1">
+    <input type="button" id="button" value="2">
+    <input type="button" id="button" value="3">
+    <input type="button" id="button" value="4">
 
     <script>
+        $("input:button").click(function () {
+            $('input:button').hide();
+            $(this).show().click(function () {
+                $('input:button').show();
+            });
+        });
+    </script>
+
+
+
+
+    <!-- <script>
         $(document).ready(function () {
             function loadData() {
                 $.ajax({
@@ -28,7 +54,7 @@
                 })
             }
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

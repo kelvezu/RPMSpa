@@ -5,7 +5,6 @@
     ?>
 
     <body>
-
         <div class="container breadcome-list shadow-reset">
             <div class=" row">
                 <div class="col-sm-6">
@@ -15,38 +14,68 @@
                             <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?> />
                             <div>
                                 <div class=" h3"><strong>
-                                        <u><?php echo switchRateeWord($position) ?> that you rate: </u>
+                                        <u><?php echo $position ? switchRateeWord($position) : 'Teachers' ?> that you rate: </u>
+                                </div>
+                                <div>
+                                    <small><i>List of <?php echo  $position ? switchRateeWord($position) : 'Teachers' ?> that you handle for <?php echo $_SESSION['sy'] ?? 'this year.' ?> </i> </small>
                                 </div>
                                 <!-- INSERT THE CONDITION AND THE TABLE HERE! -->
-                                <div>
-                                    <small><b>Direction: </b><i>Click the checkbox of the teacher you want to rate.</i> </small>
-                                </div>
-
+                                <form action="includes/processratee.php" method="POST">
+                                    <?php
+                                    if (!empty($fetchRateeresults)) :
+                                        ?>
+                                        <table class="table table-hover table-borderless">
+                                            <thead>
+                                                <tr>
+                                                    <th>Teacher's Name</th>
+                                                    <th>Position </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    <?php
+                                    elseif (empty($fetchRateeresults)) :
+                                        ?>
+                                        <p class="red-notif-border text-center"><b>No Teacher Record.</b></p>
+                                    <?php
+                                    else :
+                                        ?>
+                                        <p class="red-notif-border text-center"><b>No Teacher Record.</b></p>
+                                    <?php
+                                    endif;
+                                    ?>
+                                </form>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="col-sm-6">
                     <!-- Without rater -->
-                    <?php
-                    $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-                    $query = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $school_id . '"  AND `user_id` <> " ' . $user_id . ' "';
-                    $teacherresults = fetchAll($dbcon, $query);
-                    if (!empty($teacherresults)) :
-                        ?>
-                        <form action="includes/processratee.php" method="POST">
+                    <form action="includes/processratee.php" method="POST">
+                        <div>
+                            <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?> />
                             <div>
-                                <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?> />
+                                <div class=" h3"><strong>
+                                        <u>
+                                            <?php switchRateeWord($position) ?> with no Rater
+                                            for SY <?php echo !empty($sy = $_SESSION['sy']) ?  $sy : $sy = '';
+                                                    ?> </u>
+                                </div>
                                 <div>
-                                    <div class=" h3"><strong>
-                                            <u>
-                                                <?php switchRateeWord($position) ?> with no Rater
-                                                for SY <?php echo !empty($sy = $_SESSION['sy']) ?  $sy : $sy = '';
-                                                            ?> </u>
-                                    </div>
-                                    <div>
-                                        <small><b>Direction: </b><i>Click the checkbox of the teacher you want to rate.</i> </small>
-                                    </div>
+                                    <small><b>Direction: </b><i>Click the checkbox of the teacher you want to rate.</i> </small>
+                                </div>
+                                <?php
+                                $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+                                $query = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $school_id . '"  AND `user_id` <> " ' . $user_id . ' "';
+                                $teacherresults = fetchAll($dbcon, $query);
+                                if (!empty($teacherresults)) :
+                                    ?>
+
                                     <table class="table table-hover table-borderless">
                                         <thead>
                                             <tr>
@@ -77,23 +106,20 @@
                                     echo  'SY: ' . (!empty($sy = $_SESSION['sy']) ?  $sy : $sy = '');
                                     echo  '</u></div><p class="red-notif-border text-center"><b>No Teachers to Rate.</b></p>';
                                 else :
-                                    echo '<td align="center" class="text-danger text-center"><b>No Data Record!</b></td>';
+                                    echo '<p class="red-notif-border text-center"><b>No Teachers to Rate.</b></p>';
                                 endif;
-
                                 ?>
-
-                                </div>
                             </div>
-
-
-                        </form>
+                        </div>
+                    </form>
                 </div>
             </div>
 
 
 
-            <br> <br>
 
+        </div>
+        <br> <br>
     </body>
     <?php
 
