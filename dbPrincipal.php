@@ -84,7 +84,7 @@
 
                             <div class="dashone-adminprowrap shadow-reset mg-b-30">
                                 <div class="dash-adminpro-project-title"> 
-                                    <h4><b>Teacher Masterlist</b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
+                                    <h4><a href="displaymtprogress.php"><b>Teacher Masterlist</a></b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
                                     
                                 </div>
                                     <div class="sparkline9-graph">
@@ -114,7 +114,7 @@
                                                     
                                                     <td><?php echo $teachername; ?></td>
                                                     <td><?php echo $teacher['position']; ?></td>
-                                                    <td><?php echo $teacher['status']; ?></td>
+                                                    <!-- <td><?php echo $teacher['status']; ?></td> -->
                                                 </tr>
                                                 <?php
                                                 endforeach;
@@ -147,7 +147,7 @@
 
                             <div class="dashone-adminprowrap shadow-reset mg-b-30">
                                 <div class="dash-adminpro-project-title"> 
-                                    <h4><b>Master Teacher Masterlist</b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
+                                    <h4><a href="displaymtprogress.php"><b>Master Teacher Masterlist</a></b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
                                     
                                 </div>
                                     <div class="sparkline9-graph">
@@ -177,7 +177,7 @@
                                                     
                                                     <td><?php echo $masterteachername; ?></td>
                                                     <td><?php echo $masterteacher['position']; ?></td>
-                                                    <td><?php echo $masterteacher['status']; ?></td>
+                                                    <!-- <td><?php echo $masterteacher['status']; ?></td> -->
                                                 </tr>
                                                 <?php
                                                 endforeach;
@@ -230,17 +230,17 @@
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
-                                            <?php
+                                            <!-- <?php
                                             if(isset($schoolheadMasterlist_results)):
                                                 foreach($schoolheadMasterlist_results as $schoolhead):
                                                     $schoolheadname = $schoolhead['firstname'].' '.substr($schoolhead['middlename'],0,1).'. '.$schoolhead['surname'];
-                                                    ?>
+                                                    ?> -->
                                             <tbody>
                                                 <tr>
                                                     
                                                     <td><?php echo $schoolheadname; ?></td>
-                                                    <td><?php echo $schoolhead['position']; ?></td>
-                                                    <td><?php echo $schoolhead['status']; ?></td>
+                                                    <!-- <td><?php echo $schoolhead['position']; ?></td> -->
+                                                    <!-- <td><?php echo $schoolhead['status']; ?></td> -->
                                                 </tr>
                                                 <?php
                                                 endforeach;
