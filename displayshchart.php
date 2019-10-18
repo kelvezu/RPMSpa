@@ -25,21 +25,21 @@ $user_id = $_SESSION['user_id'];
 
 <body>
 
+
 	<!--Demographic Age -->
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
 	$query = "SELECT a.age_name,
 				b.age_no FROM age_tbl a 
-				LEFT JOIN 
-				(
-					SELECT DISTINCT age, 
-						COUNT(user_id) age_no
-						FROM 
-						esat1_demographics_tbl a
-					GROUP BY age
-				) as b on a.age_id = b.age
-			";
+						LEFT JOIN 
+						(
+							SELECT DISTINCT age, 
+								COUNT(user_id) age_no
+								FROM 
+								esat1_demographics_tbl a
+							GROUP BY age
+						) as b on a.age_id = b.age";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -89,6 +89,11 @@ $user_id = $_SESSION['user_id'];
 	<br />
 	<br />
 
+
+
+
+
+
 	<!-- End of Demographic Age -->
 
 	<!-- Start of Demographic Gender -->
@@ -121,7 +126,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="10%">Gender</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -162,10 +167,10 @@ $user_id = $_SESSION['user_id'];
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
 	$query = "SELECT DISTINCT a.employment_status, 
 								COUNT(b.user_id)emp_stat 
-								FROM esat1_demographics_tbl a
+									FROM esat1_demographics_tbl a
 			  LEFT JOIN esat1_demographics_tbl b 
-								on a.employment_status like CONCAT('%', b.employment_status, '%')
-								GROUP BY b.employment_status";
+									on a.employment_status like CONCAT('%', b.employment_status, '%')
+										GROUP BY b.employment_status";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -181,7 +186,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="10%">Employment_status</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -243,7 +248,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="10%">Position</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -310,7 +315,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="10%">Highest Degree Obtained</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -375,7 +380,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="10%">Total Number of Years in Teaching</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -439,7 +444,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="50%">Subject Taught</th>
-							<th width="auto">Total</th>
+							<th width="auto">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -503,7 +508,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="10%">Grade Level Taught</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -538,7 +543,72 @@ $user_id = $_SESSION['user_id'];
 	<br />
 
 
-	<!-- End of Demographic Start of Grade Level Taught-->
+	<!-- End of Grade Level Taught-->
+
+	<!-- Start of Curricular Class-->
+
+	<?php
+	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
+	$query = "SELECT a.curriclass_name, b.count FROM curriclass_tbl a
+					LEFT JOIN 
+							(
+								SELECT curri_class,COUNT(DISTINCT user_id)count FROM esat1_demographics_tbl
+								GROUP BY curri_class
+							) AS b on a.curriclass_id = b.curri_class";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	?>
+
+
+
+
+	<div class="container">
+		<div class="breadcome-list shadow-reset">
+			<h3 align="center"><strong>Curricular Class of School</strong></h3>
+			<br />
+
+			<div class="table-responsive">
+				<table class="table table-bordered table-striped table-hover" id="for_chart18">
+					<thead>
+						<tr>
+							<th width="10%">Curricular Class</th>
+							<th width="10%">No. of Teacher</th>
+
+						</tr>
+					</thead>
+					<?php
+
+					foreach ($result as $row) {
+
+						echo '
+										<tr>
+
+											<td>' . $row['curriclass_name'] . '</td>
+											<td>' . $row['count'] . '</td>
+										</tr>
+										';
+					}
+
+					?>
+				</table>
+			</div>
+			<br />
+			<div id="chart_area18" title="Curricular Classification">
+
+			</div>
+			<br />
+			<div align="center">
+				<button type="button" name="view_chart18" id="view_chart18" class="btn btn-info btn-lg">View Data in Chart</button>
+			</div>
+		</div>
+	</div>
+
+	<br />
+	<br />
+
+
+	<!-- End of Curricular Class-->
 
 
 	<!-- Start of Region-->
@@ -1609,6 +1679,29 @@ $user_id = $_SESSION['user_id'];
 				height: 600
 			});
 		});
+
+		$(document).ready(function() {
+
+			$('#view_chart18').click(function() {
+				$('#for_chart18').data('graph-container', '#chart_area18');
+				$('#for_chart18').data('graph-type', 'column');
+				$("#chart_area18").dialog('open');
+				$('#for_chart18').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area18').html('');
+			});
+
+			$("#chart_area18").dialog({
+				autoOpen: false,
+				width: 900,
+				height: 600
+			});
+		});
+
 
 		Highcharts.setOptions({
 			chart: {
