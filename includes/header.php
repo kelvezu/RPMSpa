@@ -8,7 +8,9 @@ include_once 'libraries/db.library.php';
 include_once 'libraries/func.lib.php';
 include_once 'includes/security.php';
 
-
+/* THIS WILL DISPLAY THE ACTIVE SCHOOL YEAR  */
+activeSY($conn);
+/* ----------------------------------------- */
 $user_id = $_SESSION['user_id'];
 $fullname = $_SESSION['fullname'];
 $position = $_SESSION['position'];
@@ -302,10 +304,16 @@ $position = $_SESSION['position'];
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <div class="breadcome-heading">
-                                        <form role="search" class="">
+                                        <!-- <form role="search" class="">
                                             <input type="text" placeholder="Search..." class="form-control">
                                             <a href=""><i class="fa fa-search"></i></a>
-                                        </form>
+                                        </form> -->
+                                        <div class="row">
+                                            <div>
+                                                <b>School Year: </b><?php echo $_SESSION['active_sy'] ?? '<p class="red-notif-border"> No Active School Year! </p>';  ?>
+                                                <b>SY start: </b><?php echo ($_SESSION['start_date']) ?? '<p class="tomato-color">Error!</p>'; ?> <b>SY end: </b><?php echo ($_SESSION['end_date']) ?? '<p class="tomato-color">Error!</p>'; ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">

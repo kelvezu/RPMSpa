@@ -89,7 +89,7 @@
 			 fillColor: "#ebebeb"
 		 });
 
-		 $("#sparkline24").sparkline([74, 43, 23, 55, 54, 32, 24, 12], {
+		 $("#sparkline24").sparkline([74, 43, 23, 55, 54, 32, 24, 20], {
 			 type: 'line',
 			 width: '100%',
 			 height: '60',

@@ -18,25 +18,30 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
             <h4>Rating Sheet</h4>
-            <h4 class="text-left">
+            <h5 class="text-left">
 
-                <div class="form-group">
-                    <div class="form-control">
+            <div class="breadcome-list shadow-reset">
+                <div class="row">
+                    <div class="col-lg-6">
                         <label>OBSERVER:</label>&nbsp;
                         <?php echo $fullname; ?>
                     </div>
-
-                    <div class="form-control">
+                   
+                    <div class="col-lg-6">
                         <label>DATE:</label>
                         <?php echo date("Y/m/d"); ?>
                     </div>
-
-                    <div class="form-control">
+                    
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-6">
+                       
                         <label>
                             TEACHER OBSERVED:
                         </label>
                         <select name="tobserved">
-                            <option value="" disabled selected>--Select Teacher--</option>
+                            <option value="" disabled selected>Select Teacher</option>
                             <?php
                             $school = $_SESSION['school_id'];
                             $rater = $_SESSION['user_id'];
@@ -56,13 +61,16 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             endif; ?>
                         </select>
                     </div>
+                    
+                    
 
-                    <div class="form-control">
+               
+                    <div class="col-lg-6">
                         <label>
                             SUBJECT:
                         </label>
                         <select name="tsubject">
-                            <option value="" disabled selected>--Select Subject--</option>
+                            <option value="" disabled selected>Select Subject</option>
                             <?php
                             $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
                             while ($subjrow = $querySubject->fetch_assoc()) :
@@ -72,13 +80,16 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <?php endwhile; ?>
                         </select>
                     </div>
+                    </div>
+                    
 
-                    <div class="form-control">
+                    <div class="row">
+                    <div class="col-lg-6">
                         <label for="gradeleveltaught">
                             GRADE LEVEL TAUGHT:
                         </label>
                         <select name="tgradelvltaught">
-                            <option value="" disabled selected>--Select Grade Level Taught--</option>
+                            <option value="" disabled selected>Select Grade Level Taught</option>
                             <?php
                             $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
                             while ($gradelvltaught = $queryGlt->fetch_assoc()) :
@@ -87,72 +98,69 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 <option value="<?php echo $glt; ?>"><?php echo $glt; ?></option>
                             <?php endwhile; ?>
                         </select>
+                    
+          
                     </div>
 
-                    <div class="form-control">
+<script>
+    function showIndicator(str) {
+        if (str == "") {
+            document.getElementById("show").innerHTML = "";
+            return;
+        } else { 
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+        } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("show").innerHTML = xmlhttp.responseText;
+                }
+            }
+            // getuser.php is seprate php file. q is parameter 
+            xmlhttp.open("GET","ajaxobs.php?period="+str,true);
+            xmlhttp.send();
+        }
+    }
+</script>
+                <div class="col-lg-6">
+                   
                         <label for="obsperiod" class="col-form-label">
                             OBSERVATION PERIOD:
                         </label>
-                        <select name="obs_period" onchange="showObs(this.value)">
-                            <option value="" disabled selected>--Select Period--</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option> 
-                        </select>
+
+                            <select name="obs" onchange="showIndicator(this.value)">
+                                <option value="" disabled selected>Select Period</option>
+                                <option value="1">1st</option>
+                                <option value="2">2nd</option>
+                                <option value="3">3rd</option>
+                                <option value="4">4th</option>
+                            </select>
+                            </div>
+                            
+                            <br>
+                            <div id="show">
+                                
+                            </div>
+
+
                     </div>
-
-
-            </h4>
+                    </div>
+                   
+                    
+            </h5>
+         
 
             
-
-
-            <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-                <thead class="legend-control bg-success text-white ">
-                    <tr>
-                        <th>Indicator No</th>
-                        <th>Indicator Name</th>
-                        <th>COT Rating</th>
-                    </tr>
-                </thead>
-                <?php
-                if ($resultquery) {
-                    while ($row = mysqli_fetch_array($resultquery)) {
-                ?>
-                        <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
-                        <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
-                        <tbody>
-                            <tr>
-                                <th><div id="observation"><?php echo $row['indicator_id']; ?></th>
-                                <th><?php echo $row['indicator_name']; ?></th>
-                                <th>
-                                    <select name="rating[]">
-                                        <option value="" disabled selected>--Select--</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="3">NO*</option>
-                                    </select>
-
-                                </th>
-                            </tr>
-                        </tbody>
-                <?php
-                    }
-                } else {
-                    echo "No record found";
-                }
-                ?>
-
-            </table>
             <textarea class="form-control" name="cot_comment" rows="5" placeholder="OTHER COMMENTS"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
     </div>
-</div>
+</div> 
+</div> 
 </form>
 <br>
 

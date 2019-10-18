@@ -1,5 +1,4 @@
 <?php
-include 'includes/conn.inc.php';
 include 'includes/header.php';
 
 

@@ -1,6 +1,7 @@
     <?php
+
     include_once 'includes/header.php';
-    //A.CHECK IF USER DID NOT TAKEN ESAT
+    // A.CHECK IF USER DID NOT TAKEN ESAT
     $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
     //A.1 DISPLAY ERRORS IF THE USER DID NOT TAKE ESAT 
     if ($userESATstats) :
@@ -39,12 +40,16 @@
                                                     if (isset($esatForm2_LvlCap_results)) :
                                                         foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
                                                             ?>
-                                                    <li><b class="tomato-color">Key Result Area: </b><u><?php echo $LvlCap_result['kra_name'] ?></u> </li>
+                                                    <li><b class="tomato-color">Key Result Area: </b><u>
+                                                            <?php
+                                                                            $LvlCap_result['kra_id'];
+                                                                            echo $LvlCap_result['kra_name'];
+                                                                            ?></u> </li>
                                                     <ul class="ul-square">
                                                         <?php
-                                                                        $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '"';
-                                                                        $mtobjLvlcapResults = fetchAll($dbcon, $queryMTobjlvlcap);
 
+                                                                        $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivesmt_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $LvlCap_result['sy'] . '" AND esat2_objectivesmt_tbl.school = "' . $LvlCap_result['school'] . '"';
+                                                                        $mtobjLvlcapResults = fetchAll($dbcon, $queryMTobjlvlcap);
                                                                         foreach ($mtobjLvlcapResults as $mtobjLvlcap) :
                                                                             ?>
                                                             <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjLvlcap['mtobj_name'] ?></i></li><br />
@@ -76,7 +81,7 @@
 
                                                 <ul class="ul-square">
                                                     <?php
-                                                                    $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '"';
+                                                                    $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '" AND user_id = "' . $PrioDev_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $PrioDev_result['sy'] . '" AND esat2_objectivesmt_tbl.school = "' . $PrioDev_result['school'] . '"';
                                                                     $mtobjPrioDevResults = fetchAll($dbcon, $queryMTobjpriodev);
                                                                     foreach ($mtobjPrioDevResults as $mtobjPriodev) :
                                                                         ?>
@@ -143,7 +148,7 @@
                                                             ?>
                                                     <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
                                                     <ul class="ul-square">
-                                                        <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '"';
+                                                        <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $cbc_strength['sy'] . '" AND esat3_core_behavioral_tbl.school = "' . $cbc_strength['school'] . '"';
                                                                         $indicatorStrengthResults = fetchAll($dbcon, $queryIndicatorStrength);
                                                                         foreach ($indicatorStrengthResults as $indicatorStrength) :
                                                                             ?>
@@ -173,7 +178,7 @@
                                                     <li><b><?php echo $cbc_devneeds['cbc_name'] ?></b></li>
                                                     <ul class="ul-square">
                                                         <?php
-                                                                        $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '"';
+                                                                        $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $cbc_devneeds['sy'] . '" AND esat3_core_behavioral_tbl.school = "' . $cbc_devneeds['school'] . '"';
                                                                         $IndicatorDevNeedsResults = fetchAll($dbcon, $queryIndicatorDevneeds);
                                                                         foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
                                                                             ?>
