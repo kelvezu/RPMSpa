@@ -244,6 +244,11 @@
                         $_SESSION['active_sy'] = $sy_item['sy_desc'] . '<br>';
                         $_SESSION['sy_status'] = $sy_item['status'] . '<br>';
                     endforeach;
+                    $startdate = $_SESSION['start_date'];
+
+                    $_SESSION['start_year'] = substr($startdate, 0, 4) . BR;
+                    $_SESSION['start_month'] = substr($startdate, 5, 2) . BR;
+                    $_SESSION['start_day'] = substr($startdate, 8, 2) . BR;
                 else :
                     echo '<p class="red-notif-border" >No Active School Year!</p> ';
                 endif;
