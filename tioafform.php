@@ -42,7 +42,7 @@ include_once 'libraries/func.lib.php';
                     <div class="col-lg-6">
                     <label>OBSERVER 2: </label>&nbsp;
                             <select name="observer2">
-                            <option value="" disabled selected>Select Observer</option>
+                            <option value="">Select Observer</option>
                                 <?php
                                     $school = $_SESSION['school_id'];
                                     $rater = $_SESSION['user_id'];
@@ -93,7 +93,7 @@ include_once 'libraries/func.lib.php';
                     <div class="col-lg-6">
                     <label>OBSERVER 3: </label>&nbsp;
                         <select name="observer3">
-                        <option value="" disabled selected>Select Observer</option>
+                        <option value="">Select Observer</option>
                                 <?php
                                     $school = $_SESSION['school_id'];
                                     $rater = $_SESSION['user_id'];
@@ -127,9 +127,10 @@ include_once 'libraries/func.lib.php';
                             <?php
                             $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
                             while ($subjrow = $querySubject->fetch_assoc()) :
+                                $subject_id = $subjrow['subject_id'];
                                 $subject = $subjrow['subject_name'];
                                 ?>
-                                <option value="<?php echo $subject; ?>"><?php echo $subject; ?></option>
+                                <option value="<?php echo $subject_id; ?>"><?php echo $subject; ?></option>
                             <?php endwhile; ?>
                         </select>
                     </div>
@@ -145,9 +146,10 @@ include_once 'libraries/func.lib.php';
                             <?php
                             $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
                             while ($gradelvltaught = $queryGlt->fetch_assoc()) :
+                                $glt_id = $gradelvltaught['gradelvltaught_id'];
                                 $glt = $gradelvltaught['gradelvltaught_name'];
                                 ?>
-                                <option value="<?php echo $glt; ?>"><?php echo $glt; ?></option>
+                                <option value="<?php echo $glt_id; ?>"><?php echo $glt; ?></option>
                             <?php endwhile; ?>
                         </select>
                     </div>

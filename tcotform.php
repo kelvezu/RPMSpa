@@ -5,7 +5,7 @@ include_once 'libraries/func.lib.php';
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
-?>
+?> 
 
 <div class="container text-center">
     <div class="breadcome-list shadow-reset">
@@ -74,9 +74,10 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <?php
                             $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
                             while ($subjrow = $querySubject->fetch_assoc()) :
+                                $subject_id = $subjrow['subject_id'];
                                 $subject = $subjrow['subject_name'];
                                 ?>
-                                <option value="<?php echo $subject; ?>"><?php echo $subject; ?></option>
+                                <option value="<?php echo $subject_id; ?>"><?php echo $subject; ?></option>
                             <?php endwhile; ?>
                         </select>
                     </div>
@@ -93,9 +94,10 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <?php
                             $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
                             while ($gradelvltaught = $queryGlt->fetch_assoc()) :
+                                $glt_id = $gradelvltaught['gradelvltaught_id'];
                                 $glt = $gradelvltaught['gradelvltaught_name'];
                                 ?>
-                                <option value="<?php echo $glt; ?>"><?php echo $glt; ?></option>
+                                <option value="<?php echo $glt_id; ?>"><?php echo $glt; ?></option>
                             <?php endwhile; ?>
                         </select>
                     
