@@ -29,13 +29,17 @@
                                                 <tr>
                                                     <th>Teacher's Name</th>
                                                     <th>Position </th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <?php foreach ($fetchRateeresults as $rateeresult) : ?>
+                                                        <td> <?php echo  $rateeresult['firstname'] . ' ' . substr($rateeresult['middlename'], 0, 1) . '. ' . $rateeresult['surname']; ?> </td>
+                                                        <td><?php echo $rateeresult['position'] ?></td>
+                                                        <td><button class="btn btn-danger btn-sm"><b>Remove</b></button></td>
                                                 </tr>
+                                            <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     <?php
@@ -101,10 +105,7 @@
                                     </table>
                                 <?php
                                 elseif (empty($teacherresults)) :
-                                    echo '<div class=" h3"><strong><u>';
-                                    echo switchRateeWord($position) . ' with no Rater ';
-                                    echo  'SY: ' . (!empty($sy = $_SESSION['sy']) ?  $sy : $sy = '');
-                                    echo  '</u></div><p class="red-notif-border text-center"><b>No Teachers to Rate.</b></p>';
+                                    echo  '<p class="red-notif-border text-center"><b>No Teachers to Rate.</b></p>';
                                 else :
                                     echo '<p class="red-notif-border text-center"><b>No Teachers to Rate.</b></p>';
                                 endif;
