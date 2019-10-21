@@ -16,16 +16,16 @@ function connect($dbHost, $dbUsername, $dbPassword, $dbName)
 function fetchAll(mysqli $conn, $query)
 {
     $data = [];
-    $results = $conn->query($query);
-    if ($results->num_rows > 0) {
-        while ($row = $results->fetch_assoc()) {
-            $data[] = $row;
-        }
-    } else {
-        //echo '<b>No Result in this Query:</b> ' . $query;
-        //echo ('<b> db.library.php: </b>No_Result_in_this_Query= . ' . $query . '<br/>');
+    $results = mysqli_query($conn, $query);
+    if (!empty($results)) :
+        if ($results) :
+            foreach ($results as $result) :
+                array_push($data, $result);
+            endforeach;
+        endif;
+    else :
         return false;
-    }
+    endif;
     return $data;
 }
 
@@ -36,4 +36,14 @@ function updateAll(mysqli $conn, $query)
     } else {
         echo 'Update Failed' . $query;
     }
+}
+
+function showAccountDB(mysqli $conn)
+{
+    $account_arr = [];
+    $qry = "SELECT * FROM account_tbl";
+    $exec  = mysqli_query($conn, $qry);
+    array_push($account_arr, $exec);
+    json_encode($account_arr);
+    return $account_arr;
 }

@@ -1,4 +1,7 @@
 <?php
+
+
+
 include 'includes/header.php';
 
 
@@ -27,3 +30,33 @@ include 'includes/header.php';
 // } catch (\Throwable $th) { }
 // //echo gettype($_SESSION['start_year']);
 // echo $start_sy = $date1->format('M d, Y');
+
+// showNoRater($position);
+
+
+$person = [
+    'name' => 'Raymond',
+    'ign' => 'KELVEZU',
+    'game' => 'Crossfire'
+];
+
+foreach ($person as $description => $value) :
+    ?>
+    <ul>
+        <li><b><?= $description ?> :</b> <?= $value ?></li>
+    <?php endforeach; ?>
+    </ul>
+
+    <?php
+    $acc_arr = showAccountDB($conn);
+    foreach ($acc_arr as $acc_arrs) :
+        ?>
+        <li><?php var_dump($acc_arrs);
+
+                ?></li>
+    <?php
+    endforeach;
+
+
+
+    include 'includes/footer.php';

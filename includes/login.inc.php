@@ -62,7 +62,7 @@ if (isset($_POST['login-submit'])) {
                         echo $_SESSION['sy'] = $sy_desc;
                         echo $_SESSION['sy_id'] = $sy_id;
                     endif;
-                    directToDashboard($position);
+                    header("location:../loginpage.php?success=" . $_SESSION['fullname']);
                 } else {
                     header("Location:../loginpage.php?error=wrongpwd");
                     exit();

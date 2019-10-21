@@ -2,6 +2,7 @@
     include_once 'includes/header.php';
     $school_id = $_SESSION['school_id'];
     $user_id = $_SESSION['user_id'];
+    $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     ?>
 
     <body>
@@ -14,7 +15,7 @@
                             <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?> />
                             <div>
                                 <div class=" h3"><strong>
-                                        <u><?php echo $position ? switchRateeWord($position) : 'Teachers' ?> that you rate: </u>
+                                        <u><?php echo $position ? switchRateeWord($position) : 'Teachers' ?> that you rate </u>
                                 </div>
                                 <div>
                                     <small><i>List of <?php echo  $position ? switchRateeWord($position) : 'Teachers' ?> that you handle for <?php echo $_SESSION['sy'] ?? 'this year.' ?> </i> </small>
@@ -22,6 +23,8 @@
                                 <!-- INSERT THE CONDITION AND THE TABLE HERE! -->
                                 <form action="includes/processratee.php" method="POST">
                                     <?php
+                                    $showratee = showRatee($_SESSION['position']);
+                                    $fetchRateeresults = fetchAll($dbcon, $showratee);
                                     if (!empty($fetchRateeresults)) :
                                         ?>
                                         <table class="table table-hover table-borderless">
@@ -37,22 +40,30 @@
                                                     <?php foreach ($fetchRateeresults as $rateeresult) : ?>
                                                         <td> <?php echo  $rateeresult['firstname'] . ' ' . substr($rateeresult['middlename'], 0, 1) . '. ' . $rateeresult['surname']; ?> </td>
                                                         <td><?php echo $rateeresult['position'] ?></td>
-                                                        <td><button class="btn btn-danger btn-sm"><b>Remove</b></button></td>
+
+                                                        <td>
+                                                            <form action="includes/processratee.php" method="post">
+                                                                <input type="hidden" name="remove_user" value="<?php echo $rateeresult['user_id']; ?>">
+                                                                <button class="btn btn-danger btn-sm" name="remove"><b>Remove</b></button>
+                                                            </form>
+                                                        </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                             </tbody>
                                         </table>
                                     <?php
-                                    elseif (empty($fetchRateeresults)) :
-                                        ?>
-                                        <p class="red-notif-border text-center"><b>No Teacher Record.</b></p>
-                                    <?php
                                     else :
                                         ?>
                                         <p class="red-notif-border text-center"><b>No Teacher Record.</b></p>
+
                                     <?php
+
                                     endif;
                                     ?>
+                                    <!-- <p class="red-notif-border text-center"><b>No Teacher Record.</b></p>
+                                    <?php
+                                    //endif;
+                                    ?> -->
                                 </form>
                             </div>
                         </div>
@@ -74,10 +85,9 @@
                                     <small><b>Direction: </b><i>Click the checkbox of the teacher you want to rate.</i> </small>
                                 </div>
                                 <?php
-                                $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-                                $query = 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $school_id . '"  AND `user_id` <> " ' . $user_id . ' "';
-                                $teacherresults = fetchAll($dbcon, $query);
-                                if (!empty($teacherresults)) :
+
+                                $teacherresults = fetchAll($dbcon, showNoRater($_SESSION['position']));
+                                if (!isset($teacherresults)) :
                                     ?>
 
                                     <table class="table table-hover table-borderless">

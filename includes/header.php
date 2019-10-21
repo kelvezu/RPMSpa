@@ -84,12 +84,10 @@ $position = $_SESSION['position'];
                 <div class="sidebar-header">
                     <a href="#"><img src="img/message/1.jpg" alt="img/message/2.jpg" />
                     </a>
-                    <h3><?php
-                        if (isset($fullname)) :
-                            echo 'Welcome, ' . $fullname;
-                        else :
-                            echo 'Welcome, Guest';
-                        endif;
+                    <h3><?=
+
+                            'Welcome, ' . $fullname ?? 'Guest!';
+
                         ?></h3>
                     <p><?php echo $_SESSION['position']; ?></p>
                     <strong><i class="fa big-icon fa-institution"></i> </strong>

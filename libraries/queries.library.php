@@ -54,7 +54,6 @@ $schoolheadMasterlist_results = fetchAll($dbcon, $schoolheadMasterlist);
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
 // Query for selectratee.php
 
-$fetchTeacherRatee = 'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" ';
-$fetchRateeresults = fetchAll($dbcon, $fetchTeacherRatee);
+
 
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/

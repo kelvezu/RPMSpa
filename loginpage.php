@@ -1,10 +1,18 @@
 <header>
   <link rel="stylesheet" href="css/bootstrap4.css">
+  <link rel="stylesheet" href="css/main.css">
 
   <?php
+
   session_start();
   include_once 'includes/conn.inc.php';
+  include_once 'libraries/func.lib.php';
 
+  if (isset($_SESSION['position'])) :
+    redirectToDashboard($_SESSION['position']);
+  else :
+    false;
+  endif;
 
   ?>
 </header>

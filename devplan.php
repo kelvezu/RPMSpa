@@ -143,12 +143,12 @@
                                         <div class="bg-black"><label for="b_strength" class="form-control-label bg-black">Strengths</label></div>
                                         <ul class="ul">
                                             <?php
-                                                    if (count($esatForm3_strength_results)) :
+                                                    if (isset($esatForm3_strength_results)) :
                                                         foreach ($esatForm3_strength_results as $cbc_strength) :
                                                             ?>
                                                     <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
                                                     <ul class="ul-square">
-                                                        <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $cbc_strength['sy'] . '" AND esat3_core_behavioral_tbl.school = "' . $cbc_strength['school'] . '"';
+                                                        <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioral_tbl.school = "' . $_SESSION['school_id'] . '"';
                                                                         $indicatorStrengthResults = fetchAll($dbcon, $queryIndicatorStrength);
                                                                         foreach ($indicatorStrengthResults as $indicatorStrength) :
                                                                             ?>
@@ -243,7 +243,6 @@
                                         <a href="includes/processdevplan.php?pos=<?php echo $_SESSION['position']; ?>" name="cancel" class="btn btn-danger">Cancel </a>
                                     </div>
                                 </div>
-
                             </center>
 
                         </form>

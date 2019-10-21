@@ -39,59 +39,7 @@
             }
 
 
-            function directToDashboard(string $position)
-            {
-                try {
-                    switch ($position) {
-                        case 'Admin':
-                            header('location:../dbAdmin.php');
-                            exit();
-                            break;
 
-                        case 'Asst. Superintendent':
-                            header('location:../dbAsstSuperintendent.php');
-                            exit();
-                            break;
-
-                        case 'Principal':
-                            header('location:../dbPrincipal.php');
-                            exit();
-                            break;
-
-                        case 'School Head':
-                            header('location:../dbSchoolHead.php');
-                            exit();
-                            break;
-
-                        case 'Master Teacher IV':
-                        case 'Master Teacher Iv':
-                        case 'Master Teacher III':
-                        case 'Master Teacher Iii':
-                        case 'Master Teacher II':
-                        case 'Master Teacher Ii':
-                        case 'Master Teacher I':
-                            header('location:../dbMasterTeacher.php');
-                            exit();
-                            break;
-
-                        case 'Teacher III':
-                        case 'Teacher Iii':
-                        case 'Teacher II':
-                        case 'Teacher Ii':
-                        case 'Teacher I':
-                            header('location:../dbTeacher.php');
-                            exit();
-                            break;
-
-                        default:
-                            header('location:../loginpage.php');
-                            exit();
-                            break;
-                    }
-                } catch (\Throwable $th) {
-                    echo 'Error', $th->getMessage();
-                }
-            }
 
             function errorCatcher(array $notif_array)
             {
@@ -134,7 +82,7 @@
                     elseif (strpos(($_SESSION['position']), 'eacher')) :
                         $esatForm2qry = 'SELECT * FROM `esat2_objectivest_tbl` WHERE `user_id` ="' . $user_id . '"';
                     else :
-                        echo 'Error in isTakenEsat function';
+                        return false;
                     endif;
 
                     //CHECK IF user has esat!
@@ -180,21 +128,23 @@
             {
                 $notif_array = [];
                 //THIS WILL CHECK THE POSITION OF THE USER
-                if (!empty($position)) :
+                if (isset($position)) :
                     if (strpos(($position), 'aster')) :
-                    //$devplanmt_a1_strength_tbl = 'SELECT * FROM `devplanmt_a1_strength_tbl` WHERE `user_id`= "' . $user_id . '"';
-                    //$devplanmt_a2_devneeds_tbl = 'SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `user_id`= "' . $user_id . '"';
-                    //$devplanmt_a3_actionplan_tbl = 'SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `user_id`= "' . $user_id . '"';
-                    //$devplanmt_b1_strength_tbl = 'SELECT * FROM `devplanmt_b1_strength_tbl` WHERE `user_id`= "' . $user_id . '"';
-                    //$devplanmt_b2_devneeds_tbl = 'SELECT * FROM `devplanmt_b2_devneeds_tbl` WHERE `user_id`= "' . $user_id . '"';
-                    //$devplanmt_b3_actionplan_tbl = 'SELECT * FROM `devplanmt_b3_actionplan_tbl` WHERE `user_id`= "' . $user_id . '"';
-                    //$devplanmt_c_tbl = 'SELECT * FROM `devplan_c_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $devplanmt_a1_strength_tbl = 'SELECT * FROM `devplanmt_a1_strength_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $devplanmt_a2_devneeds_tbl = 'SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $devplanmt_a3_actionplan_tbl = 'SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $devplanmt_b1_strength_tbl = 'SELECT * FROM `devplanmt_b1_strength_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $devplanmt_b2_devneeds_tbl = 'SELECT * FROM `devplanmt_b2_devneeds_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $devplanmt_b3_actionplan_tbl = 'SELECT * FROM `devplanmt_b3_actionplan_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $devplanmt_c_tbl = 'SELECT * FROM `devplan_c_tbl` WHERE `user_id`= "' . $user_id . '"';
 
                     elseif (strpos(($_SESSION['position']), 'eacher')) :
-                    //$devplan_t_strength = 'SELECT * FROM `esat2_objectivest_tbl` WHERE `user_id` ="' . $user_id . '"';
+                        $devplan_t_strength = 'SELECT * FROM `esat2_objectivest_tbl` WHERE `user_id` ="' . $user_id . '"';
                     else :
                         echo 'Error in isTakenEsat function';
                     endif;
+                else :
+                    echo '<p class="red-notif-border"> Error! </p>';
                 endif;
             }
 
@@ -251,5 +201,85 @@
                     $_SESSION['start_day'] = substr($startdate, 8, 2) . BR;
                 else :
                     echo '<p class="red-notif-border" >No Active School Year!</p> ';
+                endif;
+            }
+
+            function showRatee($position)
+            {
+                if (isset($position)) :
+                    if (strpos($position, 'rincipal')) :
+                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+                    elseif (strpos($position, 'aster')) :
+                        return  'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '"  AND position IN ("Teacher I", "Teacher II", "Teacher III") ';
+                    else :
+                        return false;
+                        exit();
+                    endif;
+                else :
+                    echo '<p class="red-notif-border">You dont have a position!</p>';
+                endif;
+            }
+
+            function showNoRater($position)
+            {
+                if (isset($position)) :
+                    if (strpos($position, 'rincipal')) :
+                        return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' "';
+                    elseif (strpos($position, 'aster')) :
+                        return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' "';
+                    else :
+                        return false;
+                    endif;
+                else :
+                    echo '<p class="red-notif-border">You dont have a position!</p>';
+                endif;
+            }
+
+            function devplanUSerFilter($position)
+            {
+                if (isset($position)) :
+                    if (!strpos($position, 'aster') || (strpos($position, 'eacher'))) :
+                        echo '<p class="red-notif-border">Master Teachers and Teachers only who can create their development plan!</p>';
+                    else :
+                        echo '<p class="red-notif-border">You dont have permission to rate!</p>';
+                    endif;
+                else :
+                    echo '<p class="red-notif-border">You dont have a position!</p>';
+                endif;
+            }
+
+            function directLastPage()
+            {
+                echo '<center/><form><input type="button" class="btn btn-danger" value="Go back" onClick="javascript:history.go(-1)"></form>' . BR;
+            }
+
+            /* THIS FUNCTION WILL REDIRECT THE USER TO THEIR RESPECTIVE DASHBOARD AFTER LOGGING IN*/
+            function redirectToDashboard($position)
+            {
+                if (isset($position)) :
+                    if (strpos($position, 'dmin')) :
+                        header('location:dbAdmin.php');
+                        exit();
+                    elseif (strpos($position, 'uper')) :
+                        header('location:dbAsstSuperintendent.php');
+                        exit();
+                    elseif (strpos($position, 'rincipal')) :
+                        header('location:dbPrincipal.php');
+                        exit();
+                    elseif (strpos($position, 'chool Heads')) :
+                        header('location:dbSchoolHead.php');
+                        exit();
+                    elseif (strpos($position, 'aster')) :
+                        header('location:dbMasterTeacher.php');
+                        exit();
+                    elseif (strpos($position, 'eacher')) :
+                        header('location:dbTeacher.php');
+                        exit();
+                    else :
+                        echo '<p class="red-notif-border"><b>Error: </b> You dont have position yet.</p>';
+                        return false;
+                    endif;
+                else :
+                    return false;
                 endif;
             }
