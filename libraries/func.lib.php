@@ -91,33 +91,18 @@
                     if (!$esat1) :
                         //echo '<p class="red-notif-border">No Result!</p>';
                         array_push($notif_array, '<li>You\'ve not taken the E-SAT PART 1 yet!</li>');
-                    // else :
-                    //     // foreach ($esat1 as $esat1user) :
-                    //     //     $esat1user['user_id'] . '<br/>';
-                    //     // endforeach;
-                    //     return true;
                     endif;
 
                     //THIS WILLCHECK IF THE USER TAKEN ESAT 1
                     $esat2 = fetchAll($dbcon, $esatForm2qry);
                     if (!$esat2) :
                         array_push($notif_array, '<li>You\'ve not taken the E-SAT PART 2 yet!</li>');
-                    // else :
-                    //     // foreach ($esat2 as $esat2user) :
-                    //     //     $esat2user['user_id'] . '<br/>';
-                    //     // endforeach;
-                    //     return true;
                     endif;
 
                     $esat3 = fetchAll($dbcon, $esatForm3qry);
                     if (!$esat3) :
                         //echo '<p class="red-notif-border">No Result!</p>';
                         array_push($notif_array, '<li>You\'ve not taken the E-SAT PART 3 yet!</li>');
-                    // else :
-                    //     // foreach ($esat3 as $esat3user) :
-                    //     //     $esat3user['user_id'] . '<br/>';
-                    //     // endforeach;
-                    //     return true;
                     endif;
 
                     return $notif_array;

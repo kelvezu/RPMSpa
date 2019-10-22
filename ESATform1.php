@@ -1,6 +1,6 @@
   <?php
   include_once 'includes/header.php';
-  FilterUser\FilterUser::filterEsatUser($_SESSION['position']);
+  //FilterUser\FilterUser::filterEsatUser($_SESSION['position']);
   ?>
 
 
