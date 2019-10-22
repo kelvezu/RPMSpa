@@ -1,8 +1,6 @@
-    <?php
+<?php
     include_once 'includes/header.php';
-    $school_id = $_SESSION['school_id'];
-    $user_id = $_SESSION['user_id'];
-    $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
     ?>
 
     <body>
@@ -87,7 +85,7 @@
                                 <?php
 
                                 $teacherresults = fetchAll($dbcon, showNoRater($_SESSION['position']));
-                                if (isset($teacherresults)) :
+                                if (!isset($teacherresults)) :
                                     ?>
 
                                     <table class="table table-hover table-borderless">
