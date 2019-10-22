@@ -6,7 +6,7 @@
     ?>
 
     <body>
-        <div class="container breadcome-list shadow-reset">
+        <div class="container-fluid breadcome-list shadow-reset">
             <div class=" row">
                 <div class="col-sm-6">
                     <!-- With rater -->
@@ -87,7 +87,7 @@
                                 <?php
 
                                 $teacherresults = fetchAll($dbcon, showNoRater($_SESSION['position']));
-                                if (isset($teacherresults)) :
+                                if (!empty($teacherresults)) :
                                     ?>
 
                                     <table class="table table-hover table-borderless">
