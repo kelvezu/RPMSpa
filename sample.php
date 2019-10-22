@@ -1,6 +1,7 @@
 <?php
 
 use esat\ESAT;
+use FilterUser\FilterUser;
 use RPMSdb\RPMSdb;
 
 include 'includes/header.php';
@@ -78,8 +79,12 @@ include 'includes/header.php';
 // else :
 //     false;
 // endif;
-$total = RPMSDB::totalAllTeachers($conn);
-echo ($total);
+//echo $total = FilterUser::filterDevplan($conn, $_SESSION['position']) . BR;
+
+$tite = "cUnAnan CHRISTOPHER";
+echo  nameFormat($tite);
+
+
 ?>
 
 

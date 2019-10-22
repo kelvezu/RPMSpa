@@ -269,3 +269,31 @@
                     return false;
                 endif;
             }
+
+            function positionFormat($position)
+            {
+                if (isset($position)) :
+                    $smallcaps = strtolower($position);
+                    if (stripos(($position), 'aster')) :
+                        $raw = substr($position, 15);
+                        $raw_title = substr($smallcaps, 0, 15);
+                        return ucwords($raw_title) . ' ' . strtoupper($raw);
+
+                    elseif (stripos(($position), 'eacher')) :
+                        $raw = substr($position, 7);
+                        $raw_title = substr($smallcaps, 0, 7);
+                        return ucwords($raw_title) . ' ' . strtoupper($raw);
+                    else :
+                        // return ucwords($smallcaps);
+                        echo 'error';
+                    endif;
+                else :
+                    return false;
+                endif;
+            }
+
+            function nameFormat($name)
+            {
+                $smallcaps = strtolower($name);
+                return ucwords($smallcaps);
+            }

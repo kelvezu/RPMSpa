@@ -71,8 +71,6 @@ class FilterUser
             else : return false;
             endif;
 
-
-
         else :
             echo '<p class="red-notif-border">You dont have permission to take ESAT!</p>';
             directLastPage();
@@ -115,7 +113,6 @@ class FilterUser
             else : return false;
             endif;
 
-
         else :
             echo '<p class="red-notif-border">You dont have permission to take ESAT!</p>';
             directLastPage();
@@ -154,6 +151,19 @@ class FilterUser
             directLastPage();
             include 'includes/footer.php';
             die();
+        endif;
+    }
+
+    public static function filterDevplan($conn, $position)
+    {
+        if ($position === "Admin" || $position === "School Head") :
+            return  'school heads';
+        elseif (strpos(($position), 'aster')) :
+            return 'Master Teacher';
+        elseif (strpos(($position), 'eacher')) :
+            return 'Teacher';
+        else :
+            return '<p class="red-notif-border">You are not allowed! </p>';
         endif;
     }
 }
