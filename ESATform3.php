@@ -1,6 +1,6 @@
 <?php
 include 'includes/header.php';
-FilterUser\FilterUser::filterEsatUser($_SESSION['position']);
+FilterUser\FilterUser::filterEsatUser($conn, $_SESSION['position']);
 
 //includes/processESATsurvey.php
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));

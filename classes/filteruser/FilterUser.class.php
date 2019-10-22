@@ -20,7 +20,7 @@ class FilterUser
 
                 echo '<div class="container" style="padding: 50px;">
                 <div class="col-sm" style="width="2px";">
-                <p class="">"' . $check_e1_t . '"</p>
+                <p class="">" tae"</p>
                 <div class="progress">
                 <div 
                 class="progress-bar progress-bar-success" 
@@ -111,7 +111,7 @@ class FilterUser
 
     public static function filterEsatT($position)
     {
-        if (!isset($position)) :
+        if (isset($position)) :
             if ((!strpos($position, 'eacher'))) :
                 echo '<p class="red-notif-border">You dont have to take ESAT!</p>';
                 directLastPage();

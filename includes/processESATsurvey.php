@@ -21,9 +21,9 @@
             $curriclass = $_POST['curriclass'];
             $region = $_POST['region'];
 
-            $query = "INSERT INTO esat1_demographics_tbl(user_id, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school) VALUES ('$user_id','$age','$gender','$status','$position','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school')";
+            $query = "INSERT INTO esat1_demographics_tbl(`user_id`, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school) VALUES ('$user_id','$age','$gender','$status','$position','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school')";
             if ($query_run = mysqli_query($conn, $query)) :
-                if ($position == "Teacher I" || $position == "Teacher II" || $position == "III") :
+                if ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
                     header('location:../esatform2t.php');
                     exit();
                 elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
