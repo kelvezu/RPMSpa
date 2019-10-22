@@ -117,15 +117,15 @@ class RPMSdb
         endif;
     }
 
-    public static function totalTCompleteESAT($conn)
-    {
-        $esat3 = teachersNoEsat3($conn);
-        $esat2 =  teachersNoEsat2($conn);
-        $esat1 =  teachersNoEsat1($conn);
-        if ($esat1 and $esat2 and $esat3) :
-            return 'true';
-        else :
-            return false;
-        endif;
-    }
+    // public static function totalTCompleteESAT($conn)
+    // {
+    //     $esat3 = teachersNoEsat3($conn);
+    //     $esat2 =  teachersNoEsat2($conn);
+    //     $esat1 =  teachersNoEsat1($conn);
+    //     if ($esat1 and $esat2 and $esat3) :
+    //         return 'true';
+    //     else :
+    //         return false;
+    //     endif;
+    // }
 }
