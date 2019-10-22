@@ -158,9 +158,9 @@ class FilterUser
     {
         if ($position === "Admin" || $position === "School Head") :
             return  'school heads';
-        elseif (strpos(($position), 'aster')) :
+        elseif (stripos(($position), 'aster')) :
             return 'Master Teacher';
-        elseif (strpos(($position), 'eacher')) :
+        elseif (stripos(($position), 'eacher')) :
             return 'Teacher';
         else :
             return '<p class="red-notif-border">You are not allowed! </p>';

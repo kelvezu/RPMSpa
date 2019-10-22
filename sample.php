@@ -80,9 +80,16 @@ include 'includes/header.php';
 //     false;
 // endif;
 //echo $total = FilterUser::filterDevplan($conn, $_SESSION['position']) . BR;
-
-$tite = "cUnAnan CHRISTOPHER";
-echo  nameFormat($tite);
+echo 'TOTAL OF NO T = ' . RPMSdb::totalTeachers($conn) . BR;
+echo 'TOTAL OF NO MT = ' . RPMSdb::totalMasterTeachers($conn) . BR;
+echo 'TOTAL OF NO MT W/ NO ESAT1 = ' . RPMSdb::masterteachersNoEsat1($conn) . BR;
+echo 'TOTAL OF NO T W/ NO ESAT1 = ' . RPMSdb::teachersNoEsat1($conn) . BR;
+echo 'TOTAL OF NO MT W/ NO ESAT1 = ' . RPMSdb::masterteachersNoEsat1($conn) . BR;
+echo 'TOTAL OF NO T W/ NO ESAT2 = ' . RPMSdb::teachersNoEsat2($conn) . BR;
+echo 'TOTAL OF NO MT W/ NO ESAT2 = ' . RPMSdb::masterteachersNoEsat2($conn) . BR;
+echo 'TOTAL OF NO T W/ NO ESAT3= ' . RPMSdb::teachersNoEsat3($conn) . BR;
+echo 'TOTAL OF NO MT W/ NO ESAT3 = ' . RPMSdb::masterteachersNoEsat3($conn) . BR;
+echo 'TOTAL OF NO OF COMPLETED E-SAT = ' . RPMSdb::totalTCompleteESAT($conn) . BR;
 
 
 ?>
