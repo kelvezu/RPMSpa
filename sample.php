@@ -1,6 +1,6 @@
 <?php
 
-
+use esat\ESAT;
 
 include 'includes/header.php';
 
@@ -34,29 +34,54 @@ include 'includes/header.php';
 // showNoRater($position);
 
 
-$person = [
-    'name' => 'Raymond',
-    'ign' => 'KELVEZU',
-    'game' => 'Crossfire'
-];
+// $person = [
+//     'name' => 'Raymond',
+//     'ign' => 'KELVEZU',
+//     'game' => 'Crossfire'
+// ];
 
-foreach ($person as $description => $value) :
+// foreach ($person as $description => $value) :
+//     
+?>
+<ul>
+    <li><b><?php //$description 
+            ?> :</b> <?php //$value 
+                        ?></li>
+    <?php //endforeach; 
     ?>
-    <ul>
-        <li><b><?= $description ?> :</b> <?= $value ?></li>
-    <?php endforeach; ?>
-    </ul>
+</ul>
 
-    <?php
-    $acc_arr = showAccountDB($conn);
-    foreach ($acc_arr as $acc_arrs) :
-        ?>
-        <li><?php var_dump($acc_arrs);
+<?php
+//     $acc_arr = showAccountDB($conn);
+//     foreach ($acc_arr as $acc_arrs) :
+//         
+?>
+<li><?php //var_dump($acc_arrs);    
 
-                ?></li>
-    <?php
+    //                 
+    ?></li>
+<?php
+//     endforeach;
+
+
+// $esat = ESAT::esatStatus($conn, $_SESSION['user_id'], $_SESSION['position']);
+// var_dump($esat);
+// echo "<ul>";
+// foreach ($esat as $result) :
+
+$sample = FilterUser\FilterUser::filterEsatUser($conn, $position);
+
+if ($sample) :
+    foreach ($sample as $res) :
+        echo $res;
     endforeach;
+else :
+    false;
+endif;
+?>
 
 
 
-    include 'includes/footer.php';
+<?php //echo "</ul>";
+//endforeach; -->
+include 'includes/footer.php';  ?>
