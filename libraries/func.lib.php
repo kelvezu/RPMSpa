@@ -103,6 +103,7 @@
                     if (!$esat3) :
                         //echo '<p class="red-notif-border">No Result!</p>';
                         array_push($notif_array, '<li>You\'ve not taken the E-SAT PART 3 yet!</li>');
+
                     endif;
 
                     return $notif_array;
@@ -156,7 +157,7 @@
                 if (isset($position)) :
                     if (strpos($position, 'aster')) :
                         echo "Teachers";
-                    elseif (strpos($position, 'rincipal') || strpos($position, 'uper') || strpos($position, 'heads')) :
+                    elseif (strpos($position, 'eacher')) :
                         echo 'Master Teachers';
                     else :
                         echo 'Employees';
@@ -192,10 +193,10 @@
             function showRatee($position)
             {
                 if (isset($position)) :
-                    if (strpos($position, 'rincipal') ||strpos($position, 'heads') ) :
-                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND status = "Active"';
+                    if (strpos($position, 'rincipal')) :
+                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
                     elseif (strpos($position, 'aster')) :
-                        return  'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '"  AND position IN ("Teacher I", "Teacher II", "Teacher III") AND status = "Active" ';
+                        return  'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '"  AND position IN ("Teacher I", "Teacher II", "Teacher III") ';
                     else :
                         return false;
                         exit();
@@ -209,9 +210,9 @@
             {
                 if (isset($position)) :
                     if (strpos($position, 'rincipal')) :
-                        return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' " AND status = "Active"';
+                        return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' "';
                     elseif (strpos($position, 'aster')) :
-                        return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' " AND status = "Active"';
+                        return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' "';
                     else :
                         return false;
                     endif;

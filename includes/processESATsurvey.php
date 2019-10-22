@@ -1,6 +1,7 @@
         <?php
         include_once 'conn.inc.php';
         include_once '../libraries/func.lib.php';
+        $status = "Active";
 
         //ESAT FORM 1
 
@@ -10,7 +11,7 @@
             $school = $_POST['school_id'];
             $age = $_POST['age'];
             $gender = $_POST['gender'];
-            $status = $_POST['status'];
+            $empstatus = $_POST['status'];
             $position = $_POST['position'];
             $highest_degree  = $_POST['hdo'];
             $course  = $_POST['course'];
@@ -21,7 +22,8 @@
             $curriclass = $_POST['curriclass'];
             $region = $_POST['region'];
 
-            $query = "INSERT INTO esat1_demographics_tbl(`user_id`, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school) VALUES ('$user_id','$age','$gender','$status','$position','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school')";
+
+            $query = "INSERT INTO esat1_demographics_tbl(`user_id`, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school,`status`) VALUES ('$user_id','$age','$gender','$empstatus','$position','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school','$status')";
             if ($query_run = mysqli_query($conn, $query)) :
                 if ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
                     header('location:../esatform2t.php');
@@ -51,7 +53,7 @@
             $position = $_POST['position'];
 
             for ($count = 0; $count < count($kra_id); $count++) {
-                $conn->query('INSERT INTO esat2_objectivest_tbl(user_id,kra_id, tobj_id, lvlcap, priodev,sy,position,school)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $tobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '")') or die($conn->error);
+                $conn->query('INSERT INTO esat2_objectivest_tbl(user_id,kra_id, tobj_id, lvlcap, priodev,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $tobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
             }
             header('location:../ESATform3.php');
         endif;
@@ -70,7 +72,7 @@
             $position = $_POST['position'];
 
             for ($count = 0; $count < count($kra_id); $count++) {
-                $conn->query('INSERT INTO esat2_objectivesmt_tbl(user_id,kra_id, mtobj_id, lvlcap, priodev,sy,position,school)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $mtobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '")') or die($conn->error);
+                $conn->query('INSERT INTO esat2_objectivesmt_tbl(user_id,kra_id, mtobj_id, lvlcap, priodev,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $mtobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
             }
             header('location:../ESATform3.php');
         endif;
@@ -87,7 +89,7 @@
             $position = $_POST['position'];
 
             for ($count = 0; $count < count($user_id); $count++) {
-                $conn->query('INSERT INTO esat3_core_behavioral_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '")') or die($conn->error);
+                $conn->query('INSERT INTO esat3_core_behavioral_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
             }
             directToCharts($position);
         endif;

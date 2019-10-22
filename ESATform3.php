@@ -1,8 +1,7 @@
 <?php
 include 'includes/header.php';
-FilterUser\FilterUser::filterEsatUser($conn, $_SESSION['position']);
+$verifyEsat = FilterUser\FilterUser::filterEsatCbc($conn, $position);
 
-//includes/processESATsurvey.php
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR CORE BEHAVIORAL COMPETENCIES 
 $result = $conn->query('SELECT * FROM core_behavioral_tbl')  or die($conn->error);

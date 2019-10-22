@@ -13,14 +13,12 @@ if (isset($_POST['btn-t'])) :
         $query_run = updateAll($conn, $query);
     }
     if ($query_run) :
-        header('location:selectTratee.php?nasend');
+        header('location:selectTratee.php');
+        exit();
     else :
-        header('location:../selectTratee.php?error=');
-
+        header('location:../selectTratee.php');
+        exit();
     endif;
-else :
-    echo 'error';
-
 endif;
 
 if (isset($_POST['remove'])) :
@@ -29,10 +27,12 @@ if (isset($_POST['remove'])) :
     $query = 'UPDATE account_tbl SET rater = null WHERE user_id = "' . $remove_user . '"  ';
     $remove_query_run = updateAll($conn, $query);
 
-    if ($query_run) :
+    if ($remove_query_run) :
         header('location:selectTratee.php?nasend');
+        exit();
     else :
-        header('location:../selectTratee.php?error=');
+        header('location:../selectTratee.php');
+        exit();
     endif;
 
 else :

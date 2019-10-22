@@ -1,6 +1,7 @@
 <?php
 include_once 'includes/header.php';
-FilterUser\FilterUser::filterEsatT($_SESSION['position']);
+FilterUser\FilterUser::filterEsatT($conn, $_SESSION['position']);
+
 
 $kra_num = 0;
 $tobj_num = 1;

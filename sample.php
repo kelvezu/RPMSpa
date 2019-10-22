@@ -1,6 +1,7 @@
 <?php
 
 use esat\ESAT;
+use RPMSdb\RPMSdb;
 
 include 'includes/header.php';
 
@@ -69,15 +70,16 @@ include 'includes/header.php';
 // echo "<ul>";
 // foreach ($esat as $result) :
 
-$sample = FilterUser\FilterUser::filterEsatUser($conn, $position);
-
-if ($sample) :
-    foreach ($sample as $res) :
-        echo $res;
-    endforeach;
-else :
-    false;
-endif;
+// $verifyEsat = FilterUser\FilterUser::filterEsatUser($conn, $position);
+// if ($sample) :
+//     foreach ($verifyEsat as $verf) :
+//         echo $verf;
+//     endforeach;
+// else :
+//     false;
+// endif;
+$total = RPMSDB::totalAllTeachers($conn);
+echo ($total);
 ?>
 
 

@@ -1,7 +1,6 @@
   <?php
   include 'includes/header.php';
-  FilterUser\FilterUser::filterEsatMT($_SESSION['position']);
-
+  FilterUser\FilterUser::filterEsatMT($conn, $_SESSION['position']);
   $kra_num = 0;
   $tobj_num = 1;
   $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
