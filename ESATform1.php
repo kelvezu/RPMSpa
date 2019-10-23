@@ -80,12 +80,9 @@
 
       <select name="position" id="" class="form-control">
         <?php
-        $conn = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-        $query = 'SELECT * FROM position_tbl';
-        $positions = fetchAll($conn, $query);
-        if (count($positions) > 0) :
-          foreach ($positions as $position) :
-            ?>
+        $positions = positionQuery($conn, $_SESSION['position']);
+        if (!empty($positions)) :
+          foreach ($positions as $position) : ?>
             <option value="<?php echo $position['position_name'] ?>"><?php echo $position['position_name'] ?></option>
           <?php
             endforeach;
@@ -98,6 +95,7 @@
       </select>
     </div>
   </div>
+
 
   <div class="container">
     <div class="breadcome-list shadow-reset">

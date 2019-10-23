@@ -302,3 +302,34 @@
             {
                 echo $firstname . ' ' . substr($middlename, 0, 1) . '. ' . $surname;
             }
+
+            /* 
+            USED IN: ESAT FORM 1
+            OUTPUT: ARRAY OF RESULTS
+            */
+            function positionQuery($conn, $position)
+            {
+                $result_arr = [];
+                if (isset($position)) :
+                    if (stripos(($position), 'aster')) :
+                        $query =  'SELECT * FROM position_tbl WHERE  position_name IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+                    elseif (stripos(($position), 'eacher')) :
+                        $query =  'SELECT * FROM position_tbl WHERE  position_name IN ("Teacher I", "Teacher II", "Teacher III")';
+                    else :
+                        return false;
+                    endif;
+                else :
+                    $query =  'SELECT * FROM position_tbl WHERE  position_name IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","Teacher I", "Teacher II", "Teacher III")';
+                endif;
+
+                $results = mysqli_query($conn, $query);
+                if ($results) :
+                    foreach ($results as $result) :
+                        array_push($result_arr, $result);
+                    endforeach;
+                    return $result_arr;
+                else :
+
+                    return false;
+                endif;
+            }
