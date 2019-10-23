@@ -297,3 +297,8 @@
                 $smallcaps = strtolower($name);
                 return ucwords($smallcaps);
             }
+
+            function fullnameFormat($firstname, $middlename, $surname)
+            {
+                echo $firstname . ' ' . substr($middlename, 0, 1) . '. ' . $surname;
+            }
