@@ -236,7 +236,7 @@
 
             function directLastPage()
             {
-                echo '<center/><form><input type="button" class="btn btn-danger" value="Go back" onClick="javascript:history.go(-1)"></form>' . BR;
+                echo '<input type="button" class="btn btn-danger" value="Go back" onClick="javascript:history.go(-1)">';
             }
 
             /* THIS FUNCTION WILL REDIRECT THE USER TO THEIR RESPECTIVE DASHBOARD AFTER LOGGING IN*/

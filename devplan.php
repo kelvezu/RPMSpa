@@ -1,5 +1,7 @@
     <?php
 
+    use DevPlan\DevPlan;
+
     include_once 'includes/header.php';
     // A.CHECK IF USER DID NOT TAKEN ESAT
     $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
@@ -20,9 +22,9 @@
             <main>
                 <div class="container ">
                     <div class="breadcome-list shadow-reset">
-                        <h2 class="text-center"><strong>PART IV: Development Plan</strong></h2>
+                        <h2 class="text-center"><strong>PART IV: General Development Plan</strong></h2>
                         <form action="includes/processdevplan.php" method="post" class="form-group">
-                            <input type="hidden" name="sy" value=<?php echo $_SESSION['sy_id']; ?> />
+                            <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?> />
                             <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
                             <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>" />
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'] ?>" />
@@ -36,6 +38,7 @@
                                         <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Strengths</label></div>
                                         <ul class="ul">
                                             <?php
+                                                    $esatForm2_LvlCap_results = DevPlan::showStrDevplan($conn);
                                                     /* TURN THIS INTO FUNCTION */
                                                     if (isset($esatForm2_LvlCap_results)) :
                                                         foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
@@ -48,7 +51,7 @@
                                                     <ul class="ul-square">
                                                         <?php
 
-                                                                        $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivesmt_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $LvlCap_result['sy'] . '" AND esat2_objectivesmt_tbl.school = "' . $LvlCap_result['school'] . '"';
+                                                                        $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivesmt_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $LvlCap_result['school'] . '" AND esat2_objectivesmt_tbl.status = "Active" AND esat2_objectivesmt_tbl.lvlcap >= 3 LIMIT 2';
                                                                         $mtobjLvlcapResults = fetchAll($dbcon, $queryMTobjlvlcap);
                                                                         foreach ($mtobjLvlcapResults as $mtobjLvlcap) :
                                                                             ?>
@@ -74,6 +77,7 @@
                                     <div class="bg-black"><label for="a_devneeds" class="form-control-label bg-black">Development Needs</label></div>
                                     <ul class="ul">
                                         <?php
+                                                $esatForm2_priodev_results = DevPlan::showPrioDevplan($conn);
                                                 if (count($esatForm2_priodev_results)) :
                                                     foreach ($esatForm2_priodev_results as $PrioDev_result) :
                                                         ?>
@@ -81,7 +85,7 @@
 
                                                 <ul class="ul-square">
                                                     <?php
-                                                                    $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '" AND user_id = "' . $PrioDev_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $PrioDev_result['sy'] . '" AND esat2_objectivesmt_tbl.school = "' . $PrioDev_result['school'] . '"';
+                                                                    $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '" AND user_id = "' . $PrioDev_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $PrioDev_result['school'] . '" AND esat2_objectivesmt_tbl.priodev >= 3 LIMIT 2';
                                                                     $mtobjPrioDevResults = fetchAll($dbcon, $queryMTobjpriodev);
                                                                     foreach ($mtobjPrioDevResults as $mtobjPriodev) :
                                                                         ?>
@@ -143,12 +147,13 @@
                                         <div class="bg-black"><label for="b_strength" class="form-control-label bg-black">Strengths</label></div>
                                         <ul class="ul">
                                             <?php
+                                                    $esatForm3_strength_results = DevPlan::showStrIndicator($conn);
                                                     if (isset($esatForm3_strength_results)) :
                                                         foreach ($esatForm3_strength_results as $cbc_strength) :
                                                             ?>
                                                     <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
                                                     <ul class="ul-square">
-                                                        <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioral_tbl.school = "' . $_SESSION['school_id'] . '"';
+                                                        <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioral_tbl.school = "' . $_SESSION['school_id'] . '" AND esat3_core_behavioral_tbl.status = "Active" AND cbc_score = 1 LIMIT 3';
                                                                         $indicatorStrengthResults = fetchAll($dbcon, $queryIndicatorStrength);
                                                                         foreach ($indicatorStrengthResults as $indicatorStrength) :
                                                                             ?>
@@ -170,7 +175,7 @@
                                     <div class="col-md-6">
                                         <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Development Needs</label></div>
                                         <ul class="ul">
-                                            <?php
+                                            <?php $esatForm3_devneeds_results = DevPlan::showDevNeedsIndicator($conn);
                                                     if (count($esatForm3_devneeds_results)) :
                                                         foreach ($esatForm3_devneeds_results as $cbc_devneeds) :
                                                             ?>
@@ -178,7 +183,7 @@
                                                     <li><b><?php echo $cbc_devneeds['cbc_name'] ?></b></li>
                                                     <ul class="ul-square">
                                                         <?php
-                                                                        $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $cbc_devneeds['sy'] . '" AND esat3_core_behavioral_tbl.school = "' . $cbc_devneeds['school'] . '"';
+                                                                        $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioral_tbl.* FROM esat3_core_behavioral_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioral_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioral_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioral_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioral_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioral_tbl.school = "' . $cbc_devneeds['school'] . '" AND esat3_core_behavioral_tbl.status = "Active" AND cbc_score = 0 LIMIT 2';
                                                                         $IndicatorDevNeedsResults = fetchAll($dbcon, $queryIndicatorDevneeds);
                                                                         foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
                                                                             ?>
@@ -230,17 +235,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div>
-                        <label for="learn-objectives" class="form-control-label">Feedback: </label>
-                        <textarea name="feedback" id="" cols="30" rows="10" class="form-control textarea" placeholder=" ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"></textarea>
-                    </div> -->
+                            <div>
+                                <label for="learn-objectives" class="form-control-label">Feedback: </label>
+                                <textarea name="feedback" id="" cols="30" rows="10" class="form-control textarea" placeholder=" _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"></textarea>
+                            </div>
                             <br>
                             <center>
                                 <div class="row">
                                     <div>
                                         <input type="submit" name="submit" class="btn btn-primary" value="Submit" />
                                         <input type="submit" name="save" class="btn btn-success" value="Save" />
-                                        <a href="includes/processdevplan.php?pos=<?php echo $_SESSION['position']; ?>" name="cancel" class="btn btn-danger">Cancel </a>
+                                        <?php directLastPage() ?>
                                     </div>
                                 </div>
                             </center>
