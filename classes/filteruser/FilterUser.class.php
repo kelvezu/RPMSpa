@@ -9,7 +9,7 @@ class FilterUser
     public static function filterEsatDemo($conn, $position)
     {
         if (isset($position)) :
-            if (strpos($position, 'rincipal') || (strpos($position, 'chool'))) :
+            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -42,7 +42,7 @@ class FilterUser
     public static function filterEsatT($conn, $position)
     {
         if (isset($position)) :
-            if (strpos($position, 'rincipal') || (strpos($position, 'chool'))) :
+            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -61,7 +61,7 @@ class FilterUser
                 $esat_objective_T_result = mysqli_query($conn, $esat_objective_T);
                 $check_e2_t = mysqli_num_rows($esat_objective_T_result);
                 if ($check_e2_t) :
-                    echo '<p class="green-notif-border">Youve already answer the ESAT Objectives!</p>';
+                    echo '<p class="green-notif-border">You have already answer the ESAT Objectives!</p>';
                     directLastPage();
                     include 'includes/footer.php';
                     die();
@@ -82,7 +82,7 @@ class FilterUser
     public static function filterEsatMT($conn, $position)
     {
         if (isset($position)) :
-            if (strpos($position, 'rincipal') || (strpos($position, 'chool'))) :
+            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -124,7 +124,7 @@ class FilterUser
     public static function filterEsatCbc($conn, $position)
     {
         if (isset($position)) :
-            if (strpos($position, 'rincipal') || (strpos($position, 'chool'))) :
+            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       

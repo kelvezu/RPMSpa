@@ -3,6 +3,20 @@
     $school_id = $_SESSION['school_id'];
     $user_id = $_SESSION['user_id'];
     $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+
+    $cotrating = mysqli_query($conn,'SELECT a_tcotrating_tbl.*,b_tcotrating_tbl.subject_id,b_tcotrating_tbl.gradelvltaught_id,b_tcotrating_tbl.comment FROM (a_tcotrating_tbl INNER JOIN b_tcotrating_tbl ON a_tcotrating_tbl.user_id = b_tcotrating_tbl.user_id AND a_tcotrating_tbl.obs_period = b_tcotrating_tbl.obs_period)') or die ($conn->error);
+        while ($resultcot = mysqli_fetch_array($cotrating)){
+            $rater = $resultcot['rater_id'];
+            $date = $resultcot['date'];
+            $tobserved = $resultcot['user_id'];
+            $obs_period = $resultcot['obs_period'];
+            $indicator_id = $resultcot['indicator_id'];
+            $tcotrating = $resultcot['tcotrating'];
+            $subject_id = $resultcot['subject_id'];
+            $gradelvltaught = $resultcot['gradelvltaught_id'];
+            $comment = $resultcot['comment'];
+        }
+
     ?>
 
     <!-- MODAL VIEW FOR RATING -->
@@ -16,21 +30,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <?php
-
-                    $resultquery = $conn->query('SELECT account_tbl.surname,account_tbl.firstname,account_tbl.middlename,tindicator_tbl.indicator_name,sy_tbl.sy_desc,a_tcotrating_tbl.* FROM (a_tcotrating_tbl  
-                    INNER JOIN account_tbl ON a_tcotrating_tbl.rater_id = account_tbl.user_id OR a_tcotrating_tbl.user_id = account_tbl.user_id
-                    INNER JOIN tindicator_tbl ON a_tcotrating_tbl.indicator_id = tindicator_tbl.indicator_id
-                    INNER JOIN sy_tbl ON a_tcotrating_tbl.sy = sy_tbl.sy_id) ')  or die($conn->error);
-                    while ($row = $resultquery->fetch_assoc()) :
-                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'];
-                        $date = $row['date'];
-                        $rater = $row['rater_id'];
-                        $indicator_id = $row['indicator_id'];
-                        $indicator = $row['indicator_name'];
-                    endwhile;
-
-                    ?>
+                   
 
                     <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br><br>
                     <h5><strong>COT-RPMS</strong></h5>
@@ -42,29 +42,37 @@
                     <h4>Rating Sheet</h4>
 
                 </div>
-                <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-                    <thead class="legend-control bg-success text-white ">
+                <table>
+ 
                         <tr>
-                            <th class="h6">OBSERVER</th>
+                            <td class="h5">OBSERVER</td>
+                            <td><?= $user_id ?? 'no name' ?></td>
                         </tr>
                         <tr>
-                            <th class="h6">DATE</th>
+                            <td class="h5">DATE</td>
+                            <td><?php echo $date; ?></td>
                         </tr>
                         <tr>
-                            <th class="h6">TEACHER OBSERVED</th>
+                            <td class="h5">TEACHER OBSERVED</td>
+                            <td><?php echo $tobserved; ?></td>
                         </tr>
                         <tr>
-                            <th class="h6"> SUBJECT</th>
+                            <td class="h5"> SUBJECT</td>
                         </tr>
                         <tr>
-                            <th class="h6"> GRADE LEVEL TAUGHT</th>
+                            <td class="h5"> GRADE LEVEL TAUGHT</td>
                         </tr>
                         <tr>
-                            <th class="h6">OBSERVATION PERIOD</th>
+                            <td class="h5">OBSERVATION PERIOD</td>
                         </tr>
+                </table>
+                    <br>
+                
+            <table class="table table-bordered" style="background-color: white; table-layout: 10;">
+                <thead class="legend-control bg-success text-white ">
 
-                        <tr>
-
+                
+                <tr>
                             <th>Indicator No</th>
                             <th>Indicator Name</th>
                             <th>COT Rating</th>
@@ -74,10 +82,11 @@
 
                     ?>
                     <tbody>
+
                         <tr>
-                            <th><?php echo $row['indicator_no']; ?></th>
-                            <th><?php echo $row['indicator_name']; ?></th>
-                            <th>
+                            <td><?php echo $indicator_id; ?></td>
+                           
+                            <td>
                                 <select name="rating">
                                     <option value="">--select--</option>
                                     <option value="3">3</option>
@@ -88,9 +97,10 @@
                                     <option value="3">NO*</option>
                                 </select>
 
-                            </th>
+                            </td>
 
                         </tr>
+                  
                     </tbody>
 
                     <?php

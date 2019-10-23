@@ -1,5 +1,6 @@
   <?php
   include_once 'includes/header.php';
+  RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
   FilterUser\FilterUser::filterEsatDemo($conn, $_SESSION['position']);
 
   ?>

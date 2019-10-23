@@ -2,6 +2,8 @@
 
 namespace RPMSdb;
 
+use mysqli;
+
 class RPMSdb
 {
     public static function totalAllTeachers($conn)
@@ -161,6 +163,48 @@ class RPMSdb
             return null;
         endif;
         exit;
+    }
+
+    /* FUNCTION THAT WILL CHECK IF ESAT IS COMPLETE */
+    public static function isEsatComplete($conn, $position)
+    {
+        if (isset($position)) :
+            if (stripos(($position), 'aster')) :
+                $esat2qry = 'SELECT * FROM `esat2_objectivesmt_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+            elseif (stripos(($position), 'eacher')) :
+                $esat2qry = 'SELECT * FROM `esat2_objectivest_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+            else : return false;
+            endif;
+
+            $esat1qry = 'SELECT * FROM esat1_demographics_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+            $esat3qry = 'SELECT * FROM esat3_core_behavioral_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+            $esat1result = mysqli_query($conn, $esat1qry);
+            $esat1res = mysqli_num_rows($esat1result);
+            $esat2result = mysqli_query($conn, $esat2qry);
+            $esat2res = mysqli_num_rows($esat2result);
+            $esat3result = mysqli_query($conn, $esat3qry);
+            $esat3res = mysqli_num_rows($esat3result);
+
+            if ($esat1res and $esat2res and $esat3res) :
+                echo '<p class="green-notif-border">You have already taken the ESAT.</p>';
+                directLastPage();
+                include 'includes/footer.php';
+                exit();
+            else :
+                return false;
+            endif;
+
+
+
+
+
+
+
+        else : return false;
+        endif;
     }
 
     // public static function totalTCompleteESAT($conn)

@@ -1,5 +1,6 @@
 <?php
 include 'includes/header.php';
+RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
 $verifyEsat = FilterUser\FilterUser::filterEsatCbc($conn, $position);
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));

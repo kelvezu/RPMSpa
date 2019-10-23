@@ -1,5 +1,6 @@
   <?php
   include 'includes/header.php';
+  RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
   FilterUser\FilterUser::filterEsatMT($conn, $_SESSION['position']);
   $kra_num = 0;
   $tobj_num = 1;
