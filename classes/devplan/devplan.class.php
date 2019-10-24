@@ -53,7 +53,7 @@ class DevPlan
     public static function showStrIndicator($conn)
     {
         $result_arr = [];
-        $qry = 'SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores, esat3_core_behavioral_tbl.* FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND esat3_core_behavioral_tbl.status = "Active" GROUP by core_behavioral_tbl.cbc_id HAVING SUM(esat3_core_behavioral_tbl.cbc_score) >= 3 ORDER BY CBC_SCORES DESC LIMIT 3';
+        $qry = 'SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores, esat3_core_behavioral_tbl.* FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND esat3_core_behavioral_tbl.status = "Active" AND  position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") GROUP by core_behavioral_tbl.cbc_id HAVING SUM(esat3_core_behavioral_tbl.cbc_score) >= 3 ORDER BY CBC_SCORES DESC LIMIT 3';
 
         $results = mysqli_query($conn, $qry);
         if (mysqli_num_rows($results)) :
@@ -68,7 +68,7 @@ class DevPlan
     public static function showDevNeedsIndicator($conn)
     {
         $result_arr = [];
-        $qry = 'SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores, esat3_core_behavioral_tbl.* FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND esat3_core_behavioral_tbl.status = "Active" GROUP by core_behavioral_tbl.cbc_id HAVING SUM(esat3_core_behavioral_tbl.cbc_score) ORDER BY CBC_SCORES  LIMIT 2';
+        $qry = 'SELECT core_behavioral_tbl.cbc_id,core_behavioral_tbl.cbc_name, SUM(esat3_core_behavioral_tbl.cbc_score) as CBC_scores, esat3_core_behavioral_tbl.* FROM (esat3_core_behavioral_tbl INNER JOIN core_behavioral_tbl on esat3_core_behavioral_tbl.cbc_id = core_behavioral_tbl.cbc_id) WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND esat3_core_behavioral_tbl.status = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") GROUP by core_behavioral_tbl.cbc_id HAVING SUM(esat3_core_behavioral_tbl.cbc_score) ORDER BY CBC_SCORES  LIMIT 2';
 
         $results = mysqli_query($conn, $qry);
         if (mysqli_num_rows($results)) :

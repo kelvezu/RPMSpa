@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) :
 
     $conn->query('INSERT INTO `devplanmt_b3_actionplan_tbl`(`user_id`, `rater_id`, `sy`, `school`, `position`, `b_learning_objectives`, `b_intervention`, `b_timeline`, `b_resources_needed`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $b_learning_objectives . '","' . $b_intervention . '","' . $b_timeline . '","' . $b_resources_needed . '")') or die($conn->error);
 
-    $conn->query('INSERT INTO `devplanmt_c_tbl`(`user_id`, `position`, `rater_id`, `approving_authority`, `sy`, `school_id`, `status`) VALUES ("' . $user_id . '","' . $position . '","' . $rater . '","' . $approving_authority . '","' . $sy . '","' . $school_id . '","' . $status . '")') or die($conn->error . "error in devplan_c_tbl");
+    $conn->query('INSERT INTO `devplanmt_c_tbl`(`user_id`, `position`, `rater_id`, `approving_authority`, `sy`, `school_id`, `status`) VALUES ("' . $user_id . '","' . $position . '","' . $rater . '","' . $approving_authority . '","' . $sy . '","' . $school_id . '","' . $status . '")') or die($conn->error . "error in devplanMT_c_tbl");
 
     echo 'complete!';
     pre_r($_POST['submit']);
@@ -67,10 +67,4 @@ endif;
 // IF USER PRESSED save BUTTON 
 if (isset($_POST['save'])) :
     echo 'na save hihi';
-endif;
-
-
-// IF USER PRESSED CANCEL BUTTON 
-if (isset($_GET['pos'])) :
-    directToDashboard($_GET['pos']);
 endif;
