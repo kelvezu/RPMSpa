@@ -44,7 +44,7 @@ class FilterUser
     public static function filterEsatT($conn, $position)
     {
         if (isset($position)) :
-            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
+            if (stripos($position, 'dmin')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -53,12 +53,12 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
-            elseif (strpos($position, 'aster')) :
+            elseif (stripos($position, 'aster')) :
                 echo '<p class="red-notif-border">This part of ESAT is for Teachers only!</p>';
                 directLastPage();
                 include 'includes/footer.php';
                 die();
-            elseif (strpos(($position), 'eacher')) :
+            elseif (stripos(($position), 'eacher')) :
                 $esat_objective_T = 'SELECT * FROM `esat2_objectivest_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_objective_T_result = mysqli_query($conn, $esat_objective_T);
                 $check_e2_t = mysqli_num_rows($esat_objective_T_result);
@@ -126,7 +126,7 @@ class FilterUser
     public static function filterEsatCbc($conn, $position)
     {
         if (isset($position)) :
-            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
+            if (stripos($position, 'dmin')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
