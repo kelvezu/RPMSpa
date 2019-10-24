@@ -16,7 +16,8 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
     <form action="includes/processESATsurvey.php" method="POST">
       <input type="hidden" name="sy" value=<?php echo $_SESSION['sy_id']; ?>>
       <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?>>
-      <input type="hidden" name="position" value=<?php echo $_SESSION['position']; ?>>
+      <input type="hidden" name="position" value="<?= $_SESSION['position'] ?>" />
+
       <strong>
         <h3> Self Assessment Tool Form / Part II / Teacher / Objectives</h3>
       </strong>
