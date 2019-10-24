@@ -165,6 +165,12 @@ class RPMSdb
         exit;
     }
 
+    public static function countTCompleteESAT($conn)
+    {
+        //$esat1qry = 
+
+    }
+
     /* FUNCTION THAT WILL CHECK IF ESAT IS COMPLETE */
     public static function isEsatComplete($conn, $position)
     {

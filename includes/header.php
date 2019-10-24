@@ -308,8 +308,8 @@ $position = $_SESSION['position'];
                                         </form> -->
                                         <div class="row">
                                             <div>
-                                                <b>School Year: </b><?php echo $_SESSION['active_sy'] ?? '<p class="red-notif-border"> No Active School Year! </p>';  ?>
-                                                <b>SY start: </b><?php echo ($_SESSION['start_date']) ?? '<p class="tomato-color">Error!</p>'; ?> <b>SY end: </b><?php echo ($_SESSION['end_date']) ?? '<p class="tomato-color">Error!</p>'; ?>
+                                                <b>School Year: </b><?php echo $_SESSION['active_sy'] ?? '<p class="tomato-color"> No Active School Year! </p>';  ?>
+                                                <b>SY start: </b><?php echo ($_SESSION['start_date']) ?? '<p class="tomato-color">No start date!</p>'; ?> <b>SY end: </b><?php echo ($_SESSION['end_date']) ?? '<p class="tomato-color">No end date!</p>'; ?>
                                             </div>
                                         </div>
                                     </div>
@@ -328,5 +328,26 @@ $position = $_SESSION['position'];
                 </div>
             </div>
         </div>
+
+        <?php if (empty($_SESSION['active_sy_id'])) :
+
+            if ($_SESSION['position']) :
+                $position = $_SESSION['position'];
+                if (stripos($position, 'dmin')) :
+
+                else :
+                    false;
+                endif;
+            else :
+                return false;
+            endif;
+
+            echo '<p class="red-notif-border"> There is no Active School Year! </p>';
+            include 'includes/footer.php';
+            die();
+        else :
+            return false;
+        endif;
+        ?>
 
         <!-- Breadcome End-->

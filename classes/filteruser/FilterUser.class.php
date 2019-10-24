@@ -9,7 +9,7 @@ class FilterUser
     public static function filterEsatDemo($conn, $position)
     {
         if (isset($position)) :
-            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
+            if (stripos($position, 'dmin')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -18,7 +18,7 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
-            elseif ((strpos($position, 'eacher'))) :
+            elseif (stripos($position, 'eacher')) :
                 $esat_demo_T = 'SELECT * FROM esat1_demographics_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_demo_T_result = mysqli_query($conn, $esat_demo_T);
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
@@ -26,7 +26,9 @@ class FilterUser
                     echo  '<p class="green-notif-border">You have already taken the ESAT Demographics!</p>';
                     include 'includes/footer.php';
                     exit();
-                else : return false;
+                else :
+                    return false;
+
                 endif;
             else :
                 false;

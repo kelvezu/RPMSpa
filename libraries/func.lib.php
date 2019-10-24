@@ -170,7 +170,7 @@
             function activeSY(mysqli $dbcon)
             {
                 $syQry = 'SELECT * FROM sy_tbl WHERE `status` = "Active" ';
-                $syResult = fetchAll($dbcon, $syQry);
+                $syResult = mysqli_query($dbcon, $syQry);
 
                 if ($syResult) :
                     foreach ($syResult as $sy_item) :
@@ -180,13 +180,20 @@
                         $_SESSION['active_sy'] = $sy_item['sy_desc'] . '<br>';
                         $_SESSION['sy_status'] = $sy_item['status'] . '<br>';
                     endforeach;
-                    $startdate = $_SESSION['start_date'];
-
+                    $startdate = $_SESSION['start_date'] ?? null;
                     $_SESSION['start_year'] = substr($startdate, 0, 4) . BR;
                     $_SESSION['start_month'] = substr($startdate, 5, 2) . BR;
                     $_SESSION['start_day'] = substr($startdate, 8, 2) . BR;
                 else :
-                    echo '<p class="red-notif-border" >No Active School Year!</p> ';
+                    $_SESSION['active_sy_id'] = 'none';
+                    $_SESSION['start_date'] =  'none';
+                    $_SESSION['end_date'] =  'none';
+                    $_SESSION['active_sy'] = 'none';
+                    $_SESSION['sy_status'] =  'none';
+                    $startdate = 'none';
+                    $_SESSION['start_year'] = 'none';
+                    $_SESSION['start_month'] = 'none';
+                    $_SESSION['start_day'] = 'none';
                 endif;
             }
 
@@ -331,5 +338,14 @@
                 else :
 
                     return false;
+                endif;
+            }
+
+            function checkSY($active_sy)
+            {
+                if (isset($active_sy)) :
+                    echo '<p class="red-notif-border"> There is no Active School Year! </p>';
+                    include 'includes/footer.php';
+                    die();
                 endif;
             }
