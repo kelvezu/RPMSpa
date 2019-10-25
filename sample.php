@@ -161,8 +161,6 @@ echo displayName($conn, $_SESSION['user_id']);
 
 ?>
 
-
-
 <?php //echo "</ul>";
 //endforeach; -->
 include 'includes/footer.php';  ?>

@@ -8,10 +8,6 @@ if (isset($_GET['delete'])) {
     $record = mysqli_fetch_array($query);
     $position_name = $record['position_name'];
 }
-
-
-
-
 ?>
 
 <main>
