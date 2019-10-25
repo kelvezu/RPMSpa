@@ -152,12 +152,12 @@ endif;
 // $query = $conn->query('INSERT INTO notification_tbl(category,title,`message`,`status`,`user_id`,rater_id,position,sy_id,school_id) VALUES ("' . $category . '","' . $title . '","' . $msg . '","' . $status . '","' . $adder_id . '","' . $adder_id . '","' . $adder_position . '","' . $sy_id . '","' . $school_id . '")') or die($conn->error);
 
 
-<<<<<<< HEAD
+
 echo displayName($conn, $_SESSION['user_id']);
 
-=======
+
 // echo $_SESSION['fullname'];
->>>>>>> 540a9359531577a64ab9552f481adc5933d7c700
+
 
 ?>
 
