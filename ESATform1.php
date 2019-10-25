@@ -21,7 +21,7 @@
 
 
   <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?>>
-  <input type="hidden" name="sy" value=<?php echo $_SESSION['sy_id']; ?>>
+  <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?>>
   <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?>>
 
 

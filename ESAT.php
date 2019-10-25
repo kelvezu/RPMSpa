@@ -559,8 +559,8 @@ include 'includes/header.php';
 
                     <td><?php echo $row['totalyear_name'] ?></td>
                     <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                    <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                    <a href="delete/deletetotalyear.php?delete=<?php echo $row['totalyear_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Remove</a></td>
+                    <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                    <a href="delete/deletetotalyear.php?delete=<?php echo $row['totalyear_id'];?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
 
                     <?php elseif($row['status'] == "Inactive"): ?>
   <td><strike><?php echo $row['totalyear_name'] ?></strike></td>
@@ -608,8 +608,8 @@ include 'includes/header.php';
                <tr><?php if($row['status'] == "Active"): ?>
                     <td><?php echo $row['gradelvltaught_name'] ?></td>
                     <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                    <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                    <a href="delete/deletegradelvltaught.php?delete=<?php echo $row['gradelvltaught_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none">Remove</a></td>
+                    <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                    <a href="delete/deletegradelvltaught.php?delete=<?php echo $row['gradelvltaught_id'];?>" class="btn btn-danger text-decoration-none">Remove</a></td>
 
                     <?php elseif($row['status'] == "Inactive"): ?>
                     <td><strike><?php echo $row['gradelvltaught_name'] ?></strike></td>
@@ -660,8 +660,8 @@ include 'includes/header.php';
                     <tr><?php if($row['status'] == "Active"): ?>
                         <td><?php echo $row['curriclass_name'] ?></td>
                         <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                        <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                        <a href="delete/deletecurri.php?delete=<?php echo $row['curriclass_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Remove</a></td>
+                        <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="delete/deletecurri.php?delete=<?php echo $row['curriclass_id'];?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
 
                         <?php elseif($row['status'] == "Inactive"): ?>
                         <td><strike><?php echo $row['curriclass_name'] ?></strike></td>
@@ -710,8 +710,8 @@ include 'includes/header.php';
             <tbody>
             <tr>
                     <td><?php echo $row['region_name'] ?></td>
-                    <td><a href="update/updateregion.php?edit=<?php echo $row['reg_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                    <a href="delete/deleteregion.php?delete=<?php echo $row['reg_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                    <td><a href="update/updateregion.php?edit=<?php echo $row['reg_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                    <a href="delete/deleteregion.php?delete=<?php echo $row['reg_id'];?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
             </tr>
             </tbody>
             <?php
@@ -748,8 +748,8 @@ include 'includes/header.php';
             
             <tr>
                     <td><?php echo $row['divi_name'] ?></td>
-                    <td><a href="update/updatedivision.php?edit=<?php echo $row['div_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                    <a href="delete/deletedivision.php?delete=<?php echo $row['div_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                    <td><a href="update/updatedivision.php?edit=<?php echo $row['div_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                    <a href="delete/deletedivision.php?delete=<?php echo $row['div_id'];?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
             </tr>
             </tbody>
             <?php
@@ -783,8 +783,8 @@ include 'includes/header.php';
                         <tbody>
                         <tr>
                             <td><?php echo $row['muni_name']?></td>
-                            <td><a href="update/updatemunicipality.php?edit=<?php echo $row['muni_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                            <a href="delete/deletemunicipality.php?delete=<?php echo $row['muni_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                            <td><a href="update/updatemunicipality.php?edit=<?php echo $row['muni_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                            <a href="delete/deletemunicipality.php?delete=<?php echo $row['muni_id'];?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
                         </tr>
                         </tbody>
                         <?php
