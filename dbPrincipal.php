@@ -270,6 +270,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
 
                             <!-- <div class="dashone-adminprowrap shadow-reset mg-b-30">
                                 <h3><b>Recommended Seminar</b></h3> <br>
@@ -281,4 +282,8 @@
                             </div> -->
     </div>
 </div>
+</div>
+</div>
+<br>
+
 <?php include 'includes/footer.php'; ?>
