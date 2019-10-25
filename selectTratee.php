@@ -78,7 +78,7 @@
                                 <div class=" h3"><strong>
                                         <u>
                                             <?php switchRateeWord($position) ?> with no Rater
-                                            for SY <?php echo !empty($sy = $_SESSION['sy']) ?  $sy : $sy = '';
+                                            for SY <?php echo ($_SESSION['active_sy']) ?? '';
                                                     ?> </u>
                                 </div>
                                 <div>

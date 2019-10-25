@@ -1,12 +1,13 @@
 <?php
 session_start();
-require_once 'security.php';
-include_once 'conn.inc.php';
-include_once 'includes/constants.inc.php';
-include_once 'includes/classautoloader.inc.php';
-include_once 'libraries/db.library.php';
-include_once 'libraries/func.lib.php';
-include_once 'includes/security.php';
+include_once '../includes/.php';
+require_once '../includes/security.php';
+include_once '../includes/conn.inc.php';
+include_once '../includes/constants.inc.php';
+include_once '../includes/classautoloader.inc.php';
+include_once '../libraries/db.library.php';
+include_once '../libraries/func.lib.php';
+include_once '../includes/security.php';
 
 /* THIS WILL DISPLAY THE ACTIVE SCHOOL YEAR  */
 activeSY($conn);
@@ -77,9 +78,6 @@ $position = $_SESSION['position'];
 </head>
 <?php include_once 'libraries/queries.library.php'; ?>
 
-
-
-
 <body class="materialdesign">
     <div class="wrapper-pro">
         <div class="left-sidebar-pro">
@@ -95,11 +93,10 @@ $position = $_SESSION['position'];
                     <p><?php echo $_SESSION['position']; ?></p>
                     <strong><i class="fa big-icon fa-institution"></i> </strong>
                 </div>
-
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro ">
                         <li class="nav-item ">
-                            <a href="#" role="button"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span></a>
+                            <a href="?i_love_you_so_much_baby_<3" role="button"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span></a>
                         </li>
                         <li class="nav-item">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-list"></i> <span class="mini-dn">ESAT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
@@ -244,7 +241,6 @@ $position = $_SESSION['position'];
                                                 <h1>Notifications</h1>
                                             </div>
                                             <ul class="notification-menu">
-
                                                 <li>
                                                     <a href="#">
                                                         <div class="notification-icon">
@@ -295,7 +291,6 @@ $position = $_SESSION['position'];
                 </div>
             </div>
         </div>
-
 
 
         <!-- Header top area end-->
@@ -378,5 +373,3 @@ $position = $_SESSION['position'];
                 ?>
 
          Breadcome End-->
-
-        <!-- Breadcome End-->

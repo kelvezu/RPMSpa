@@ -332,6 +332,11 @@ table.fixed td {
 
 .tomato-color {
     color: tomato;
+    font-weight: bold;
+}
+
+.apple-color {
+    color: green;
 }
 
 .no-record {
