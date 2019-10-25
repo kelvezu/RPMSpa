@@ -93,7 +93,7 @@ $result = $statement->fetchAll();
 	$query = "SELECT CONCAT(a.kra_id,'.',a.tobj_id) 
 			AS OBJECTIVES, lvlcap, priodev 
 			FROM esat2_objectivest_tbl a INNER JOIN tobj_tbl b on a.tobj_id = b.tobj_id
-			WHERE a.user_id = $user_id 
+			WHERE a.user_id = $user_id and status='active'
 			group by a.tobj_id,b.tobj_name;";
 
 	$statement = $connect->prepare($query);

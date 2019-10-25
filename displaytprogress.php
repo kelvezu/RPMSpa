@@ -1,5 +1,9 @@
 <?php
+
+use RPMSdb\RPMSdb;
+
 include 'includes/header.php';
+RPMSdb::isEsatComplete($conn, $_SESSION['position']);
 ?>
 <div class="dashone-adminprowrap shadow-reset mg-b-30">
     <div class="dash-adminpro-project-title">
@@ -20,32 +24,26 @@ include 'includes/header.php';
                                         <th>IPCRF</th>
                                         <th>DEVELOPMENT PLAN</th>
                                         
-                                     
-                                        
                                     </tr>
                                 </thead>
                                 <?php
                                 if(isset($teacherMasterlist_results)):
                                     foreach($teacherMasterlist_results as $teacher):
-                                        $teachername = $teacher['firstname'].' '.substr($teacher['middlename'],0,1).'. '.$teacher['surname'];
+                                        
+                                        $teachername = $teacher['user_id'].' '.$teacher['firstname'].' '.substr($teacher['middlename'],0,1).'. '.$teacher['surname'];
                                         ?>
                                 <tbody>
                                     <tr>
                                         
                                         <td width="20%"><?php echo $teachername; ?></td>
                                         <td width="20%"><?php echo $teacher['position']; ?></td>
-                                        <td width="20%"><div class="progress-bar progress-bar-success" 
-                                                        role="progressbar" aria-valuenow="40" 
-                                                                aria-valuemin="0" aria-valuemax="100" style="width:100%">100% Complete (success)</td>
-                                        <td width="20%"><div class="progress-bar progress-bar-success" 
-                                                        role="progressbar" aria-valuenow="40" 
-                                                                aria-valuemin="0" aria-valuemax="100" style="width:100%">100% Complete (success)</td>
-                                        <td width="25%"><div class="progress-bar progress-bar-success" 
-                                                        role="progressbar" aria-valuenow="40" 
-                                                                aria-valuemin="0" aria-valuemax="100" style="width:100%">100% Complete (success)</td>
-                                        <td width="25%"><div class="progress-bar progress-bar-success" 
-                                                        role="progressbar" aria-valuenow="40" 
-                                                                aria-valuemin="0" aria-valuemax="100" style="width:200%">100% Complete (success)</td>                        
+                                        <td width="20%"><?php 
+                                         if((RPMSdb::isEsatComplete($conn, $position))):
+                                                
+                                        else:   
+                                            endif; ?> 
+                                        </td>
+                       
 
                                     </tr>
                                     <?php
