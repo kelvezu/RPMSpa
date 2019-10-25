@@ -95,6 +95,7 @@ $position = $_SESSION['position'];
                     <p><?php echo $_SESSION['position']; ?></p>
                     <strong><i class="fa big-icon fa-institution"></i> </strong>
                 </div>
+
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro ">
                         <li class="nav-item ">
@@ -202,8 +203,6 @@ $position = $_SESSION['position'];
                     </ul>
                 </div>
 
-
-
             </nav>
         </div>
     </div>
@@ -245,21 +244,7 @@ $position = $_SESSION['position'];
                                                 <h1>Notifications</h1>
                                             </div>
                                             <ul class="notification-menu">
-                                                <?php
-                                                // if (stripos($_SESSION['position'], 'dmin')) :
-                                                //     $query1 = $conn->query('SELECT * FROM notification_tbl WHERE position = "Principal" AND category = "User"') or die($conn->error);
-                                                // elseif (stripos($_SESSION['position'], 'incipal')) :
-                                                //     $query2 = $conn->query('SELECT * FROM notification_tbl WHERE school_id = ' . $_SESSION['school_id'] . ' AND category IN ("ESAT","COT","IPCRF","Dev Plan")') or die($conn->error);
-                                                // elseif (stripos($_SESSION['position'], 'head')) :
-                                                //     $query3 = $conn->query('SELECT * FROM notification_tbl WHERE school_id = ' . $_SESSION['school_id'] . ' AND rater_id = ' . $_SESSION['rater'] . ' AND category IN("ESAT","COT","IPCRF","Dev Plan") ') or die($conn->error);
-                                                // elseif (stripos($_SESSION['position'], 'aster')) :
-                                                //     $query4 = $conn->query('SELECT * FROM notification_tbl WHERE school_id = ' . $_SESSION['school_id'] . ' AND rater_id = ' . $_SESSION['rater'] . ' AND category IN("ESAT","COT","IPCRF","Dev Plan") ') or die($conn->error);
-                                                // elseif (stripos($_SESSION['position'], 'eacher')) :
-                                                //     $query5 = $conn->query('SELECT * FROM notification_tbl WHERE school_id = ' . $_SESSION['school_id'] . ' AND rater_id = ' . $_SESSION['rater'] . ' ') or die($conn->error);
-                                                // else :
-                                                //     false;
-                                                // endif;
-                                                ?>
+
                                                 <li>
                                                     <a href="#">
                                                         <div class="notification-icon">
@@ -310,90 +295,88 @@ $position = $_SESSION['position'];
                 </div>
             </div>
         </div>
-    </div>
 
 
-    <!-- Header top area end-->
-    <!-- Breadcome start-->
-    <div class="breadcome-area mg-b-30 small-dn">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcome-list map-mg-t-40-gl shadow-reset">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                <div class="breadcome-heading">
-                                    <!-- <form role="search" class="">
+
+        <!-- Header top area end-->
+        <!-- Breadcome start-->
+        <div class="breadcome-area mg-b-30 small-dn">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="breadcome-list map-mg-t-40-gl shadow-reset">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="breadcome-heading">
+                                        <!-- <form role="search" class="">
                                             <input type="text" placeholder="Search..." class="form-control">
                                             <a href=""><i class="fa fa-search"></i></a>
                                         </form> -->
-                                    <div class="row">
-                                        <div>
-                                            <b>School Year: </b><?php echo $_SESSION['active_sy'] ?? '<p class="tomato-color"> No Active School Year! </p>';  ?>
-                                            <b>SY start: </b><?php echo ($_SESSION['start_date']) ?? '<p class="tomato-color">No start date!</p>'; ?> <b>SY end: </b><?php echo ($_SESSION['end_date']) ?? '<p class="tomato-color">No end date!</p>'; ?>
+                                        <div class="row">
+                                            <div>
+                                                <b>School Year: </b><?php echo $_SESSION['active_sy'] ?? '<p class="tomato-color"> No Active School Year! </p>';  ?>
+                                                <b>SY start: </b><?php echo ($_SESSION['start_date']) ?? '<p class="tomato-color">No start date!</p>'; ?> <b>SY end: </b><?php echo ($_SESSION['end_date']) ?? '<p class="tomato-color">No end date!</p>'; ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                <ul class="breadcome-menu">
-                                    <li><a href="#">Home</a> <span class="bread-slash">/</span>
-                                    </li>
-                                    <li><span class="bread-blod">Dashboard</span>
-                                    </li>
-                                </ul>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                    <ul class="breadcome-menu">
+                                        <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                        </li>
+                                        <li><span class="bread-blod">Dashboard</span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <?php
-    if (!empty($_SESSION['active_sy_id'])) :
-        endSchoolYear($conn, $_SESSION['active_sy_id']);
-    else :
-        if (isset($position)) :
-            if (stripos($position, 'dmin')) :
-                echo '<p class="red-notif-border">School Year just ended! Click <a href="sy.php">here</a> to set the school year. </p>';
-            elseif (stripos($position, 'rincipal') || stripos($position, 'chool head') || stripos($position, 'aster') || stripos($position, 'uper')) :
-                echo '<p class="red-notif-border">School Year just ended! Please wait for the Division Office to set the new School Year. </p>';
+        <?php
+        if (!empty($_SESSION['active_sy_id'])) :
+            endSchoolYear($conn, $_SESSION['active_sy_id']);
+        else :
+            if (isset($position)) :
+                if (stripos($position, 'dmin')) :
+                    echo '<p class="red-notif-border">School Year just ended! Click <a href="sy.php">here</a> to set the school year. </p>';
+                elseif (stripos($position, 'rincipal') || stripos($position, 'chool head') || stripos($position, 'aster') || stripos($position, 'uper')) :
+                    echo '<p class="red-notif-border">School Year just ended! Please wait for the Division Office to set the new School Year. </p>';
+                else :
+                    echo '<p class="red-notif-border">School Year just ended! Please wait for the Division Office to set the new School Year.</p>';
+                    include 'includes/footer.php';
+                    exit();
+                endif;
             else :
-                echo '<p class="red-notif-border">School Year just ended! Please wait for the Division Office to set the new School Year.</p>';
+                echo '<p class="red-notif-border">School Year just ended!!!</p>';
                 include 'includes/footer.php';
                 exit();
             endif;
-        else :
-            echo '<p class="red-notif-border">School Year just ended!!!</p>';
-            include 'includes/footer.php';
-            exit();
         endif;
-    endif;
-    ?>
+        ?>
 
 
+        <!-- <?php
+                //if (empty($_SESSION['active_sy_id'])) :
+                //     if ($_SESSION['position']) :
+                //         $position = $_SESSION['position'];
+                //         if (stripos($position, 'dmin')) :
+                //         else :
+                //             false;
+                //         endif;
+                //     else :
+                //         return false;
+                //     endif;
 
-    <!-- <?php
-            //if (empty($_SESSION['active_sy_id'])) :
-            //     if ($_SESSION['position']) :
-            //         $position = $_SESSION['position'];
-            //         if (stripos($position, 'dmin')) :
-            //         else :
-            //             false;
-            //         endif;
-            //     else :
-            //         return false;
-            //     endif;
-
-            //     echo '<p class="red-notif-border"> There is no Active School Year! </p>';
-            //     include 'includes/footer.php';
-            //     die();
-            // else :
-            //     return false;
-            // endif;
-            ?>
+                //     echo '<p class="red-notif-border"> There is no Active School Year! </p>';
+                //     include 'includes/footer.php';
+                //     die();
+                // else :
+                //     return false;
+                // endif;
+                ?>
 
          Breadcome End-->
 
-</body>
-<!-- Breadcome End-->
+        <!-- Breadcome End-->
