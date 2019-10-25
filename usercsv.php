@@ -41,12 +41,21 @@ include 'includes/header.php';
      </div>
    </div>
   
+
+
+
+
  <div> 
  <form id="upload_csv" method="post" enctype="multipart/form-data">
+ <input type="hidden" name="adder_name" value="<?php $_SESSION['fullname']; ?>"/>
+ <input type="hidden" name="adder_id" value="<?php $_SESSION['user_id']; ?>"/>
+ <input type="hidden" name="adder_position" value="<?php $_SESSION['position'];?>"/>
+ <input type="hidden" name="sy_id" value="<?php $_SESSION['active_sy_id'];?>"/>
+ <input type="hidden" name="school_id" value="<?php $_SESSION['school_id'];?>"/>
     <div class="col-md-3">  
      <br />
      <?php 
-     
+       
       ?>
      <label>Select CSV File</label>
     </div>  
