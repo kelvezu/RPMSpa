@@ -1,12 +1,13 @@
 <?php
 session_start();
-require_once 'security.php';
-include_once 'conn.inc.php';
-include_once 'includes/constants.inc.php';
-include_once 'includes/classautoloader.inc.php';
-include_once 'libraries/db.library.php';
-include_once 'libraries/func.lib.php';
-include_once 'includes/security.php';
+include_once '../includes/.php';
+require_once '../includes/security.php';
+include_once '../includes/conn.inc.php';
+include_once '../includes/constants.inc.php';
+include_once '../includes/classautoloader.inc.php';
+include_once '../libraries/db.library.php';
+include_once '../libraries/func.lib.php';
+include_once '../includes/security.php';
 
 /* THIS WILL DISPLAY THE ACTIVE SCHOOL YEAR  */
 activeSY($conn);

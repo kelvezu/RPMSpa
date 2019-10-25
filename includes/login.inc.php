@@ -5,13 +5,7 @@ include_once "../libraries/func.lib.php";
 
 $current_date = date('Y-m-d');
 
-$syresult = $conn->query('SELECT * FROM sy_tbl WHERE status = "active"')  or die($conn->error);
-while ($syrow = $syresult->fetch_assoc()) :
-    $end_date = $syrow['end_date'];
-    $start_date = $syrow['startDate'];
-    $sy_desc = $syrow['sy_desc'];
-    $sy_id = $syrow['sy_id'];
-endwhile;
+
 
 $schresult = $conn->query('SELECT * FROM school_tbl')  or die($conn->error);
 while ($schrow = $schresult->fetch_assoc()) :
@@ -56,11 +50,7 @@ if (isset($_POST['login-submit'])) {
                     $_SESSION['rater'] = $row['rater'];
                     $_SESSION['approving_authority'] = $row['approving_authority'];
                     $_SESSION['fullname'] = $_SESSION['uname'] . ' ' . substr($_SESSION['mname'], 0, 1) . '. ' . $_SESSION['sname'];
-                    //CHECK IF THE SCHOOL YEAR IS SET   
-                    if (!empty($sy_desc)) :
-                        echo $_SESSION['sy'] = $sy_desc;
-                        echo $_SESSION['sy_id'] = $sy_id;
-                    endif;
+
                     header("location:../loginpage.php?success=" . $_SESSION['fullname']);
                 } else {
                     header("Location:../loginpage.php?error=wrongpwd");

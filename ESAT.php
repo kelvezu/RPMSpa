@@ -330,7 +330,7 @@ include 'includes/header.php';
 
 
             <?php if(isset($_SESSION['message'])): ?>
-                        <div class="alert alert-<?= $_SESSION['msg_type'] ?> font-weight-bold">
+                        <div class="<?= $_SESSION['msg_type'] ?>">
                             <?php 
                             echo $_SESSION['message'];
                             unset($_SESSION['message']);
@@ -350,35 +350,44 @@ include 'includes/header.php';
     <div class="col-sm my-4">
             <h5> Subject Option</h5>
             <?php 
-                $subjqry = "SELECT * FROM subject_tbl";
+                $subjqry = 'SELECT * FROM subject_tbl ORDER BY `status`';
                 $qry_run = mysqli_query($conn,$subjqry);
             ?>
             <table class=" table table-sm  table-hover">
                <thead class="bg-info">
                     <tr>
                         <th>Options</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                </thead>
-
            <?php
-                    if($qry_run){
-                    foreach($qry_run as $row)
-                    {
-                    
+                    if((mysqli_num_rows($qry_run))> 0){
+                    foreach($qry_run as $row):         
             ?>   
-                
                <tbody class=" text-dark">
-                    <tr> 
-                       
+                    <tr>  <?php if($row['status'] == "Active"): ?>
                         <td><?php echo $row['subject_name'];  ?></td>
-                        <td> <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-sm btn-outline-primary  text-decoration-none ">Update</a> &nbsp <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                        <td><?= $row['status'] ?></td>
+                        <td> 
+                            <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success  text-decoration-none ">Update</a> &nbsp 
+                            <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id'];?>" class="btn  btn-danger text-decoration-none ">Remove</a>
+                        </td>
+                        <?php elseif($row['status'] == "Inactive"): ?>
+                        <td><strike><?= $row['subject_name'] ?></strike></td>
+                        <td class="tomato-color"><?= $row['status'] ?></td>
+                        <td> 
+                            <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                            <a href="includes/processESAT.php?unremovesub=<?php echo $row['subject_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
+                        </td>
+                    <?php else: echo 'Error' ?>
+                    <?php endif; ?>  
                     </tr>
                </tbody>
             <?php
-                    }
+                    endforeach;
                 }else{
-                    echo "No Record Found!";
+                    echo '<td class="tomato-color">No Record Found!</td>';
                 }
             ?>
             </table>
@@ -391,26 +400,40 @@ include 'includes/header.php';
     <div class="col-sm my-4">
             <h5> Age Option</h5>
             <?php 
-                $agejqry = "SELECT * FROM age_tbl";
+                $agejqry = "SELECT * FROM age_tbl ORDER BY `status`";
                 $qry_run = mysqli_query($conn,$agejqry);
             ?>
             <table class=" table table-sm  table-hover">
-               <thead class="bg-info"">
+               <thead class="bg-info">
                     <tr>
                         <th>Options</th>
+                        <th>Status</th>
                         <th >Actions</th>
                     </tr>
                </thead>
                <?php
-                    if($qry_run){
+                    if(mysqli_num_rows($qry_run) > 0){
                     foreach($qry_run as $row)
                     { 
-                ?>
+                ?><?php if($row['status'] == "Active"): ?>
                <tbody>
                     <tr>
                         <td><?php echo $row['age_name'] ?></td>
-                        <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class=" btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                        <a href="delete/deleteage.php?delete=<?php echo $row['age_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                        <td><?= $row['status'] ?></td>
+                        <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="delete/deleteage.php?delete=<?php echo $row['age_id'];?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
+
+                        <?php elseif($row['status'] == "Inactive"): ?>
+                        
+                        <td><strike><?php echo $row['age_name'] ?></strike></td>
+                        <td class="tomato-color"><?= $row['status'] ?></td>
+                        <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="includes/processESAT.php?unremoveage=<?php echo $row['age_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
+                    </td>
+                    <?php
+                     else: echo 'Error in age';
+                    endif;?>    
+
                     </tr>
                </tbody>
                <?php

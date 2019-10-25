@@ -97,6 +97,8 @@ echo 'TOTAL OF NO OF COMPLETED E-SAT = ' . RPMSdb::masterteachersNoEsat3($conn) 
 echo $_SESSION['position'];
 
 
+
+
 //var_dump($rateeOBS1 = RPMSdb::teachersWithCOT1($conn));
 
 
@@ -105,6 +107,20 @@ echo $_SESSION['position'];
 // foreach ($results as $result) :
 //     echo   $result['firstname'];
 // endforeach;
+
+echo BR;
+
+date_default_timezone_set('Asia/Manila');
+$today_date = strtotime(intval(date('Y-m-d')));
+$enddate = strtotime(intval($_SESSION['end_date']));
+
+echo ($enddate) . BR;
+echo ($today_date) . BR;
+if ($today_date == $enddate) {
+    echo 'bakasyon na!';
+} else {
+    echo 'd pa bakasyon';
+}
 
 
 ?>

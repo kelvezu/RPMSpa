@@ -169,12 +169,13 @@
 
             function activeSY(mysqli $dbcon)
             {
+                date_default_timezone_set('Asia/Manila');
                 $syQry = 'SELECT * FROM sy_tbl WHERE `status` = "Active" ';
                 $syResult = mysqli_query($dbcon, $syQry);
 
                 if ($syResult) :
                     foreach ($syResult as $sy_item) :
-                        $_SESSION['active_sy_id'] = $_SESSION['sy_id'];
+                        $_SESSION['active_sy_id'] = $sy_item['sy_id'];
                         $_SESSION['start_date'] = $sy_item['startDate'] . '<br>';
                         $_SESSION['end_date'] = $sy_item['end_date'] . '<br>';
                         $_SESSION['active_sy'] = $sy_item['sy_desc'] . '<br>';
@@ -184,6 +185,8 @@
                     $_SESSION['start_year'] = substr($startdate, 0, 4) . BR;
                     $_SESSION['start_month'] = substr($startdate, 5, 2) . BR;
                     $_SESSION['start_day'] = substr($startdate, 8, 2) . BR;
+
+
                 else :
                     $_SESSION['active_sy_id'] = 'none';
                     $_SESSION['start_date'] =  'none';
@@ -197,13 +200,47 @@
                 endif;
             }
 
+            function endSchoolYear($conn, $sy_id)
+            {
+                //SET THE DATABASE TO INACTIVE IF THE END DATE IS EQUAL TO END_DATE
+                if (!empty($sy_id)) :
+                    if (!empty($_SESSION['end_date'])) :
+                        $today_date = strtotime(intval(date('Y-m-d')));
+                        $enddate = strtotime(intval($_SESSION['end_date']));
+                        if ($today_date >= $enddate) :
+
+                            $qry = 'UPDATE sy_tbl SET `status` = "Inactive", rater = null, approving_authority = null WHERE sy_id = "' . $sy_id . '"';
+                            mysqli_query($conn, $qry);
+
+                            $qry_account = 'UPDATE account_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
+                            mysqli_query($conn, $qry_account);
+
+                            $qry_subject = 'UPDATE subject_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
+                            mysqli_query($conn, $qry_subject);
+
+                            $qry_age = 'UPDATE age_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
+                            mysqli_query($conn, $qry_age);
+
+
+                            exit();
+                        else : return false;
+                        endif;
+                    else :
+                        return false;
+                    endif;
+                else :
+                    echo '<p class="red-notif-border">No Active School year!</p>';
+                    include 'includes/footer.php';
+                endif;
+            }
+
             function showRatee($position)
             {
                 if (isset($position)) :
                     if (strpos($position, 'rincipal')) :
-                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND status = "Active"';
                     elseif (strpos($position, 'aster')) :
-                        return  'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '"  AND position IN ("Teacher I", "Teacher II", "Teacher III") ';
+                        return  'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '"  AND position IN ("Teacher I", "Teacher II", "Teacher III") AND status = "Active" ';
                     else :
                         return false;
                         exit();
@@ -217,9 +254,9 @@
             {
                 if (isset($position)) :
                     if (strpos($position, 'rincipal')) :
-                        return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' "';
+                        return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' " AND status = "Active"';
                     elseif (strpos($position, 'aster')) :
-                        return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' "';
+                        return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' AND status = "Active""';
                     else :
                         return false;
                     endif;
