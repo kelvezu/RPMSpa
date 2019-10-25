@@ -469,7 +469,7 @@ include 'includes/header.php';
                <tbody ><?php if($row['status'] == "Active"): ?>
                     <tr>
                         <td><?php echo $row['gender_name']?></td>
-                        <td><b><?= $row['status'] ?></b></td>
+                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
                         <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
                         <a href="delete/deletegender.php?delete=<?php echo $row['gender_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Remove</a></td>
 
