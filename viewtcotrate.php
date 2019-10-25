@@ -37,7 +37,7 @@ if (isset($_GET['view'])) {
                         <div class="row">
                             <div class="col-lg-6">
                                 <label>OBSERVER:</label>&nbsp;
-                                <input type="text" name="rater" value="<?php echo $rater_id; ?>">
+                                <input type="text" name="rater" value="<?php echo displayname($conn, $rater_id); ?>">
                             </div>
 
                             <div class="col-lg-6">
@@ -53,7 +53,7 @@ if (isset($_GET['view'])) {
                                 <label>
                                     TEACHER OBSERVED:
                                 </label>
-                                <input type="text" name="tobserved" value="<?php echo $tobserved; ?>">
+                                <input type="text" name="tobserved" value="<?php echo displayname($conn, $tobserved); ?>">
                             </div>
 
                             <div class="col-lg-6">
