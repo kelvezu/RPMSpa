@@ -25,7 +25,7 @@ if (isset($_GET['view'])) {
             <form action="" method="POST" name="myForm">
                 <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br><br>
                 <h5><strong>COT-RPMS</strong></h5>
-                <div class="h3 bg-success">Teacher I-III</div>
+                <div class="h3 bg-info">Master Teacher I-IV</div>
                 <input type="hidden" name="rater_id" value="<?php echo $rater_id; ?>" />
                 <input type="hidden" name="sy" value="<?php echo $sy; ?>" />
                 <input type="hidden" name="school_id" value="<?php echo $school; ?>" />
@@ -87,7 +87,7 @@ if (isset($_GET['view'])) {
 
 
                 <table class="table table-responsive-sm">
-                    <thead class="bg-success text-left ">
+                    <thead class="bg-info text-left ">
                         <tr>
                             <th>Indicator No</th>
                             <th>Indicator Name</th>
@@ -96,11 +96,11 @@ if (isset($_GET['view'])) {
                     </thead>
                     <?php
                         $indicator_no = 1;
-                        $query1 = $conn->query('SELECT mtindicator_tbl.mtindicator_name,a_mtcotrating_tbl.* FROM (a_tcotrating_tbl INNER JOIN mtindicator_tbl ON a_tcotrating_tbl.indicator_id = tindicator_tbl.mtindicator_id) WHERE a_mtcotrating_tbl.user_id = ' . $user_id . '');
+                        $query1 = $conn->query('SELECT mtindicator_tbl.mtindicator_name,a_mtcotrating_tbl.* FROM (a_mtcotrating_tbl INNER JOIN mtindicator_tbl ON a_mtcotrating_tbl.indicator_id = mtindicator_tbl.mtindicator_id) WHERE a_mtcotrating_tbl.user_id = ' . $user_id . '');
                         while ($rows = $query1->fetch_assoc()) :
 
                             $indicator_name = $rows['mtindicator_name'];
-                            $tcotrating = $rows['tcotrating'];
+                            $tcotrating = $rows['mtcotrating'];
                             ?>
                         <tbody>
                             <tr>
