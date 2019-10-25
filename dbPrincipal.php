@@ -84,7 +84,7 @@
 
                             <div class="dashone-adminprowrap shadow-reset mg-b-30">
                                 <div class="dash-adminpro-project-title"> 
-                                    <h4><a href="displaymtprogress.php"><b>Teacher Masterlist</a></b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
+                                    <h4><a href="displaytprogress.php"><b>Teacher Masterlist</a></b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp; 
                                     
                                 </div>
                                     <div class="sparkline9-graph">

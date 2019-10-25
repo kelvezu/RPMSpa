@@ -865,7 +865,7 @@ $user_id = $_SESSION['user_id'];
 								score3,
 									score4,
 										score5 
-											FROM tblcbc_selfassessment";
+											FROM tbl_rptselfmanagement";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -937,7 +937,7 @@ $user_id = $_SESSION['user_id'];
 								score3,
 									score4,
 										score5 
-											FROM tblcbc_professionalism";
+											FROM tbl_rptprofessionalismethics";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -1009,7 +1009,7 @@ $user_id = $_SESSION['user_id'];
 								score3,
 									score4,
 										score5 
-											FROM tblcbc_result_focus";
+											FROM tbl_rptresultfocus";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -1081,7 +1081,7 @@ $user_id = $_SESSION['user_id'];
 								score3,
 									score4,
 										score5 
-											FROM tblcbc_teamwork";
+											FROM tbl_rptteamwork";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -1153,7 +1153,7 @@ $user_id = $_SESSION['user_id'];
 								score3,
 									score4,
 										score5 
-											FROM tblcbc_service_orientation";
+											FROM tbl_rptserviceorientation";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
