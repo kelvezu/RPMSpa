@@ -22,7 +22,7 @@
                             <!-- INSERT THE CONDITION AND THE TABLE HERE! -->
 
                             <?php
-                            $results = RPMSDB\RPMSdb::teachersWithCOT1($conn);
+                            $results = RPMSDB\RPMSdb::masterteachersWithCOT1($conn);
 
                             if (!empty($results)) :
                                 ?>
@@ -78,7 +78,7 @@
 
                             <?php
 
-                            $noCotresults = RPMSDB\RPMSdb::teachersnoCOT1($conn);
+                            $noCotresults = RPMSDB\RPMSdb::masterteachersnoCOT1($conn);
                             if (!empty($noCotresults)) :
                                 ?>
 

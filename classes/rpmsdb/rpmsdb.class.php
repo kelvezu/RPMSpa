@@ -147,6 +147,21 @@ class RPMSdb
         exit;
     }
 
+    public static function masterteachersWithCOT1($conn)
+    {
+        //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
+        $result_arr = [];
+        $qry = 'SELECT * FROM `account_tbl` WHERE rater = "' . $_SESSION['user_id'] . '" AND `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `tcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV"))  AND school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")';
+
+        $result = mysqli_query($conn, $qry);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+
     public static function teachersNoCOT1($conn)
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
@@ -165,11 +180,25 @@ class RPMSdb
         exit;
     }
 
-    public static function countTCompleteESAT($conn)
+    public static function masterteachersNoCOT1($conn)
     {
-        //$esat1qry = 
+        //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
+        $result_arr = [];
+        $qry = 'SELECT * FROM `account_tbl` WHERE  rater = "' . $_SESSION['user_id'] . '" AND NOT `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `user_id` IS NOT NULL AND status = "Active" AND school_id = 14 AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND school_id ="14" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")';
 
+        $result = mysqli_query($conn, $qry);
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else :
+            return null;
+        endif;
+        exit;
     }
+
+
 
     /* FUNCTION THAT WILL CHECK IF ESAT IS COMPLETE */
     public static function isEsatComplete($conn, $position)
