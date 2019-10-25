@@ -38,10 +38,39 @@ RPMSdb::isEsatComplete($conn, $_SESSION['position']);
                                         <td width="20%"><?php echo $teachername; ?></td>
                                         <td width="20%"><?php echo $teacher['position']; ?></td>
                                         <td width="20%"><?php 
-                                         if((RPMSdb::isEsatComplete($conn, $position))):
+                                         if((RPMSdb::isEsatCompleteBool($conn, $teacher['position'],$teacher['user_id']))):
+                                            
+                                                        if (stripos($teacher['position'], 'aster')):
+                                                    
+                                                            echo '<a href="redisplaymtchart.php"><img src="https://img.icons8.com/flat_round/20/000000/checkmark.png">';
+                                                            
+
+                                                        elseif (stripos($teacher['position'], 'eacher')):
+                                                            echo '<a href="redisplaytchart.php"><img src="https://img.icons8.com/flat_round/20/000000/checkmark.png">';
+                                                        
+
+                                                        else :
+                                                            return false;
+                                                            
+                                                        endif;
+
+                                        elseif((RPMSdb::isEsatCompleteBool($conn, $teacher['position'],$teacher['user_id'])==false)):
+
+                                                echo '<img src="https://img.icons8.com/cotton/24/000000/cancel--v1.png">';
                                                 
-                                        else:   
+                                        
+                                        else :
+                                            return false;
+                                            exit();       
                                             endif; ?> 
+                                        </td>
+
+                                        <td>
+                                                <?php echo'<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">'?>
+                                                <?php echo'<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">'?>
+                                                <?php echo'<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">'?>
+                                                <?php echo'<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">'?>
+
                                         </td>
                        
 
