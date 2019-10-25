@@ -137,7 +137,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE rater = "' . $_SESSION['user_id'] . '" AND `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `tcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III"))  AND school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III")';
+        $qry = 'SELECT * FROM `account_tbl` WHERE rater = "' . $_SESSION['user_id'] . '" AND `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `tcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III"))  AND school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
 
         $result = mysqli_query($conn, $qry);
         foreach ($result as $res) :
@@ -151,7 +151,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE rater = "' . $_SESSION['user_id'] . '" AND `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `tcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV"))  AND school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")';
+        $qry = 'SELECT * FROM `account_tbl` WHERE rater = ' . $_SESSION['user_id'] . ' AND `user_id` IN (SELECT `user_id` FROM a_mtcotrating_tbl WHERE `mtcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV"))  AND school_id = ' . $_SESSION['school_id'] . ' AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active" ';
 
         $result = mysqli_query($conn, $qry);
         foreach ($result as $res) :
@@ -166,7 +166,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE  rater = "' . $_SESSION['user_id'] . '" AND NOT `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `user_id` IS NOT NULL AND status = "Active" AND school_id = 14 AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND school_id ="14" AND position IN ("Teacher I", "Teacher II", "Teacher III")';
+        $qry = 'SELECT * FROM `account_tbl` WHERE  rater = "' . $_SESSION['user_id'] . '" AND NOT `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `user_id` IS NOT NULL AND status = "Active" AND school_id = 14 AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND school_id ="14" AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
 
         $result = mysqli_query($conn, $qry);
         if ($result) :
@@ -184,7 +184,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE  rater = "' . $_SESSION['user_id'] . '" AND NOT `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `user_id` IS NOT NULL AND status = "Active" AND school_id = 14 AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND school_id ="14" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")';
+        $qry = 'SELECT * FROM `account_tbl` WHERE rater = ' . $_SESSION['user_id'] . ' AND NOT `user_id` IN (SELECT `user_id` FROM a_mtcotrating_tbl WHERE `user_id` IS NOT NULL AND status = "Active" AND school_id = 14 AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND school_id ="14" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active" ';
 
         $result = mysqli_query($conn, $qry);
         if ($result) :

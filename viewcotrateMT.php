@@ -41,7 +41,7 @@
                                                 <td> <?php echo  $result['firstname'] . ' ' . substr($result['middlename'], 0, 1) . '. ' . $result['surname']; ?> </td>
                                                 <td><?php echo $result['position'] ?></td>
                                                 <td>
-                                                    <a href="viewtcotrate.php?view=<?php echo $result['user_id']; ?>" class="btn btn-primary" role="button">View Rating </a>
+                                                    <a href="viewmtcotrate.php?view=<?php echo $result['user_id']; ?>" class="btn btn-primary" role="button">View Rating </a>
                                                 </td>
 
                                         </tr> <?php endforeach; ?>
