@@ -209,10 +209,10 @@
                         $enddate = strtotime(intval($_SESSION['end_date']));
                         if ($today_date >= $enddate) :
 
-                            $qry = 'UPDATE sy_tbl SET `status` = "Inactive", rater = null, approving_authority = null WHERE sy_id = "' . $sy_id . '"';
+                            $qry = 'UPDATE sy_tbl SET `status` = "Inactive" WHERE sy_id = "' . $sy_id . '"';
                             mysqli_query($conn, $qry);
 
-                            $qry_account = 'UPDATE account_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
+                            $qry_account = 'UPDATE account_tbl SET `status` = "Inactive" , rater = null, approving_authority = null WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_account);
 
                             $qry_subject = 'UPDATE subject_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
