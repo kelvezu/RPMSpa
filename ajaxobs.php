@@ -2,19 +2,19 @@
 // don't use intval if your select value is not numberic
 
 
-   include 'includes/conn.inc.php';
+include 'includes/conn.inc.php';
 
-if(isset($_GET['period'])):
+if (isset($_GET['period'])) :
     $period = $_GET['period'];
-    if($period == 1 ):
+    if ($period == 1) :
         $periodqry = 'SELECT * FROM tindicator_tbl WHERE period1=1';
-    elseif($period == 2 ):
+    elseif ($period == 2) :
         $periodqry = 'SELECT * FROM tindicator_tbl WHERE period2=1';
-    elseif($period == 3 ):
+    elseif ($period == 3) :
         $periodqry = 'SELECT * FROM tindicator_tbl WHERE period3=1';
-    elseif($period == 4 ):
+    elseif ($period == 4) :
         $periodqry = 'SELECT * FROM tindicator_tbl WHERE period4=1';
-    else:
+    else :
         echo 'invalid period!';
     endif;
 else :
@@ -27,44 +27,45 @@ $resultqry = $conn->query($periodqry)  or die($conn->error);
 ?>
 
 <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-<thead class="legend-control bg-success text-white ">
-    <tr>
-        <th>Indicator No</th>
-        <th>Indicator Name</th>
-        <th>COT Rating</th>
-    </tr>
-</thead>
+    <thead class="legend-control bg-success text-white ">
+        <tr>
+            <th>Indicator No</th>
+            <th>Indicator Name</th>
+            <th>COT Rating</th>
+        </tr>
+    </thead>
 
-<?php
+    <?php
+    $indicator_no = 1;
     while ($row = $resultqry->fetch_assoc()) :
         ?>
-        
-        
-         <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
-         <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
-         
-         <tbody>
-                            <tr>
-                                <td><?php echo $row['indicator_id']; ?></td>
-                                <td><?php echo $row['indicator_name']; ?></td>
-                                <td>
-                                    <select name="rating[]">
-                                        <option value="" disabled selected>--Select--</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="3">NO*</option>
-                                    </select>
 
-                                </td>
-                          
-                       
-<?php
 
-    endwhile;
+        <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
+        <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
+
+        <tbody>
+            <tr>
+                <td><?php echo $indicator_no; ?></td>
+                <td><?php echo $row['indicator_name']; ?></td>
+                <td>
+                    <select name="rating[]">
+                        <option value="" disabled selected>--Select--</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="3">NO*</option>
+                    </select>
+
+                </td>
+
+
+            <?php
+                $indicator_no++;
+            endwhile;
             ?>
-             </tbody>
-    </tr>
+        </tbody>
+        </tr>
 </table>
