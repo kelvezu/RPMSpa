@@ -122,6 +122,8 @@ if ($today_date == $enddate) {
     echo 'd pa bakasyon';
 }
 
+echo displayName($conn, $_SESSION['user_id']);
+
 
 ?>
 

@@ -386,3 +386,16 @@
                     die();
                 endif;
             }
+
+            function displayName($conn, $user_id)
+            {
+                $qry = "SELECT * FROM account_tbl WHERE user_id = $user_id";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return fullnameFormat($res['firstname'], $res['middlename'], $res['surname']);
+                    endforeach;
+                else :
+                    return false;
+                endif;
+            }

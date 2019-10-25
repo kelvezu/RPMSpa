@@ -89,7 +89,7 @@ if (isset($_GET['deleteAGE'])) {
     header("location:../ESAT.php");
 }
 
-//UNREMOVE SUBJECT
+//UNREMOVE AGE
 if (isset($_GET['unremoveage'])) {
     $age_id = $_GET['unremoveage'];
     $conn->query("UPDATE  age_tbl SET `status`='Active' WHERE age_id=$age_id") or die($conn->error);
@@ -122,16 +122,25 @@ if (isset($_POST['updateGEN'])) {
     $gender_name = $_POST['gender_name'];
     mysqli_query($conn, "UPDATE gender_tbl SET gender_id = '$gender_id', gender_name = '$gender_name' WHERE gender_id = '$gender_id' ");
     $_SESSION['message'] = 'Gender Option has been updated!';
-    $_SESSION['msg_type'] = 'success';
+    $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
 
 //REMOVE GENDER
-if (isset($_GET['unremovegen'])) {
+if (isset($_GET['deleteGD'])) {
     $gender_id = $_GET['deleteGD'];
-    $conn->query("DELETE FROM gender_tbl WHERE gender_id=$gender_id") or die($conn->error);
-    $_SESSION['message'] = 'Gender has been deleted!';
+    $conn->query("UPDATE  gender_tbl SET `status` = 'Inactive' WHERE gender_id=$gender_id") or die($conn->error);
+    $_SESSION['message'] = 'Gender has been removed from the ESAT selection!';
     $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
+
+//UNREMOVE GENDER
+if (isset($_GET['unremovegen'])) {
+    $gender_id = $_GET['unremovegen'];
+    $conn->query("UPDATE  gender_tbl SET `status`='Active' WHERE gender_id=$gender_id") or die($conn->error);
+    $_SESSION['message'] = 'Gender option successfully unremoved!';
+    $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
 
@@ -166,9 +175,9 @@ if (isset($_POST['updatePOS'])) {
 //DELETE POSITION
 if (isset($_GET['deletePST'])) {
     $position_id = $_GET['deletePST'];
-    $conn->query("DELETE FROM position_tbl WHERE position_id=$position_id") or die($conn->error);
-    $_SESSION['message'] = 'Position has been deleted!';
-    $_SESSION['msg_type'] = 'danger';
+    $conn->query("UPDATE  position_tbl SET `status` = 'Inactive' WHERE position_id=$position_id") or die($conn->error);
+    $_SESSION['message'] = 'Position has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
     header("location:../ESAT.php");
 }
 
@@ -200,12 +209,21 @@ if (isset($_POST['updateTY'])) {
     header("location:../ESAT.php");
 }
 
-//DELETE TOTAL YEAR
+//REMOVE TOTAL YEAR
 if (isset($_GET['deleteTY'])) {
     $totalyear_id = $_GET['deleteTY'];
-    $conn->query("DELETE FROM totalyear_tbl WHERE totalyear_id=$totalyear_id") or die($conn->error);
-    $_SESSION['message'] = 'Total Year has been deleted!';
-    $_SESSION['msg_type'] = 'danger';
+    $conn->query("UPDATE  totalyear_tbl SET `status` = 'Inactive'  WHERE totalyear_id=$totalyear_id") or die($conn->error);
+    $_SESSION['message'] = 'Total Year option has been removed from the ESAT selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
+
+//UNREMOVE TOTAL YEAR
+if (isset($_GET['unremovetot'])) {
+    $totalyear_id = $_GET['unremovetot'];
+    $conn->query("UPDATE  totalyear_tbl SET `status`='Active' WHERE totalyear_id=$totalyear_id") or die($conn->error);
+    $_SESSION['message'] = 'Total Year option added to the selection successfully!';
+    $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
 
@@ -233,16 +251,25 @@ if (isset($_POST['updateGLT'])) {
     $gradelvltaught_name = $_POST['gradelvltaught_name'];
     mysqli_query($conn, "UPDATE gradelvltaught_tbl SET gradelvltaught_id = '$gradelvltaught_id', gradelvltaught_name = '$gradelvltaught_name' WHERE gradelvltaught_id = '$gradelvltaught_id' ");
     $_SESSION['message'] = 'Grade Level Taught Option has been updated!';
-    $_SESSION['msg_type'] = 'success';
+    $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
 
-//DELETE TOTAL YEAR
+//REMOVE TOTAL YEAR
 if (isset($_GET['deleteGLT'])) {
     $gradelvltaught_id = $_GET['deleteGLT'];
-    $conn->query("DELETE FROM gradelvltaught_tbl WHERE gradelvltaught_id=$gradelvltaught_id") or die($conn->error);
-    $_SESSION['message'] = 'Grade Level Taught has been deleted!';
-    $_SESSION['msg_type'] = 'danger';
+    $conn->query("UPDATE  gradelvltaught_tbl SET `status` = 'Inactive' WHERE gradelvltaught_id=$gradelvltaught_id") or die($conn->error);
+    $_SESSION['message'] = 'Grade Level Taught has been removed from ESAT selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
+
+//UNREMOVE TOTAL YEAR
+if (isset($_GET['unremoveglt'])) {
+    $gradelvltaught_id = $_GET['unremoveglt'];
+    $conn->query("UPDATE  gradelvltaught_tbl SET `status`='Active' WHERE gradelvltaught_id=$gradelvltaught_id") or die($conn->error);
+    $_SESSION['message'] = 'Grade Level Taught option has been added to the selection successfully!';
+    $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
 
@@ -278,9 +305,18 @@ if (isset($_POST['updateCC'])) {
 //DELETE CURRICULAR CLASSIFICATION 
 if (isset($_GET['deleteCURRI'])) {
     $curriclass_id = $_GET['deleteCURRI'];
-    $conn->query("DELETE FROM curriclass_tbl WHERE curriclass_id=$curriclass_id") or die($conn->error);
-    $_SESSION['message'] = 'Curricular Classification has been deleted!';
-    $_SESSION['msg_type'] = 'danger';
+    $conn->query("UPDATE  curriclass_tbl SET `status` = 'Inactive' WHERE curriclass_id=$curriclass_id") or die($conn->error);
+    $_SESSION['message'] = 'Curricular Classification has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
+
+//UNREMOVE CURRICULAR CLASSIFICATION 
+if (isset($_GET['unremovecurr'])) {
+    $curriclass_id = $_GET['unremovecurr'];
+    $conn->query("UPDATE  curriclass_tbl SET `status`='Active' WHERE curriclass_id=$curriclass_id") or die($conn->error);
+    $_SESSION['message'] = 'Curricular Classification option has been added to the selection successfully!';
+    $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
 

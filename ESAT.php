@@ -3,7 +3,7 @@
 include 'includes/conn.inc.php';
 include 'includes/header.php';
 ?>
-
+<b/>
 
     <!-- Subject modal -->
     <div class="modal fade" id="subject-modal" tabindex="-1" role="dialog" aria-labelledby="addSubjectModal" aria-hidden="true">
@@ -367,14 +367,14 @@ include 'includes/header.php';
             ?>   
                <tbody class=" text-dark">
                     <tr>  <?php if($row['status'] == "Active"): ?>
-                        <td><?php echo $row['subject_name'];  ?></td>
-                        <td><b><?= $row['status'] ?></b></td>
+                        <td><b><?= $row['subject_name'];  ?></b></td>
+                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
                         <td> 
                             <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success  text-decoration-none ">Update</a> &nbsp 
                             <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id'];?>" class="btn  btn-danger text-decoration-none ">Remove</a>
                         </td>
                         <?php elseif($row['status'] == "Inactive"): ?>
-                        <td><strike><?= $row['subject_name'] ?></strike></td>
+                        <td><b><strike><?= $row['subject_name'] ?></strike></b></td>
                         <td class="tomato-color"><?= $row['status'] ?></td>
                         <td> 
                             <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
@@ -419,7 +419,7 @@ include 'includes/header.php';
                <tbody>
                     <tr>
                         <td><?php echo $row['age_name'] ?></td>
-                        <td><b><?= $row['status'] ?></b></td>
+                        <td class="apple-color"><b><?= $row['status'] ?></b></td>
                         <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
                         <a href="delete/deleteage.php?delete=<?php echo $row['age_id'];?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
 
@@ -469,9 +469,9 @@ include 'includes/header.php';
                <tbody ><?php if($row['status'] == "Active"): ?>
                     <tr>
                         <td><?php echo $row['gender_name']?></td>
-                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                        <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                        <a href="delete/deletegender.php?delete=<?php echo $row['gender_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Remove</a></td>
+                        <td class="apple-color"><b><?= $row['status'] ?></b></td>
+                        <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="delete/deletegender.php?delete=<?php echo $row['gender_id'];?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
 
                     <?php elseif($row['status'] == "Inactive"): ?>
 
@@ -480,9 +480,7 @@ include 'includes/header.php';
                         <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp 
                         <a href="includes/processESAT.php?unremovegen=<?php echo $row['gender_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
                     <?php else:echo 'Error'; ?>
-                    
-
-
+                
                     <?php endif; ?>
                     </tr>
                </tbody>
@@ -519,8 +517,8 @@ include 'includes/header.php';
                <tbody>
                <tr>
                     <td><?php echo $row['position_name'] ?></td>
-                    <td><a href="update/updateposition.php?edit=<?php echo $row['position_id'] ?>" class="btn btn-sm btn-outline-primary ">Update</a> &nbsp 
-                    <a href="delete/deleteposition.php?delete=<?php echo $row['position_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                    <td><a href="update/updateposition.php?edit=<?php echo $row['position_id'] ?>" class="btn btn-success ">Update</a> &nbsp 
+                    <a href="delete/deleteposition.php?delete=<?php echo $row['position_id'];?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
                </tr>
                </tbody>
                 <?php
@@ -546,6 +544,7 @@ include 'includes/header.php';
                <thead class="bg-info">
                 <tr>
                     <th>Options</th>
+                    <th>Status</th>
                     <th >Actions</th>
                 </tr>
                 </thead>
@@ -556,10 +555,23 @@ include 'includes/header.php';
                 ?>
                </th>
                <tbody>
-               <tr>
+               <tr><?php if($row['status'] == "Active"): ?>
+
                     <td><?php echo $row['totalyear_name'] ?></td>
+                    <td><b class="apple-color"><?= $row['status'] ?></b></td>
                     <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                    <a href="delete/deletetotalyear.php?delete=<?php echo $row['totalyear_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                    <a href="delete/deletetotalyear.php?delete=<?php echo $row['totalyear_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Remove</a></td>
+
+                    <?php elseif($row['status'] == "Inactive"): ?>
+  <td><strike><?php echo $row['totalyear_name'] ?></strike></td>
+                        <td class="tomato-color"><?= $row['status'] ?></td>
+                        <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="includes/processESAT.php?unremovetot=<?php echo $row['totalyear_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
+                    <?php
+                     else:echo 'Error'; 
+                    endif;
+                    ?>
+
                </tr>
                </tbody>
                <?php
@@ -583,23 +595,37 @@ include 'includes/header.php';
                <thead class="bg-info">
                 <tr>
                     <th>Options</th>
+                    <th>Status</th>
                     <th >Actions</th>
                 </tr>
                </thead>
                <?php
                     if($qry_run){
-                    foreach($qry_run as $row)
-                    { 
+                    foreach($qry_run as $row):
+                    
                 ?>
                <tbody>
-               <tr>
+               <tr><?php if($row['status'] == "Active"): ?>
                     <td><?php echo $row['gradelvltaught_name'] ?></td>
+                    <td><b class="apple-color"><?= $row['status'] ?></b></td>
                     <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                    <a href="delete/deletegradelvltaught.php?delete=<?php echo $row['gradelvltaught_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none">Delete</a></td>
+                    <a href="delete/deletegradelvltaught.php?delete=<?php echo $row['gradelvltaught_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none">Remove</a></td>
+
+                    <?php elseif($row['status'] == "Inactive"): ?>
+                    <td><strike><?php echo $row['gradelvltaught_name'] ?></strike></td>
+                        <td class="tomato-color"><?= $row['status'] ?></td>
+                        <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="includes/processESAT.php?unremoveglt=<?php echo $row['gradelvltaught_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
+                    <?php
+                     else:echo 'Error'; 
+                    endif;
+                    ?>
                </tr>
+               <?php endforeach; ?>
                </tbody>
                <?php
-                    }
+                    
+                
                     }else{
                         echo "No Record Found!";
                     }
@@ -621,6 +647,7 @@ include 'includes/header.php';
                     <thead class="bg-info">
                         <tr>
                             <th>Options</th>
+                            <th>Status</th>
                             <th >Actions</th>
                         </tr>
                     </thead>
@@ -630,10 +657,21 @@ include 'includes/header.php';
                     { 
                 ?>
                 <tbody>
-                    <tr>
+                    <tr><?php if($row['status'] == "Active"): ?>
                         <td><?php echo $row['curriclass_name'] ?></td>
+                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
                         <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class="btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                        <a href="delete/deletecurri.php?delete=<?php echo $row['curriclass_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                        <a href="delete/deletecurri.php?delete=<?php echo $row['curriclass_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Remove</a></td>
+
+                        <?php elseif($row['status'] == "Inactive"): ?>
+                        <td><strike><?php echo $row['curriclass_name'] ?></strike></td>
+                        <td class="tomato-color"><?= $row['status'] ?></td>
+                        <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="includes/processESAT.php?unremovecurr=<?php echo $row['curriclass_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
+                    <?php 
+                    else: echo 'Error';
+                    endif;?>
+                    
                     </tr>
                 </tbody>
                 <?php
