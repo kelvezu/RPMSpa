@@ -6,6 +6,39 @@ use mysqli;
 
 class RPMSdb
 {
+
+    public static function displayMasterList($conn)
+    {
+        $user_arr = [];
+        $totalqry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND status = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") ORDER BY user_id desc  ';
+        $result = mysqli_query($conn, $totalqry);
+        $total = mysqli_num_rows($result);
+        if ($total) :
+            foreach ($result as $res) :
+                array_push($user_arr, $res);
+            endforeach;
+            return $user_arr;
+        else :
+            return false;
+        endif;
+    }
+
+    public static function displayVacantList($conn)
+    {
+        $user_arr = [];
+        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "For Transfer" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") ORDER BY `user_id` desc  ';
+        $result = mysqli_query($conn, $totalqry);
+        $total = mysqli_num_rows($result);
+        if ($total) :
+            foreach ($result as $res) :
+                array_push($user_arr, $res);
+            endforeach;
+            return $user_arr;
+        else :
+            return false;
+        endif;
+    }
+
     public static function totalAllTeachers($conn)
     {
         $totalqry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND status = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")  ';

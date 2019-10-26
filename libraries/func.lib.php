@@ -209,7 +209,7 @@
                         $enddate = strtotime(intval($_SESSION['end_date']));
                         if ($today_date >= $enddate) :
 
-                            $qry = 'UPDATE sy_tbl SET `status` = "Inactive" WHERE sy_id = "' . $sy_id . '"';
+                            $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
                             mysqli_query($conn, $qry);
 
                             $qry_account = 'UPDATE account_tbl SET `status` = "Inactive" , rater = null, approving_authority = null WHERE `status` = "Active"';
@@ -221,12 +221,25 @@
                             $qry_age = 'UPDATE age_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_age);
 
+                            $qry_totalyr = 'UPDATE totalyear_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
+                            mysqli_query($conn, $qry_totalyr);
+
+                            $qry_glt = 'UPDATE gradelvltaught_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
+                            mysqli_query($conn, $qry_glt);
+
+                            $qry_kra = 'UPDATE kra_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
+                            mysqli_query($conn, $qry_kra);
+                            header('location:includes/logout.inc.php');
 
                             exit();
                         else : return false;
+
                         endif;
                     else :
+                        $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
+                        mysqli_query($conn, $qry);
                         return false;
+
                     endif;
                 else :
                     echo '<p class="red-notif-border">No Active School year!</p>';
