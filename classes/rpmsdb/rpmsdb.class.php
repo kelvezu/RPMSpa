@@ -137,7 +137,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE rater = "' . $_SESSION['user_id'] . '" AND `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `tcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III"))  AND school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
+        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE obs_period = 1 AND `tcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III"))  AND school_id =' . $_SESSION['school_id'] . ' AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
 
         $result = mysqli_query($conn, $qry);
         foreach ($result as $res) :
@@ -147,11 +147,25 @@ class RPMSdb
         exit;
     }
 
+    public static function teacherHasCOT1($conn, $user_id)
+    {
+        $qry = 'SELECT * FROM a_tcotrating_tbl WHERE obs_period = 1 AND `user_id` = ' . $user_id . ' AND `status` = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III")';
+        $result = mysqli_query($conn, $qry);
+        if ($result) :
+            $count = mysqli_num_rows($result);
+            if ($count > 0) :
+                return true;
+            else : return false;
+            endif;
+        else : return false;
+        endif;
+    }
+
     public static function masterteachersWithCOT1($conn)
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE rater = ' . $_SESSION['user_id'] . ' AND `user_id` IN (SELECT `user_id` FROM a_mtcotrating_tbl WHERE `mtcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV"))  AND school_id = ' . $_SESSION['school_id'] . ' AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active" ';
+        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM a_mtcotrating_tbl WHERE `mtcotrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV"))  AND school_id = ' . $_SESSION['school_id'] . ' AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active" ';
 
         $result = mysqli_query($conn, $qry);
         foreach ($result as $res) :
@@ -268,8 +282,11 @@ class RPMSdb
         endif;
     }
 
+
     // public static function totalTCompleteESAT($conn)
     // {
     //    
     // }
+    public static function isCOTCompleteBool($conn, $position, $user_id)
+    { }
 }
