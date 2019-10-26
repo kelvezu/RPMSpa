@@ -153,10 +153,18 @@ endif;
 
 
 
-echo displayName($conn, $_SESSION['user_id']);
+//echo displayName($conn, $_SESSION['user_id']);
 
 
 // echo $_SESSION['fullname'];
+
+// $result = RPMSdb::teacherHasCOT1($conn, $_SESSION['user_id']);
+
+// foreach ($result as $monay) :
+//     echo $monay['surname'];
+// endforeach;
+
+pre_r(BR . RPMSdb::teacherHasCOT1($conn, 32));
 
 
 ?>

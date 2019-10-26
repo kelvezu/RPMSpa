@@ -1,11 +1,11 @@
 <?php
 
 include_once 'includes/header.php';
-include_once 'includes/conn.inc.php';
-include_once 'libraries/func.lib.php';
-include_once 'includes/constants.inc.php';
-include_once 'libraries/db.library.php';
-$user_id = $_SESSION['user_id'];
+// include_once 'includes/conn.inc.php';
+// include_once 'libraries/func.lib.php';
+// include_once 'includes/constants.inc.php';
+// include_once 'libraries/db.library.php';
+// $user_id = $_SESSION['user_id'];
 
 ?>
 
@@ -91,10 +91,11 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT CONCAT(a.kra_id,'.',a.mtobj_id) as OBJECTIVES, lvlcap, priodev 
-			FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
-			WHERE status='active'
-			group by a.mtobj_id,b.mtobj_name;";
+	$query = "SELECT CONCAT(a.kra_id,'.',a.mtobj_id) 
+	AS OBJECTIVES, lvlcap, priodev 
+	FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
+	WHERE status='active'
+	group by a.mtobj_id,b.mtobj_name;";
 
 	$statement = $connect->prepare($query);
 	$statement->execute();
