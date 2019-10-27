@@ -68,3 +68,11 @@ endif;
 if (isset($_POST['save'])) :
     echo 'na save hihi';
 endif;
+
+// IF USER PRESSED edit BUTTON 
+
+if (isset($_POST['edit'])) :
+
+    header('location:../editdevplan.php');
+
+endif;
