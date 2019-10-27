@@ -36,20 +36,20 @@ if (isset($_POST['submit'])) :
     $status = $_POST['submit'];
 
 
-    $conn->query('INSERT INTO `devplanmt_a1_strength_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `a_strengths`, `strengths_mtobj`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $a_kra_id . '","' . $a_obj_id . '")') or die($conn->error);
+    $conn->query('INSERT INTO `devplant_a1_strength_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `a_strengths`, `strengths_mtobj`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $a_kra_id . '","' . $a_obj_id . '")') or die($conn->error);
 
-    $conn->query('INSERT INTO `devplanmt_a2_devneeds_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `a_devneeds`, `devneeds_mtobj`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $a_kra_id1 . '","' . $a_obj_id1 . '")') or die($conn->error);
+    $conn->query('INSERT INTO `devplant_a2_devneeds_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `a_devneeds`, `devneeds_mtobj`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $a_kra_id1 . '","' . $a_obj_id1 . '")') or die($conn->error);
 
-    $conn->query('INSERT INTO `devplanmt_a3_actionplan_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `a_learning_objectives`, `a_intervention`, `a_timeline`, `a_resources_needed`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $a_learning_objectives . '","' . $a_intervention . '","' . $a_timeline . '","' . $a_resources_needed . '")') or die($conn->error);
+    $conn->query('INSERT INTO `devplant_a3_actionplan_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `a_learning_objectives`, `a_intervention`, `a_timeline`, `a_resources_needed`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $a_learning_objectives . '","' . $a_intervention . '","' . $a_timeline . '","' . $a_resources_needed . '")') or die($conn->error);
 
-    $conn->query('INSERT INTO `devplanmt_b1_strength_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `strength_cbc_id`, `strength_cbc_ind_id`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $b_cbc_id . '","' . $b_cbc_name . '")') or die($conn->error);
+    $conn->query('INSERT INTO `devplant_b1_strength_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `strength_cbc_id`, `strength_cbc_ind_id`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $b_cbc_id . '","' . $b_cbc_name . '")') or die($conn->error);
 
-    $conn->query('INSERT INTO `devplanmt_b2_devneeds_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `devneed_cbc_id`, `devneed_cbc_ind_id`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $b_dev_cbc  . '","' .  $b_cbc_name2 . '")') or die($conn->error);
+    $conn->query('INSERT INTO `devplant_b2_devneeds_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `devneed_cbc_id`, `devneed_cbc_ind_id`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' . $b_dev_cbc  . '","' .  $b_cbc_name2 . '")') or die($conn->error);
 
-    $conn->query('INSERT INTO `devplanmt_b3_actionplan_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `b_learning_objectives`, `b_intervention`, `b_timeline`, `b_resources_needed`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' .  $b_learning_obj . '","' .  $b_intervention . '","' .  $b_timeline  . '", "' .  $b_resources_needed . '")') or die($conn->error);
+    $conn->query('INSERT INTO `devplant_b3_actionplan_tbl` (`user_id`, `rater_id`, `sy`, `school`, `position`, `b_learning_objectives`, `b_intervention`, `b_timeline`, `b_resources_needed`) VALUES ("' . $user_id . '","' . $rater . '","' . $sy . '","' . $school_id . '","' . $position . '","' .  $b_learning_obj . '","' .  $b_intervention . '","' .  $b_timeline  . '", "' .  $b_resources_needed . '")') or die($conn->error);
 
 
-    $conn->query('INSERT INTO `devplanmt_c_tbl`(`feedback`,`user_id`, `position`, `rater_id`, `approving_authority`, `sy`, `school_id`, `status`) VALUES ("' . $feedback . '","' . $user_id . '","' . $position . '","' . $rater . '","' . $approving_authority . '","' . $sy . '","' . $school_id . '","' . $status . '")') or die($conn->error . "error in devplanMT_c_tbl");
+    $conn->query('INSERT INTO `devplant_c_tbl`(`feedback`,`user_id`, `position`, `rater_id`, `approving_authority`, `sy`, `school_id`, `status`) VALUES ("' . $feedback . '","' . $user_id . '","' . $position . '","' . $rater . '","' . $approving_authority . '","' . $sy . '","' . $school_id . '","' . $status . '")') or die($conn->error . "error in devplanMT_c_tbl");
 
     echo 'complete!';
     header('location:../editdevplan.php');

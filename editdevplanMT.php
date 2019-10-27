@@ -5,7 +5,7 @@ use DevPlan\DevPlan;
 <div class="container ">
     <div class="breadcome-list shadow-reset">
         <h2 class="text-center"><strong>PART IV: General Master Teacher Development Plan</strong></h2>
-        <form action="includes/processeditdevplan.php" method="post" class="form-group">
+        <form action="includes/processeditdevplanMT.php" method="post" class="form-group">
             <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?> />
             <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
             <input type="hidden" name="position" value="<?php echo $_SESSION['position']; ?>" />

@@ -4,7 +4,7 @@ use DevPlan\DevPlan;
 ?>
 <div class="container ">
     <div class="breadcome-list shadow-reset">
-        <h2 class="text-center"><strong>PART IV: General Development Plan</strong></h2>
+        <h2 class="text-center"><strong>PART IV: General Teacher Development Plan</strong></h2>
         <form action="includes/processeditdevplan.php" method="post" class="form-group">
             <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?> />
             <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
