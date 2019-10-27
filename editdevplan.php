@@ -6,12 +6,12 @@ use DevPlan\DevPlan;
     <div class="breadcome-list shadow-reset">
         <h2 class="text-center"><strong>PART IV: General Development Plan</strong></h2>
         <form action="includes/processeditdevplan.php" method="post" class="form-group">
-            <input type="text" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?> />
-            <input type="text" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
-            <input type="text" name="position" value="<?php echo $_SESSION['position']; ?>" />
-            <input type="text" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" />
-            <input type="text" name="rater" value="<?php echo $_SESSION['user_id']; ?>" />
-            <input type="text" name="approving_authority" value="<?php echo $_SESSION['user_id']; ?>" />
+            <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?> />
+            <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
+            <input type="hidden" name="position" value="<?php echo $_SESSION['position']; ?>" />
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" />
+            <input type="hidden" name="rater" value="<?php echo $_SESSION['user_id']; ?>" />
+            <input type="hidden" name="approving_authority" value="<?php echo $_SESSION['user_id']; ?>" />
             <div id="A">
                 <fieldset>
                     <legend><strong>A. Functional Competencies</strong></legend>
