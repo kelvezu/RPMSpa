@@ -229,7 +229,7 @@
 
                             $qry_kra = 'UPDATE kra_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_kra);
-                            header('location:includes/logout.inc.php');
+                            // header('location:includes/logout.inc.php');
 
                             exit();
                         else : return false;
@@ -269,7 +269,7 @@
                     if (strpos($position, 'rincipal')) :
                         return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' " AND status = "Active"';
                     elseif (strpos($position, 'aster')) :
-                        return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' AND status = "Active""';
+                        return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . '" AND status = "Active"';
                     else :
                         return false;
                     endif;

@@ -23,7 +23,6 @@ endif;
 
 if (isset($_POST['remove'])) :
     $remove_user = $_POST['remove_user'];
-
     $query = 'UPDATE account_tbl SET rater = null WHERE user_id = "' . $remove_user . '"  ';
     $remove_query_run = updateAll($conn, $query);
 

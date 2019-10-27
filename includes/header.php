@@ -99,12 +99,15 @@ $position = $_SESSION['position'];
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro ">
                         <li class="nav-item ">
-                            <a href="#" role="button"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span></a>
+                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
+                                <a href="displaytprogress.php" class="dropdown-item"> Teacher Analytics Progress</a>
+                                <a href="displaymtprogress.php" class="dropdown-item"> Master Teacher Analytics Progress</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-list"></i> <span class="mini-dn">ESAT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <a href="#" class="dropdown-item">View Teacher Result</a>
+                                <a href="displayshchart.php" class="dropdown-item">View Teacher Result</a>
                                 <a href="#" class="dropdown-item">View Master Teacher Result</a>
                             </div>
                         </li>
@@ -157,6 +160,9 @@ $position = $_SESSION['position'];
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
                                 <a href="displayusers.php" class="dropdown-item">View User</a>
                                 <a href="signup.php" class="dropdown-item">Add User</a>
+                                <a href="selectteacher.php" class="dropdown-item">Select Teacher</a>
+                                <a href="selecttratee.php" class="dropdown-item">Select Ratee</a>
+
                             </div>
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bullhorn"></i> <span class="mini-dn">Announcement</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>

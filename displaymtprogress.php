@@ -3,7 +3,7 @@
 use RPMSdb\RPMSdb;
 
 include 'includes/header.php';
-RPMSdb::isEsatComplete($conn, $_SESSION['position']);
+
 ?>
 <div class="dashone-adminprowrap shadow-reset mg-b-30">
     <div class="dash-adminpro-project-title">
@@ -20,7 +20,7 @@ RPMSdb::isEsatComplete($conn, $_SESSION['position']);
                                 <th>Name</th>
                                 <th>Position</th>
                                 <th>ESAT</th>
-                                <th>COT</th>
+                                <th colspan="4" class="text-center">COT</th>
                                 <th>IPCRF</th>
                                 <th>DEVELOPMENT PLAN</th>
 
@@ -68,8 +68,14 @@ RPMSdb::isEsatComplete($conn, $_SESSION['position']);
 
                                         <td>
                                             <?php echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">' ?>
+                                        </td>
+                                        <td>
                                             <?php echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">' ?>
+                                        </td>
+                                        <td>
                                             <?php echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">' ?>
+                                        </td>
+                                        <td>
                                             <?php echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">' ?>
                                         </td>
 

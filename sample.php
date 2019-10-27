@@ -125,18 +125,18 @@ echo BR;
 //     echo 'd pa bakasyon';
 // }
 
-$qry1 = 'SELECT * FROM account_tbl WHERE surname = "asdjhsbdad"';
+// $qry1 = 'SELECT * FROM account_tbl WHERE surname = "asdjhsbdad"';
 // $result = mysqli_query($conn, $qry1);
 // pre_r($result);
 
-$conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
-$conn->query($qry1);
-if ($conn->query($qry1)->num_rows) :
-    echo 'May Laman';
-else :
-    echo 'wala';
+// $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+// $conn->query($qry1);
+// if ($conn->query($qry1)->num_rows) :
+//     echo 'May Laman';
+// else :
+//     echo 'wala';
 
-endif;
+// endif;
 
 // $category = "User Management";
 // $title = "Add User";
@@ -164,9 +164,9 @@ endif;
 //     echo $monay['surname'];
 // endforeach;
 
-pre_r(BR . RPMSdb::teacherHasCOT1($conn, 32));
+// pre_r(BR . RPMSdb::teacherHasCOT1($conn, 32));
 
-
+pre_r($teacherMasterlist_results);
 ?>
 
 <?php //echo "</ul>";

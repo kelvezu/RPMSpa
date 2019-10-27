@@ -26,7 +26,7 @@ class RPMSdb
     public static function displayVacantList($conn)
     {
         $user_arr = [];
-        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "For Transfer" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") ORDER BY `user_id` desc  ';
+        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "For Transfer" AND school_id is NULL  AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") ORDER BY `user_id` desc  ';
         $result = mysqli_query($conn, $totalqry);
         $total = mysqli_num_rows($result);
         if ($total) :

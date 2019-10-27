@@ -99,14 +99,11 @@
                                         </thead>
                                         <div class="card-body text-dark">
                                             <?php
-                                                foreach ($teacherresults as $teacher) :
-                                                    ?>
+                                                foreach ($teacherresults as $teacher) : ?>
                                                 <tr>
                                                     <td><input type="checkbox" class=" form-check-input" name="teacher[]" value="<?php echo $teacher['user_id'] ?>" /> <?php echo '- ' . $teacher['firstname'] . ' ' . substr($teacher['middlename'], 0, 1) . '. ' . $teacher['surname']; ?></td>
                                                     <td><?php echo $teacher['position']; ?></td>
-                                                <?php
-                                                    endforeach;
-                                                    ?>
+                                                <?php endforeach; ?>
                                                 </tr>
                                                 <tr>
                                                     <?php echo !empty($teacherresults) ? '<td colspan="4" align="center"><button name="btn-t" class="btn btn-info btn-block"><b>Submit</b></button></td>' : false ?>
