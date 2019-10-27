@@ -2,24 +2,46 @@
 
 <?php
 
-$connection=mysqli_connect("localhost","root","");
-mysqli_select_db($connection,"rpms");
+$connection = mysqli_connect("localhost", "root", "");
+mysqli_select_db($connection, "rpms");
 
-$kra = $_GET["kra"]; 
+$kra = $_GET["kra"];
 
 
-if($kra != ""){
-    $result3 = mysqli_query($connection,"SELECT * FROM tobj_tbl WHERE kra_id=$kra");
+if ($kra != "") {
+    $result3 = mysqli_query($connection, "SELECT * FROM tobj_tbl WHERE kra_id=$kra");
     echo "<select name='tobj_name' class='form-control'>";
-    while($resultrow = mysqli_fetch_array($result3)){
+    while ($resultrow = mysqli_fetch_array($result3)) {
         $tobj_id = $resultrow['tobj_id'];
         $tobj_name = $resultrow['tobj_name'];
 
-    echo "<option value = '$tobj_id'>"; 
-    echo $tobj_name;
-    echo "</option>";
-}
+        echo "<option value = '$tobj_id'>";
+        echo $tobj_name;
+        echo "</option>";
+    }
     echo "</select>";
+}
+?>
 
+<?php
+
+$connection = mysqli_connect("localhost", "root", "");
+mysqli_select_db($connection, "rpms");
+
+$kra = $_GET["kra1"];
+
+
+if ($kra != "") {
+    $result3 = mysqli_query($connection, "SELECT * FROM tobj_tbl WHERE kra_id=$kra");
+    echo "<select name='tobj_name' class='form-control'>";
+    while ($resultrow = mysqli_fetch_array($result3)) {
+        $tobj_id = $resultrow['tobj_id'];
+        $tobj_name = $resultrow['tobj_name'];
+
+        echo "<option value = '$tobj_id'>";
+        echo $tobj_name;
+        echo "</option>";
+    }
+    echo "</select>";
 }
 ?>

@@ -35,9 +35,12 @@
                                     <legend><strong>A. Functional Competencies</strong></legend>
                                     <!--A. Strengths -->
                                     <div>
-                                        <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Strengths</label></div>
+                                        <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Strengths</label>
+
+                                        </div>
                                         <ul class="ul">
                                             <?php
+
                                                     $esatForm2_LvlCap_results = DevPlan::showStrDevplan($conn);
                                                     /* TURN THIS INTO FUNCTION */
                                                     if (isset($esatForm2_LvlCap_results)) :
@@ -245,6 +248,7 @@
                                     <div>
                                         <input type="submit" name="submit" class="btn btn-primary" value="Submit" />
                                         <input type="submit" name="save" class="btn btn-success" value="Save" />
+                                        <input type="submit" name="edit" class="btn btn-info" value="Edit" />
                                         <?php directLastPage() ?>
                                     </div>
                                 </div>
