@@ -57,7 +57,6 @@
                     $result = mysqli_num_rows($submit_result);
                     if ($result > 0) :
                         array_push($notif_array, '<li class="green-notif-border">Youve already submitted your Development Plan!</li>');
-                        array_push($notif_array, '<li class="green-notif-border">Tae ka!</li>');
                     endif;
 
                 else :
@@ -79,8 +78,10 @@
                     $esatForm3qry = 'SELECT * FROM `esat3_core_behavioral_tbl` WHERE `user_id`= "' . $user_id . '"';
                     if (strpos(($position), 'aster')) :
                         $esatForm2qry = 'SELECT * FROM `esat2_objectivesmt_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $esatForm3qry = 'SELECT * FROM `esat3_core_behavioralmt_tbl` WHERE `user_id`= "' . $user_id . '"';
                     elseif (strpos(($_SESSION['position']), 'eacher')) :
                         $esatForm2qry = 'SELECT * FROM `esat2_objectivest_tbl` WHERE `user_id` ="' . $user_id . '"';
+                        $esatForm3qry = 'SELECT * FROM `esat3_core_behavioralt_tbl` WHERE `user_id`= "' . $user_id . '"';
                     else :
                         return false;
                     endif;
@@ -107,6 +108,7 @@
                     endif;
 
                     return $notif_array;
+                else : return false;
                 endif;
             }
 

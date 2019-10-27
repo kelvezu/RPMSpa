@@ -9,7 +9,7 @@ class FilterUser
     public static function filterEsatDemo($conn, $position)
     {
         if (isset($position)) :
-            if (stripos($position, 'dmin')) :
+            if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -18,8 +18,21 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
+            elseif (stripos($position, 'aster')) :
+                $esat_demo_T = 'SELECT * FROM esat1_demographicsMT_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+                $esat_demo_T_result = mysqli_query($conn, $esat_demo_T);
+                $check_e1_t = mysqli_num_rows($esat_demo_T_result);
+                if ($check_e1_t) :
+                    echo  '<p class="green-notif-border">You have already taken the ESAT Demographics!</p>';
+                    include 'includes/footer.php';
+                    exit();
+                else :
+                    return false;
+
+                endif;
+
             elseif (stripos($position, 'eacher')) :
-                $esat_demo_T = 'SELECT * FROM esat1_demographics_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+                $esat_demo_T = 'SELECT * FROM esat1_demographicst_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_demo_T_result = mysqli_query($conn, $esat_demo_T);
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
                 if ($check_e1_t) :
@@ -44,7 +57,7 @@ class FilterUser
     public static function filterEsatT($conn, $position)
     {
         if (isset($position)) :
-            if (stripos($position, 'dmin')) :
+            if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -84,7 +97,7 @@ class FilterUser
     public static function filterEsatMT($conn, $position)
     {
         if (isset($position)) :
-            if (!stripos($position, 'aster') || (!stripos($position, 'eacher'))) :
+            if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
@@ -93,7 +106,7 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
-            elseif (!strpos($position, 'aster')) :
+            elseif (strpos($position, 'eacher')) :
                 echo '<p class="red-notif-border">This part of ESAT is for Master Teachers only!</p>';
                 directLastPage();
                 include 'includes/footer.php';
@@ -166,6 +179,26 @@ class FilterUser
             return 'Teacher';
         else :
             return '<p class="red-notif-border">You are not allowed! </p>';
+        endif;
+    }
+
+    public static function filterDevplanTUsers($position)
+    {
+        if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool') || stripos($position, 'aster')) :
+            return true;
+        else : echo '<p class="red-notif-border">You dont have access to this page!</p>';
+            include 'includes/footer.php';
+            exit();
+        endif;
+    }
+
+    public static function filterDevplanMTUsers($position)
+    {
+        if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool')) :
+            return true;
+        else : echo '<p class="red-notif-border">You dont have access to this page!</p>';
+            include 'includes/footer.php';
+            exit();
         endif;
     }
 }

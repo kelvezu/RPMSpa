@@ -166,9 +166,16 @@ echo BR;
 
 // pre_r(BR . RPMSdb::teacherHasCOT1($conn, 32));
 
-pre_r($teacherMasterlist_results);
+// pre_r($teacherMasterlist_results);
+
+$teacher_dp = devplan\DevPlan::showStrIndicatorT($conn);
+pre_r($teacher_dp);
+// foreach ($teacher_dp as $res) :
+//     echo $res['cbc_score'];
+// endforeach;
+
 ?>
 
 <?php //echo "</ul>";
-//endforeach; -->
+//endforeach; -->x
 include 'includes/footer.php';  ?>

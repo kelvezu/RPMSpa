@@ -20,9 +20,10 @@
 
 
 
-  <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?>>
-  <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?>>
-  <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?>>
+  <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+  <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>">
+  <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id'] ?>" />
+  <input type="hidden" name="employee_position" value="<?= $_SESSION['position'] ?>">
 
 
 
@@ -85,7 +86,7 @@
         $positions = positionQuery($conn, $_SESSION['position']);
         if (!empty($positions)) :
           foreach ($positions as $position) : ?>
-            <option value="<?php echo $position['position_name'] ?>"><?php echo $position['position_name'] ?></option>
+            <option value="<?php echo $_SESSION['position'] ?>"><?php echo $position['position_name'] ?></option>
           <?php
             endforeach;
           else :

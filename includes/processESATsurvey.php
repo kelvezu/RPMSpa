@@ -6,6 +6,7 @@
         //ESAT FORM 1
 
         if (isset($_POST['submitESAT1'])) :
+            $emp_position = $_POST['employee_position'];
             $user_id = $_POST['user_id'];
             $sy = $_POST['sy'];
             $school = $_POST['school_id'];
@@ -22,14 +23,19 @@
             $curriclass = $_POST['curriclass'];
             $region = $_POST['region'];
 
-
-            $query = "INSERT INTO esat1_demographics_tbl(`user_id`, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school,`status`) VALUES ('$user_id','$age','$gender','$empstatus','$position','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school','$status')";
-            if ($query_run = mysqli_query($conn, $query)) :
-                if ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
-                    header('location:../esatform2t.php');
-                    exit();
-                elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
+            if (stripos($emp_position, 'aster')) :
+                $query = "INSERT INTO esat1_demographicsmt_tbl(`user_id`, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school,`status`) VALUES ('$user_id','$age','$gender','$empstatus','$position','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school','$status')";
+                if ($query_run = mysqli_query($conn, $query)) :
                     header('location:../esatform2mt.php');
+                    exit();
+                else :
+                    echo 'Mysql Error!' . mysqli_error($conn);
+                endif;
+
+            elseif (stripos($emp_position, 'eacher')) :
+                $query = "INSERT INTO esat1_demographicst_tbl(`user_id`, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school,`status`) VALUES ('$user_id','$age','$gender','$empstatus','$position','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school','$status')";
+                if ($query_run = mysqli_query($conn, $query)) :
+                    header('location:../esatform2t.php');
                     exit();
                 else :
                     echo "You are not required to take ESAT!";
@@ -37,6 +43,7 @@
             else :
                 echo 'Mysql Error!' . mysqli_error($conn);
             endif;
+        else : return false;
         endif;
 
         //-------ESAT FORM 2 teacher objectives------//
@@ -52,10 +59,12 @@
             $priodev = $_POST['priodev'];
             $position = $_POST['position'];
 
-            for ($count = 0; $count < count($kra_id); $count++) {
-                $conn->query('INSERT INTO esat2_objectivest_tbl(user_id,kra_id, tobj_id, lvlcap, priodev,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $tobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
+            for ($count = 0; $count < count($tobj_id); $count++) {
+                $conn = mysqli_query($conn, 'INSERT INTO esat2_objectivest_tbl(`user_id`,kra_id, tobj_id, lvlcap, priodev,sy,position,school,`status`)VALUES(' . $user_id[$count] . ',' . $kra_id[$count] . ',' . $tobj_id[$count] . ',' . $lvlcap[$count] . ',' . $priodev[$count] . ',' . $sy . ',' . $position . ',' . $school . ',' . $status . ')');
             }
             header('location:../ESATform3.php');
+            exit();
+
         endif;
 
         //-------ESAT FORM 2 master teacher objectives------//
@@ -92,4 +101,5 @@
                 $conn->query('INSERT INTO esat3_core_behavioral_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
             }
             directToCharts($position);
+        else : return false;
         endif;
