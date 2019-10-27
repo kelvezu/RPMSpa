@@ -73,6 +73,6 @@ endif;
 
 if (isset($_POST['edit'])) :
 
-    header('location:../editdevplan.php');
+    header('location:../editdevplanMT.php');
 
 endif;

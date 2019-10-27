@@ -23,7 +23,7 @@
         if (!$notifsss) :
             ?>
             <main>
-                <div class="container ">
+                <div class="container "> 
                     <div class="breadcome-list shadow-reset">
                         <h2 class="text-center"><strong>PART IV: General Teacher Development Plan</strong></h2>
                         <form action="includes/processgendevplant.php" method="post" class="form-group">
