@@ -40,33 +40,37 @@
                         <h1><b>Welcome Admin</b></h1>
                         <p>You have new notifications.</p>
                     </div>
-                    <div class="adminpro-message-list">
-                        <table class="table table-hover">
-                            <tr>
-                                <th>#</th>
-                                <th>Message</th>
-                                <th>Date</th>
-                            </tr>
-                            <?php
-                            $no = 1;
-                            $result = $conn->query('SELECT * FROM notification_tbl WHERE `status`="Active" ORDER BY notif_id desc limit 5');
-                            while ($row = $result->fetch_assoc()) :
-                                $category = $row['category'];
-                                $title = $row['title'];
-                                $message = $row['message'];
-                                $date = $row['datetime_stamp'];
-                                ?>
-                                <tr>
-                                    <td><?php echo $no; ?></td>
-                                    <td><?php echo $message; ?></td>
-                                    <td> <?php echo $date; ?></td>
+                    <div class="pre-scrollable">
+                        <div class="adminpro-message-list">
+                            
+                                    <table class="table table-hover">
+                                        
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Message</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        <?php
+                                        $no = 1;
+                                        $result = $conn->query('SELECT * FROM notification_tbl WHERE `status`="Active" ORDER BY notif_id desc limit 5');
+                                        while ($row = $result->fetch_assoc()) :
+                                            $category = $row['category'];
+                                            $title = $row['title'];
+                                            $message = $row['message'];
+                                            $date = $row['datetime_stamp'];
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $no; ?></td>
+                                                <td><?php echo $message; ?></td>
+                                                <td> <?php echo $date; ?></td>
 
-                                </tr>
-                            <?php
-                                $no++;
-                            endwhile; ?>
-                        </table>
-                    </div>
+                                            </tr>
+                                        <?php
+                                            $no++;
+                                        endwhile; ?>
+                                    </table>
+                            </div>      
+                        </div>
                 </div>
                 <div class="dashone-adminprowrap shadow-reset mg-b-30">
                     <div class="analytics-rounded-content">
@@ -88,8 +92,46 @@
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="dashone-adminprowrap shadow-reset mg-b-30">
+                    <div class="analytics-rounded-content">
+                        <h4><b>School Master List</b><span id="sparkline4"></span></h4>
+                        <div class="pre-scrollable">
+                            <div class="adminpro-message-list">
+                            
+                                <table class="table table-hover">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>School Name</th>
+                                            <th>Total</th>
+                                            
+                                        </tr>
+                                        <?php
+                                        $no = 1;
+                                        $result = $conn->query('SELECT a.school_id,a.school_name, count(distinct b.user_id) as x FROM school_tbl a inner join account_tbl b on a.school_id = b.school_id where b.status="Active" group by a.school_name');
+                                        while ($row = $result->fetch_assoc()) :
+                                            $school_name = $row['school_id'];
+                                            $school_name = $row['school_name'];
+                                            $count = $row['x'];
+    
 
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $no; ?></td>
+                                                <td><a href="dbprincipal.php?view=<?php echo $row['school_id']; ?>"><?php echo $school_name; ?> </a></td>
+                                                <td><?php echo $count; ?></td>
+
+                                            </tr>
+                                        <?php
+                                            $no++;
+                                        endwhile; ?>
+                                    </table>
+
+                           </div>                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="col-lg-4">
                 <div class="dashboard-line-chart shadow-reset mg-b-30">
                     <h4><b>Teacher IPCRF Summary Rating</b> <span class="bar">5,3,9,6,5,9,7,3,5,2</span></h4><br><br>

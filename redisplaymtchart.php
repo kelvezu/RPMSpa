@@ -12,12 +12,11 @@ include_once 'includes/header.php';
 
 <?php
 $connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-$query = "SELECT a.CBC_NAME,sum(b.cbc_score) 
-			AS cbc_score FROM core_behavioral_tbl a 
+$query = "SELECT a.CBC_NAME,c.indicator FROM core_behavioral_tbl a 
 			INNER JOIN 
-			esat3_core_behavioral_tbl b  on a.cbc_id = b.cbc_id 
-			WHERE b.status='active'
-			group by a.cbc_name order by a.cbc_id;";
+			esat3_core_behavioral_tbl b  on a.cbc_id = b.cbc_id
+			INNER JOIN cbc_indicators_tbl c on b.cbc_ind_id=c.cbc_ind_id
+			WHERE b.status='active' GROUP BY a.CBC_NAME,c.indicator order by a.cbc_id;";
 $statement = $connect->prepare($query);
 $statement->execute();
 $result = $statement->fetchAll();
@@ -48,7 +47,7 @@ $result = $statement->fetchAll();
 					<thead>
 						<tr>
 							<th width="20%">CBC Name</th>
-							<th width="20%">CBC Score</th>
+							<th width="20%">CBC Indicator</th>
 
 						</tr>
 					</thead>
@@ -60,7 +59,7 @@ $result = $statement->fetchAll();
 								<tr>
 
 									<td>' . $row['CBC_NAME'] . '</td>
-									<td>' . $row['cbc_score'] . '</td>
+									<td>' . $row['indicator'] . '</td>
 								</tr>
 								';
 					}
@@ -68,18 +67,6 @@ $result = $statement->fetchAll();
 					?>
 				</table>
 			</div>
-			<br />
-			<div id="chart_area1" title="The Rating of Core Behavioral Competencies">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart1" id="view_chart1" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-
-			<br />
-			<br />
-
 		</div>
 	</div>
 
@@ -91,11 +78,23 @@ $result = $statement->fetchAll();
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT CONCAT(a.kra_id,'.',a.mtobj_id) 
-	AS OBJECTIVES, lvlcap, priodev 
-	FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
-	WHERE status='active'
-	group by a.mtobj_id,b.mtobj_name;";
+	$query = "SELECT CONCAT(a.kra_id,'.',b.mtobj_id,'.',b.mtobj_name) 
+					AS OBJECTIVES, 
+					CASE 
+						WHEN a.lvlcap = 1 THEN 'Low'
+						WHEN a.lvlcap = 2 THEN 'Moderate'
+						WHEN a.lvlcap = 3 THEN 'High'
+						WHEN a.lvlcap = 4 THEN 'Very High'
+											end as lvlcap,
+					CASE 
+						WHEN a.priodev = 1 THEN 'Low'
+						WHEN a.priodev = 2 THEN 'Moderate'
+						WHEN a.priodev = 3 THEN 'High'
+						WHEN a.priodev = 4 THEN 'Very High'
+											END AS priodev 
+					FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
+					WHERE a.status='Active'
+					group by a.mtobj_id,b.mtobj_name;";
 
 	$statement = $connect->prepare($query);
 	$statement->execute();
@@ -135,103 +134,11 @@ $result = $statement->fetchAll();
 					?>
 				</table>
 			</div>
-			<br />
-			<div id="chart_area2" title="The Assessment of Capabilities and Priorities">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart2" id="view_chart2" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-
-			<br />
-			<br />
-
 		</div>
 	</div>
 </body>
 
 </html>
 
-<script>
-	$(document).ready(function() {
-
-		$('#view_chart1').click(function() {
-			$('#for_chart1').data('graph-container', '#chart_area1');
-			$('#for_chart1').data('graph-type', 'column');
-			$("#chart_area1").dialog('open');
-			$('#for_chart1').highchartTable();
-
-			$('#remove_chart').attr('disabled', false);
-		});
-
-		$('#remove_chart').click(function() {
-			$('#chart_area1').html('');
-		});
-
-		$("#chart_area1").dialog({
-			autoOpen: false,
-			width: 900,
-			height: 600
-		});
-	});
-
-
-	$(document).ready(function() {
-
-		$('#view_chart2').click(function() {
-			$('#for_chart2').data('graph-container', '#chart_area2');
-			$('#for_chart2').data('graph-type', 'column');
-			$("#chart_area2").dialog('open');
-			$('#for_chart2').highchartTable();
-
-			$('#remove_chart').attr('disabled', false);
-		});
-
-		$('#remove_chart').click(function() {
-			$('#chart_area2').html('');
-		});
-
-		$("#chart_area2").dialog({
-			autoOpen: false,
-			width: 1000,
-			height: 600
-		});
-
-		Highcharts.setOptions({
-			chart: {
-				backgroundColor: {
-					linearGradient: [0, 0, 500, 500],
-					stops: [
-						[0, 'rgb(255, 255, 255)'],
-						[1, 'rgb(240, 240, 255)']
-					]
-				},
-				borderWidth: 2,
-				plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-				plotShadow: false,
-				plotBorderWidth: 2,
-
-
-			},
-
-			plotOptions: {
-				series: {
-					pointWidth: 30,
-					dataLabels: {
-						enabled: true
-					}
-
-
-				}
-
-			},
-
-		});
-
-
-
-	});
-</script>
 
 <!-- Start of Assessment of Capabilities and Prioties -->
