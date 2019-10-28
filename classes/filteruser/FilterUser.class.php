@@ -148,7 +148,7 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
-            elseif ((strpos($position, 'aster'))) :
+            elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
                 $esat_cbc_T = 'SELECT * FROM esat3_core_behavioralmt_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_cbc_T_result = mysqli_query($conn, $esat_cbc_T);
                 $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
@@ -159,7 +159,7 @@ class FilterUser
                 else : return false;
                 endif;
 
-            elseif ((strpos($position, 'eacher'))) :
+            elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
                 $esat_cbc_T = 'SELECT * FROM esat3_core_behavioralt_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_cbc_T_result = mysqli_query($conn, $esat_cbc_T);
                 $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
