@@ -62,16 +62,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
               </td>
               <td>
 
-                <select name="lvlcap[]" id="" class="form-control bg-primary text-white font-weight-bold">
-                  <option value="">--Select--</option>
-                  <option value=4> Very High</option>
-                  <option value=3> High</option>
-                  <option value=2>Moderate</option>
-                  <option value=1>Low</option>
-                </select>
-              </td>
-              <td>
-                <select name="priodev[]" id="" class="form-control bg-danger text-white font-weight-bold">
+                <select name="lvlcap[]" id="lvlcapp" onChange="change_cap()" class="form-control bg-primary text-white font-weight-bold">
                   <option value="">--Select--</option>
                   <option value=4>Very High</option>
                   <option value=3>High</option>
@@ -79,7 +70,16 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                   <option value=1>Low</option>
                 </select>
               </td>
+              <td>
+              <div id="priodev">
+                <select class="form-control">
+                  <option value="">--Select--</option>
+                </select>
+              </div>
+               
+              </td>
           </tr>
+
           <!-- END LOOP FOR THE CBC INDICATORS -->
         <?php
           endwhile
@@ -92,6 +92,17 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
       ?>
 
     </table>
+    
+<script type="text/javascript">
+    function change_cap()
+    {
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.open("GET","ajaxesat2T.php?cap="+document.getElementById("lvlcapp").value,false);
+        xmlhttp.send(null);
+        document.getElementById("priodev").innerHTML=xmlhttp.responseText;
+        
+    }
+</script>
     <div class="card-footer text-muted ">
       <button type="submit" class="btn btn-success btn-block my-2" name="submitESAT2t">Submit</button>
       <a href="" role="button" class="btn btn-danger btn-block my-2">Cancel</a>
