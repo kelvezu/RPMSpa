@@ -141,4 +141,34 @@ class DevPlan
         else :  echo '<p class="red-notif-border">No record!</p>';
         endif;
     }
+
+    public static function showAllAvailRaterforMT($conn)
+    {
+        $result_arr = [];
+        $qry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Principal", "School Head","Superintendent","Assistant Principal","Assistant Superintendent" ) ';
+
+        $result = mysqli_query($conn, $qry);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+    public static function showAllAppAuthforMT($conn)
+    {
+        $result_arr = [];
+        $qry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent" ) ';
+
+        $result = mysqli_query($conn, $qry);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
 }

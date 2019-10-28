@@ -342,7 +342,7 @@ $position = $_SESSION['position'];
         </div>
         <?php
         if (!empty($_SESSION['active_sy_id'])) :
-            endSchoolYear($conn, $_SESSION['active_sy_id']);
+            return true;
         else :
             if (isset($position)) :
                 if (stripos($position, 'dmin')) :

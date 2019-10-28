@@ -168,13 +168,17 @@ echo BR;
 
 // pre_r($teacherMasterlist_results);
 
-$teacher_dp = devplan\DevPlan::showStrIndicatorT($conn);
-pre_r($teacher_dp);
-// foreach ($teacher_dp as $res) :
-//     echo $res['cbc_score'];
-// endforeach;
 
 ?>
+<select name="" id="">
+    <?php
+
+    ?>
+
+    <?php
+    //endforeach;
+    ?>
+</select>
 
 <?php //echo "</ul>";
 //endforeach; -->x

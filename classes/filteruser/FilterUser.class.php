@@ -18,7 +18,7 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
-            elseif (stripos($position, 'aster')) :
+            elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
                 $esat_demo_T = 'SELECT * FROM esat1_demographicsMT_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_demo_T_result = mysqli_query($conn, $esat_demo_T);
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
@@ -31,7 +31,7 @@ class FilterUser
 
                 endif;
 
-            elseif (stripos($position, 'eacher')) :
+            elseif ($position = "Teacher I" ||  $position = "Teacher II" ||  $position = "Teacher III") :
                 $esat_demo_T = 'SELECT * FROM esat1_demographicst_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_demo_T_result = mysqli_query($conn, $esat_demo_T);
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
@@ -66,7 +66,7 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
-            elseif (stripos($position, 'aster')) :
+            elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
                 echo '<p class="red-notif-border">This part of ESAT is for Teachers only!</p>';
                 directLastPage();
                 include 'includes/footer.php';
@@ -111,7 +111,7 @@ class FilterUser
                 directLastPage();
                 include 'includes/footer.php';
                 die();
-            elseif (strpos(($position), 'aster')) :
+            elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
                 $esat_objectivesmt_T = 'SELECT * FROM `esat2_objectivesmt_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_objective_MT_result = mysqli_query($conn, $esat_objectivesmt_T);
                 $check_e2_mt = mysqli_num_rows($esat_objective_MT_result);

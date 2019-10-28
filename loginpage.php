@@ -7,6 +7,7 @@
   session_start();
   include_once 'includes/conn.inc.php';
   include_once 'libraries/func.lib.php';
+  endSchoolYear($conn, $_SESSION['active_sy_id']);
 
   if (isset($_SESSION['position'])) :
     redirectToDashboard($_SESSION['position']);
@@ -16,10 +17,6 @@
 
   ?>
 </header>
-
-
-
-
 <div class="container col-sm-4 my-4">
   <div class="card">
     <div class="card-header bg-dark text-white font-weight-bold">
@@ -46,10 +43,6 @@
         <div class="row align-items-center justify-content-center my-2">
           <a href="requestreset.php" class="text-primary text-decoration-none">Forgot Password?</a>
         </div>
-
-
-
-
       </form>
 
 

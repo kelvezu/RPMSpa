@@ -59,9 +59,9 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                     //ASSIGN THE VALUE FROM THE DB
                     echo '<strong>' . $tobj_num++ . ".</strong> " . $tobj_name = $rows['tobj_name'];
                     ?>
-                <input type="text" name="user_id[]" value="<?php echo $_SESSION['user_id']; ?>">
-                <input type="text" name="kra_id[]" value="<?php echo $row['kra_id'] ?>">
-                <input type="text" name="tobj_id[]" value="<?php echo $rows['tobj_id'] ?>">
+                <input type="hidden" name="user_id[]" value="<?php echo $_SESSION['user_id']; ?>">
+                <input type="hidden" name="kra_id[]" value="<?php echo $row['kra_id'] ?>">
+                <input type="hidden" name="tobj_id[]" value="<?php echo $rows['tobj_id'] ?>">
 
               </td>
               <td>

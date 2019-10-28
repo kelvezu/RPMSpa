@@ -221,8 +221,8 @@
                             $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
                             mysqli_query($conn, $qry);
 
-                            $qry_account = 'UPDATE account_tbl SET `status` = "Inactive" , rater = null, approving_authority = null WHERE `status` = "Active"';
-                            mysqli_query($conn, $qry_account);
+                            // $qry_account = 'UPDATE account_tbl SET `status` = "Inactive" , rater = null, approving_authority = null WHERE `status` = "Active"';
+                            // mysqli_query($conn, $qry_account);
 
                             $qry_subject = 'UPDATE subject_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_subject);
@@ -252,7 +252,7 @@
                     endif;
                 else :
                     echo '<p class="red-notif-border">No Active School year!</p>';
-                    include 'includes/footer.php';
+
                 endif;
             }
 

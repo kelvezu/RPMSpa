@@ -300,8 +300,8 @@ table.fixed td {
 .bg-black {
     background-color: #000;
     color: white;
-    margin: 1em 0;
-    padding: 1;
+    margin: 2%;
+    padding: 10px;
     font-weight: bold;
     font-size-adjust: inherit;
     font-weight: bold;
@@ -377,6 +377,16 @@ table.fixed td {
     text-align: center;
     font-weight: bolder;
 }
+
+.black-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    color: black;
+    padding: 2%;
+    font-weight: bolder;
+}
+
+
 
 /* .li-nostyle {
     list-style-type: none;
