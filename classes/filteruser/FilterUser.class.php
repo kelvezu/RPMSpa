@@ -71,7 +71,7 @@ class FilterUser
                 directLastPage();
                 include 'includes/footer.php';
                 die();
-            elseif (stripos(($position), 'eacher')) :
+            elseif ($position == 'Teacher I' || $position == 'Teacher II' || $position == 'Teacher III') :
                 $esat_objective_T = 'SELECT * FROM `esat2_objectivest_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_objective_T_result = mysqli_query($conn, $esat_objective_T);
                 $check_e2_t = mysqli_num_rows($esat_objective_T_result);
@@ -106,7 +106,7 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
-            elseif (strpos($position, 'eacher')) :
+            elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
                 echo '<p class="red-notif-border">This part of ESAT is for Master Teachers only!</p>';
                 directLastPage();
                 include 'includes/footer.php';
@@ -148,8 +148,19 @@ class FilterUser
                 include 'includes/footer.php';
                 die();
 
+            elseif ((strpos($position, 'aster'))) :
+                $esat_cbc_T = 'SELECT * FROM esat3_core_behavioralmt_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+                $esat_cbc_T_result = mysqli_query($conn, $esat_cbc_T);
+                $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
+                if ($check_e3_t) :
+                    echo  '<p class="green-notif-border">You have already taken the ESAT Core Behavioral Competencies!</p>';
+                    include 'includes/footer.php';
+                    exit();
+                else : return false;
+                endif;
+
             elseif ((strpos($position, 'eacher'))) :
-                $esat_cbc_T = 'SELECT * FROM esat3_core_behavioral_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+                $esat_cbc_T = 'SELECT * FROM esat3_core_behavioralt_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_cbc_T_result = mysqli_query($conn, $esat_cbc_T);
                 $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
                 if ($check_e3_t) :

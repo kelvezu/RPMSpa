@@ -74,14 +74,21 @@
                 $notif_array = [];
                 //THIS WILL CHECK THE POSITION OF THE USER
                 if (!empty($position)) :
-                    $esatForm1qry = 'SELECT * FROM `esat1_demographics_tbl` WHERE `user_id` = "' . $user_id . '"';
-                    $esatForm3qry = 'SELECT * FROM `esat3_core_behavioral_tbl` WHERE `user_id`= "' . $user_id . '"';
+
+
                     if (strpos(($position), 'aster')) :
-                        $esatForm2qry = 'SELECT * FROM `esat2_objectivesmt_tbl` WHERE `user_id`= "' . $user_id . '"';
-                        $esatForm3qry = 'SELECT * FROM `esat3_core_behavioralmt_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $esatForm1qry = 'SELECT * FROM `esat1_demographicsmt_tbl` WHERE `user_id` = "' . $user_id . '" AND school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '"';
+
+                        $esatForm2qry = 'SELECT * FROM `esat2_objectivesmt_tbl` WHERE `user_id`= "' . $user_id . '"AND school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '"';
+
+                        $esatForm3qry = 'SELECT * FROM `esat3_core_behavioralmt_tbl` WHERE `user_id`= "' . $user_id . '"AND school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '"';
+
                     elseif (strpos(($_SESSION['position']), 'eacher')) :
-                        $esatForm2qry = 'SELECT * FROM `esat2_objectivest_tbl` WHERE `user_id` ="' . $user_id . '"';
-                        $esatForm3qry = 'SELECT * FROM `esat3_core_behavioralt_tbl` WHERE `user_id`= "' . $user_id . '"';
+                        $esatForm1qry = 'SELECT * FROM `esat1_demographicst_tbl` WHERE `user_id` = "' . $user_id . '" AND school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '"';
+
+                        $esatForm2qry = 'SELECT * FROM `esat2_objectivest_tbl` WHERE `user_id`= "' . $user_id . '"AND school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '"';
+
+                        $esatForm3qry = 'SELECT * FROM `esat3_core_behavioralt_tbl` WHERE `user_id`= "' . $user_id . '"AND school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '"';
                     else :
                         return false;
                     endif;

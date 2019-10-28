@@ -9,14 +9,17 @@ $tobj_num = 1;
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR KRA TABLE  
 $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
+
 ?>
 
 <div class="container">
   <div class="breadcome-list shadow-reset">
-    <form action="includes/processESATsurvey.php" method="POST">
+    <!-- -->
+    <form action=" includes/processESATsurvey.php" method="POST">
       <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>">
       <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>">
-      <input type="hidden" name="position" value="<?= $_SESSION['position'] ?>" />
+      <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>" />
+      <input type="hidden" name="status" value="Active">
 
       <strong>
         <h3> Self Assessment Tool Form / Part II / Teacher / Objectives</h3>
@@ -56,9 +59,10 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                     //ASSIGN THE VALUE FROM THE DB
                     echo '<strong>' . $tobj_num++ . ".</strong> " . $tobj_name = $rows['tobj_name'];
                     ?>
-                <input type="hidden" name="user_id[]" value="<?php echo $_SESSION['user_id']; ?>">
-                <input type="hidden" name="kra_id[]" value="<?php echo $row['kra_id'] ?>">
-                <input type="hidden" name="tobj_id[]" value="<?php echo $rows['tobj_id'] ?>">
+                <input type="text" name="user_id[]" value="<?php echo $_SESSION['user_id']; ?>">
+                <input type="text" name="kra_id[]" value="<?php echo $row['kra_id'] ?>">
+                <input type="text" name="tobj_id[]" value="<?php echo $rows['tobj_id'] ?>">
+
               </td>
               <td>
 
@@ -71,12 +75,16 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                 </select>
               </td>
               <td>
-              <div id="priodev">
-                <select class="form-control">
-                  <option value="">--Select--</option>
-                </select>
-              </div>
-               
+                <div id="priodev">
+                  <select name="priodev[]" class="form-control">
+                    <option value="">--Select--</option>
+                    <option value=4>Very High</option>
+                    <option value=3>High</option>
+                    <option value=2>Moderate</option>
+                    <option value=1>Low</option>
+                  </select>
+                </div>
+
               </td>
           </tr>
 
@@ -92,17 +100,17 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
       ?>
 
     </table>
-    
-<script type="text/javascript">
-    function change_cap()
-    {
-        var xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("GET","ajaxesat2T.php?cap="+document.getElementById("lvlcapp").value,false);
-        xmlhttp.send(null);
-        document.getElementById("priodev").innerHTML=xmlhttp.responseText;
-        
-    }
-</script>
+
+    <script type="text/javascript">
+      // function change_cap() {
+      //   var xmlhttp = new XMLHttpRequest();
+      //   xmlhttp.open("GET", "ajaxesat2T.php?cap=" + document.getElementById("lvlcapp").value, false);
+      //   document.getElementById("priodev").innerHTML = xmlhttp.responseText;
+      //   xmlhttp.send();
+
+
+      }
+    </script>
     <div class="card-footer text-muted ">
       <button type="submit" class="btn btn-success btn-block my-2" name="submitESAT2t">Submit</button>
       <a href="" role="button" class="btn btn-danger btn-block my-2">Cancel</a>
