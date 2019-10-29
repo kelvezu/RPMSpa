@@ -1,5 +1,6 @@
 <?php
 
+use DevPlan\DevPlan;
 use esat\ESAT;
 use FilterUser\FilterUser;
 use RPMSdb\RPMSdb;
@@ -189,9 +190,9 @@ FilterUser::filterObsPeriod($_SESSION['position']);
 
 activeObsPeriod($conn);
 
-echo $_SESSION['first_period'];
-
-
+echo $_SESSION['first_period'] . BR;
+$chk = DevPlan::checkDevPlanMT($conn);
+echo $chk;
 
 ?>
 <!-- <select name="" id=""> -->

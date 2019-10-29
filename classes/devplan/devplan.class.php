@@ -201,4 +201,84 @@ class DevPlan
         else : return false;
         endif;
     }
+
+    public static function checkDevPlanT($conn)
+    {
+        $qry1 = 'SELECT * FROM `devplant_a1_strength_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result1 = mysqli_query($conn, $qry1) or die($conn->error);
+        $count_res1 = mysqli_num_rows($result1);
+
+        $qry2 = 'SELECT * FROM `devplant_a2_devneeds_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result2 = mysqli_query($conn, $qry2) or die($conn->error);
+        $count_res2 = mysqli_num_rows($result2);
+
+        $qry3 = 'SELECT * FROM `devplant_a3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result3 = mysqli_query($conn, $qry3) or die($conn->error);
+        $count_res3 = mysqli_num_rows($result3);
+
+        $qry4 = 'SELECT * FROM `devplant_b1_strength_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result4 = mysqli_query($conn, $qry4) or die($conn->error);
+        $count_res4 = mysqli_num_rows($result4);
+
+        $qry5 = 'SELECT * FROM `devplant_b2_devneeds_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result5 = mysqli_query($conn, $qry5) or die($conn->error);
+        $count_res5 = mysqli_num_rows($result5);
+
+        $qry6 = 'SELECT * FROM `devplant_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result6 = mysqli_query($conn, $qry6) or die($conn->error);
+        $count_res6 = mysqli_num_rows($result6);
+
+        $qry7 = 'SELECT * FROM `devplant_c_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result7 = mysqli_query($conn, $qry7) or die($conn->error);
+        $count_res7 = mysqli_num_rows($result7);
+
+
+
+        if ($count_res1 > 0 && $count_res2 > 0 && $count_res3 > 0 && $count_res4 > 0  && $count_res5 > 0  && $count_res6 > 0  && $count_res7 > 0) :
+            echo '<p class="green-notif-border" >General Development Plan for Teacher\'s I-III is already submitted for  ' . $_SESSION['active_sy'] . '</p>';
+            include 'includes/footer.php';
+            exit();
+        else : return false;
+        endif;
+    }
+
+    public static function checkDevPlanMT($conn)
+    {
+        $qry1 = 'SELECT * FROM `devplanmt_a1_strength_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result1 = mysqli_query($conn, $qry1) or die($conn->error);
+        $count_res1 = mysqli_num_rows($result1);
+
+        $qry2 = 'SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result2 = mysqli_query($conn, $qry2) or die($conn->error);
+        $count_res2 = mysqli_num_rows($result2);
+
+        $qry3 = 'SELECT * FROM `devplanmt_a3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result3 = mysqli_query($conn, $qry3) or die($conn->error);
+        $count_res3 = mysqli_num_rows($result3);
+
+        $qry4 = 'SELECT * FROM `devplanmt_b1_strength_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result4 = mysqli_query($conn, $qry4) or die($conn->error);
+        $count_res4 = mysqli_num_rows($result4);
+
+        $qry5 = 'SELECT * FROM `devplanmt_b2_devneeds_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result5 = mysqli_query($conn, $qry5) or die($conn->error);
+        $count_res5 = mysqli_num_rows($result5);
+
+        $qry6 = 'SELECT * FROM `devplanmt_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result6 = mysqli_query($conn, $qry6) or die($conn->error);
+        $count_res6 = mysqli_num_rows($result6);
+
+        $qry7 = 'SELECT * FROM `devplanmt_c_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result7 = mysqli_query($conn, $qry7) or die($conn->error);
+        $count_res7 = mysqli_num_rows($result7);
+
+
+
+        if ($count_res1 > 0 && $count_res2 > 0 && $count_res3 > 0 && $count_res4 > 0  && $count_res5 > 0  && $count_res6 > 0  && $count_res7 > 0) :
+            echo '<p class="green-notif-border" >General Development Plan for Master Teacher\'s I-IV is already submitted for  ' . $_SESSION['active_sy'] . '</p>';
+            include 'includes/footer.php';
+            exit();
+        else : return false;
+        endif;
+    }
 }

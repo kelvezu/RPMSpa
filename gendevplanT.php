@@ -5,6 +5,7 @@
 
 
     include_once 'includes/header.php';
+    devplan::checkDevPlanT($conn);
     FilterUser::filterDevplanTUsers($_SESSION['position']);
     // A.CHECK IF USER DID NOT TAKEN ESAT
     $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
@@ -34,7 +35,7 @@
                                     <div class="row black-border">
                                         <div class="col-sm-6">
                                             <label for="select-rater" class="form-control-label">Select Rater: </label>
-                                            <select name="rater" id="" class="form-control required">
+                                            <select name="rater" id="" class="form-control " required>
                                                 <?php
                                                         $raterformt = DevPlan::showAllAvailRaterforT($conn);
                                                         foreach ($raterformt as $res) :

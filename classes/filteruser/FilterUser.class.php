@@ -60,7 +60,7 @@ class FilterUser
             if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
-                Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
+                Click <a href="gendevplant.php">here</a> to proceed to the Development Plan.       
                 </p>';
                 directLastPage();
                 include 'includes/footer.php';
@@ -100,7 +100,7 @@ class FilterUser
             if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool')) :
                 echo '<p class="green-notif-border">
                 ESAT is only available for Master Teachers and Teachers only.
-                Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
+                Click <a href="gendevplanmt.php">here</a> to proceed to the Development Plan.       
                 </p>';
                 directLastPage();
                 include 'includes/footer.php';

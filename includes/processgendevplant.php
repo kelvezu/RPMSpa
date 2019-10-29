@@ -60,8 +60,7 @@ if (isset($_POST['submit'])) :
     $conn->query('INSERT INTO `devplant_c_tbl`( `feedback`,`user_id`,`position`,`rater_id`, `sy`, `school_id`, `status`,`approving_authority`) 
     VALUES ("' . $feedback . '",' . $user_id . ',"' . $position . '","' . $rater_id . '","' . $sy . '","' . $school_id . '","' . $status . '","' . $approving_authority . '")') or die($conn->error . "error in devplant_c_tbl");
 
-    echo 'complete!';
-    pre_r($_POST['submit']);
+    header('location:../gendevplanmt.php');
 endif;
 
 

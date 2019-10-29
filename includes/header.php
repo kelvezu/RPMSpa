@@ -132,6 +132,8 @@ $position = $_SESSION['position'];
                                 <a href="#" class="dropdown-item">View Teacher General Development Plan</a>
                                 <a href="#" class="dropdown-item">VIew Master Teacher Development Plan-IPCRF</a>
                                 <a href="#" class="dropdown-item">View Master Teacher General Development Plan</a>
+                                <a href="gendevplant.php" class="dropdown-item">Create Teacher General Development Plan</a>
+                                <a href="gendevplanmt.php" class="dropdown-item">Create Master Teacher General Development Plan</a>
                             </div>
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-check-circle"></i> <span class="mini-dn">Means of Verification</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
@@ -174,6 +176,7 @@ $position = $_SESSION['position'];
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-users"></i> <span class="mini-dn">Users</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
                                 <a href="displayusers.php" class="dropdown-item">View User</a>
+                                <a href="usercsv.php" class="dropdown-item">Mass Upload</a>
                                 <a href="signup.php" class="dropdown-item">Add User</a>
                                 <a href="selectteacher.php" class="dropdown-item">Select Teacher</a>
                                 <a href="selecttratee.php" class="dropdown-item">Select Ratee</a>
