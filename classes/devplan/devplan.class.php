@@ -281,4 +281,68 @@ class DevPlan
         else : return false;
         endif;
     }
+
+    public static function showA1strength($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplant_a1_strength_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+    public static function showA3Action($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplant_a3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+    public static function showB3Action($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplant_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+    public static function showDevC($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplant_c_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
 }

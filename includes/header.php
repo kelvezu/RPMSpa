@@ -110,7 +110,7 @@ $position = $_SESSION['position'];
                         </li>
 
                         <li class="nav  -item ">
-                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-hourglass"></i> <span class="mini-dn">Dashboard</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-hourglass"></i> <span class="mini-dn">Observation Period</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
                                 <?php activeobsperiod($conn); ?>
                                 <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['first_period'] ?? 'N/A' ?></a>
@@ -129,7 +129,7 @@ $position = $_SESSION['position'];
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bullseye"></i> <span class="mini-dn">Development Plan</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
                                 <a href="#" class="dropdown-item">View Teacher Development Plan-IPCRF</a>
-                                <a href="#" class="dropdown-item">View Teacher General Development Plan</a>
+                                <a href="viewgendevplant.php" class="dropdown-item">View Teacher General Development Plan</a>
                                 <a href="#" class="dropdown-item">VIew Master Teacher Development Plan-IPCRF</a>
                                 <a href="#" class="dropdown-item">View Master Teacher General Development Plan</a>
                                 <a href="gendevplant.php" class="dropdown-item">Create Teacher General Development Plan</a>
