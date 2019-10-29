@@ -212,4 +212,16 @@ class FilterUser
             exit();
         endif;
     }
+
+    public static function filterObsPeriod($position)
+    {
+        if (!stripos($position, 'rincipal')) :
+            echo '<p class="red-notif-border">Only the Principal can set the Obervation Period!</p><center/>';
+            directLastPage();
+            include 'includes/footer.php';
+            exit();
+
+        else : return false;
+        endif;
+    }
 }

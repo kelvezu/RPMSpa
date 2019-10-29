@@ -34,11 +34,7 @@ include_once 'includes/header.php';
 
 
                     <select name="start-day[]" id="" class="form-control mx-2">
-                        <?php
-
-                        for ($i = 1; $i < 32; $i++) :
-                            ?>
-
+                        <?php for ($i = 1; $i < 32; $i++) : ?>
                             <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                         <?php
                         endfor ?>

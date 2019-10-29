@@ -15,8 +15,8 @@ if (isset($_POST["sy-set"])) {
     $sy_desc = getStartYear() . "-" . getEndYear();
 
 
-    $query2 = 'UPDATE sy_tbl SET status = "inactive"';
-    $query = "INSERT INTO sy_tbl(startDate,end_date,sy_desc,status) VALUES ('$sdate','$edate','$sy_desc','Active')";
+    $query2 = 'UPDATE sy_tbl SET status = "Inactive"';
+    $query = "INSERT INTO sy_tbl(startDate,end_date,sy_desc,`status`) VALUES ('$sdate','$edate','$sy_desc','Active')";
     mysqli_query($conn, $query2);
 
     $syresult = $conn->query('SELECT * FROM sy_tbl WHERE status = "Active"')  or die($conn->error);

@@ -81,19 +81,28 @@ include 'includes/header.php';
 // endif;
 
 
-// echo $total = FilterUser::filterDevplan($conn, $_SESSION['position']) . BR;
-// echo 'TOTAL OF NO T = ' . RPMSdb::totalTeachers($conn) . BR;
-// echo 'TOTAL OF NO MT = ' . RPMSdb::totalMasterTeachers($conn) . BR;
-// echo 'TOTAL OF NO MT W/ NO ESAT1 = ' . RPMSdb::masterteachersNoEsat1($conn) . BR;
-// echo 'TOTAL OF NO T W/ NO ESAT1 = ' . RPMSdb::teachersNoEsat1($conn) . BR;
-// echo 'TOTAL OF NO T W/ ESAT1 = ' . RPMSdb::teachersWithEsat1($conn) . BR . BR;
+//echo $total = FilterUser::filterDevplan($conn, $_SESSION['position']) . BR;
+echo 'TOTAL OF  T = ' . RPMSdb::totalTeachers($conn) . BR;
+echo 'TOTAL OF  MT = ' . RPMSdb::totalMasterTeachers($conn) . BR;
+echo 'TOTAL OF MT W/ NO ESAT1 = ' . RPMSdb::masterteachersNoEsat1($conn) . BR;
+echo 'TOTAL OF T W/ NO ESAT1 = ' . RPMSdb::teachersNoEsat1($conn) . BR;
+echo 'TOTAL OF  T W/ ESAT1 = ' . RPMSdb::teachersWithEsat1($conn) . BR . BR;
+echo 'TOTAL OF MT WITH ESAT1 ='  . RPMSdb::masterteachersWithEsat1($conn) . BR;
 
-// echo 'TOTAL OF NO MT W/ NO ESAT1 = ' . RPMSdb::masterteachersNoEsat1($conn) . BR;
-// echo 'TOTAL OF NO T W/ NO ESAT2 = ' . RPMSdb::teachersNoEsat2($conn) . BR;
-// echo 'TOTAL OF NO MT W/ NO ESAT2 = ' . RPMSdb::masterteachersNoEsat2($conn) . BR;
-// echo 'TOTAL OF NO T W/ NO ESAT3= ' . RPMSdb::teachersNoEsat3($conn) . BR;
-// echo 'TOTAL OF NO MT W/ NO ESAT3 = ' . RPMSdb::masterteachersNoEsat3($conn) . BR;
-// echo 'TOTAL OF NO OF COMPLETED E-SAT = ' . RPMSdb::masterteachersNoEsat3($conn) . BR;
+echo 'TOTAL OF MT W/ NO ESAT1 = ' . RPMSdb::masterteachersNoEsat1($conn) . BR;
+echo 'TOTAL OF T W/ NO ESAT2 = ' . RPMSdb::teachersNoEsat2($conn) . BR;
+echo 'TOTAL OF MT W/ NO ESAT2 = ' . RPMSdb::masterteachersNoEsat2($conn) . BR;
+echo 'TOTAL OF T W/ NO ESAT3= ' . RPMSdb::teachersNoEsat3($conn) . BR;
+echo 'TOTAL OF MT W/ NO ESAT3 = ' . RPMSdb::masterteachersNoEsat3($conn) . BR;
+
+echo '<b>TOTAL OF TEACHER WITH NO COMPLETE ESAT = </b>' . RPMSdb::totalofNoESAT_t($conn) . BR;
+echo '<b>TOTAL OF TEACHER WITH COMPLETE ESAT = </b>' . RPMSdb::totalofCompleteESAT_t($conn) . BR . BR;
+
+echo '<b>TOTAL OF MASTER TEACHER WITH NO COMPLETE ESAT = </b>' . RPMSdb::totalofNoESAT_mt($conn) . BR;
+echo '<b>TOTAL OF MASTER TEACHER WITH NO COMPLETE ESAT = </b>' . RPMSdb::totalofCompleteESAT_mt($conn) . BR;
+
+
+
 // echo $_SESSION['position'];
 
 
@@ -168,16 +177,31 @@ echo BR;
 
 // pre_r($teacherMasterlist_results);
 
+// $year = date('Y');
+// $month = date('m');
+// $day = date('d');
+
+// echo formatDate($year, $month, $day);
+// echo gettype($_SESSION['position']);
+
+FilterUser::filterObsPeriod($_SESSION['position']);
+// echo strval($x);
+
+activeObsPeriod($conn);
+
+echo $_SESSION['first_period'];
+
+
 
 ?>
-<select name="" id="">
-    <?php
+<!-- <select name="" id=""> -->
+<?php
 
-    ?>
+?>
 
-    <?php
-    //endforeach;
-    ?>
+<?php
+//endforeach;
+?>
 </select>
 
 <?php //echo "</ul>";

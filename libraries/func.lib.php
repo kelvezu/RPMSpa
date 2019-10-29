@@ -238,7 +238,6 @@
 
                             $qry_kra = 'UPDATE kra_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_kra);
-                            // header('location:includes/logout.inc.php');
 
                             exit();
                         else : return false;
@@ -251,7 +250,9 @@
 
                     endif;
                 else :
-                    echo '<p class="red-notif-border">No Active School year!</p>';
+                    session_unset();
+                    session_destroy();
+
 
                 endif;
             }
@@ -419,5 +420,31 @@
                     endforeach;
                 else :
                     return false;
+                endif;
+            }
+
+            function formatDate($year, $month, $day)
+            {
+                return $year . '/' . $month . '/' . $day;
+            }
+
+            function activeObsPeriod($conn)
+            {
+                $result_arr = [];
+                $qry = 'SELECT * FROM obs_period_tbl WHERE `status` = "Active" AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' ';
+                $result = mysqli_query($conn, $qry);
+                if (!empty($result)) :
+                    foreach ($result as $res) :
+                        $_SESSION['first_period'] = $res['first_period'];
+                        $_SESSION['second_period'] = $res['second_period'];
+                        $_SESSION['third_period'] = $res['third_period'];
+                        $_SESSION['final_period'] = $res['fourth_period'];
+                    endforeach;
+                    return $result_arr;
+                else :
+                    $_SESSION['first_period'] = '';
+                    $_SESSION['second_period'] = '';
+                    $_SESSION['third_period'] = '';
+                    $_SESSION['final_period'] = '';
                 endif;
             }

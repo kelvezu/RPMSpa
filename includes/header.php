@@ -98,12 +98,27 @@ $position = $_SESSION['position'];
 
                 <div class="left-custom-menu-adp-wrap">
                     <ul class="nav navbar-nav left-sidebar-menu-pro ">
+
+
+
+
                         <li class="nav-item ">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
                                 <a href="displaytprogress.php" class="dropdown-item"> Teacher Analytics Progress</a>
                                 <a href="displaymtprogress.php" class="dropdown-item"> Master Teacher Analytics Progress</a>
                         </li>
+
+                        <li class="nav  -item ">
+                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-hourglass"></i> <span class="mini-dn">Dashboard</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
+                                <?php $periods = activeobsperiod($conn); ?>
+                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['first_period'] ?></a>
+                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['second_period'] ?></a>
+                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['third_period'] ?></a>
+                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['final_period'] ?></a>
+                        </li>
+
                         <li class="nav-item">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-list"></i> <span class="mini-dn">ESAT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
@@ -269,6 +284,9 @@ $position = $_SESSION['position'];
                                                 <a href="#">View All Notification</a>
                                             </div>
                                         </div>
+
+
+
                                     </li>
                                     <li class="nav-item">
                                         <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">

@@ -3,11 +3,16 @@
   <link rel="stylesheet" href="css/main.css">
 
   <?php
-
   session_start();
   include_once 'includes/conn.inc.php';
   include_once 'libraries/func.lib.php';
-  endSchoolYear($conn, $_SESSION['active_sy_id']);
+  include_once 'includes/constants.inc.php';
+
+  activeSY($conn);
+  if (!empty($_SESSION['active_sy_id'])) :
+    endSchoolYear($conn, $_SESSION['active_sy_id']);
+  else : false;
+  endif;
 
   if (isset($_SESSION['position'])) :
     redirectToDashboard($_SESSION['position']);

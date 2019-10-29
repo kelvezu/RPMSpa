@@ -47,7 +47,7 @@ class RPMSdb
         if ($total) :
             return $total;
         else :
-            return null;
+            return false;
         endif;
     }
 
@@ -55,11 +55,11 @@ class RPMSdb
     {
         $totalqry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND status = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III") ';
         $result = mysqli_query($conn, $totalqry);
-        $total = mysqli_num_rows($result);
-        if ($total) :
-            return $total;
+
+        if (!empty($result)) :
+            return  mysqli_num_rows($result);
         else :
-            return null;
+            return false;
         endif;
     }
 
@@ -79,25 +79,37 @@ class RPMSdb
 
     public static function teachersNoEsat1($conn)
     {
-        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat1_demographics_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
+        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat1_demographicst_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
         $result1 = mysqli_query($conn, $qryesat1);
-        $total1 = mysqli_num_rows($result1);
-        if ($total1) :
-            return $total1;
+
+        if (!empty($result1)) :
+            return  mysqli_num_rows($result1);
         else :
-            false;
+            return 0;
         endif;
     }
 
     public static function teachersWithEsat1($conn)
     {
-        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE `user_id` IN (SELECT `user_id` FROM esat1_demographics_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
+        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE `user_id` IN (SELECT `user_id` FROM esat1_demographicst_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
         $result1 = mysqli_query($conn, $qryesat1);
-        $total1 = mysqli_num_rows($result1);
-        if ($total1) :
-            return $total1;
+
+        if (!empty($result1)) :
+            return mysqli_num_rows($result1);
         else :
-            false;
+            return 0;
+        endif;
+    }
+
+    public static function masterteachersWithEsat1($conn)
+    {
+        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE `user_id` IN (SELECT `user_id` FROM esat1_demographicsmt_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")  AND `status` = "Active"';
+        $result1 = mysqli_query($conn, $qryesat1);
+
+        if (!empty($result1)) :
+            return mysqli_num_rows($result1);
+        else :
+            return 0;
         endif;
     }
 
@@ -105,26 +117,24 @@ class RPMSdb
 
     public static function masterteachersNoEsat1($conn)
     {
-        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat1_demographics_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")  AND `status` = "Active"';
-
+        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat1_demographicsmt_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")  AND `status` = "Active"';
         $result1 = mysqli_query($conn, $qryesat1);
-        $total1 = mysqli_num_rows($result1);
-        if ($total1) :
-            return $total1;
+
+        if (!empty($result1)) :
+            return mysqli_num_rows($result1);
         else :
-            false;
+            return 0;
         endif;
     }
 
     public static function teachersNoEsat2($conn)
     {
-        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat3_core_behavioral_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
+        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat2_objectivest_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
         $result1 = mysqli_query($conn, $qryesat1);
-        $total1 = mysqli_num_rows($result1);
-        if ($total1) :
-            return $total1;
+        if (!empty($result1)) :
+            return mysqli_num_rows($result1);
         else :
-            false;
+            return 0;
         endif;
     }
 
@@ -133,36 +143,33 @@ class RPMSdb
         $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat2_objectivesmt_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")  AND `status` = "Active"';
 
         $result1 = mysqli_query($conn, $qryesat1);
-        $total1 = mysqli_num_rows($result1);
-        if ($total1) :
-            return $total1;
+        if (!empty($result1)) :
+            return mysqli_num_rows($result1);
         else :
-            false;
+            return 0;
         endif;
     }
 
     public static function teachersNoEsat3($conn)
     {
-        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat3_core_behavioral_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
+        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat3_core_behavioralt_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III")  AND `status` = "Active"';
 
         $result1 = mysqli_query($conn, $qryesat1);
-        $total1 = mysqli_num_rows($result1);
-        if ($total1) :
-            return $total1;
+        if (!empty($result1)) :
+            return mysqli_num_rows($result1);
         else :
-            false;
+            return 0;
         endif;
     }
 
     public static function masterteachersNoEsat3($conn)
     {
-        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat3_core_behavioral_tbl WHERE `user_id` is not null AND sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")  AND `status` = "Active"';
+        $qryesat1 = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat3_core_behavioralmt_tbl WHERE  sy = "' . $_SESSION['active_sy_id'] . '" AND school = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")  AND `status` = "Active"';
         $result1 = mysqli_query($conn, $qryesat1);
-        $total1 = mysqli_num_rows($result1);
-        if ($total1) :
-            return $total1;
+        if (!empty($result1)) :
+            return mysqli_num_rows($result1);
         else :
-            false;
+            return 0;
         endif;
     }
 
@@ -320,11 +327,80 @@ class RPMSdb
         endif;
     }
 
+    /* TOTAL OF T WITH WITH NO OR INCOMPLETE ESAT! */
+    public  static function totalofNoESAT_t($conn)
+    {
+        $qry = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat1_demographicst_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND NOT `user_id` IN (SELECT `user_id` FROM esat2_objectivest_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND NOT `user_id` IN (SELECT `user_id` FROM esat3_core_behavioralt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
+
+        $result = mysqli_query($conn, $qry);
+        if (!empty($result)) :
+            return mysqli_num_rows($result);
+        else :
+            return 0;
+        endif;
+    }
+    /* TOTAL OF MT WITH WITH NO OR INCOMPLETE ESAT! */
+    public  static function totalofNoESAT_mt($conn)
+    {
+        $qry = 'SELECT * FROM `account_tbl` WHERE NOT `user_id` IN (SELECT `user_id` FROM esat1_demographicsmt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND NOT `user_id` IN (SELECT `user_id` FROM esat2_objectivesmt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND NOT `user_id` IN (SELECT `user_id` FROM esat3_core_behavioralmt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active"';
+
+        $result = mysqli_query($conn, $qry);
+        if (!empty($result)) :
+            return mysqli_num_rows($result);
+        else :
+            return 0;
+        endif;
+    }
+
+    public  static function totalofCompleteESAT_mt($conn)
+    {
+        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM esat1_demographicsmt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND  `user_id` IN (SELECT `user_id` FROM esat2_objectivesmt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND  `user_id` IN (SELECT `user_id` FROM esat3_core_behavioralmt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV")) AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active"';
+
+        $result = mysqli_query($conn, $qry);
+        if (!empty($result)) :
+            return mysqli_num_rows($result);
+        else :
+            return 0;
+        endif;
+    }
+
+    public  static function totalofCompleteESAT_t($conn)
+    {
+        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM esat1_demographicst_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND  `user_id` IN (SELECT `user_id` FROM esat2_objectivest_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND  `user_id` IN (SELECT `user_id` FROM esat3_core_behavioralt_tbl WHERE `user_id` is not null AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
+
+        $result = mysqli_query($conn, $qry);
+        if (!empty($result)) :
+            return mysqli_num_rows($result);
+        else :
+            return 0;
+        endif;
+    }
+
+    public static function sessionObsPeriod($conn, $position)
+    {
+        $result_array = [];
+        $qry = 'SELECT * FROM obs_period_tbl WHERE `status` = "Active" ';
+        $result = mysqli_query($conn, $qry);
+
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+            endforeach;
+
+            return $result_array;
+        else :
+            if (stripos($position, 'rincipal')) :
+                echo '<p class="green-notif-border">Click <a href="setobsperiod.php">here</a> to set the Observation Period.</p>';
+            else : return false;
+            endif;
+        endif;
+    }
+
 
     // public static function totalTCompleteESAT($conn)
     // {
     //    
     // }
-    public static function isCOTCompleteBool($conn, $position, $user_id)
-    { }
+    // public static function isCOTCompleteBool($conn, $position, $user_id)
+    // { }
 }
