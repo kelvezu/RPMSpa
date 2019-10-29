@@ -8,7 +8,7 @@ include_once '../libraries/func.lib.php';
 if (isset($_POST["surname"])) {
     $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 
-
+    $prcid = $_POST["prcid"];
     $surname = $_POST["surname"];
     $firstname = $_POST["firstname"];
     $middlename = $_POST["middlename"];
@@ -21,7 +21,7 @@ if (isset($_POST["surname"])) {
     for ($count = 0; $count < count($surname); $count++) {
 
 
-        $query1 = $conn->query('INSERT INTO account_tbl(surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword) VALUES ("' . ucwords($surname[$count]) . '","' . ucwords($firstname[$count]) . '","' . ucwords($middlename[$count]) . '","' . positionFormat($position[$count]) . '","' . $email[$count] . '","' . $contact[$count] . '","' . ucwords($gender[$count]) . '","' . $birthdate[$count] . '","' . $username = usernameGen($firstname[$count], $surname[$count], $contact[$count]) . '","' . defaultPwd() . '")') or die($conn->error);
+        $query1 = $conn->query('INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword) VALUES ("' . $prcid[$count] . '","' . ucwords($surname[$count]) . '","' . ucwords($firstname[$count]) . '","' . ucwords($middlename[$count]) . '","' . positionFormat($position[$count]) . '","' . $email[$count] . '","' . $contact[$count] . '","' . ucwords($gender[$count]) . '","' . $birthdate[$count] . '","' . $username = usernameGen($firstname[$count], $surname[$count], $contact[$count]) . '","' . defaultPwd() . '")') or die($conn->error);
     }
     if ($query1) :
         $category = "User Management";
