@@ -80,6 +80,9 @@ fieldset {
 
 textarea {
     resize: vertical;
+    border-style: solid;
+    border-color: black;
+    color: black;
 }
 
 /* ==========================================================================

@@ -112,11 +112,11 @@ $position = $_SESSION['position'];
                         <li class="nav  -item ">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-hourglass"></i> <span class="mini-dn">Dashboard</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <?php $periods = activeobsperiod($conn); ?>
-                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['first_period'] ?></a>
-                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['second_period'] ?></a>
-                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['third_period'] ?></a>
-                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['final_period'] ?></a>
+                                <?php activeobsperiod($conn); ?>
+                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['first_period'] ?? 'N/A' ?></a>
+                                <a class="dropdown-item"><?= '<b>Second Period: </b>' . $_SESSION['second_period'] ?? 'N/A' ?></a>
+                                <a class="dropdown-item"><?= '<b>Third Period: </b>' . $_SESSION['third_period'] ?? 'N/A' ?></a>
+                                <a class="dropdown-item"><?= '<b>Fourth Period: </b>' . $_SESSION['final_period'] ?? 'N/A' ?></a>
                         </li>
 
                         <li class="nav-item">

@@ -430,6 +430,7 @@
 
             function activeObsPeriod($conn)
             {
+                date_default_timezone_set('Asia/Manila');
                 $result_arr = [];
                 $qry = 'SELECT * FROM obs_period_tbl WHERE `status` = "Active" AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' ';
                 $result = mysqli_query($conn, $qry);

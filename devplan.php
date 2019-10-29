@@ -37,7 +37,7 @@
                                     <legend><strong>A. Functional Competencies</strong></legend>
                                     <!--A. Strengths -->
                                     <div>
-                                        <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Strengths</label>
+                                        <div class="bg-black"><label for="a_strength" class="form-control-label">Strengths</label>
 
                                         </div>
                                         <ul class="ul">
@@ -79,7 +79,7 @@
 
                                     <!-- A. Development Needs -->
                                     <div class="indentcontent"></div>
-                                    <div class="bg-black"><label for="a_devneeds" class="form-control-label bg-black">Development Needs</label></div>
+                                    <div class="bg-black"><label for="a_devneeds" class="form-control-label">Development Needs</label></div>
                                     <ul class="ul">
                                         <?php
                                                 $esatForm2_priodev_results = DevPlan::showPrioDevplanMT($conn);
@@ -115,7 +115,7 @@
                             <!-- Action Plan -->
                             <div>
                                 <div class="form-control-label bg-black">
-                                    <label for="learn-objectives" class="form-control-label bg-black">Action Plan</label>
+                                    <label for="learn-objectives" class="form-control-label">Action Plan</label>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -132,7 +132,7 @@
                             <!-- Timeline and Resources needed -->
                             <div>
                                 <div class="form-control-label bg-black">
-                                    <label for="learn-objectives" class="form-control-label bg-black">Timelines and Resources needed</label>
+                                    <label for="learn-objectives" class="form-control-label">Timelines and Resources needed</label>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -152,7 +152,7 @@
                             <div id="B">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="bg-black"><label for="b_strength" class="form-control-label bg-black">Strengths</label></div>
+                                        <div class="bg-black"><label for="b_strength" class="form-control-label">Strengths</label></div>
                                         <ul class="ul">
                                             <?php
                                                     $esatForm3_strength_results = DevPlan::showStrIndicatorMT($conn);
@@ -184,7 +184,7 @@
                                             ?>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="bg-black"><label for="a_strength" class="form-control-label bg-black">Development Needs</label></div>
+                                        <div class="bg-black"><label for="a_strength" class="form-control-label">Development Needs</label></div>
                                         <ul class="ul">
                                             <?php $esatForm3_devneeds_results = DevPlan::showDevNeedsIndicatorMT($conn);
                                                     if (!empty($esatForm3_devneeds_results)) :
@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                             <div class="form-control-label bg-black">
-                                <label for="learn-objectives" class="form-control-label bg-black">Action Plan</label>
+                                <label for="learn-objectives" class="form-control-label">Action Plan</label>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -232,7 +232,7 @@
                             </div>
                             <div>
                                 <div class="form-control-label bg-black">
-                                    <label for="learn-objectives" class="form-control-label bg-black">Timelines and Resources needed</label>
+                                    <label for="learn-objectives" class="form-control-label">Timelines and Resources needed</label>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
