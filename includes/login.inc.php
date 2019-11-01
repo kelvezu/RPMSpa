@@ -2,27 +2,25 @@
 $sy_desc = "";
 include_once "conn.inc.php";
 include_once "../libraries/func.lib.php";
-
+$notif_array = [];
 $current_date = date('Y-m-d');
 
-
-
-$schresult = $conn->query('SELECT * FROM school_tbl')  or die($conn->error);
-while ($schrow = $schresult->fetch_assoc()) :
-    $school_id = $schrow['school_id'];
-    $school_name = $schrow['school_name'];
-endwhile;
+// $schresult = $conn->query('SELECT * FROM school_tbl')  or die($conn->error);
+// while ($schrow = $schresult->fetch_assoc()) :
+//     $school_id = $schrow['school_id'];
+//     $school_name = $schrow['school_name'];
+// endwhile;
 
 
 
 if (isset($_POST['login-submit'])) {
-
-
     $userEmail = $_POST['userMail'];
     $password = $_POST['pwd'];
 
     if (empty($userEmail) || empty($password)) {
-        header("Location:../loginpage.php?error=emptyfields");
+        // header("Location:../loginpage.php?error=emptyfields");
+        array_push($notif_array, 'Fields must not be Empty!');
+        return json_encode($notif_array);
         exit();
     } else {
         $sql = "SELECT * FROM account_tbl WHERE email=? OR username=?;";

@@ -1,6 +1,7 @@
 <header>
-  <link rel="stylesheet" href="css/bootstrap4.css">
+  <!-- <link rel="stylesheet" href="css/bootstrap4.css"> -->
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
 
   <?php
   session_start();
@@ -21,7 +22,9 @@
   endif;
 
   ?>
+
 </header>
+<div class="form-messages">hello</div>
 <div class="container col-sm-4 my-4">
   <div class="card">
     <div class="card-header bg-dark text-white font-weight-bold">
@@ -32,7 +35,7 @@
       <form action="includes/login.inc.php" method="post">
         <div class="form-group">
           <label for="exampleInputEmail1" class="form-control-label font-weight-bold">Email address/Username </label>
-          <input type="text" class="form-control" id="exampleInputEmail1" name="userMail" placeholder="Enter email or username" autocomplete="off" required>
+          <input type="text" class="form-control" id="exampleInputEmail1" name="userMail" placeholder="Enter email or username" autocomplete="off" required spellcheck="false">
         </div>
 
         <div class="form-group">
@@ -57,3 +60,7 @@
     </div>
   </div>
 </div>
+
+<script src="bootstrap4/scripts/boootrap.min.js"></script>
+<script src="bootstrap4/scripts/jquery-3.2.1.slim.min.js"></script>
+<script src="bootstrap4/scripts/popper.min.js"></script>
