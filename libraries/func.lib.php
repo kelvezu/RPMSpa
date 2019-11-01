@@ -446,3 +446,24 @@
                     $_SESSION['final_period'] = '';
                 endif;
             }
+
+            function loginError($get)
+            {
+                switch ($get) {
+                    case 'emptyfields':
+                        echo  'Fields must not be empty!';
+                        break;
+
+                    case 'wrongpwd':
+                        echo 'User name and Password did not match!';
+                        break;
+
+                    case 'nouser':
+                        echo 'User does not exist!';
+                        break;
+
+                    default:
+                        return false;
+                        break;
+                }
+            }

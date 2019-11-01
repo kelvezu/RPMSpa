@@ -1,6 +1,6 @@
 <header>
   <!-- <link rel="stylesheet" href="css/bootstrap4.css"> -->
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/newmain.css">
   <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
 
   <?php
@@ -24,13 +24,22 @@
   ?>
 
 </header>
-<div class="form-messages">hello</div>
+
 <div class="container col-sm-4 my-4">
+
   <div class="card">
     <div class="card-header bg-dark text-white font-weight-bold">
+
       Please Enter your Credentials
     </div>
     <div class="card-body">
+
+      <?php if (isset($_GET['error'])) : ?>
+        <p class="form-messages"><?php loginError($_GET['error']); ?></p>
+      <?php else : false;
+      endif;
+      ?>
+
 
       <form action="includes/login.inc.php" method="post">
         <div class="form-group">

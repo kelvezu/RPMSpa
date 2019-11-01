@@ -1,0 +1,104 @@
+.form-messages {
+    background-color: lightpink;
+    border: 2px solid red;
+    color: red;
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 10px 25px;
+    text-align: center;
+}
+
+.textarea {
+    resize: none;
+}
+
+.bg-black {
+    background-color: #000;
+    color: white;
+    margin: 2%;
+    padding: 10px;
+    font-weight: bold;
+    font-size-adjust: inherit;
+    font-weight: bold;
+    font-size: larger;
+    text-indent: 10px;
+    text-align: justify;
+}
+
+.ul {
+    list-style-type: disc;
+    padding-left: 5%;
+    ;
+}
+
+.ul-square {
+    list-style-type: square;
+    padding-left: 5%;
+    word-wrap: normal;
+}
+
+.contentIndent {
+    padding-left: 5px;
+}
+
+.darkred-color {
+    color: crimson;
+}
+
+.tomato-color {
+    color: tomato;
+    font-weight: bold;
+}
+
+.apple-color {
+    color: green;
+}
+
+.no-record {
+    color: red;
+    font-weight: bolder;
+    text-align: center;
+    font-size: medium;
+}
+
+.err-catch {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+}
+
+.mid-red {
+    list-style-type: disc;
+    padding-left: 5%;
+}
+
+.red-notif-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    background-color: pink;
+    color: red;
+    padding: 20px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+
+.green-notif-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    background-color: lightcyan;
+    color: green;
+    padding: 20px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.black-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    color: black;
+    padding: 2%;
+    font-weight: bolder;
+}
