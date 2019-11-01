@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <?php
 session_start();
 include_once 'includes/security.php';
@@ -15,10 +16,10 @@ include_once 'includes/security.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?php echo $_SESSION['position']; ?> Dashboard</title>
+    <title><?= $_SESSION['position']; ?> Dashboard</title>
     <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/favicon.ico">
-    <link rel="stylesheet" href="css/newmain.css">
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
 </head>
 
@@ -30,7 +31,6 @@ include_once 'includes/security.php';
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarsExample03">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
@@ -54,5 +54,6 @@ include_once 'includes/security.php';
             <div class="my-2 my-md-0">
                 <h6 class="text-white"><?= $_SESSION['fullname'] ?></h6>
             </div>
+            <div class="ml-2"><a class="text-decoration-none"> <i data-target="#exampleModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
         </div>
     </nav>

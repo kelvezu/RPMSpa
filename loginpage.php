@@ -1,6 +1,6 @@
 <header>
   <!-- <link rel="stylesheet" href="css/bootstrap4.css"> -->
-  <link rel="stylesheet" href="css/newmain.css">
+  <link rel="stylesheet" href="bootstrap4/b4css/main.css">
   <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
 
   <?php
@@ -20,12 +20,11 @@
   else :
     false;
   endif;
-
   ?>
 
 </header>
 
-<div class="container col-sm-4 my-4">
+<div class="container col-sm-4 mt-5">
 
   <div class="card">
     <div class="card-header bg-dark text-white font-weight-bold">
