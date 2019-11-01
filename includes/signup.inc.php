@@ -16,6 +16,7 @@ if (isset($_POST['signup-submit'])) {
     $school = $_POST['school'];
     $password = $_POST['pwd'];
     $passwordRepeat = $_POST['pwd-repeat'];
+    $status = "Active";
 
     //CHECK IF THE FIELDS ARE EMPTY 
     if (empty($prc_id) || empty($surname) || empty($firstname) ||  empty($email) || empty($contact) || empty($password) || empty($passwordRepeat)) {
@@ -124,7 +125,7 @@ if (isset($_POST['signup-submit'])) {
                 if (!empty($school)) {
                     $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,school_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
                 } else {
-                    $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                    $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,`status`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
                 }
 
                 $stmt = mysqli_stmt_init($conn);
@@ -136,7 +137,7 @@ if (isset($_POST['signup-submit'])) {
                     if (!empty($school)) {
                         mysqli_stmt_bind_param($stmt, "issssssssssi", $prc_id, nameFormat($surname), nameFormat($firstname), nameFormat($middlename), positionFormat($position), $email, $contact, ucwords($gender), $birthdate, $username, $hashedPwd, $school);
                     } else {
-                        mysqli_stmt_bind_param($stmt, "issssssssss", $prc_id, ucwords($surname), ucwords($firstname), ucwords($middlename), ucwords($position), $email, $contact, ucwords($gender), $birthdate, $username, $hashedPwd);
+                        mysqli_stmt_bind_param($stmt, "isssssssssss", $prc_id, ucwords($surname), ucwords($firstname), ucwords($middlename), positionFormat($position), $email, $contact, ucwords($gender), $birthdate, $username, $hashedPwd, $status);
                     }
                     mysqli_stmt_execute($stmt);
                     header("Location:../signup.php?signup=success&uname=" . $username);

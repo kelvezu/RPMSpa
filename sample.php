@@ -185,14 +185,18 @@ echo BR;
 // echo formatDate($year, $month, $day);
 // echo gettype($_SESSION['position']);
 
-FilterUser::filterObsPeriod($_SESSION['position']);
-// echo strval($x);
+// FilterUser::filterObsPeriod($_SESSION['position']);
+// // echo strval($x);
 
-activeObsPeriod($conn);
+// activeObsPeriod($conn);
 
-echo $_SESSION['first_period'] . BR;
-$chk = DevPlan::checkDevPlanMT($conn);
-echo $chk;
+// echo $_SESSION['first_period'] . BR;
+// $chk = DevPlan::checkDevPlanMT($conn);
+// echo $chk;
+
+$position = "Teacher II";
+echo positionFormat($position) . BR;
+echo ucwords($position) . BR;
 
 ?>
 <!-- <select name="" id=""> -->

@@ -143,7 +143,7 @@ include_once 'includes/header.php';
                             $posi_name = $posirow['position_name'];
                             ?>
                             <option value="<?php echo $posi_name ?>"><?php echo $posi_name; ?>
-                            <?php endwhile ?>
+                            <?php endwhile; ?>
                             </option>
                     </select>
                     <?php

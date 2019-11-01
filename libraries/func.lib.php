@@ -351,11 +351,8 @@
                         $raw_title = substr($smallcaps, 0, 7);
                         return ucwords($raw_title) . ' ' . strtoupper($raw);
                     else :
-                        // return ucwords($smallcaps);
-                        echo 'error';
+                        return ucwords($position);
                     endif;
-                else :
-                    return false;
                 endif;
             }
 

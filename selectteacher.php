@@ -16,7 +16,7 @@
                     <form action="includes/processselectteacher.php" method="POST">
                         <div>
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" />
-                            <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
+                            <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
                             <div>
                                 <div class=" h3"><strong>
                                         Master List of Teachers
@@ -74,7 +74,8 @@
                     <!-- Without rater -->
                     <form action="includes/processselectteacher.php" method="POST">
                         <div>
-                            <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id']; ?> />
+                            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" />
+                            <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
                             <div>
                                 <div class=" h3"><strong>
                                         Teachers Available for Transfer

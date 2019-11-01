@@ -17,9 +17,9 @@ if (isset($_POST["surname"])) {
     $contact = $_POST["contact"];
     $gender = $_POST["gender"];
     $birthdate = $_POST["birthdate"];
+    //$status = "Active";
 
     for ($count = 0; $count < count($surname); $count++) {
-
 
         $query1 = $conn->query('INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword) VALUES ("' . $prcid[$count] . '","' . ucwords($surname[$count]) . '","' . ucwords($firstname[$count]) . '","' . ucwords($middlename[$count]) . '","' . positionFormat($position[$count]) . '","' . $email[$count] . '","' . $contact[$count] . '","' . ucwords($gender[$count]) . '","' . $birthdate[$count] . '","' . $username = usernameGen($firstname[$count], $surname[$count], $contact[$count]) . '","' . defaultPwd() . '")') or die($conn->error);
     }
@@ -35,9 +35,7 @@ if (isset($_POST["surname"])) {
         $school_id = $_SESSION['school_id'];
 
         $query = $conn->query('INSERT INTO notification_tbl(category,title,`message`,`status`,`user_id`,rater_id,position,sy_id,school_id) VALUES ("' . $category . '","' . $title . '","' . $msg . '","' . $status . '","' . $adder_id . '","' . $adder_id . '","' . $adder_position . '","' . $sy_id . '","' . $school_id . '")') or die($conn->error);
-    else :
 
-        echo 'Error';
 
     endif;
 }
