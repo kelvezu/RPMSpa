@@ -107,7 +107,7 @@
                                         </tr>
                                         <?php
                                         $no = 1;
-                                        $result = $conn->query('SELECT a.school_id,a.school_name, count(distinct b.user_id) as x FROM school_tbl a inner join account_tbl b on a.school_id = b.school_id where b.status="Active" group by a.school_name');
+                                        $result = $conn->query('SELECT a.school_id,a.school_name, count(distinct b.user_id) as x FROM school_tbl a inner join account_tbl b on a.school_id = b.school_id where b.status="Active" and b.position like "Teacher%" or b.position like "Master Teacher%" group by a.school_name');
                                         while ($row = $result->fetch_assoc()) :
                                             $school_name = $row['school_id'];
                                             $school_name = $row['school_name'];
