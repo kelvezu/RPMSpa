@@ -102,7 +102,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>School Name</th>
-                                            <th>Total</th>
+                                            <th>No. of Teacher</th>
                                             
                                         </tr>
                                         <?php
@@ -117,7 +117,7 @@
                                             ?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
-                                                <td><a href="dbprincipal.php?view=<?php echo $row['school_id']; ?>"><?php echo $school_name; ?> </a></td>
+                                                <td><a href="dbAdminView.php?view=<?php echo $row['school_id']; ?>"><?php echo $school_name; ?> </a></td>
                                                 <td><?php echo $count; ?></td>
 
                                             </tr>
@@ -151,6 +151,54 @@
                     <h4><b> ESAT Progress</b> <span class="bar">5,3,9,6,5,8,7,3,5,2</span></h4>
                     <div class="text-center">
                         <div id="sparkline51">
+                        </div>
+                    </div>
+                </div>
+                <div class="dashone-adminprowrap shadow-reset mg-b-30">
+                    <div class="analytics-rounded-content">
+                        <h4><b>School With ESAT</b><span id="sparkline4"></span></h4>
+                        <div class="pre-scrollable">
+                            <div class="adminpro-message-list">
+                            
+                                <table class="table table-hover">
+                                        <tr>
+                                            
+                                            <th>No.</th>
+                                            <th>School Name</th>
+                                            <th># of Teacher</th>
+                                            <th>With ESAT</th>
+                                            <th>S_Y</th>
+                                            
+                                            
+                                        </tr>
+                                        <?php
+                                        $no=1;
+                                        $result = $conn->query('SELECT * FROM tbl_rptwithesat');
+                                        while ($row = $result->fetch_assoc()) :
+                                            $school_id = $row['school_id'];
+                                            $school_name = $row['school_name'];
+                                            $Total_Teacher = $row['Total_Teacher'];
+                                            $With_ESAT = $row['With_ESAT'];
+                                            $School_Year = $row['School_Year'];
+                                            
+    
+
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $no; ?></td>
+                                                <td><?php echo $school_name; ?></td>
+                                                <td><?php echo $Total_Teacher; ?></td>
+                                                <td><?php echo $With_ESAT; ?></td>
+                                                <td><?php echo $School_Year; ?></td>
+                                                
+
+                                            </tr>
+                                        <?php
+                                            $no++;
+                                        endwhile; ?>
+                                    </table>
+
+                           </div>                
                         </div>
                     </div>
                 </div>
