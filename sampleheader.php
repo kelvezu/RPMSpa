@@ -57,12 +57,3 @@ include_once 'includes/security.php';
             <div class="ml-2"><a class="text-decoration-none"> <i data-target="#exampleModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
         </div>
     </nav>
-
-
-
-    <aside class="nav flex-column">
-        <a class="nav-link active" href="#">Active</a>
-        <a class="nav-link" href="#">Link</a>
-        <a class="nav-link" href="#">Link</a>
-        <a class="nav-link disabled" href="#">Disabled</a>
-    </aside>

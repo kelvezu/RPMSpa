@@ -176,6 +176,14 @@
                 endif;
             }
 
+            function displayDate($date)
+            {
+                date_default_timezone_set('Asia/Manila');
+                $san_date = filter_var($date, FILTER_SANITIZE_STRING);
+                $new_date = new DateTime($san_date);
+                return $new_date->format('M d, Y');
+            }
+
             function activeSY(mysqli $dbcon)
             {
                 date_default_timezone_set('Asia/Manila');
@@ -194,6 +202,11 @@
                     $_SESSION['start_year'] = substr($startdate, 0, 4) . BR;
                     $_SESSION['start_month'] = substr($startdate, 5, 2) . BR;
                     $_SESSION['start_day'] = substr($startdate, 8, 2) . BR;
+
+                    $enddate = $_SESSION['start_date'] ?? null;
+                    $_SESSION['end_year'] = substr($enddate, 0, 4) . BR;
+                    $_SESSION['end_month'] = substr($enddate, 5, 2) . BR;
+                    $_SESSION['end_day'] = substr($enddate, 8, 2) . BR;
 
 
                 else :
@@ -417,6 +430,19 @@
                     endforeach;
                 else :
                     return false;
+                endif;
+            }
+
+            function displaySchool($conn, $school_id)
+            {
+                $qry = "SELECT * FROM school_tbl WHERE school_id = $school_id";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return $res['school_name'];
+                    endforeach;
+                else :
+                    return "School Undefined!";
                 endif;
             }
 

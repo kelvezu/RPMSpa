@@ -194,9 +194,12 @@ echo BR;
 // $chk = DevPlan::checkDevPlanMT($conn);
 // echo $chk;
 
-$position = "Teacher II";
-echo positionFormat($position) . BR;
-echo ucwords($position) . BR;
+// $position = "Teacher II";
+// echo positionFormat($position) . BR;
+// echo ucwords($position) . BR;
+
+echo RPMSdb::totalTeacherCount($conn) . BR;
+echo RPMSdb::totalTeachers($conn);
 
 ?>
 <!-- <select name="" id=""> -->

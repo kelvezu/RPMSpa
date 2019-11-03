@@ -3,10 +3,11 @@
 namespace RPMSdb;
 
 use mysqli;
+use mysqli_result;
 
 class RPMSdb
 {
-
+    // DISPLAY ALL TEACHERS ACCORDING TO USERS SCHOOL
     public static function displayMasterList($conn)
     {
         $user_arr = [];
@@ -23,6 +24,7 @@ class RPMSdb
         endif;
     }
 
+    // DISPLAY ALL TEACHERS WITH FOR TRANSFER STATUS
     public static function displayVacantList($conn)
     {
         $user_arr = [];
@@ -59,9 +61,61 @@ class RPMSdb
         if (!empty($result)) :
             return  mysqli_num_rows($result);
         else :
+            return 0;
+        endif;
+    }
+    //TOTAL OF ALL ACTIVE TEACHERS
+    public static function totalTeachersCount($conn)
+    {
+        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        $result = mysqli_query($conn, $totalqry);
+
+
+        if (!empty($result)) :
+            return  mysqli_fetch_assoc($result);
+        else :
+            return 0;
+        endif;
+    }
+
+    public static function totalTOnlyCount($conn)
+    {
+        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III")';
+        $result = mysqli_query($conn, $totalqry);
+        if (!empty($result)) :
+            return  mysqli_fetch_assoc($result);
+        else :
+            return 0;
+        endif;
+    }
+
+    public static function totalMTOnlyCount($conn)
+    {
+        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        $result = mysqli_query($conn, $totalqry);
+        if (!empty($result)) :
+            return  mysqli_fetch_assoc($result);
+        else :
+            return 0;
+        endif;
+    }
+
+    public static function totalTeacherPerSchool($conn)
+    {
+        $result_arr = [];
+        $totalqry = 'SELECT * FROM `total_teachers_per_school`';
+        $result = mysqli_query($conn, $totalqry);
+
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return  $result_arr;
+        else :
             return false;
         endif;
     }
+
 
     public static function totalMasterTeachers($conn)
     {

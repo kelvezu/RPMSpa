@@ -23,12 +23,19 @@
 
 <footer class="fixed-bottom bg-dark text-white">
     <div class="d-flex justify-content-between">
-        <div class="p-2">
+
+        <div class="p-1">
+            <div class="d-flex flex-row bd-highlight">
+                <div class="p-2 bd-highlight"> <small><b>SY:</b> <?= $_SESSION['active_sy'] ?? "N/A" ?></small></div>
+                <div class="p-2 bd-highlight"><small><b>Start of Class:</b> <?= displayDate($_SESSION['start_date']) ?? "N/A" ?></small></div>
+                <div class="p-2 bd-highlight"><small><b>End of Class:</b> <?= displayDate($_SESSION['end_date']) ?? "N/A" ?></small></div>
+            </div>
         </div>
-        <div class="p-2">
-            <h6 class="pt-1">Copyright &#169; 2019 All rights reserved. Team Guerra.</h6>
+        <div class="p-1">
+
         </div>
-        <div class="p-2">
+        <div class="p-1">
+            <small>Copyright &#169; 2019 All rights reserved. Team Guerra.</small>
         </div>
     </div>
     <script src="bootstrap4/scripts/jquery.min.js"></script>
