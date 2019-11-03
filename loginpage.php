@@ -1,74 +1,100 @@
-<header>
-  <!-- <link rel="stylesheet" href="css/bootstrap4.css"> -->
-  <link rel="stylesheet" href="bootstrap4/b4css/main.css">
-  <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
+<!DOCTYPE html>
+<html lang="en">
 
-  <?php
-  session_start();
-  include_once 'includes/conn.inc.php';
-  include_once 'libraries/func.lib.php';
-  include_once 'includes/constants.inc.php';
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Online Results-based Performance
+    Management System </title>
+</head>
 
-  activeSY($conn);
-  if (!empty($_SESSION['active_sy_id'])) :
-    endSchoolYear($conn, $_SESSION['active_sy_id']);
-  else : false;
-  endif;
+<body>
 
-  if (isset($_SESSION['position'])) :
-    redirectToDashboard($_SESSION['position']);
-  else :
-    false;
-  endif;
-  ?>
 
-</header>
+  <header>
+    <!-- <link rel="stylesheet" href="css/bootstrap4.css"> -->
+    <link rel="stylesheet" href="bootstrap4/b4css/main.css">
+    <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
 
-<div class="container col-sm-4 mt-5">
+    <?php
+    session_start();
+    include_once 'includes/conn.inc.php';
+    include_once 'libraries/func.lib.php';
+    include_once 'includes/constants.inc.php';
 
-  <div class="card">
-    <div class="card-header bg-dark text-white font-weight-bold">
+    activeSY($conn);
+    if (!empty($_SESSION['active_sy_id'])) :
+      endSchoolYear($conn, $_SESSION['active_sy_id']);
+    else : false;
+    endif;
 
-      Please Enter your Credentials
+    if (isset($_SESSION['position'])) :
+      redirectToDashboard($_SESSION['position']);
+    else :
+      false;
+    endif;
+    ?>
+
+  </header>
+
+  <div class="container col-sm-4 mt-5">
+    <div class="row mb-3">
+      <center />
+      <img src="img/depeds.png" width="80" height="80" alt="">
+      <span class=" text-center">
+        <h5>Online Result-based Performance Monitoring System</h6>
+      </span>
     </div>
-    <div class="card-body">
 
-      <?php if (isset($_GET['error'])) : ?>
-        <p class="form-messages"><?php loginError($_GET['error']); ?></p>
-      <?php else : false;
-      endif;
-      ?>
+    <div class="card border-dark">
+      <div class="card-header bg-dark text-white font-weight-bold">
 
+        Please Enter your Credentials
+      </div>
+      <div class="card-body">
 
-      <form action="includes/login.inc.php" method="post">
-        <div class="form-group">
-          <label for="exampleInputEmail1" class="form-control-label font-weight-bold">Email address/Username </label>
-          <input type="text" class="form-control" id="exampleInputEmail1" name="userMail" placeholder="Enter email or username" autocomplete="off" required spellcheck="false">
-        </div>
-
-        <div class="form-group">
-          <label for="exampleInputPassword1" class="form-control-label font-weight-bold">Password</label>
-          <input type="password" class="form-control" name="pwd" id="exampleInputPassword1" placeholder="Password" required>
-        </div>
+        <?php if (isset($_GET['error'])) : ?>
+          <p class="form-messages"><?php loginError($_GET['error']); ?></p>
+        <?php else : false;
+        endif;
+        ?>
 
 
-        <div class="row align-items-center justify-content-center">
-          <button type="submit" name="login-submit" class="btn btn-primary">Login</button>
-        </div>
+        <form action="includes/login.inc.php" method="post">
+          <div class="form-group">
+            <label for="exampleInputEmail1" class="form-control-label font-weight-bold">Email address/Username </label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="userMail" placeholder="Enter email or username" autocomplete="off" required spellcheck="false">
+          </div>
 
-        <div class="row align-items-center justify-content-center my-2">
-          <a href="requestreset.php" class="text-primary text-decoration-none">Forgot Password?</a>
-        </div>
-      </form>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="form-control-label font-weight-bold">Password</label>
+            <input type="password" class="form-control" name="pwd" id="exampleInputPassword1" placeholder="Password" required>
+          </div>
 
 
-    </div>
-    <div class="card-footer text-muted bg-dark">
+          <div class="row align-items-center justify-content-center">
+            <button type="submit" name="login-submit" class="btn btn-primary">Login</button>
+          </div>
 
+          <div class="row align-items-center justify-content-center my-2">
+            <a href="requestreset.php" class="text-primary text-decoration-none">Forgot Password?</a>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="card-footer text-muted bg-dark">
+
+      </div>
     </div>
   </div>
-</div>
+</body>
+
 
 <script src="bootstrap4/scripts/boootrap.min.js"></script>
 <script src="bootstrap4/scripts/jquery-3.2.1.slim.min.js"></script>
 <script src="bootstrap4/scripts/popper.min.js"></script>
+
+</html>

@@ -23,7 +23,7 @@ include_once 'includes/security.php';
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
 </head>
 
-<body>
+<body class="mb-5">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
         <a class="navbar-brand">
             <img src="img/depeds.png" width="50" height="50" alt="">
@@ -57,3 +57,12 @@ include_once 'includes/security.php';
             <div class="ml-2"><a class="text-decoration-none"> <i data-target="#exampleModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
         </div>
     </nav>
+
+
+
+    <aside class="nav flex-column">
+        <a class="nav-link active" href="#">Active</a>
+        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link disabled" href="#">Disabled</a>
+    </aside>
