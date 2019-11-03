@@ -9,19 +9,20 @@ $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-$teacherCount = 'SELECT COUNT(user_id) as Total_Count_Teacher FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III")';
+$teacherCount = 'SELECT COUNT(user_id) as Total_Count_Teacher FROM account_tbl WHERE position like "Teacher%"
+AND school_id= "' . $_SESSION['school_id'] . '"';
 $teacherTotal = fetchAll($dbcon, $teacherCount);
 
-$masterteacherCount = 'SELECT COUNT(user_id) as Total_Count_MasterTeacher FROM account_tbl WHERE position IN ("Master Teacher I","Master Teacher II","Master Teacher III","Master Teacher IV")';
+$masterteacherCount = 'SELECT COUNT(user_id) as Total_Count_MasterTeacher FROM account_tbl WHERE position like "Master Teacher%" AND school_id= "' . $_SESSION['school_id'] . '"';
 $masterteacherTotal = fetchAll($dbcon, $masterteacherCount);
 
 $schoolheadCount = 'SELECT COUNT(user_id) as Total_Count_SchoolHead FROM account_tbl WHERE position="School Head" AND school_id= "' . $_SESSION['school_id'] . '"';
 $schoolheadTotal = fetchAll($dbcon, $schoolheadCount);
 
-$teacherMasterlist = 'SELECT * FROM account_tbl WHERE school_id= "' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II","Teacher III")';
+$teacherMasterlist = 'SELECT * FROM account_tbl WHERE school_id= "' . $_SESSION['school_id'] . '" AND position like "Teacher%"';
 $teacherMasterlist_results = fetchAll($dbcon, $teacherMasterlist);
 
-$masterteacherMasterlist = 'SELECT * FROM account_tbl WHERE school_id= "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+$masterteacherMasterlist = 'SELECT * FROM account_tbl WHERE school_id= "' . $_SESSION['school_id'] . '" AND position like "Master Teacher%"';
 $masterteacherMasterlist_results = fetchAll($dbcon, $masterteacherMasterlist);
 
 $schoolheadMasterlist = 'SELECT * FROM account_tbl WHERE school_id= "' . $_SESSION['school_id'] . '" AND position="School Head"';
