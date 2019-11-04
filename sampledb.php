@@ -58,16 +58,8 @@ include_once 'sampleheader.php'; ?>
 
             <div class=" card-body text-dark">
                 <div class="list-group">
-                    <div class="card">
-                        <div class="card-header">
-                            header
-                        </div>
-                        <div class="card-bdo">
-                            body
-                        </div>
-                        <div class="card-footer">
-                            footer
-                        </div>
+                    <div id='fetch-announcement'>
+                        <!-- result here -->
                     </div>
                 </div>
             </div>

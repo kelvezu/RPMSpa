@@ -33,10 +33,10 @@
             <div class="modal-body">
                 <p id="show-notif" class="green-notif-border">Post notif here</p>
                 <form method="post" id="add_announcement_form">
-                    <input type="text" id="user_id" value="<?= $_SESSION['user_id'] ?>" />
-                    <input type="text" id="sy" value="<?= $_SESSION['active_sy_id'] ?>" />
-                    <input type="text" id="position" value="<?= $_SESSION['position'] ?>" />
-                    <input type="text" id="school" value="<?= $_SESSION['school_id'] ?>" />
+                    <input type="hidden" id="user_id" value="<?= $_SESSION['user_id'] ?>" />
+                    <input type="hidden" id="sy" value="<?= $_SESSION['active_sy_id'] ?>" />
+                    <input type="hidden" id="position" value="<?= $_SESSION['position'] ?>" />
+                    <input type="hidden" id="school" value="<?= $_SESSION['school_id'] ?>" />
                     <div class="form-group-sm">
                         <label for="subject" class="col-form-label">Subject:</label>
                         <input type="text" class="form-control" id="subject">
@@ -49,7 +49,6 @@
                         <label for="message" class="col-form-label">Message:</label>
                         <textarea class="form-control" id="message"></textarea>
                     </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
