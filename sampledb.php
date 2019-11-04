@@ -6,24 +6,74 @@ include_once 'sampleheader.php'; ?>
 <!--Collapse message -->
 <div class="container mb-4">
     <p>
-        <a class="btn btn-outline-primary" data-toggle="collapse" href="#tite" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <!-- Button for Announcement -->
+        <a class="btn btn-outline-dark" data-toggle="collapse" href="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
             Announcements
         </a>
-        <button class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Sample Buttons
-        </button>
-    </p>
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-        </div>
-    </div>
+        <!-- end btn for announcement -->
 
-    <div class="collapse" id="tite">
-        <div class="card card-body">
-            titetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetiteteititetitetei
+        <!-- btn for notif -->
+        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#notifCollapse" aria-expanded="false" aria-controls="collapseExample">
+            Notifications
+        </button>
+        <!-- end of btn notif -->
+    </p>
+    <!-- Notification Collapse -->
+    <div class="collapse m-2" id="notifCollapse">
+        <div class="card">
+            <div class="card-header font-weight-bold">Notification List</div>
+            <div class="card card-body">
+                <div class="list-group">
+                    <?php
+                    if (!empty(RPMSdb::showNotif($conn))) :
+                        foreach (RPMSdb::showNotif($conn) as $notif) : ?>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1"><?= $notif['category'] ?></h5>
+                                    <small><?= displaySchool($conn, $notif['school_id']) ?></small>
+                                </div>
+                                <p class="mb-1"><?= $notif['message']  ?></p>
+                                <small>Date posted: <?= displayDate($notif['datetime_stamp']) ?></small><br>
+                            </a>
+                            <br />
+                    <?php
+                        endforeach;
+                    else : echo "<p class='font-weight-bold text-center'>No notification!</p>";
+                    endif;
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
+    <!-- End of Notification List -->
+    <!-- Announcement List -->
+    <div class="collapse m-2" id="announcementCollapse">
+        <div class="card">
+            <div class=" card card-header font-weight-bold">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2-">Announcement List</div>
+                    <div class="p-2-"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
+                </div>
+            </div>
+
+            <div class=" card-body text-dark">
+                <div class="list-group">
+                    <div class="card">
+                        <div class="card-header">
+                            header
+                        </div>
+                        <div class="card-bdo">
+                            body
+                        </div>
+                        <div class="card-footer">
+                            footer
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of announcement list -->
 </div>
 <!-- End of collapse -->
 <div class="container-fluid">
@@ -36,25 +86,23 @@ include_once 'sampleheader.php'; ?>
             <div class="mb-5">
                 <div class="card  shadow">
                     <div class="card-header">
-                        <h6>Notifications</h6>
+                        <h6>sample</h6>
                     </div>
-                    <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati similique magni fuga, temporibus soluta autem expedita, ab tempore iusto excepturi blanditiis perspiciatis in illo aperiam voluptates sit ex, nihil
-                    </div>
-                    <div class="card-footer">
-                        im a footer
-                    </div>
+                    <!--  -->
+                    sample notif
+
+                    <!--  -->
                 </div>
             </div>
 
             <div class="col mb-3">
-                <div class="card">
+                <div class="card border border-dark">
                     <div class="card-header">
                         <h6>Total of Active Teachers</h6>
                     </div>
                     <div class="card-body">
-                        <table class=" table table-sm table-responsive-sm table-hover font-weight-bold ">
-                            <thead class="bg-dark text-white">
+                        <table class=" table table-sm table-responsive-sm table-hover ">
+                            <thead class="bg-light">
                                 <tr>
                                     <th>#</th>
                                     <th>School Name</th>
@@ -71,14 +119,14 @@ include_once 'sampleheader.php'; ?>
                                     if (!empty($sch_t['school_id']) and $sch_t['T'] || $sch_t['MT']) : ?>
                                         <td><?= $num++ ?></td>
                                         <td><?= displaySchool($conn, $sch_t['school_id']); ?></td>
-                                        <td class="bg-success text-white"><?= $sch_t['T'] ?></td>
-                                        <td class="bg-primary text-white"><?= $sch_t['MT'] ?></td>
-                                        <td><?= $sch_t['T'] + $sch_t['MT']  ?></td>
+                                        <td class="font-weight-bold text-success"><?= $sch_t['T'] ?></td>
+                                        <td class="font-weight-bold text-primary"><?= $sch_t['MT'] ?></td>
+                                        <td class="font-weight-bold"><?= $sch_t['T'] + $sch_t['MT']  ?></td>
                                     <?php endif ?>
                             </tbody>
 
                         <?php endforeach; ?>
-                        <tfoot class="bg-dark text-white">
+                        <tfoot class="bg-light font-weight-bold">
                             <tr>
                                 <td class=" text-right" colspan="2">Total:</td>
                                 <td> <?= RPMSdb::totalTOnlyCount($conn)["Total"] ?></td>
@@ -105,7 +153,7 @@ include_once 'sampleheader.php'; ?>
 
 
             <div>
-                <p class="text-primary black-border overflow-auto">titeLorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.</p>
+                <p class="text-primary black-border">titeLorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores debitis voluptatum rem fugit! Similique quo laboriosam molestias nisi exercitationem nemo sint repudiandae odio sequi laudantium, cum commodi quam voluptatum deleniti cumque aperiam temporibus unde mollitia, illum eveniet. Corrupti vitae, delectus, ipsa fugiat exercitationem atque soluta fugit, ullam odit reprehenderit ut.</p>
             </div>
         </div>
         <!-- Right Column -->

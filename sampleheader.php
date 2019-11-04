@@ -54,6 +54,6 @@ include_once 'includes/security.php';
             <div class="my-2 my-md-0">
                 <h6 class="text-white"><?= $_SESSION['fullname'] ?></h6>
             </div>
-            <div class="ml-2"><a class="text-decoration-none"> <i data-target="#exampleModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
+            <div class="ml-2"><a class="text-decoration-none"> <i data-target="#LogoutModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
         </div>
     </nav>

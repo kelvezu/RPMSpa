@@ -1,6 +1,6 @@
 </body>
 <!-- Logout Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="LogoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
@@ -20,6 +20,47 @@
     </div>
 </div>
 <!-- End of Modal Logout -->
+<!-- Add Announcement Modal  -->
+<div class="modal fade" id="AddAnnouncement" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add New Announcement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="show-notif" class="green-notif-border">Post notif here</p>
+                <form method="post" id="add_announcement_form">
+                    <input type="text" id="user_id" value="<?= $_SESSION['user_id'] ?>" />
+                    <input type="text" id="sy" value="<?= $_SESSION['active_sy_id'] ?>" />
+                    <input type="text" id="position" value="<?= $_SESSION['position'] ?>" />
+                    <input type="text" id="school" value="<?= $_SESSION['school_id'] ?>" />
+                    <div class="form-group-sm">
+                        <label for="subject" class="col-form-label">Subject:</label>
+                        <input type="text" class="form-control" id="subject">
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="title" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="title">
+                    </div>
+                    <div class="form-group-sm">
+                        <label for="message" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message"></textarea>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" id="btn-ann" name="submit" class="btn btn-primary">Post Announcement</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of Add Announcement Modal -->
+
 
 <footer class="fixed-bottom bg-dark text-white">
     <div class="d-flex justify-content-between">
@@ -38,6 +79,7 @@
             <small>Copyright &#169; 2019 All rights reserved. Team Guerra.</small>
         </div>
     </div>
+    <script src="includes/func.lib.js"></script>
     <script src="bootstrap4/scripts/jquery.min.js"></script>
     <script src="bootstrap4/scripts/bootstrap.min.js"></script>
     <script src="bootstrap4/scripts/jquery-3.2.1.slim.min.js"></script>

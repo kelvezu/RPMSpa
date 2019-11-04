@@ -198,8 +198,11 @@ echo BR;
 // echo positionFormat($position) . BR;
 // echo ucwords($position) . BR;
 
-echo RPMSdb::totalTeacherCount($conn) . BR;
+
 echo RPMSdb::totalTeachers($conn);
+pre_r(RPMSdb::showNotif($conn));
+
+
 
 ?>
 <!-- <select name="" id=""> -->

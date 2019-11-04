@@ -1,9 +1,13 @@
 <?php
 
+
 namespace RPMSdb;
 
 use mysqli;
-use mysqli_result;
+
+
+
+
 
 class RPMSdb
 {
@@ -11,7 +15,7 @@ class RPMSdb
     public static function displayMasterList($conn)
     {
         $user_arr = [];
-        $totalqry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND status = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") ORDER BY user_id desc  ';
+        $totalqry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND status = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") ORDER BY notif_id desc  ';
         $result = mysqli_query($conn, $totalqry);
         $total = mysqli_num_rows($result);
         if ($total) :
@@ -459,11 +463,37 @@ class RPMSdb
         endif;
     }
 
+    public static function showNotif($conn)
+    {
+        $notif_arr = [];
 
-    // public static function totalTCompleteESAT($conn)
-    // {
-    //    
-    // }
-    // public static function isCOTCompleteBool($conn, $position, $user_id)
-    // { }
+        $qry = 'SELECT * FROM notification_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id desc LIMIT 6';
+        $result = mysqli_query($conn, $qry);
+
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($notif_arr, $res);
+            endforeach;
+            return $notif_arr;
+        else :
+            return false;
+        endif;
+    }
+
+    public static function showAnnouncement($conn)
+    {
+        $notif_arr = [];
+
+        $qry = 'SELECT * FROM announcement_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id desc LIMIT 6';
+        $result = mysqli_query($conn, $qry);
+
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($notif_arr, $res);
+            endforeach;
+            return $notif_arr;
+        else :
+            return false;
+        endif;
+    }
 }
