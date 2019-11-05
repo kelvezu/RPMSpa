@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <h4><b> ESAT Progress</b></h4>
+                    <h4><b> ESAT Progress</b><span class="bar">5,3,9,6,5,9,7,3,5,2</span></h4>
                     <div class="text-center">
                     <?php include 'includes/drawchart.php'; ?>
                     </div>
