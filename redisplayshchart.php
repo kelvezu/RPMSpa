@@ -884,13 +884,15 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptselfmanagement";
+	$query = "SELECT a.cbc_name, SUM(b.score1)score1,SUM(b.score2)score2,SUM(b.score3)score3,sum(b.score4)score4,sum(b.score5)score5 FROM core_behavioral_tbl a INNER JOIN
+	(
+		SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptselfmanagementt
+	
+		UNION
+	
+		SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptselfmanagementmt
+	) as b on a.cbc_name = b.cbc_name GROUP BY a.cbc_name";
+
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -956,13 +958,14 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptprofessionalismethics";
+	$query = "SELECT a.cbc_name, SUM(b.score1)score1,SUM(b.score2)score2,SUM(b.score3)score3,SUM(b.score4)score4,SUM(b.score5)score5 FROM core_behavioral_tbl a INNER JOIN
+	(
+		SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptprofessionalismethicst
+	
+		UNION
+	
+		SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptprofessionalismethicsmt
+	) as b on a.cbc_name = b.cbc_name GROUP BY a.cbc_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -1028,13 +1031,12 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptresultfocus";
+	$query = "SELECT a.cbc_name, SUM(b.score1)score1,SUM(b.score2)score2,SUM(b.score3)score3,SUM(b.score4)score4,SUM(b.score5)score5 FROM core_behavioral_tbl a INNER JOIN
+	(
+	SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptresultfocust
+	UNION
+	SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptresultfocusmt
+	) as b on a.cbc_name = b.cbc_name GROUP BY a.cbc_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -1100,13 +1102,14 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptteamwork";
+	$query = "SELECT a.cbc_name, SUM(b.score1)score1,SUM(b.score2)score2,SUM(b.score3)score3,SUM(b.score4)score4,			SUM(b.score5)score5 FROM core_behavioral_tbl a INNER JOIN
+				(
+					SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptteamworkt
+				
+					UNION
+				
+					SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptteamworkmt
+				) as b on a.cbc_name = b.cbc_name GROUP BY a.cbc_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -1172,13 +1175,14 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptserviceorientation";
+	$query = "SELECT a.cbc_name, SUM(b.score1)score1,SUM(b.score2)score2,SUM(b.score3)score3,SUM(b.score4)score4,		  SUM(b.score5)score5 FROM core_behavioral_tbl a INNER JOIN
+			(
+				SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptserviceorientationt
+			
+				UNION
+			
+				SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptserviceorientationmt
+			) as b on a.cbc_name = b.cbc_name GROUP BY a.cbc_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -1242,13 +1246,14 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-					score1,
-						score2,
-							score3,
-								score4,
-									score5 
-										FROM tblcbc_innovation";
+	$query = "SELECT a.cbc_name, SUM(b.score1)score1,SUM(b.score2)score2,SUM(b.score3)score3,SUM(b.score4)score4,				SUM(b.score5)score5 FROM core_behavioral_tbl a INNER JOIN
+					(
+						SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptinnovationt
+					
+						UNION
+					
+						SELECT cbc_name, score1, score2,score3, score4, score5 FROM tbl_rptinnovationmt
+					) as b on a.cbc_name = b.cbc_name GROUP BY a.cbc_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
