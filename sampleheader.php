@@ -23,7 +23,7 @@ include_once 'includes/security.php';
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
 </head>
 
-<body class="mb-5">
+<body class="mb-5 bg-light">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
         <a class="navbar-brand">
             <img src="img/depeds.png" width="50" height="50" alt="">
@@ -34,7 +34,7 @@ include_once 'includes/security.php';
         <div class="collapse navbar-collapse" id="navbarsExample03">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a id="home-btn" class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>

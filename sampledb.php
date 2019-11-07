@@ -7,7 +7,7 @@ include_once 'sampleheader.php'; ?>
 <div class="container mb-4">
     <p>
         <!-- Button for Announcement -->
-        <a class="btn btn-outline-dark" data-toggle="collapse" href="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <a id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" href="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
             Announcements
         </a>
         <!-- end btn for announcement -->
@@ -19,7 +19,7 @@ include_once 'sampleheader.php'; ?>
         <!-- end of btn notif -->
     </p>
     <!-- Notification Collapse -->
-    <div class="collapse m-2" id="notifCollapse">
+    <div class="collapse m-2 border border-dark" id="notifCollapse">
         <div class="card">
             <div class="card-header font-weight-bold">Notification List</div>
             <div class="card card-body">
@@ -47,7 +47,7 @@ include_once 'sampleheader.php'; ?>
     </div>
     <!-- End of Notification List -->
     <!-- Announcement List -->
-    <div class="collapse m-2" id="announcementCollapse">
+    <div class="collapse m-2 border border-dark" id="announcementCollapse">
         <div class="card">
             <div class=" card card-header font-weight-bold">
                 <div class="d-flex justify-content-between">
@@ -75,17 +75,16 @@ include_once 'sampleheader.php'; ?>
         <!-- Left Column -->
         <div class="col">
 
-            <div class="mb-5">
+            <!-- <div class="mb-5">
                 <div class="card  shadow">
                     <div class="card-header">
                         <h6>sample</h6>
                     </div>
-                    <!--  -->
+                  
                     sample notif
-
-                    <!--  -->
+                  
                 </div>
-            </div>
+            </div> -->
 
             <div class="col mb-3">
                 <div class="card border border-dark">

@@ -371,14 +371,14 @@ include 'includes/header.php';
                         <td><b class="apple-color"><?= $row['status'] ?></b></td>
                         <td> 
                             <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success  text-decoration-none ">Update</a> &nbsp 
-                            <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id'];?>" class="btn  btn-danger text-decoration-none ">Remove</a>
+                            <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id'];?>" class="btn  btn-danger text-decoration-none ">Set to Inactive</a>
                         </td>
                         <?php elseif($row['status'] == "Inactive"): ?>
                         <td><b><strike><?= $row['subject_name'] ?></strike></b></td>
                         <td class="tomato-color"><?= $row['status'] ?></td>
                         <td> 
                             <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
-                            <a href="includes/processESAT.php?unremovesub=<?php echo $row['subject_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
+                            <a href="includes/processESAT.php?unremovesub=<?php echo $row['subject_id'];?>" class="btn btn-info text-decoration-none ">Set to active</a>
                         </td>
                     <?php else: echo 'Error' ?>
                     <?php endif; ?>  
@@ -412,7 +412,7 @@ include 'includes/header.php';
                     </tr>
                </thead>
                <?php
-                    if(mysqli_num_rows($qry_run) > 0){
+                    if(!empty($qry_run)){
                     foreach($qry_run as $row)
                     { 
                 ?><?php if($row['status'] == "Active"): ?>
