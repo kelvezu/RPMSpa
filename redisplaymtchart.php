@@ -14,7 +14,7 @@ include_once 'includes/header.php';
 $connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
 $query = "SELECT a.CBC_NAME,c.indicator FROM core_behavioral_tbl a 
 			INNER JOIN 
-			esat3_core_behavioral_tbl b  on a.cbc_id = b.cbc_id
+			esat3_core_behavioralmt_tbl b  on a.cbc_id = b.cbc_id
 			INNER JOIN cbc_indicators_tbl c on b.cbc_ind_id=c.cbc_ind_id
 			WHERE b.status='active' GROUP BY a.CBC_NAME,c.indicator order by a.cbc_id;";
 $statement = $connect->prepare($query);
