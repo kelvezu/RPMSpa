@@ -18,6 +18,7 @@ if (isset($_POST['subjectsave'])) {
     } else {
         $_SESSION['message'] = "Data Insertion Failed";
         $_SESSION['msg_type'] = "red-notif-border";
+
         header('location:../ESAT.php');
     }
 }
@@ -30,6 +31,7 @@ if (isset($_POST['updateSUB'])) {
     if ($qrySJ) {
         $_SESSION['message'] = 'Subject Option has been updated!';
         $_SESSION['msg_type'] = 'green-notif-border';
+        $_SESSION['subj-af'] = 'autofocus';
         header("location:../ESAT.php");
     }
 }

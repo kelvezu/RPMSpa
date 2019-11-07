@@ -390,7 +390,7 @@ include 'includes/header.php';
                 }
                 ?>
             </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#subject-modal">Add Subject Option</button>
+            <input id="add-subject-btn" <?= $_SESSION['subj-af'] ?> class="btn btn-sm btn-success" data-toggle="modal" data-target="#subject-modal" value="Add Subject Option" />
         </div><!-- End of col-sm my-4-->
 
 
