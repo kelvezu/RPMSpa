@@ -1,5 +1,6 @@
 <?php
 
+use Dashboard\Dashboard;
 use DevPlan\DevPlan;
 use esat\ESAT;
 use FilterUser\FilterUser;
@@ -201,6 +202,13 @@ echo BR;
 
 echo RPMSdb::totalTeachers($conn);
 pre_r(RPMSdb::showNotif($conn));
+echo BR;
+$admin = Dashboard::adminOnly();
+if ($admin) {
+    echo 'admin ka!';
+} else {
+    echo 'd ka admin!';
+}
 
 
 

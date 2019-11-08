@@ -1,4 +1,7 @@
 <?php
+
+use Dashboard\Dashboard;
+
 session_start();
 require_once 'security.php';
 include_once 'conn.inc.php';
@@ -77,9 +80,6 @@ $position = $_SESSION['position'];
 </head>
 <?php include_once 'libraries/queries.library.php'; ?>
 
-
-
-
 <body class="materialdesign">
     <div class="wrapper-pro">
         <div class="left-sidebar-pro">
@@ -101,64 +101,88 @@ $position = $_SESSION['position'];
 
 
 
+                        <?php if (Dashboard::principalOnly()) : ?>
+                            <li class="nav-item ">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
+                                    <a href="displaytprogress.php" class="dropdown-item"> Teacher Analytics Progress</a>
+                                    <a href="displaymtprogress.php" class="dropdown-item"> Master Teacher Analytics Progress</a>
+                            </li>
+                        <?php endif; ?>
 
                         <li class="nav-item ">
-                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-home"></i> <span class="mini-dn">Dashboard</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <a href="displaytprogress.php" class="dropdown-item"> Teacher Analytics Progress</a>
-                                <a href="displaymtprogress.php" class="dropdown-item"> Master Teacher Analytics Progress</a>
-                        </li>
-
-                        <li class="nav  -item ">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-hourglass"></i> <span class="mini-dn">Observation Period</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
                                 <?php activeobsperiod($conn); ?>
-                                <a class="dropdown-item"><?= '<b>First Period: </b>' . $_SESSION['first_period'] ?? 'N/A' ?></a>
-                                <a class="dropdown-item"><?= '<b>Second Period: </b>' . $_SESSION['second_period'] ?? 'N/A' ?></a>
-                                <a class="dropdown-item"><?= '<b>Third Period: </b>' . $_SESSION['third_period'] ?? 'N/A' ?></a>
-                                <a class="dropdown-item"><?= '<b>Fourth Period: </b>' . $_SESSION['final_period'] ?? 'N/A' ?></a>
+                                <a class="dropdown-item"><?= '<b>First Period: </b><br/>' . displayDate($_SESSION['first_period'])  ?? 'N/A' ?></a>
+                                <a class="dropdown-item"><?= '<b>Second Period: </b><br/>' . displayDate($_SESSION['second_period']) ?? 'N/A' ?></a>
+                                <a class="dropdown-item"><?= '<b>Third Period: </b><br/>' . displayDate($_SESSION['third_period']) ?? 'N/A' ?></a>
+                                <a class="dropdown-item"><?= '<b>Fourth Period: </b><br/>' . displayDate($_SESSION['final_period']) ?? 'N/A' ?></a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-list"></i> <span class="mini-dn">ESAT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <a href="displayshchart.php" class="dropdown-item">View Teacher Result</a>
-                                <a href="#" class="dropdown-item">View Master Teacher Result</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bullseye"></i> <span class="mini-dn">Development Plan</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <a href="#" class="dropdown-item">View Teacher Development Plan-IPCRF</a>
-                                <a href="viewgendevplant.php" class="dropdown-item">View Teacher General Development Plan</a>
-                                <a href="#" class="dropdown-item">VIew Master Teacher Development Plan-IPCRF</a>
-                                <a href="#" class="dropdown-item">View Master Teacher General Development Plan</a>
-                                <a href="gendevplant.php" class="dropdown-item">Create Teacher General Development Plan</a>
-                                <a href="gendevplanmt.php" class="dropdown-item">Create Master Teacher General Development Plan</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-check-circle"></i> <span class="mini-dn">Means of Verification</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <a href="#" class="dropdown-item">View Teacher MOVs</a>
-                                <a href="#" class="dropdown-item">View Master Teacher MOVs</a>
 
-                            </div>
-                        </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-star"></i> <span class="mini-dn">COT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown chart-left-menu-std animated flipInX">
-                                <a href="viewcotrateT.php" class="dropdown-item">View Teacher COT</a>
-                                <a href="viewcotrateMT.php" class="dropdown-item">View Master Teacher COT</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">IPCRF</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <a href="#" class="dropdown-item">View Teacher IPCRF Rating</a>
-                                <a href="#" class="dropdown-item">View Teacher PMCF Logs</a>
-                                <a href="#" class="dropdown-item">View Teacher MRF</a>
-                                <a href="#" class="dropdown-item">View Master Teacher IPCRF Rating</a>
-                                <a href="#" class="dropdown-item">View Master Teacher PMCF Logs</a>
-                                <a href="#" class="dropdown-item">View Master Teacher MRF</a>
-                            </div>
-                        </li>
+                        <?php if (Dashboard::DOandSHonly()) : ?>
+                            <li class="nav-item">
+                                <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-list"></i> <span class="mini-dn">ESAT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
+                                    <a href="displayshchart.php" class="dropdown-item">View Teacher Result</a>
+                                    <a href="#" class="dropdown-item">View Master Teacher Result</a>
+                                </div>
+                            </li>
+                        <?php endif ?>
+
+                        <?php if (Dashboard::DOandSHonly() || Dashboard::mTeacherOnly()) : ?>
+                            <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bullseye"></i> <span class="mini-dn">Development Plan</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
+                                    <a href="#" class="dropdown-item">View Teacher Development Plan-IPCRF</a>
+                                    <a href="viewgendevplant.php" class="dropdown-item">View Teacher General Development Plan</a>
+                                    <a href="#" class="dropdown-item">VIew Master Teacher Development Plan-IPCRF</a>
+                                    <a href="#" class="dropdown-item">View Master Teacher General Development Plan</a>
+                                    <a href="gendevplant.php" class="dropdown-item">Create Teacher General Development Plan</a>
+                                    <a href="gendevplanmt.php" class="dropdown-item">Create Master Teacher General Development Plan</a>
+                                </div>
+                            </li>
+                        <?php endif ?>
+
+
+                        <?php if (Dashboard::DOandSHonly() || Dashboard::mTeacherOnly()) : ?>
+                            <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-check-circle"></i> <span class="mini-dn">Means of Verification</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
+                                    <a href="#" class="dropdown-item">View Teacher MOVs</a>
+                                    <a href="#" class="dropdown-item">View Master Teacher MOVs</a>
+                                </div>
+                            </li>
+                        <?php endif ?>
+
+                        <?php if (Dashboard::DOandSHonly() || Dashboard::mTeacherOnly()) : ?>
+                            <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-star"></i> <span class="mini-dn">COT</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown chart-left-menu-std animated flipInX">
+                                    <?php if (Dashboard::mTeacherOnly()) : ?>
+                                        <a href="viewcotrateT.php" class="dropdown-item">View Teacher COT</a>
+                                    <?php elseif (Dashboard::DOandSHonly()) : ?>
+                                        <a href="viewcotrateMT.php" class="dropdown-item">View Master Teacher COT</a>
+                                    <?php else : false ?>
+                                    <?php endif ?>
+                                </div>
+                            </li>
+                        <?php endif ?>
+
+                        <?php if (Dashboard::DOandSHonly() || Dashboard::mTeacherOnly()) : ?>
+                            <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">IPCRF</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
+                                    <?php if (Dashboard::DOandSHonly() || Dashboard::mTeacherOnly()) : ?>
+                                        <a href="#" class="dropdown-item">View Teacher IPCRF Rating</a>
+                                        <a href="#" class="dropdown-item">View Teacher PMCF Logs</a>
+                                        <a href="#" class="dropdown-item">View Teacher MRF</a>
+                                    <?php elseif (Dashboard::DOandSHonly()) : ?>
+                                        <a href="#" class="dropdown-item">View Master Teacher IPCRF Rating</a>
+                                        <a href="#" class="dropdown-item">View Master Teacher PMCF Logs</a>
+                                        <a href="#" class="dropdown-item">View Master Teacher MRF</a>
+                                    <?php endif ?>
+                                </div>
+                            </li>
+                        <?php endif ?>
+
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-files-o"></i> <span class="mini-dn">Forms</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
                                 <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
@@ -173,16 +197,19 @@ $position = $_SESSION['position'];
                                 <a href="mrf.php" class="dropdown-item">MRF</a>
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-users"></i> <span class="mini-dn">Users</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
-                                <a href="displayusers.php" class="dropdown-item">View User</a>
-                                <a href="usercsv.php" class="dropdown-item">Mass Upload</a>
-                                <a href="signup.php" class="dropdown-item">Add User</a>
-                                <a href="selectteacher.php" class="dropdown-item">Select Teacher</a>
-                                <a href="selecttratee.php" class="dropdown-item">Select Ratee</a>
 
-                            </div>
-                        </li>
+                        <?php if (Dashboard::adminOnly()) : ?>
+                            <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-users"></i> <span class="mini-dn">Users</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
+                                    <a href="displayusers.php" class="dropdown-item">View User</a>
+                                    <a href="usercsv.php" class="dropdown-item">Mass Upload</a>
+                                    <a href="signup.php" class="dropdown-item">Add User</a>
+                                    <a href="selectteacher.php" class="dropdown-item">Select Teacher</a>
+                                    <a href="selecttratee.php" class="dropdown-item">Select Ratee</a>
+                                </div>
+                            </li>
+                        <?php endif ?>
+
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-bullhorn"></i> <span class="mini-dn">Announcement</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
                                 <a href="#" class="dropdown-item">View Announcements</a>
@@ -204,26 +231,29 @@ $position = $_SESSION['position'];
                                 <a href="#" class="dropdown-item">Seminar List</a>
                             </div>
                         </li>
-                        <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-cogs"></i> <span class="mini-dn">Settings</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
-                            <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
-                                <a href="sy.php" class="dropdown-item">School Year</a>
-                                <a href="school.php" class="dropdown-item">School Info</a>
-                                <a href="displaypolicy.php" class="dropdown-item">Policy</a>
-                                <a href="ESAT.php" class="dropdown-item">ESAT Details </a>
-                                <a href="displaycbc.php " class="dropdown-item">ESAT Core Behavioral Settings </a>
-                                <a href="displaytRubric.php" class="dropdown-item">Teacher COT Rubrics</a>
-                                <a href="displaymtRubric.php" class="dropdown-item">Master Teacher COT Rubrics</a>
-                                <a href="displaytindicator.php" class="dropdown-item">Teacher COT Indicator List</a>
-                                <a href="displaymtindicator.php" class="dropdown-item">Master Teacher COT Indicator List</a>
-                                <a href="displayperftindicator.php" class="dropdown-item">Teacher Performance Indicator List</a>
-                                <a href="displayperfmtindicator.php" class="dropdown-item">Master Teacher Performance Indicator List</a>
-                                <a href="displaytkramov.php" class="dropdown-item">Teacher KRA and Objective Details</a>
-                                <a href="displaymtkramov.php" class="dropdown-item">Master Teacher Objective Details</a>
-                                <a href="displaytmov.php" class="dropdown-item">Teacher MOV Details</a>
-                                <a href="displaymtmov.php" class="dropdown-item">Master Teacher MOV Details</a>
-                                <a href="displayseminar.php" class="dropdown-item">Seminar List</a>
-                            </div>
-                        </li>
+
+                        <?php if (Dashboard::adminOnly()) : ?>
+                            <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-cogs"></i> <span class="mini-dn">Settings</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
+                                <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
+                                    <a href="sy.php" class="dropdown-item">School Year</a>
+                                    <a href="school.php" class="dropdown-item">School Info</a>
+                                    <a href="displaypolicy.php" class="dropdown-item">Policy</a>
+                                    <a href="ESAT.php" class="dropdown-item">ESAT Details </a>
+                                    <a href="displaycbc.php " class="dropdown-item">ESAT Core Behavioral Settings </a>
+                                    <a href="displaytRubric.php" class="dropdown-item">Teacher COT Rubrics</a>
+                                    <a href="displaymtRubric.php" class="dropdown-item">Master Teacher COT Rubrics</a>
+                                    <a href="displaytindicator.php" class="dropdown-item">Teacher COT Indicator List</a>
+                                    <a href="displaymtindicator.php" class="dropdown-item">Master Teacher COT Indicator List</a>
+                                    <a href="displayperftindicator.php" class="dropdown-item">Teacher Performance Indicator List</a>
+                                    <a href="displayperfmtindicator.php" class="dropdown-item">Master Teacher Performance Indicator List</a>
+                                    <a href="displaytkramov.php" class="dropdown-item">Teacher KRA and Objective Details</a>
+                                    <a href="displaymtkramov.php" class="dropdown-item">Master Teacher Objective Details</a>
+                                    <a href="displaytmov.php" class="dropdown-item">Teacher MOV Details</a>
+                                    <a href="displaymtmov.php" class="dropdown-item">Master Teacher MOV Details</a>
+                                    <a href="displayseminar.php" class="dropdown-item">Seminar List</a>
+                                </div>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
 
@@ -342,7 +372,7 @@ $position = $_SESSION['position'];
                                         <div class="row">
                                             <div>
                                                 <b>School Year: </b><?php echo $_SESSION['active_sy'] ?? '<p class="tomato-color"> No Active School Year! </p>';  ?>
-                                                <b>SY start: </b><?php echo ($_SESSION['start_date']) ?? '<p class="tomato-color">No start date!</p>'; ?> <b>SY end: </b><?php echo ($_SESSION['end_date']) ?? '<p class="tomato-color">No end date!</p>'; ?>
+                                                <b>SY start: </b><?= displayDate($_SESSION['start_date']) ?? '<p class="tomato-color">No start date!</p>'; ?> <br /><b>SY end: </b><?= displayDate($_SESSION['end_date']) ?? '<p class="tomato-color">No end date!</p>'; ?>
                                             </div>
                                         </div>
                                     </div>
