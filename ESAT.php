@@ -16,9 +16,10 @@ include 'includes/header.php';
             </div>
             <div class="modal-body">
                 <form action="includes/processESAT.php" method="POST">
+
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Science and Technolgy">
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Science and Technolgy" required pattern="[A-Za-z ]{4,}" title="Input four or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>
@@ -26,6 +27,7 @@ include 'includes/header.php';
                         <button type="submit" class="btn btn-primary" name="subjectsave">Add Option</button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
@@ -46,7 +48,7 @@ include 'includes/header.php';
                 <form action="includes/processESAT.php" method="POST">
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="age" id="age" placeholder="Ex. 15-30 years">
+                            <input type="text" class="form-control" name="age" id="age" placeholder="Ex. 15-30 years" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters">
                         </div>
                     </div>
                     <div>
@@ -73,7 +75,7 @@ include 'includes/header.php';
                 <form action="includes/processESAT.php" method="POST">
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="gender" id="gender" placeholder="Female">
+                            <input type="text" class="form-control" name="gender" id="gender" placeholder="Female" required pattern="[A-Za-z]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>
@@ -102,7 +104,7 @@ include 'includes/header.php';
                     <div class="form-group row">
 
                         <div class="col-sm">
-                            <input type="text" class="form-control" name="position" id="age" placeholder="Ex.Master Teacher I">
+                            <input type="text" class="form-control" name="position" id="age" placeholder="Ex.Master Teacher I" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
 
@@ -134,7 +136,7 @@ include 'includes/header.php';
                     <div class="form-group row">
 
                         <div class="col-sm">
-                            <input type="text" class="form-control" name="totalyears" id="age" placeholder="Ex.0-3 Years">
+                            <input type="text" class="form-control" name="totalyears" id="age" placeholder="Ex.0-3 Years" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters">
                         </div>
                     </div>
 
@@ -165,7 +167,7 @@ include 'includes/header.php';
                 <form action="includes/processESAT.php" method="POST">
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="glt" id="glt" placeholder="Ex. Kindergarten">
+                            <input type="text" class="form-control" name="glt" id="glt" placeholder="Ex. Kindergarten" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>
@@ -192,7 +194,7 @@ include 'includes/header.php';
                 <form action="includes/processESAT.php" method="POST">
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="curri" id="curri" placeholder="ex. Kinder and Grade 1-6">
+                            <input type="text" class="form-control" name="curri" id="curri" placeholder="ex. Kinder and Grade 1-6" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>
@@ -219,7 +221,7 @@ include 'includes/header.php';
                 <form action="includes/processESAT.php" method="POST">
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="region" id="region" placeholder="ex. Manila">
+                            <input type="text" class="form-control" name="region" id="region" placeholder="ex. Manila" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters">
                         </div>
                     </div>
                     <div>
@@ -266,7 +268,7 @@ include 'includes/header.php';
                     </div>
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="division" id="division" placeholder="ex. Makati">
+                            <input type="text" class="form-control" name="division" id="division" placeholder="ex. Makati" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>
@@ -313,7 +315,7 @@ include 'includes/header.php';
                     </div>
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="municipality" id="municipality" placeholder="ex. Makati City">
+                            <input type="text" class="form-control" name="municipality" id="municipality" placeholder="ex. Makati City" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>
@@ -390,7 +392,8 @@ include 'includes/header.php';
                 }
                 ?>
             </table>
-            <input id="add-subject-btn" <?= $_SESSION['subj-af'] ?> class="btn btn-sm btn-success" data-toggle="modal" data-target="#subject-modal" value="Add Subject Option" />
+            <input id="add-subject-btn" <?php //$_SESSION['subj-af'] 
+                                        ?> class="btn btn-sm btn-success" data-toggle="modal" data-target="#subject-modal" value="Add Subject Option" />
         </div><!-- End of col-sm my-4-->
 
 
