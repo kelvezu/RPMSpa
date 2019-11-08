@@ -30,18 +30,18 @@ if (isset($_GET['edit'])) {
                     <div class="col-sm-6">
                         <input type="hidden" name="rubric_id" value="<?php echo $rubric_id; ?>" />
                         <label for="level" class="control-label"><strong>Rubric Level</strong></label>
-                        <input type="number" name="rubric_lvl" id="rubric-lvl" class="form-control" width="500" value="<?php echo $rubric_lvl; ?>" placeholder="Enter the rubric level...">
+                        <input type="number" name="rubric_lvl" id="rubric-lvl" class="form-control" width="500" value="<?php echo $rubric_lvl; ?>" placeholder="Enter the rubric level..." required pattern="[0-9]" title="Input number only">
                     </div>
 
                     <div class="col-sm-6">
                         <label for="level-name" class="control-label"><strong>Level Name</strong></label>
-                        <input type="text" name="level_name" id=level-name" class="form-control" width="500" value="<?php echo $level_name; ?>" placeholder="Enter the Level Name..." />
+                        <input type="text" name="level_name" id="level-name" class="form-control" width="500" value="<?php echo $level_name; ?>" placeholder="Enter the Level Name..." required pattern="[A-Za-z]{3,}" title="Input three or more characters and input should not include numbers and special characters" />
                     </div>
                 </div>
 
                 <div>
                     <label for="description" class="control-label w-25 "><strong>Description</strong></label>
-                    <textarea name="rubric_description" id="policy-content" cols="5" rows="5" class="form-control" value="" placeholder="Enter the description..."><?php echo $rubric_description ?></textarea>
+                    <textarea name="rubric_description" id="policy-content" cols="5" rows="5" class="form-control" value="" placeholder="Enter the description..." required><?php echo $rubric_description ?></textarea>
                 </div>
                 <div class="row">
 

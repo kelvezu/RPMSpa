@@ -81,13 +81,13 @@ if (isset($_GET['edit'])) {
                 <div class="row">
                     <div class="col-lg">
                         <label for="main-mov" class="col-form-label"><strong>Main MOV</strong></label>
-                        <textarea name="main_mov" id="main-mov" cols="3" rows="3" class="form-control" placeholder="Enter the main mov..."><?php echo $main_mov; ?></textarea>
+                        <input type="text" name="main_mov" id="main-mov" class="form-control" placeholder="Enter the main mov..." value="<?php echo $main_mov; ?>" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg">
                         <label for="supp-mov" class="col-form-label"><strong>Supporting MOV</strong></label>
-                        <textarea name="supp_mov" id="supp-mov" cols="3" rows="3" class="form-control" placeholder="Enter the supporting mov..."><?php echo $supp_mov; ?></textarea>
+                        <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." value="<?php echo $supp_mov; ?>" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                     </div>
                 </div>
                 <div class="m-2">

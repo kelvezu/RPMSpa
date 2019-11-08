@@ -27,12 +27,12 @@ if (isset($_GET['edit'])) {
 
                     <div class="form-group-sm">
                         <label for="indicator-no" class="control-label"><strong>Indicator Number</strong></label>
-                        <input type="number" name="newindicator_no" id="indicator-no" class="form-control" value="<?php echo $indicator_no; ?>" width="500">
+                        <input type="number" name="newindicator_no" id="indicator-no" class="form-control" value="<?php echo $indicator_no; ?>" width="500" required pattern="[0-9]" title="Input number only">
                     </div>
                 </div>
                 <div>
                     <label for="indicator-name" class="control-label w-25 "><strong>Indicator Name</strong></label>
-                    <textarea name="newindicator_name" value="" id="indicator-name" cols="5" rows="5" class="form-control"><?php echo $indicator_name; ?></textarea>
+                    <textarea name="newindicator_name" id="indicator-name" class="form-control" required><?php echo $indicator_name; ?></textarea>
                 </div>
                 <div>
                     <label for="obs" class="control-label w-25 "><strong>Observation Period</strong></label>

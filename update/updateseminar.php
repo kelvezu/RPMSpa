@@ -40,7 +40,7 @@ if (isset($_GET['edit'])) {
                     <div class="row">
                         <div class="col-lg">
                             <label for="sem-name" class="col-form-label"><strong>Seminar Name</strong></label>
-                            <textarea name="seminar_name" id="sem-name" cols="5" rows="5" class="form-control" placeholder="Enter the seminar name..."><?php echo $seminar_name; ?></textarea>
+                            <textarea name="seminar_name" id="sem-name" cols="5" rows="5" class="form-control" placeholder="Enter the seminar name..." required><?php echo $seminar_name; ?></textarea>
                         </div>
                     </div>
                     <div class="m-2"><br>

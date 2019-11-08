@@ -27,7 +27,7 @@ if (isset($_GET['edit'])) {
                 </div>
                 <div>
                     <label for="policy-content" class="control-label "><strong>Policy content</strong></label>
-                    <textarea name="policy_content" id="policy-content" cols="30" rows="5" class="form-control" required pattern="{3,}" title="Input three or more characters"><?php echo $policy_content; ?></textarea>
+                    <textarea name="policy_content" id="policy-content" cols="30" rows="5" class="form-control" required><?php echo $policy_content; ?></textarea>
                 </div>
                 <div class="row">
                     <button type="submit" class="btn btn-secondary  my-4" name="update">Update</button>&nbsp

@@ -88,19 +88,19 @@ if (isset($_GET['edit'])) {
             <div class="row">
                 <div class="col-lg">
                     <label for="lvl-no" class="control-label w-25 "><strong>Level No</strong></label>
-                    <input type="number" name="level_no" class="form-control" value="<?php echo $level_no; ?>">
+                    <input type="number" name="level_no" class="form-control" value="<?php echo $level_no; ?>" required pattern="[0-9]" title="Input number only">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg">
                     <label for="indicator-name" class="control-label w-25 "><strong>Indicator Name</strong></label>
-                    <textarea name="indicator_name" id="indicator-name" cols="5" rows="5" class="form-control" placeholder="Enter the indicator name..."><?php echo $indicator_name; ?></textarea>
+                    <textarea name="indicator_name" id="indicator-name" cols="5" rows="5" class="form-control" placeholder="Enter the indicator name..." required><?php echo $indicator_name; ?></textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg">
                     <label for="desc" class="control-label w-25 "><strong>Indicator Description</strong></label>
-                    <textarea name="desc_name" id="desc" cols="5" rows="5" class="form-control" placeholder="Enter the indicator description..."><?php echo $desc_name; ?></textarea>
+                    <textarea name="desc_name" id="desc" cols="5" rows="5" class="form-control" placeholder="Enter the indicator description..." required><?php echo $desc_name; ?></textarea>
                 </div>
             </div>
 

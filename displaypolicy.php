@@ -22,7 +22,7 @@ include 'includes/header.php';
                     </div>
                     <div>
                         <label for="content" class="control-label w-25 "><strong>Policy Content</strong></label>
-                        <textarea name="policycontent" id="policy-content" cols="5" rows="5" class="form-control" value="" placeholder="Enter the Policy Content..." required pattern="{3,}" title="Input three or more characters"></textarea>
+                        <textarea name="policycontent" id="policy-content" cols="5" rows="5" class="form-control" value="" placeholder="Enter the Policy Content..." required></textarea>
                     </div>
                     <div class="m-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

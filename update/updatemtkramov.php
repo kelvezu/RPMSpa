@@ -61,7 +61,7 @@ if (isset($_GET['edit'])) {
                 </div>
                 <div>
                     <label for="mtobj_name" class="control-label "><strong>Objective</strong></label>
-                    <textarea name="newtobj_name" id="tobj_name" cols="30" rows="5" class="form-control"><?php echo $mtobj_name; ?></textarea>
+                    <input type="text" name="newtobj_name" id="tobj_name" class="form-control" value="<?php echo $mtobj_name; ?>" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include special characters">
                 </div>
                 <div class="row m-1">
                     <button type="submit" class="btn btn-secondary  my-4" name="updatetOBJ">Update</button>&nbsp
@@ -99,7 +99,7 @@ if (isset($_GET['editkra'])) {
                 </div>
                 <div>
                     <label for="kra_name" class="control-label "><strong>KRA Name</strong></label>
-                    <textarea name="newkra_name" id="kra_name" cols="30" rows="5" class="form-control"><?php echo $kra_name; ?></textarea>
+                    <input type="text" name="newkra_name" id="kra_name" class="form-control" value="<?php echo $kra_name; ?>" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include special characters">
                 </div>
                 <div class="row m-1">
                     <button type="submit" class="btn btn-secondary  my-4" name="updatetKRA">Update</button>&nbsp

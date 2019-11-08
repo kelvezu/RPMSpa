@@ -65,7 +65,7 @@ if (isset($_GET['edit'])) {
                 </div>
                 <div>
                     <label for="indicator" class="control-label "><strong>Indicator</strong></label>
-                    <textarea name="indicator" id="new-indicator" cols="30" rows="5" class="form-control"><?php echo $indicator; ?></textarea>
+                    <input type="text" name="indicator" id="new-indicator" cols="30" rows="5" class="form-control" required pattern="[0-9A-Za-z -.]{3,}" title="Input three or more characters and input should not include special characters" value="<?php echo $indicator; ?>">
                 </div>
                 <div class="row m-1">
                     <button type="submit" class="btn btn-secondary  my-4" name="updateIND">Update</button>&nbsp
