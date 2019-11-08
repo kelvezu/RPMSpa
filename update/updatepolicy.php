@@ -23,11 +23,11 @@ if (isset($_GET['edit'])) {
                 <legend class="legend-control"><strong>Update Policy Description</strong></legend>
                 <div>
                     <label for="policy-title" class="control-label "><strong>Policy Title</strong></label>
-                    <input type="text" name="policy_title" id="" class="form-control" value="<?php echo $policy_title; ?>">
+                    <input type="text" name="policy_title" id="" class="form-control" value="<?php echo $policy_title; ?>" required pattern="{3,}" title="Input three or more characters">
                 </div>
                 <div>
                     <label for="policy-content" class="control-label "><strong>Policy content</strong></label>
-                    <textarea name="policy_content" id="policy-content" cols="30" rows="5" class="form-control"><?php echo $policy_content; ?></textarea>
+                    <textarea name="policy_content" id="policy-content" cols="30" rows="5" class="form-control" required pattern="{3,}" title="Input three or more characters"><?php echo $policy_content; ?></textarea>
                 </div>
                 <div class="row">
                     <button type="submit" class="btn btn-secondary  my-4" name="update">Update</button>&nbsp

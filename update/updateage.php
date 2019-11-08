@@ -20,7 +20,7 @@
 
                <div class="form-group ">
                    <label for="username">Age Option</label>
-                   <input type="text" class="form-control" id="contact" name="age_name" value="<?php echo $age_name;  ?>" />
+                   <input type="text" class="form-control" id="contact" name="age_name" value="<?php echo $age_name;  ?>" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters" />
                </div>
 
                <div class="form-row">

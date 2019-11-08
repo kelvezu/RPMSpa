@@ -21,7 +21,7 @@
 
                 <div class="form-group ">
                     <label for="username">Subject Option</label>
-                    <input type="text" class="form-control" id="contact" name="subject_name" value="<?php echo $subject_name;  ?>" />
+                    <input type="text" class="form-control" id="contact" name="subject_name" value="<?php echo $subject_name;  ?>" required pattern="[A-Za-z ]{4,}" title="Input four or more characters and input should not include numbers and special characters" />
                 </div>
 
                 <div class="form-row">

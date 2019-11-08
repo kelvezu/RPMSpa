@@ -54,7 +54,7 @@ if (isset($_GET['edit'])) {
 
             <div class="form-group ">
                 <label for="division">Division Option</label>
-                <input type="text" class="form-control" id="division" name="divi_name" value="<?php echo $divi_name;  ?>" />
+                <input type="text" class="form-control" id="division" name="divi_name" value="<?php echo $divi_name;  ?>" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters" />
             </div>
 
             <div class="form-row">

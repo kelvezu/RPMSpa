@@ -55,7 +55,7 @@ if (isset($_GET['edit'])) {
 
             <div class="form-group ">
                 <label for="municipality">Municipality</label>
-                <input type="text" class="form-control" id="muni_name" name="muni_name" value="<?php echo $muni_name;  ?>" />
+                <input type="text" class="form-control" id="muni_name" name="muni_name" value="<?php echo $muni_name;  ?>" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters" />
             </div>
 
             <div class="form-row">
