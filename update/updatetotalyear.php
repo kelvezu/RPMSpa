@@ -17,7 +17,7 @@ if (isset($_GET['edit'])) {
 
             <div class="form-group ">
                 <label for="totalyear">Total Year Option</label>
-                <input type="text" class="form-control" id="totalyear" name="totalyear_name" value="<?php echo $totalyear_name;  ?>" />
+                <input type="text" class="form-control" id="totalyear" name="totalyear_name" value="<?php echo $totalyear_name;  ?>" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters" />
             </div>
 
             <div class="form-row">
