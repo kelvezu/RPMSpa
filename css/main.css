@@ -382,10 +382,8 @@ table.fixed td {
 }
 
 .black-border {
-    margin: 10px 20px 30px 20px;
-    border-style: solid;
-    color: black;
-    padding: 2%;
+    border-style: solid black;
+    padding: 2px;
     font-weight: bolder;
 }
 

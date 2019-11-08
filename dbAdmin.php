@@ -1,305 +1,237 @@
-<?php include 'includes/header.php'; ?>
+<?php
 
+use RPMSdb\RPMSdb;
 
-<!-- Breadcome start-->
-<div class="breadcome-area des-none">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="breadcome-list map-mg-t-40-gl shadow-reset">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <div class="breadcome-heading">
-                                <form role="search" class="">
-                                    <input type="text" placeholder="Search..." class="form-control">
-                                    <a href=""><i class="fa fa-search"></i></a>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                            <ul class="breadcome-menu">
-                                <li><a href="#">Home</a> <span class="bread-slash">/</span>
-                                </li>
-                                <li><span class="bread-blod">Dashboard</span>
-                                </li>
-                            </ul>
-                        </div>
+include_once 'sampleheader.php'; ?>
+<!--Collapse message -->
+<div class="container mb-4">
+    <p>
+        <!-- Button for Announcement -->
+        <a id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" href="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Announcements
+        </a>
+        <!-- end btn for announcement -->
+
+        <!-- btn for notif -->
+        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#notifCollapse" aria-expanded="false" aria-controls="collapseExample">
+            Notifications
+        </button>
+        <!-- end of btn notif -->
+
+        <!-- btn for abang1 -->
+        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#abang1" aria-expanded="false" aria-controls="collapseExample">
+            Abang 1
+        </button>
+        <!-- end of btn abang1 -->
+
+        <!-- btn for abang2 -->
+        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#abang2" aria-expanded="false" aria-controls="collapseExample">
+            Abang 2
+        </button>
+        <!-- end of btn abang2 -->
+
+    </p>
+    <!-- Notification Collapse -->
+    <div class="collapse m-2 border border-dark" id="notifCollapse">
+        <div class="card">
+            <div class="card-header font-weight-bold">Notification List</div>
+            <div class="card card-body">
+                <div class="list-group">
+                    <?php
+                    if (!empty(RPMSdb::showNotif($conn))) :
+                        foreach (RPMSdb::showNotif($conn) as $notif) : ?>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1"><?= $notif['category'] ?></h5>
+                                    <small><?= displaySchool($conn, $notif['school_id']) ?></small>
+                                </div>
+                                <p class="mb-1"><?= $notif['message']  ?></p>
+                                <small>Date posted: <?= displayDate($notif['datetime_stamp']) ?></small><br>
+                            </a>
+                            <br />
+                    <?php
+                        endforeach;
+                    else : echo "<p class='font-weight-bold text-center'>No notification!</p>";
+                    endif;
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Notification List -->
+    <!-- Announcement List -->
+    <div class="collapse m-2 border border-dark" id="announcementCollapse">
+        <div class="card">
+            <div class=" card card-header font-weight-bold">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2-">Announcement List</div>
+                    <div class="p-2-"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
+                </div>
+            </div>
+            <div class=" card-body text-dark">
+                <div class="list-group">
+                    <div id='fetch-announcement'>
+                        <!-- result here -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Breadcome End-->
-<!-- welcome Project, sale area start-->
-<div class="welcome-adminpro-area">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="welcome-wrapper shadow-reset res-mg-t mg-b-30">
-                    <div class="welcome-adminpro-title">
-                        <h1><b>Welcome Admin</b></h1>
-                        <p>You have new notifications.</p>
-                    </div>
-                    <div class="pre-scrollable">
-                        <div class="adminpro-message-list">
+    <!-- End of announcement list -->
 
-                            <table class="table table-hover">
-
-                                <tr>
-                                    <th>#</th>
-                                    <th>Message</th>
-                                    <th>Date</th>
-                                </tr>
-                                <?php
-                                $no = 1;
-                                $result = $conn->query('SELECT * FROM notification_tbl WHERE `status`="Active" ORDER BY notif_id desc limit 5');
-                                while ($row = $result->fetch_assoc()) :
-                                    $category = $row['category'];
-                                    $title = $row['title'];
-                                    $message = $row['message'];
-                                    $date = $row['datetime_stamp'];
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $no; ?></td>
-                                        <td><?php echo $message; ?></td>
-                                        <td> <?php echo $date; ?></td>
-
-                                    </tr>
-                                <?php
-                                    $no++;
-                                endwhile; ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <div class="analytics-rounded-content">
-                        <h5><b>Teacher KRA Challenges</b><span class="sparklineadminpro"></span></h5>
-                        <h2>KRA 4</h2>
-                        <p>Assessment and Reporting</p>
-                        <div class="text-center">
-                            <div id="sparkline25"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <div class="analytics-rounded-content">
-                        <h5><b>Master Teacher KRA Challenges</b><span id="sparkline3"></span></h5>
-                        <h2>KRA 4</h2>
-                        <p>Assessment and Reporting</p>
-                        <div class="text-center">
-                            <div id="sparkline22"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <div class="analytics-rounded-content">
-                        <h4><b>School Master List</b><span id="sparkline4"></span></h4>
-                        <div class="pre-scrollable">
-                            <div class="adminpro-message-list">
-
-                                <table class="table table-hover">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>School Name</th>
-                                        <th>No. of Teacher</th>
-
-                                    </tr>
-                                    <?php
-                                    $no = 1;
-                                    $result = $conn->query('SELECT a.school_id,a.school_name, count(distinct b.user_id) as x FROM school_tbl a inner join account_tbl b on a.school_id = b.school_id where b.position like "Teacher%" or b.position like "Master Teacher%" and status="Active" group by a.school_name');
-                                    while ($row = $result->fetch_assoc()) :
-                                        $school_name = $row['school_id'];
-                                        $school_name = $row['school_name'];
-                                        $count = $row['x'];
-
-
-                                        ?>
-                                        <tr>
-                                            <td><?php echo $no; ?></td>
-                                            <td><a href="dbAdminView.php?view=<?php echo $row['school_id']; ?>"><?php echo $school_name; ?> </a></td>
-                                            <td><?php echo $count; ?></td>
-
-                                        </tr>
-                                    <?php
-                                        $no++;
-                                    endwhile; ?>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
+    <!-- Start of Abang 1 -->
+    <div class="collapse m-2 border border-dark" id="abang1">
+        <div class="card">
+            <div class=" card card-header font-weight-bold">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2-">Abang Result</div>
                 </div>
             </div>
-
-            <div class="col-lg-4">
-                <div class="dashboard-line-chart shadow-reset mg-b-30">
-                    <h4><b>Teacher IPCRF Summary Rating</b> <span class="bar">5,3,9,6,5,9,7,3,5,2</span></h4><br><br>
-                    <div class="text-center">
-                        <div id="sparkline24">
-                        </div>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <h4><b> Master Teacher IPCRF Summary Rating</b> <span class="bar">5,3,9,6,5,8,7,3,5,2</span></h4> <br><br>
-                    <div class="text-center">
-                        <div id="sparkline23">
-                        </div>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <h4><b> ESAT Progress</b><span class="bar">5,3,9,6,5,9,7,3,5,2</span></h4>
-                    <div class="text-center">
-                    <?php include 'includes/drawchart.php'; ?>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <div class="analytics-rounded-content">
-                        <h4><b>School With ESAT</b><span id="sparkline4"></span></h4>
-                        <div class="pre-scrollable">
-                            <div class="adminpro-message-list">
-
-                                <table class="table table-hover">
-                                        <tr>
-
-                                            <th>No.</th>
-                                            <th>School Name</th>
-                                            <th># of Teacher</th>
-                                            <th>With ESAT</th>
-                                            <th>S_Y</th>
-
-
-                                        </tr>
-                                        <?php
-                                        $no=1;
-                                        $result = $conn->query('SELECT * FROM tbl_rptwithesat');
-                                        while ($row = $result->fetch_assoc()) :
-                                            $school_id = $row['school_id'];
-                                            $school_name = $row['school_name'];
-                                            $Total_Teacher = $row['Total_Teacher'];
-                                            $With_ESAT = $row['With_ESAT'];
-                                            $School_Year = $row['School_Year'];
-                                            
-    
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $no; ?></td>
-                                                <td><?php echo $school_name; ?></td>
-                                                <td><?php echo $Total_Teacher; ?></td>
-                                                <td><?php echo $With_ESAT; ?></td>
-                                                <td><?php echo $School_Year; ?></td>
-
-
-                                            </tr>
-                                        <?php
-                                            $no++;
-                                        endwhile; ?>
-                                    </table>
-
-                           </div>                
-                        </div>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <h4><b> IPCRF Progress </b><span class="bar">5,3,9,6,5,8,7,3,5,2</span></h4>
-                    <div class="text-center">
-                        <div id="sparkline54">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-lg-4">
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <div class="dash-adminpro-project-title">
-                        <h4><b>Teacher Ranking Summary </b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span>&nbsp;&nbsp;&nbsp;<a href="#">View</a></h4>
-                    </div>
-                    <div class="sparkline9-graph">
-                        <div class="static-table-list">
-                            <table class="table sparkle-table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Rating</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Madelene Guerra</td>
-                                        <td>Teacher I</td>
-                                        <td> 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Rose Tan</td>
-                                        <td>Teacher III</td>
-                                        <td> 5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Rafael Chavez</td>
-                                        <td>Teacher II</td>
-                                        <td> 5</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <div class="dash-adminpro-project-title">
-                        <h4><b>Master Teacher Ranking Summary </b><span class="bar">5,3,2,-1,-3,-2,2,3,5,2</span> &nbsp;&nbsp;&nbsp;<a href="#">View</a></h4>
-                    </div>
-                    <div class="sparkline9-graph">
-                        <div class="static-table-list">
-                            <table class="table sparkle-table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Rating</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Archie Salas</td>
-                                        <td>Master Teacher I</td>
-                                        <td> 7</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Raymond Cunanan</td>
-                                        <td>Master Teacher III</td>
-                                        <td> 7</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Marlon Gelito</td>
-                                        <td>Master Teacher II</td>
-                                        <td> 7</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <h3><b>Recommended Seminar</b></h3> <br>
-                    <div class="dashone-adminprowrap shadow-reset mg-b-30 text-center">
-                        <h4>International Seminar Workshop on Special Education (SPEd) <br>
-                            Theme: The Changing Landscape of Special Education Worldwide: Its Impact on the Current Practices in the K to 12 Program
-                        </h4>
+            <div class=" card-body text-dark">
+                <div class="list-group">
+                    <div id='data-sample'>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, eos dicta labore laborum eaque amet qui ex temporibus quidem tempora quod earum molestias possimus expedita perspiciatis officiis doloribus aut voluptate deserunt enim placeat assumenda beatae excepturi? Inventore perferendis earum neque facilis odio illo explicabo nam ullam. Dolorem eligendi, eveniet eos cumque quisquam maxime minus natus voluptas alias amet aliquam dolor officia ad culpa velit consequatur. Tenetur ad blanditiis culpa magnam nihil quo rem. Distinctio non voluptates quisquam illum nisi blanditiis obcaecati molestias, nihil ad amet dicta ut, perferendis eum odit, exercitationem adipisci eos voluptate facilis! Quas alias mollitia ipsam autem?</p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- End of Abang 1 -->
 
-        <?php include 'includes/footer.php'; ?>
+    <!-- Start of Abang 2 -->
+    <div class="collapse m-2 border border-dark" id="abang2">
+        <div class="card">
+            <div class=" card card-header font-weight-bold">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2-">Abang Result 2</div>
+                </div>
+            </div>
+            <div class=" card-body text-dark">
+                <div class="list-group">
+                    <div id='data-sample'>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, eos dicta labore laborum eaque amet qui ex temporibus quidem tempora quod earum molestias possimus expedita perspiciatis officiis doloribus aut voluptate deserunt enim placeat assumenda beatae excepturi? Inventore perferendis earum neque facilis odio illo explicabo nam ullam. Dolorem eligendi, eveniet eos cumque quisquam maxime minus natus voluptas alias amet aliquam dolor officia ad culpa velit consequatur. Tenetur ad blanditiis culpa magnam nihil quo rem. Distinctio non voluptates quisquam illum nisi blanditiis obcaecati molestias, nihil ad amet dicta ut, perferendis eum odit, exercitationem adipisci eos voluptate facilis! Quas alias mollitia ipsam autem?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Abang 2 -->
+
+
+</div>
+<!-- End of collapse container -->
+
+
+
+
+<!-- Main Container -->
+<div class="container-fluid">
+
+    <div class="row">
+        <!-- First row -->
+        <div class="col black-border">
+            <!-- First column -->
+            <!-- Total of Active Teachers -->
+            <div class="col mb-3">
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h6>Total of Active Teachers</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <table class=" table table-sm table-responsive-sm table-hover ">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>School Name</th>
+                                    <th>T</th>
+                                    <th>MT</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $num = 1;
+                                $t_total = RPMSdb::totalTeacherPerSchool($conn);
+                                foreach ($t_total as $sch_t) :
+                                    if (!empty($sch_t['school_id']) and $sch_t['T'] || $sch_t['MT']) : ?>
+                                        <td><?= $num++ ?></td>
+                                        <td><?= displaySchool($conn, $sch_t['school_id']); ?></td>
+                                        <td class="font-weight-bold text-success"><?= $sch_t['T'] ?></td>
+                                        <td class="font-weight-bold text-primary"><?= $sch_t['MT'] ?></td>
+                                        <td class="font-weight-bold"><?= $sch_t['T'] + $sch_t['MT']  ?></td>
+                                    <?php endif ?>
+                            </tbody>
+
+                        <?php endforeach; ?>
+                        <tfoot class="bg-light font-weight-bold">
+                            <tr>
+                                <td class=" text-right" colspan="2">Total:</td>
+                                <td> <?= RPMSdb::totalTOnlyCount($conn)["Total"] ?></td>
+                                <td> <?= RPMSdb::totalMTOnlyCount($conn)["Total"] ?></td>
+                                <td><?= RPMSdb::totalTeachersCount($conn)["Total"] ?></td>
+
+                            </tr>
+                        </tfoot>
+                        </table>
+                    </div>
+                    <!-- end of card-body -->
+                </div>
+                <!-- end of card -->
+            </div>
+            <!-- Total of Active Teachers -->
+            <!-- End of First Column -->
+        </div>
+
+
+
+        <div class="col-sm-4  black-border text-danger">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
+        </div>
+
+        <div class="col text-warning black-border">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
+        </div>
+
+
+    </div>
+    <!-- End of First Row -->
+
+    <!-- Second Row -->
+    <div class="row">
+        <!-- 1st column of 2nd row -->
+        <div class="col-4 text-primary black-border">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro tenetur ducimus, corrupti sunt vel corporis voluptates provident obcaecati soluta? Rerum, id similique veniam dignissimos sit eveniet facilis modi sint voluptates error nisi nesciunt nostrum commodi aut optio, accusamus laboriosam necessitatibus reprehenderit exercitationem recusandae rem repellendus natus alias? Perspiciatis, expedita excepturi!
+        </div>
+        <!-- End of 1st column of 2nd row  -->
+
+        <!--  2nd column of 2nd row -->
+        <div class="col text-secondary black-border">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam dicta, atque aperiam distinctio vel voluptas aliquid neque. Maxime tenetur iure labore placeat sunt sequi quis provident iusto nesciunt obcaecati sint sed eum magnam fugiat est minus dolore animi, esse eaque voluptatum ullam id vel aliquid necessitatibus? Tenetur cum dicta animi sapiente explicabo doloremque, sint vel ut aut laboriosam voluptatum nihil tempora cumque aspernatur praesentium distinctio expedita repudiandae exercitationem beatae. Voluptates non aspernatur quasi repellat facilis consequuntur unde debitis iste repudiandae similique esse cupiditate, nulla dolores vitae voluptatem veritatis vel, molestiae reiciendis error officiis dolorem soluta? Ipsa nesciunt accusamus alias eum.
+        </div>
+        <!-- End of 2nd column of 2nd row   -->
+    </div>
+    <!-- End of Second Row -->
+
+    <div class="row">
+        <div class="col text-success black-border">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque praesentium incidunt nostrum accusamus, reiciendis eveniet libero eius iste possimus, sit dolorem voluptatum fugiat delectus quo! Numquam reiciendis a totam, molestiae quas reprehenderit facilis tempora odit ipsa fuga et in ab excepturi vitae qui explicabo amet quis rem. Repudiandae, pariatur eligendi sunt esse impedit unde aliquam id nam sint placeat mollitia natus. Et eius totam sequi veritatis alias quos error, sapiente reiciendis saepe minima quidem magni natus eligendi nobis. At similique perferendis, iure quasi et nobis minima. Molestias nobis amet aperiam, nostrum, inventore quasi ab alias iusto ipsa maxime cum dolores?
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+<!-- End of main container -->
+
+<?php include_once 'samplefooter.php' ?>

@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 const annBtnShow = document.getElementById('ann-btnshow');
 const annBtnPost = document.getElementById('ann-btnpost');
 const annBtnUpdate = document.getElementById('ann-btnupdate');
+
 let showNotif = document.getElementById('show-notif');
 let fetch_announce = document.getElementById('fetch-announcement');
 let announcement_form = document.getElementById('add_announcement_form');
@@ -55,14 +56,16 @@ function postAnn(e) {
     console.log(xhr.statusText);
     xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
 
-    xhr.onload = function(){
-        
+    xhr.onload = function () {
+
     }
     try {
         xhr.send(params);
         showNotif.style.display = "block";
         showNotif.innerHTML = "New Announcement has been added!";
-        setInterval(function(){showNotif.style.display = "none"} ,3000);
+        setInterval(function () {
+            showNotif.style.display = "none"
+        }, 3000);
         document.getElementById('subject').value = '';
         document.getElementById('title').value = '';
         document.getElementById('message').value = '';
@@ -70,7 +73,7 @@ function postAnn(e) {
         console.log(error)
     }
 
-    setInt = setInterval(fetchAnnouncement(),1000);
+    setInt = setInterval(fetchAnnouncement(), 1000);
     clearInterval(setInt);
 
 }
@@ -80,15 +83,15 @@ function fetchAnnouncement() {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', 'ajax/announcement_ajax.php', true);
     xhr.onload = function () {
-        console.log('Fetch_Ann_status: '+this.statusText);
+        console.log('Fetch_Ann_status: ' + this.statusText);
+        console.log(this.responseText);
         let results = JSON.parse(this.responseText);
         let output = '';
-
-        try {
-            if (results) {
-                results.forEach(function (result) {
-                    output +=
-                        `<div class="card border border-dark">
+        // try {
+        if (results) {
+            results.forEach(function (result) {
+                output +=
+                    `<div class="card border border-dark">
                          <div class="card-header">
                          <div class="d-flex">
                             <div class="px-2 bd-highlight"><p><b>Subject: </b> ${result.subject}</p></div>
@@ -108,24 +111,23 @@ function fetchAnnouncement() {
                          <div class="card-body">${result.message}</div>
                          <div class="card-footer"><p><b>Date Posted:</b> ${new Date(result.datetime_stamp)}</p></div>
                          </div>'<br/>`
-                });
+            });
 
 
-                document.getElementById('fetch-announcement').innerHTML = output;
-            } else {
-                document.getElementById('fetch-announcement').innerHTML = 'No Result';
-            }
-
-        } catch (error) {
-            console.log(error)
+            document.getElementById('fetch-announcement').innerHTML = output;
+        } else {
+            document.getElementById('fetch-announcement').innerHTML = 'No Result';
         }
+
+        // } catch (error) {
+        //     console.log(error)
+        // }
     }
     xhr.send();
 }
 
 // function updateAnnouncement() {
-  
+
 //        console.log('na click');
 
 // }
-
