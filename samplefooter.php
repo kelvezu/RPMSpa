@@ -60,47 +60,7 @@
 </div>
 <!-- End of Add Announcement Modal -->
 
-<!-- Update Announcement Modal -->
-<div class="modal fade" id="updateAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Update Announcement</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <p id="show-notif" class="green-notif-border"></p>
-                <form method="post" id="update_announcement_form">
-                    <input type="hidden" id="user_id" value="<?= $_SESSION['user_id'] ?>" />
-                    <input type="hidden" id="sy" value="<?= $_SESSION['active_sy_id'] ?>" />
-                    <input type="hidden" id="position" value="<?= $_SESSION['position'] ?>" />
-                    <input type="hidden" id="school" value="<?= $_SESSION['school_id'] ?>" />
-                    <div class="form-group-sm">
-                        <label for="subject" class="col-form-label">Subject:</label>
-                        <input type="text" class="form-control" id="update-subject">
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="title" class="col-form-label">Title:</label>
-                        <input type="text" class="form-control" id="update-title">
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="message" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="update-message"></textarea>
-                    </div>
-     
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-           </form>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- End of Update Announcement Modal -->
 
 
 <footer class="fixed-bottom bg-dark text-white">

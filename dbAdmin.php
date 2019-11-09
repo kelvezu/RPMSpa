@@ -7,9 +7,9 @@ include_once 'sampleheader.php'; ?>
 <div class="container mb-4">
     <p>
         <!-- Button for Announcement -->
-        <a id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" href="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <button id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
             Announcements
-        </a>
+        </button>
         <!-- end btn for announcement -->
 
         <!-- btn for notif -->
@@ -123,18 +123,19 @@ include_once 'sampleheader.php'; ?>
 
 
 
-
+<!-- Adding BORDERS to determine the width and height of each div -->
 <!-- Main Container -->
 <div class="container-fluid">
 
     <div class="row">
         <!-- First row -->
-        <div class="col black-border">
+
+        <div class="col">
             <!-- First column -->
             <!-- Total of Active Teachers -->
-            <div class="col mb-3">
+            <div class="col">
                 <!-- Card -->
-                <div class="card">
+                <div class="card border border-dark">
                     <div class="card-header">
                         <h6>Total of Active Teachers</h6>
                     </div>
@@ -185,12 +186,13 @@ include_once 'sampleheader.php'; ?>
         </div>
 
 
-
-        <div class="col-sm-4  black-border text-danger">
+        <!-- 1st row 2nd column -->
+        <div class="col-4  black-border text-danger">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
         </div>
+        <!-- end  1st row 2nd column-->
 
-        <div class="col text-warning black-border">
+        <div class="col black-border text-warning ">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
         </div>
 
