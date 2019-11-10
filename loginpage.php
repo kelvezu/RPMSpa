@@ -79,10 +79,17 @@
           </div>
 
           <div class="row align-items-center justify-content-center my-2">
-            <a href="requestreset.php" class="text-primary text-decoration-none">Forgot Password?</a>
+            <a href="index.php" class="text-primary text-decoration-none">Forgot Password?</a>
           </div>
         </form>
 
+        <?php
+        if (isset($_GET["newpwd"])) {
+          if ($_GET["newpwd"] == "passwordupdated") {
+            echo '<p>Your password has been reset!</p>';
+          }
+        }
+        ?>
 
       </div>
       <div class="card-footer text-muted bg-dark">
