@@ -12,7 +12,7 @@ $user_id = $_SESSION['user_id'];
 <?php
 $connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
 $query = "SELECT a.CBC_NAME,sum(b.cbc_score) 
-			AS cbc_score FROM core_behavioralt_tbl a 
+			AS cbc_score FROM core_behavioral_tbl a 
 			INNER JOIN 
 			esat3_core_behavioralt_tbl b  on a.cbc_id = b.cbc_id 
 			WHERE b.user_id = $user_id 
