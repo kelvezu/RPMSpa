@@ -496,4 +496,21 @@ class RPMSdb
             return false;
         endif;
     }
+
+    public static function displayAnnouncement($conn, $id)
+    {
+        $notif_arr = [];
+
+        $qry = 'SELECT * FROM announcement_tbl WHERE `status` = "Active"  AND id = "' . $id . '" ORDER BY id desc LIMIT 6';
+        $result = mysqli_query($conn, $qry);
+
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($notif_arr, $res);
+            endforeach;
+            return $notif_arr;
+        else :
+            return false;
+        endif;
+    }
 }

@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 // Variable Declaration
 const annBtnShow = document.getElementById('ann-btnshow');
 const annBtnPost = document.getElementById('ann-btnpost');
-const annBtnUpdate = document.getElementById('ann-btnupdate');
+// const annBtnUpdate = document.getElementById('ann-btnupdate');
 
 let showNotif = document.getElementById('show-notif');
 let fetch_announce = document.getElementById('fetch-announcement');
@@ -22,6 +22,9 @@ let announcement_form = document.getElementById('add_announcement_form');
 showNotif.style.display = "none";
 announcement_form.addEventListener('submit', postAnn);
 annBtnShow.click(fetchAnnouncement());
+// annBtnUpdate.click(sayHi());
+
+
 
 
 
@@ -81,53 +84,29 @@ function postAnn(e) {
 function fetchAnnouncement() {
 
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'ajax/announcement_ajax.php', true);
+    xhr.open('GET', 'ajax/announcement_ajax.php');
     xhr.onload = function () {
         console.log('Fetch_Ann_status: ' + this.statusText);
-        console.log(this.responseText);
-        let results = JSON.parse(this.responseText);
-        let output = '';
-        // try {
+        let results = this.responseText;
         if (results) {
-            results.forEach(function (result) {
-                output +=
-                    `<div class="card border border-dark">
-                         <div class="card-header">
-                         <div class="d-flex">
-                            <div class="px-2 bd-highlight"><p><b>Subject: </b> ${result.subject}</p></div>
-                            <div class="px-2 bd-highlight"><p><b>Title: </b>${result.title}</p></div>
-                            <div class="ml-auto px-2">
-                            <div class="row">
-                            <div class="px-2"> 
-                                <input type="button" id="ann-btnupdate" class="btn btn-info btn-sm" data-ann-id="${result.id}"  data-target="#updateAnnouncementModal" value="Update"/>
-                            </div>
-                            <div  class="px-2">
-                                <button class="btn btn-danger btn-sm" data-ann-id="${result.id}">Remove</button>
-                            </div>                          
-                            </div>
-                            </div>
-                        </div>
-                       </div>
-                         <div class="card-body">${result.message}</div>
-                         <div class="card-footer"><p><b>Date Posted:</b> ${new Date(result.datetime_stamp)}</p></div>
-                         </div>'<br/>`
-            });
-
-
-            document.getElementById('fetch-announcement').innerHTML = output;
+            setTimeout(document.getElementById('fetch-announcement').innerHTML = results, 1000);
         } else {
             document.getElementById('fetch-announcement').innerHTML = 'No Result';
         }
-
-        // } catch (error) {
-        //     console.log(error)
-        // }
     }
     xhr.send();
 }
 
-// function updateAnnouncement() {
 
-//        console.log('na click');
 
-// }
+function updateAnnouncement() {
+    // let updateAnnModal = document.getElementById('updateAnnouncementModal');
+    let dataTarget = data - target;
+    let updateAppBtn = document.getElementById('ann-btnupdate');
+    let updateDataId = updateAppBtn.getAttribute("data-target");
+    // console.log(updateAppBtn.getAttribute("data-target"))
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'ajax/updateAnnouncement_ajax.php?ann_id=' + updateDataId, true);
+    console.log(xhr.responseText);
+    xhr.send();
+}
