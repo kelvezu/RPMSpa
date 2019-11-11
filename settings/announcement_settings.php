@@ -25,8 +25,6 @@ $result = RPMSdb::showAllAnnouncement($conn);
 				<div class="card-header">
 
 					<div class="d-flex flex-row">
-
-
 						<div class="pl-2">
 							<div>
 								<p><b>Subject:</b> <?= $subject ?></p>
