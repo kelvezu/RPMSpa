@@ -1,5 +1,7 @@
 <?php
 include 'conn.inc.php';
+include '../libraries/func.lib.php';
+
 if (isset($_POST['user_id'])) :
     $user_id = $_POST['user_id'];
     $sy = $_POST['sy'];
@@ -17,5 +19,15 @@ if (isset($_POST['user_id'])) :
     if (!$result) :
         return false;
     endif;
+endif;
 
+if (isset($_POST['upd_id'])) :
+    $id = $_POST['upd_id'];
+    $upd_subj = $_POST['subject'];
+    $upd_title = $_POST['title'];
+    $upd_message = $_POST['message'];
+
+    $qry = "UPDATE `announcement_tbl` SET subject = '$upd_subj', `title`= '$upd_title', `message` = '$upd_message' WHERE id = '$id' ";
+    $sql_conn = mysqli_query($conn, $qry) or die($conn->error);
+   
 endif;

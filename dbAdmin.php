@@ -60,12 +60,21 @@ include_once 'sampleheader.php'; ?>
     </div>
     <!-- End of Notification List -->
     <!-- Announcement List -->
+
     <div class="collapse m-2 border border-dark" id="announcementCollapse">
         <div class="card">
             <div class=" card card-header font-weight-bold">
                 <div class="d-flex justify-content-between">
                     <div class="p-2-">Announcement List</div>
-                    <div class="p-2-"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
+                    <div class="row">
+                        <div class="p-2"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
+
+                        <div class="p-2">
+                            <a href="settings/announcement_settings.php" class="btn btn-sm btn-primary">Manage Settings</a>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
             <div class=" card-body text-dark">

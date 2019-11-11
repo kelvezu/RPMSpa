@@ -480,13 +480,28 @@ class RPMSdb
         endif;
     }
 
-    public static function showAnnouncement($conn)
+    public static function showAnnouncement($conn, $sy, $limit = 6)
     {
         $notif_arr = [];
 
-        $qry = 'SELECT * FROM announcement_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id desc LIMIT 6';
+        $qry = "SELECT * FROM announcement_tbl WHERE `status` = 'Active' AND sy_id =  $sy ORDER BY id desc LIMIT $limit";
         $result = mysqli_query($conn, $qry);
 
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($notif_arr, $res);
+            endforeach;
+            return $notif_arr;
+        else :
+            return false;
+        endif;
+    }
+
+    public static function showAllAnnouncement($conn)
+    {
+        $notif_arr = [];
+        $qry = "SELECT * FROM announcement_tbl ORDER BY id desc";
+        $result = mysqli_query($conn, $qry);
         if ($result) :
             foreach ($result as $res) :
                 array_push($notif_arr, $res);

@@ -9,8 +9,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // }, 60000);
 });
 // Variable Declaration
+
+/* Announcement Update Butoon*/
+// const updateNotifAnn = document.getElementById('update_notif_ann');
+// const updateFormAnn = document.getElementById('update_form_ann');
 const annBtnShow = document.getElementById('ann-btnshow');
 const annBtnPost = document.getElementById('ann-btnpost');
+// const updateAnnBtn = document.getElementById('update-btn-ann');
+
+/* ----------------------------------------------------  */
+
 // const annBtnUpdate = document.getElementById('ann-btnupdate');
 
 let showNotif = document.getElementById('show-notif');
@@ -19,10 +27,19 @@ let announcement_form = document.getElementById('add_announcement_form');
 
 
 // Event Listener
-showNotif.style.display = "none";
-announcement_form.addEventListener('submit', postAnn);
-annBtnShow.click(fetchAnnouncement());
-// annBtnUpdate.click(sayHi());
+
+// updateAnnBtn.addEventListener('click',updateAnnouncement);
+// updateNotifAnn.style.display = "none";
+
+    showNotif.style.display = "none";
+
+
+    announcement_form.addEventListener('submit', postAnn);
+
+    annBtnShow.click(fetchAnnouncement());
+
+
+
 
 
 
@@ -60,7 +77,6 @@ function postAnn(e) {
     xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
 
     xhr.onload = function () {
-
     }
     try {
         xhr.send(params);
@@ -96,17 +112,31 @@ function fetchAnnouncement() {
     }
     xhr.send();
 }
+// UPDATE ANNOUNCEMENT
+
+// function updateAnnouncement(e){
+
+//     e.preventDefault();
+//     let id = document.getElementById('ann_id').value;
+//     let subject = document.getElementById('subject').value;
+//     let title = document.getElementById('title').value;
+//     let message = document.getElementById('message').value;
+//     let params = `ann_id=${id}&subject=${subject}&title=${title}&message=${message}`;
+
+//     const xhr = new XMLHttpRequest();
+//     xhr.open('POST','../includes/processannouncement.php',true);
+//     xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+//     xhr.onload = function(){
+//         console.log(this.statusText);
+//         console.log(this.responseText);
+//     }
+//     xhr.send(params);
+// }
 
 
 
-function updateAnnouncement() {
-    // let updateAnnModal = document.getElementById('updateAnnouncementModal');
-    let dataTarget = data - target;
-    let updateAppBtn = document.getElementById('ann-btnupdate');
-    let updateDataId = updateAppBtn.getAttribute("data-target");
-    // console.log(updateAppBtn.getAttribute("data-target"))
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'ajax/updateAnnouncement_ajax.php?ann_id=' + updateDataId, true);
-    console.log(xhr.responseText);
-    xhr.send();
-}
+
+// function updateAnnouncement() {
+
+
+// }
