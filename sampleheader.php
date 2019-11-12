@@ -2,6 +2,10 @@
 <html lang="en">
 
 <?php
+
+use Dashboard\Dashboard;
+
+
 session_start();
 include_once 'includes/security.php';
 include_once 'includes/conn.inc.php';
@@ -36,15 +40,17 @@ include_once 'includes/security.php';
 
                 <a class="" data-toggle="collapse" data-target="#navBar" aria-expanded="false" aria-controls="collapseExample">
                     <i class="fa fa-bars text-light "></i>
-                    </button>
+                </a>
 
-                    <div class="collapse" id="navBar">
-                        <?= navbarView($_SESSION['position']) ?>
-                    </div>
+                <!-- NavBar Collapse -->
+                <div class="collapse" id="navBar">
+                    <?= Dashboard::navbarView() ?>
+                </div>
+                <!-- End of NavBar Collapse -->
 
             </ul>
             <div class="my-2 my-md-0">
-                <h6 class="text-white"><?= $_SESSION['position'] ?></h6>
+                <h6 class="text-white">Welcome, <?= $_SESSION['position'] ?></h6>
             </div>
             <div class="ml-2"><a class="text-decoration-none"> <i data-target="#LogoutModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
         </div>
