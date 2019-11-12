@@ -105,6 +105,6 @@
 .box {
     word-wrap: normal;
     width: auto;
-    height: 15.5em;
+    height: 250px;
     overflow: auto;
 }
