@@ -213,7 +213,7 @@ include_once 'sampleheader.php'; ?>
             <!-- Top Teacher Table -->
 
             <!-- Chart -->
-            <div id="chart_div" style="width: 700px; height: 350px;"></div>
+            <div class="box" id="chart_div" style="width: 90em; height: 30em;"></div>
             <!-- End of Chart -->
 
             <!-- End of Table -->
