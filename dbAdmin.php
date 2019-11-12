@@ -71,11 +71,11 @@ include_once 'sampleheader.php'; ?>
     <!-- End of Notification List -->
     <!-- Announcement List -->
 
-    <div class="collapse m-2 border border-dark" id="announcementCollapse">
-        <div class="card">
+    <div class="collapse " id="announcementCollapse">
+        <div class="card box">
             <div class=" card card-header font-weight-bold">
                 <div class="d-flex justify-content-between">
-                    <div class="p-2-">Announcement List</div>
+                    <div class="p-2">Announcement List</div>
                     <div class="row">
                         <div class="p-2"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
 
@@ -95,6 +95,7 @@ include_once 'sampleheader.php'; ?>
             </div>
         </div>
     </div>
+
     <!-- End of announcement list -->
 
     <!-- Start of Abang 1 -->
@@ -206,10 +207,10 @@ include_once 'sampleheader.php'; ?>
 
 
         <!-- 1st row 2nd column -->
-        <div class="col-4  black-border text-danger">
-            <div class="container overflow-auto">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae dolores accusamus consequatur, eos corrupti modi itaque assumenda recusandae corporis sit officia quae, maiores odit blanditiis voluptatem laudantium at et maxime velit molestiae minima! Saepe repudiandae, aperiam numquam dolore quae
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae fugit quibusdam voluptate autem accusamus suscipit unde quis, fugiat inventore distinctio?
+        <div class="col text-danger">
+            <div class="box">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. O
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam aliquid ipsa beatae, odio, natus amet quos ullam veniam exercitationem vitae corrupti delectus at assumenda sapiente alias dignissimos, ad perspiciatis. Minima veniam inventore voluptas praesentium et dolorum repudiandae laborum dolores nisi, tempore ipsa eos illum natus nihil odio doloremque maxime accusantium perspiciatis porro quo itaque vitae hic? Quod, debitis. Aspernatur libero iure aut deleniti praesentium necessitatibus sapiente eos! Obcaecati quasi iure mollitia itaque accusantium cumque, dolor atque. Tempora quidem error sequi corporis cumque ea voluptate, qui quis numquam culpa cum pariatur placeat eos laborum aliquam beatae blanditiis earum a amet ullam. Facere rerum, vero amet natus quos vitae quisquam voluptate repellat itaque architecto voluptatibus fugiat molestias rem laboriosam officia. Dolor nihil debitis, nulla exercitationem ipsam repellat odio molestiae! Architecto rerum eaque, similique quod voluptate pariatur cumque? Sit ad sed a tempore molestias, nam ea dicta magnam dolores, excepturi magni, temporibus est. Dignissimos, assumenda itaque fugiat neque, alias est earum corporis fuga, at vero labore. Est quas, voluptatibus facere similique doloremque ut iusto. Alias provident ipsam at in culpa perferendis ea exercitationem minus, fugiat dolorem? Possimus deleniti perferendis neque fugiat? Cupiditate blanditiis expedita iure doloremque? Ea dicta expedita quibusdam debitis animi nostrum laudantium, inventore minus dolores itaque suscipit modi cupiditate at beatae numquam temporibus qui aliquid! Facere, autem, architecto quaerat quos ullam explicabo mollitia sit blanditiis, non assumenda dolores porro. Laboriosam consequatur aspernatur sapiente ipsam modi porro accusantium officia totam omnis aliquid perferendis ipsa, illum voluptatibus fugit atque sit voluptatem cum quasi mollitia nisi suscipit nesciunt soluta? Inventore, esse? Quibusdam ea dolor excepturi, sit tenetur quo odit repudiandae porro ipsum dolorum nemo molestias esse ratione amet eius ipsa illo magnam nihil blanditiis suscipit, corrupti inventore. Temporibus, animi ipsum. Cumque iure blanditiis, atque aspernatur optio, consequuntur magni perferendis eos voluptate iste omnis vel unde, quas laudantium? Omnis nisi illo temporibus corrupti laboriosam aperiam optio hic accusantium numquam, debitis est. Ipsum molestias modi velit eligendi! Autem natus ea quisquam rerum reiciendis, amet animi numquam labore similique iste eius aliquid. Dolorum ipsum optio, consequatur iusto perferendis assumenda repellat repudiandae! Quos, est. Repellendus quo eum assumenda, animi quisquam accusantium omnis, quas sed asperiores modi velit vero possimus! Repellat obcaecati recusandae minima incidunt provident, fugit, hic excepturi, rem animi esse officia. Aperiam, ullam! Itaque reprehenderit dolor dicta voluptatibus sed natus tempore quidem earum suscipit assumenda vero, amet molestiae quibusdam, officia rerum est atque nobis veniam optio vitae omnis magni, a tempora? Explicabo eos nesciunt tenetur accusantium quam minus. Laborum obcaecati, ad laudantium distinctio quas dolorem, accusamus in earum animi iste quae a. Hic voluptatem officia qui veritatis? Commodi distinctio consequatur pariatur, dicta ullam, unde porro ipsum repellat est, velit ipsam dignissimos possimus saepe deserunt? Provident accusantium voluptatem, pariatur eligendi adipisci vel delectus, explicabo optio error perspiciatis quam. Perspiciatis necessitatibus doloremque culpa, optio quae ipsum, omnis sint assumenda quam nihil aperiam nemo molestiae pariatur temporibus numquam impedit, recusandae vero minus. Itaque temporibus rem dolor odit, quae voluptate placeat, cumque, recusandae assumenda explicabo amet nisi a vel deleniti laboriosam!
             </div>
 
         </div>
