@@ -3,15 +3,24 @@
 use \RPMSdb\RPMSdb;
 
 include 'header.php';
-
-
 $result = RPMSdb::showAllAnnouncement($conn);
 
 ?>
 
-<div><?= directToDb($_SESSION['position']) ?? 'error' ?></div>
+
 <div class="container my-5  d-flex">
+
 	<div class="col">
+		<div class="d-flex">
+			<div class="p-2 w-100">
+				<h3 class="text-secondary ">Annoucement Settings</h5>
+			</div>
+			<div class="p-2 flex-left-shrink">
+				<?= directToDb($_SESSION['position']) ?? false ?>
+			</div>
+		</div>
+
+
 		<?php foreach ($result as $res) :
 			$ann_id = $res['id'];
 			$subject = $res['subject'];
@@ -43,7 +52,7 @@ $result = RPMSdb::showAllAnnouncement($conn);
 									</div>
 									<div class="col">
 
-										<button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#removeAnnModal<?= $ann_id ?>" name="remove">Remove</button>
+										<button type="submit" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#removeAnnModal<?= $ann_id ?>" name="remove">Set to Inactive</button>
 									</div>
 								</div>
 							</div>
@@ -136,7 +145,7 @@ $result = RPMSdb::showAllAnnouncement($conn);
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<!-- action="../includes/processannouncement.php" -->
+
 						<div class="modal-body">
 							<form action="../includes/processannouncement.php" method="post">
 								<div class="form-group">
@@ -152,7 +161,6 @@ $result = RPMSdb::showAllAnnouncement($conn);
 									<label for="message-text" class="col-form-label">Message:</label>
 									<textarea class="form-control" name="message" id="message<?= $ann_id ?>"><?= $message ?></textarea>
 								</div>
-
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -187,8 +195,6 @@ $result = RPMSdb::showAllAnnouncement($conn);
 								<input type="hidden" name="del_id" value="<?= $ann_id ?>">
 								<button type="submit" name="remove" class="btn btn-danger">Confirm</button>
 							</form>
-
-
 						</div>
 					</div>
 				</div>

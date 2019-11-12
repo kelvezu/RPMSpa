@@ -33,26 +33,18 @@ include_once 'includes/security.php';
         </button>
         <div class="collapse navbar-collapse" id="navbarsExample03">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a id="home-btn" class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown03">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+
+                <a class="" data-toggle="collapse" data-target="#navBar" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fa fa-bars text-light "></i>
+                    </button>
+
+                    <div class="collapse" id="navBar">
+                        <?= navbarView($_SESSION['position']) ?>
                     </div>
-                </li>
+
             </ul>
             <div class="my-2 my-md-0">
-                <h6 class="text-white"><?= $_SESSION['fullname'] ?></h6>
+                <h6 class="text-white"><?= $_SESSION['position'] ?></h6>
             </div>
             <div class="ml-2"><a class="text-decoration-none"> <i data-target="#LogoutModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
         </div>

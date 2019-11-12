@@ -20,7 +20,6 @@ include_once '../includes/security.php';
     <link rel="shortcut icon" href="../img/favicon.ico">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../bootstrap4/font_awesome/css/all.css">
-
 </head>
 
 <body>

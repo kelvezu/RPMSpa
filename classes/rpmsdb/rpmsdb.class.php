@@ -466,10 +466,23 @@ class RPMSdb
     public static function showNotif($conn)
     {
         $notif_arr = [];
-
         $qry = 'SELECT * FROM notification_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id desc LIMIT 6';
         $result = mysqli_query($conn, $qry);
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($notif_arr, $res);
+            endforeach;
+            return $notif_arr;
+        else :
+            return false;
+        endif;
+    }
 
+    public static function showAllNotif($conn)
+    {
+        $notif_arr = [];
+        $qry = 'SELECT * FROM notification_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id';
+        $result = mysqli_query($conn, $qry);
         if ($result) :
             foreach ($result as $res) :
                 array_push($notif_arr, $res);

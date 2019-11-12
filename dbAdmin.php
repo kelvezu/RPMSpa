@@ -8,13 +8,13 @@ include_once 'sampleheader.php'; ?>
     <p>
         <!-- Button for Announcement -->
         <button id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Announcements
+            <i class=" fa fa-newspaper"></i> Announcements
         </button>
         <!-- end btn for announcement -->
 
         <!-- btn for notif -->
         <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#notifCollapse" aria-expanded="false" aria-controls="collapseExample">
-            Notifications
+            <i class=" fa fa-bell"></i> Notifications
         </button>
         <!-- end of btn notif -->
 
@@ -34,7 +34,17 @@ include_once 'sampleheader.php'; ?>
     <!-- Notification Collapse -->
     <div class="collapse m-2 border border-dark" id="notifCollapse">
         <div class="card">
-            <div class="card-header font-weight-bold">Notification List</div>
+            <div class="card-header font-weight-bold">
+                <div class="d-flex">
+                    <div class="p-2 w-100">
+                        Notification List
+                    </div>
+                    <div class="p-2 flex-shrink-1">
+                        <a href="settings/notification_settings.php" class="btn btn-sm btn-primary">View All Notifications</a>
+                    </div>
+                </div>
+
+            </div>
             <div class="card card-body">
                 <div class="list-group">
                     <?php
@@ -51,7 +61,7 @@ include_once 'sampleheader.php'; ?>
                             <br />
                     <?php
                         endforeach;
-                    else : echo "<p class='font-weight-bold text-center'>No notification!</p>";
+                    else : echo "<p class='text-danger font-weight-bold text-center'>No notification!</p>";
                     endif;
                     ?>
                 </div>
@@ -148,7 +158,7 @@ include_once 'sampleheader.php'; ?>
                         <h6>Total of Active Teachers</h6>
                     </div>
                     <!-- Card Body -->
-                    <div class="card-body">
+                    <div class="card-body overflow-auto">
                         <table class=" table table-sm table-responsive-sm table-hover ">
                             <thead class="bg-light">
                                 <tr>
@@ -184,6 +194,7 @@ include_once 'sampleheader.php'; ?>
                             </tr>
                         </tfoot>
                         </table>
+
                     </div>
                     <!-- end of card-body -->
                 </div>
@@ -196,11 +207,15 @@ include_once 'sampleheader.php'; ?>
 
         <!-- 1st row 2nd column -->
         <div class="col-4  black-border text-danger">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
+            <div class="container overflow-auto">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Beatae dolores accusamus consequatur, eos corrupti modi itaque assumenda recusandae corporis sit officia quae, maiores odit blanditiis voluptatem laudantium at et maxime velit molestiae minima! Saepe repudiandae, aperiam numquam dolore quae
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae fugit quibusdam voluptate autem accusamus suscipit unde quis, fugiat inventore distinctio?
+            </div>
+
         </div>
         <!-- end  1st row 2nd column-->
 
-        <div class="col black-border text-warning ">
+        <div class=" col black-border text-warning ">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
         </div>
 
@@ -209,7 +224,7 @@ include_once 'sampleheader.php'; ?>
     <!-- End of First Row -->
 
     <!-- Second Row -->
-    <div class="row">
+    <div class=" row">
         <!-- 1st column of 2nd row -->
         <div class="col-4 text-primary black-border">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro tenetur ducimus, corrupti sunt vel corporis voluptates provident obcaecati soluta? Rerum, id similique veniam dignissimos sit eveniet facilis modi sint voluptates error nisi nesciunt nostrum commodi aut optio, accusamus laboriosam necessitatibus reprehenderit exercitationem recusandae rem repellendus natus alias? Perspiciatis, expedita excepturi!
