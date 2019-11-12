@@ -24,16 +24,8 @@ include_once 'includes/security.php';
     <link rel="stylesheet" href="bootstrap4/b4css/main.css">
     <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/favicon.ico">
-
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
-    <style>
-        /* .box {
-            word-wrap: normal;
-            width: auto;
-            height: 15.5em;
-            overflow: auto;
-        } */
-    </style>
+
 </head>
 
 <body class="mb-5 bg-light">

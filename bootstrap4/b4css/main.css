@@ -103,7 +103,6 @@
 }
 
 .box {
-    word-wrap: normal;
     width: auto;
     height: 250px;
     overflow: auto;
