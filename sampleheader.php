@@ -26,6 +26,8 @@ include_once 'includes/security.php';
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
 
+
+
 </head>
 
 <body class="mb-5 bg-light">

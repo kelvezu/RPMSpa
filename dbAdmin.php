@@ -159,7 +159,7 @@ include_once 'sampleheader.php'; ?>
                         <h6>Total of Active Teachers</h6>
                     </div>
                     <!-- Card Body -->
-                    <div class="card-body overflow-auto">
+                    <div class="card-body">
                         <table class=" table table-sm table-responsive-sm table-hover ">
                             <thead class="bg-light">
                                 <tr>
@@ -170,12 +170,13 @@ include_once 'sampleheader.php'; ?>
                                     <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="box">
                                 <?php
+                                //  and $sch_t['T'] || $sch_t['MT']
                                 $num = 1;
                                 $t_total = RPMSdb::totalTeacherPerSchool($conn);
                                 foreach ($t_total as $sch_t) :
-                                    if (!empty($sch_t['school_id']) and $sch_t['T'] || $sch_t['MT']) : ?>
+                                    if (!empty($sch_t['school_id'])) : ?>
                                         <td><?= $num++ ?></td>
                                         <td><?= displaySchool($conn, $sch_t['school_id']); ?></td>
                                         <td class="font-weight-bold text-success"><?= $sch_t['T'] ?></td>
@@ -188,9 +189,9 @@ include_once 'sampleheader.php'; ?>
                         <tfoot class="bg-light font-weight-bold">
                             <tr>
                                 <td class=" text-right" colspan="2">Total:</td>
-                                <td> <?= RPMSdb::totalTOnlyCount($conn)["Total"] ?></td>
-                                <td> <?= RPMSdb::totalMTOnlyCount($conn)["Total"] ?></td>
-                                <td><?= RPMSdb::totalTeachersCount($conn)["Total"] ?></td>
+                                <td> <?= RPMSdb::totalTOnlyCount($conn) ?></td>
+                                <td> <?= RPMSdb::totalMTOnlyCount($conn) ?></td>
+                                <td><?= $totalCount = RPMSdb::totalTeachersCount($conn) ?></td>
 
                             </tr>
                         </tfoot>
@@ -207,17 +208,15 @@ include_once 'sampleheader.php'; ?>
 
 
         <!-- 1st row 2nd column -->
-        <div class="col text-danger">
-            <div class="box tomato-color">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. O
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam aliquid ipsa beatae, odio, natus amet quos ullam veniam exercitationem vitae corrupti delectus at assumenda sapiente alias dignissimos, ad perspiciatis. Minima veniam inventore voluptas praesentium et dolorum repudiandae laborum dolores nisi, tempore ipsa eos illum natus nihil odio doloremque maxime accusantium perspiciatis porro quo itaque vitae hic? Quod, debitis. Aspernatur libero iure aut deleniti praesentium necessitatibus sapiente eos! Obcaecati quasi iure mollitia itaque accusantium cumque, dolor atque. Tempora quidem error sequi corporis cumque ea voluptate, qui quis numquam culpa cum pariatur placeat eos laborum aliquam beatae blanditiis earum a amet ullam. Facere rerum, vero amet natus quos vitae quisquam voluptate repellat itaque architecto voluptatibus fugiat molestias rem laboriosam officia. Dolor nihil debitis, nulla exercitationem ipsam repellat odio molestiae! Architecto rerum eaque, similique quod voluptate pariatur cumque? Sit ad sed a tempore molestias, nam ea dicta magnam dolores, excepturi magni, temporibus est. Dignissimos, assumenda itaque fugiat neque, alias est earum corporis fuga, at vero labore. Est quas, voluptatibus facere similique doloremque ut iusto. Alias provident ipsam at in culpa perferendis ea exercitationem minus, fugiat dolorem? Possimus deleniti perferendis neque fugiat? Cupiditate blanditiis expedita iure doloremque? Ea dicta expedita quibusdam debitis animi nostrum laudantium, inventore minus dolores itaque suscipit modi cupiditate at beatae numquam temporibus qui aliquid! Facere, autem, architecto quaerat quos ullam explicabo mollitia sit blanditiis, non assumenda dolores porro. Laboriosam consequatur aspernatur sapiente ipsam modi porro accusantium officia totam omnis aliquid perferendis ipsa, illum voluptatibus fugit atque sit voluptatem cum quasi mollitia nisi suscipit nesciunt soluta? Inventore, esse? Quibusdam ea dolor excepturi, sit tenetur quo odit repudiandae porro ipsum dolorum nemo molestias esse ratione amet eius ipsa illo magnam nihil blanditiis suscipit, corrupti inventore. Temporibus, animi ipsum. Cumque iure blanditiis, atque aspernatur optio, consequuntur magni perferendis eos voluptate iste omnis vel unde, quas laudantium? Omnis nisi illo temporibus corrupti laboriosam aperiam optio hic accusantium numquam, debitis est. Ipsum molestias modi velit eligendi! Autem natus ea quisquam rerum reiciendis, amet animi numquam labore similique iste eius aliquid. Dolorum ipsum optio, consequatur iusto perferendis assumenda repellat repudiandae! Quos, est. Repellendus quo eum assumenda, animi quisquam accusantium omnis, quas sed asperiores modi velit vero possimus! Repellat obcaecati recusandae minima incidunt provident, fugit, hic excepturi, rem animi esse officia. Aperiam, ullam! Itaque reprehenderit dolor dicta voluptatibus sed natus tempore quidem earum suscipit assumenda vero, amet molestiae quibusdam, officia rerum est atque nobis veniam optio vitae omnis magni, a tempora? Explicabo eos nesciunt tenetur accusantium quam minus. Laborum obcaecati, ad laudantium distinctio quas dolorem, accusamus in earum animi iste quae a. Hic voluptatem officia qui veritatis? Commodi distinctio consequatur pariatur, dicta ullam, unde porro ipsum repellat est, velit ipsam dignissimos possimus saepe deserunt? Provident accusantium voluptatem, pariatur eligendi adipisci vel delectus, explicabo optio error perspiciatis quam. Perspiciatis necessitatibus doloremque culpa, optio quae ipsum, omnis sint assumenda quam nihil aperiam nemo molestiae pariatur temporibus numquam impedit, recusandae vero minus. Itaque temporibus rem dolor odit, quae voluptate placeat, cumque, recusandae assumenda explicabo amet nisi a vel deleniti laboriosam!
-            </div>
 
-        </div>
-        <!-- end  1st row 2nd column-->
+        <div class="col border border-dark">
+            <!-- Top Teacher Table -->
 
-        <div class=" col black-border text-warning ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
+            <!-- Chart -->
+            <div id="chart_div" style="width: 700px; height: 350px;"></div>
+            <!-- End of Chart -->
+
+            <!-- End of Table -->
         </div>
 
 

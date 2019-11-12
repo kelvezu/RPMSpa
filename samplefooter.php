@@ -80,6 +80,70 @@
             <small>Copyright &#169; <?= date('Y') ?> All rights reserved. Team Guerra.</small>
         </div>
     </div>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- Sample Chart for DbAdmin -->
+    <script>
+        google.charts.load('current', {
+            packages: ['corechart', 'bar']
+        });
+        google.charts.setOnLoadCallback(drawAxisTickColors);
+
+        function drawAxisTickColors() {
+            var data = google.visualization.arrayToDataTable([
+                ['School', 'Teacher', 'Master Teacher'],
+                // ['New York City, NY', 8175000, 8008000],
+                // ['Los Angeles, CA', 3792000, 3694000],
+                // ['Chicago, IL', 2695000, 2896000],
+                // ['Houston, TX', 2099000, 1953000],
+                // ['Philadelphia, PA', 1526000, 1517000]
+                <?php
+                // GET THE DATA FROM dbadmin.php
+                foreach ($t_total as $total) :
+                    $data = "['" . displaySchool($conn, $total['school_id']) . " '," . $total['T'] . "," . $total['MT'] . "],";
+                    echo ($data);
+                endforeach;
+                ?>
+            ]);
+
+            var options = {
+                title: 'List of Teachers and Master Teachers',
+                chartArea: {
+                    width: '60%'
+                },
+                hAxis: {
+                    title: 'Total of Master Teachers and Teachers: <?= $totalCount ?>',
+                    minValue: 0,
+                    maxValue: <?= $totalCount / 2 ?>,
+                    textStyle: {
+                        bold: false,
+                        fontSize: 10,
+                        color: '#4d4d4d'
+                    },
+                    titleTextStyle: {
+                        bold: true,
+                        fontSize: 12,
+                        color: '#4d4d4d'
+                    }
+                },
+                vAxis: {
+                    title: 'School',
+                    textStyle: {
+                        fontSize: 12,
+                        bold: true,
+                        color: '#848484'
+                    },
+                    titleTextStyle: {
+                        fontSize: 14,
+                        bold: false,
+                        color: '#848484'
+                    }
+                }
+            };
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+    <!-- End of Sample Chart for Admin -->
     <script src="includes/func.lib.js"></script>
     <script src="ajax/updateAnnouncement_ajax.php"></script>
     <script src="bootstrap4/scripts/jquery.min.js"></script>

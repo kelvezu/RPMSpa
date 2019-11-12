@@ -71,12 +71,13 @@ class RPMSdb
     //TOTAL OF ALL ACTIVE TEACHERS
     public static function totalTeachersCount($conn)
     {
-        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        // $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        $totalqry = 'SELECT * FROM account_tbl WHERE (POSITION LIKE "Master%" OR POSITION LIKE "Teacher%") AND school_id is not null AND `status` = "Active" ';
         $result = mysqli_query($conn, $totalqry);
 
 
         if (!empty($result)) :
-            return  mysqli_fetch_assoc($result);
+            return  mysqli_num_rows($result);
         else :
             return 0;
         endif;
@@ -84,10 +85,11 @@ class RPMSdb
 
     public static function totalTOnlyCount($conn)
     {
-        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III")';
+        // $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III")';
+        $totalqry = 'SELECT * FROM account_tbl WHERE POSITION LIKE "Teacher%" AND school_id is not null AND `status` = "Active" ';
         $result = mysqli_query($conn, $totalqry);
         if (!empty($result)) :
-            return  mysqli_fetch_assoc($result);
+            return  mysqli_num_rows($result);
         else :
             return 0;
         endif;
@@ -95,10 +97,11 @@ class RPMSdb
 
     public static function totalMTOnlyCount($conn)
     {
-        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        // $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        $totalqry = 'SELECT * FROM account_tbl WHERE POSITION LIKE "Master%" AND school_id is not null';
         $result = mysqli_query($conn, $totalqry);
         if (!empty($result)) :
-            return  mysqli_fetch_assoc($result);
+            return  mysqli_num_rows($result);
         else :
             return 0;
         endif;
