@@ -38,12 +38,12 @@ include_once 'includes/security.php';
         <div class="collapse navbar-collapse" id="navbarsExample03">
             <ul class="navbar-nav mr-auto">
 
-                <a class="" data-toggle="collapse" data-target="#navBar" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="fa fa-bars text-light "></i>
-                </a>
+                <!-- <a class="" data-toggle="collapse" data-target="#navBar" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fa fa-angle-double-right text-light "></i>
+                </a> -->
 
                 <!-- NavBar Collapse -->
-                <div class="collapse" id="navBar">
+                <div class="col" id="navBar">
                     <?= Dashboard::navbarView() ?>
                 </div>
                 <!-- End of NavBar Collapse -->
