@@ -70,9 +70,8 @@ include_once 'sampleheader.php'; ?>
                         <div class="p-2"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
 
                         <div class="p-2">
-                            <a href="settings/announcement_settings.php" class="btn btn-sm btn-primary">Manage Settings</a>
+                            <a href="settings/announcement_settings.php" class="btn btn-sm btn-primary">Announcement Settings</a>
                         </div>
-
                     </div>
 
                 </div>

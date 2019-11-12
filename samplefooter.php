@@ -77,7 +77,7 @@
 
         </div>
         <div class="p-1">
-            <small>Copyright &#169; 2019 All rights reserved. Team Guerra.</small>
+            <small>Copyright &#169; <?= date('Y') ?> All rights reserved. Team Guerra.</small>
         </div>
     </div>
     <script src="includes/func.lib.js"></script>

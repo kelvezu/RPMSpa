@@ -21,7 +21,7 @@ if (isset($_POST['user_id'])) :
     endif;
 endif;
 
-if (isset($_POST['upd_id'])) :
+if (isset($_POST['update'])) :
     $id = $_POST['upd_id'];
     $upd_subj = $_POST['subject'];
     $upd_title = $_POST['title'];
@@ -29,5 +29,35 @@ if (isset($_POST['upd_id'])) :
 
     $qry = "UPDATE `announcement_tbl` SET subject = '$upd_subj', `title`= '$upd_title', `message` = '$upd_message' WHERE id = '$id' ";
     $sql_conn = mysqli_query($conn, $qry) or die($conn->error);
-   
+
+    if ($sql_conn) {
+        header('location:../settings/announcement_settings.php?notif=success');
+        exit();
+    } else {
+        header('location:../settings/announcement_settings.php?notif=error');
+    }
+endif;
+
+if (isset($_POST['remove'])) :
+    $del_id = $_POST['del_id'];
+    $qry = "UPDATE `announcement_tbl` SET `status` = 'Inactive' WHERE id = '$del_id' ";
+    $remove = mysqli_query($conn, $qry);
+    if ($remove) {
+        header('location:../settings/announcement_settings.php?notif=removed');
+        exit();
+    } else {
+        header('location:../settings/announcement_settings.php?notif=error');
+    }
+endif;
+
+if (isset($_POST['unremove'])) :
+    $active_id = $_POST['active_id'];
+    $qry = "UPDATE `announcement_tbl` SET `status` = 'Active' WHERE id = '$active_id' ";
+    $remove = mysqli_query($conn, $qry);
+    if ($remove) {
+        header('location:../settings/announcement_settings.php?notif=unremoved');
+        exit();
+    } else {
+        header('location:../settings/announcement_settings.php?notif=error');
+    }
 endif;

@@ -493,3 +493,46 @@
                         break;
                 }
             }
+
+            function annNotif($get)
+            {
+                if (isset($get)) :
+                    if ($get == "success") :
+                        return '<div class="green-notif-border">Announcement has been updated!</div>';
+                    else : return '<div class="red-notif-border">Announcement update failed!</div>';
+                    endif;
+                else :
+                    return false;
+                endif;
+            }
+
+            function directToDb($position)
+            {
+                if (isset($position)) :
+                    if (strpos($position, 'dmin')) :
+                        $href = '../dbAdmin.php';
+
+                    elseif (strpos($position, 'uper')) :
+                        $href = '../dbAsstSuperintendent.php';
+
+                    elseif (strpos($position, 'rincipal')) :
+                        $href = '../dbPrincipal.php';
+
+                    elseif (strpos($position, 'chool Heads')) :
+                        $href = '../dbSchoolHead.php';
+
+                    elseif (strpos($position, 'aster')) :
+                        $href = '../dbMasterTeacher.php';
+
+                    elseif (strpos($position, 'eacher')) :
+                        $href = '../dbTeacher.php';
+
+                    else :
+                        return false;
+                    endif;
+
+                    return  "<a href='$href' class='btn btn-sm btn-primary'>Back to Dashboard</a>";
+                else :
+                    return false;
+                endif;
+            }
