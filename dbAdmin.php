@@ -149,7 +149,7 @@ include_once 'sampleheader.php'; ?>
     <div class="row">
         <!-- First row -->
 
-        <div class="col">
+        <div id="total-teachers" class="col">
             <!-- First column -->
             <!-- Total of Active Teachers -->
             <div class="col">
@@ -209,7 +209,7 @@ include_once 'sampleheader.php'; ?>
 
         <!-- 1st row 2nd column -->
 
-        <div class="col border border-dark">
+        <div id="total-chart" class="col">
             <!-- Top Teacher Table -->
 
             <!-- Chart -->
@@ -224,7 +224,7 @@ include_once 'sampleheader.php'; ?>
     <!-- End of First Row -->
 
     <!-- Second Row -->
-    <div class=" row">
+    <div class="row">
         <!-- 1st column of 2nd row -->
         <div class="col-4 text-primary black-border">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro tenetur ducimus, corrupti sunt vel corporis voluptates provident obcaecati soluta? Rerum, id similique veniam dignissimos sit eveniet facilis modi sint voluptates error nisi nesciunt nostrum commodi aut optio, accusamus laboriosam necessitatibus reprehenderit exercitationem recusandae rem repellendus natus alias? Perspiciatis, expedita excepturi!
