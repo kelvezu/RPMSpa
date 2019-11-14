@@ -20,7 +20,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
             <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
-            <h4> Inter-Observer Agreement Form</h4>
+            <h4> Classroom Observation Rating Form</h4>
             <h5 class="text-left">
 
                 <div class="breadcome-list shadow-reset">
@@ -65,7 +65,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
                         <div class="col-lg-6">
                             <label>TEACHER OBSERVED: </label>
-                            <select name="tobserved">
+                            <select name="tobserved" required="required">
                                 <option value="" disabled selected>--Select Teacher--</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -121,7 +121,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <label>
                                 SUBJECT:
                             </label>
-                            <select name="tsubject">
+                            <select name="tsubject" required="required">
                                 <option value="" disabled selected>--Select Subject--</option>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
@@ -129,7 +129,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                     $subject_id = $subjrow['subject_id'];
                                     $subject = $subjrow['subject_name'];
                                     ?>
-                                    <option value="<?php echo $subject_id; ?>"><?php echo $subject; ?></option>
+                                    <option value=" <?php echo $subject_id; ?>"><?php echo $subject; ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -140,7 +140,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <label for="gradeleveltaught">
                                 GRADE LEVEL TAUGHT:
                             </label>
-                            <select name="tgradelvltaught">
+                            <select name="tgradelvltaught" required="required">
                                 <option value="" disabled selected>--Select Grade Level Taught--</option>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
@@ -148,7 +148,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                     $glt_id = $gradelvltaught['gradelvltaught_id'];
                                     $glt = $gradelvltaught['gradelvltaught_name'];
                                     ?>
-                                    <option value="<?php echo $glt_id; ?>"><?php echo $glt; ?></option>
+                                    <option value=" <?php echo $glt_id; ?>"><?php echo $glt; ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -192,7 +192,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 OBSERVATION PERIOD:
                             </label>
 
-                            <select name="obs" onchange="showIndicator(this.value)">
+                            <select name="obs" onchange="showIndicator(this.value)" required>
                                 <option value="" disabled selected>Select Period</option>
                                 <option value="1">1st</option>
                                 <option value="2">2nd</option>
@@ -215,7 +215,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
 
 
-            <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS"></textarea><br>
+            <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
 
