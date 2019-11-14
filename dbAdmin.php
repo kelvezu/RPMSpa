@@ -153,14 +153,10 @@ include_once 'sampleheader.php'; ?>
 
         <!-- First row -->
 
-<<<<<<< HEAD
 
 
         <div class="col-sm-6">
             <input type="button" id="show-tcount-btn" value="Show Table">
-=======
-        <div id="total-teachers" class="col">
->>>>>>> 20e10f26db0ad9d9d6e8aaea48c74b0f85e17b41
             <!-- First column -->
 
             <!-- Total of Active Teachers -->
@@ -230,11 +226,9 @@ include_once 'sampleheader.php'; ?>
 
 
 
-<<<<<<< HEAD
-=======
-        <div id="total-chart" class="col">
+        <<<<<<< HEAD=======<div id="total-chart" class="col">
             <!-- Top Teacher Table -->
->>>>>>> 20e10f26db0ad9d9d6e8aaea48c74b0f85e17b41
+            >>>>>>> 20e10f26db0ad9d9d6e8aaea48c74b0f85e17b41
 
 
 
