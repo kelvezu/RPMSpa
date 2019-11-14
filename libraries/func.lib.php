@@ -333,7 +333,7 @@
                     elseif (strpos($position, 'rincipal')) :
                         header('location:dbPrincipal.php');
                         exit();
-                    elseif (strpos($position, 'chool Heads')) :
+                    elseif (strpos($position, 'chool Head')) :
                         header('location:dbSchoolHead.php');
                         exit();
                     elseif (strpos($position, 'aster')) :
