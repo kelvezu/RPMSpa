@@ -156,7 +156,7 @@ include_once 'sampleheader.php'; ?>
 
 
         <div class="col-sm-6">
-            <input type="button" id="show-tcount-btn" value="Show Table">
+            <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
             <!-- First column -->
 
             <!-- Total of Active Teachers -->
@@ -226,16 +226,17 @@ include_once 'sampleheader.php'; ?>
 
 
 
-        <<<<<<< HEAD=======<div id="total-chart" class="col">
+        <div id="total-chart">
             <!-- Top Teacher Table -->
-            >>>>>>> 20e10f26db0ad9d9d6e8aaea48c74b0f85e17b41
+        </div>
 
-
-
-
-
+        <div class="col-sm-6">
+            <p class="text-danger black-border">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum id tenetur, sunt dolores laudantium laboriosam reprehenderit eos obcaecati itaque non vel, aspernatur, voluptatibus eligendi. Nemo, porro necessitatibus. Praesentium, optio ipsam. Fuga tenetur consequuntur, voluptates at aut, voluptas architecto nihil quidem commodi ut alias sunt sequi? Aliquam ipsa, nihil deserunt, eum a neque laudantium tenetur quos iure ad odit aperiam magni dolores mollitia cumque aut autem nulla temporibus commodi adipisci voluptate et similique voluptatum. Animi, ex non cumque cum itaque deserunt culpa. Ut fuga hic aliquid autem, ipsa laboriosam quis provident debitis veniam excepturi dolor itaque rem atque minus fugiat consequuntur.
+            </p>
+        </div>
+        <!-- End of First Row -->
     </div>
-    <!-- End of First Row -->
 
     <!-- Second Row -->
     <div class="row">
