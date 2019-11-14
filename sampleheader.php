@@ -25,8 +25,8 @@ include_once 'includes/security.php';
     <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
-
-
+    <!-- Script for Charts  -->
+    <script src="bootstrap4/scripts/googlechart.js"></script>
 
 </head>
 
@@ -46,7 +46,7 @@ include_once 'includes/security.php';
                 </a> -->
 
                 <!-- NavBar Collapse -->
-                <div class="col" id="navBar">
+                <div id="navBar">
                     <?= Dashboard::navbarView() ?>
                 </div>
                 <!-- End of NavBar Collapse -->

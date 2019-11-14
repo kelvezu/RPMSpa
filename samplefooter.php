@@ -1,4 +1,7 @@
 </body>
+
+
+
 <!-- Logout Modal -->
 <div class="modal fade" id="LogoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -80,9 +83,54 @@
             <small>Copyright &#169; <?= date('Y') ?> All rights reserved. Team Guerra.</small>
         </div>
     </div>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <!-- Sample Chart for DbAdmin -->
+
+    <!-- JavaScript Syntax -->
     <script>
+        // This will load the functions after the web finished loading
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // let exec_time = setInterval(() => {
+            //     fetchAnnouncement();
+            // }, 3000);
+
+            // setInterval(() => {
+            //     clearInterval(exec_time);
+            // }, 60000);
+        });
+        // Variable Declaration
+
+
+        const annBtnShow = document.getElementById('ann-btnshow');
+        const annBtnPost = document.getElementById('ann-btnpost');
+        const showTcountBtn = document.getElementById('show-tcount-btn');
+        const fetch_announce = document.getElementById('fetch-announcement');
+        const announcement_form = document.getElementById('add_announcement_form');
+        const teacherTable = document.getElementById('teacher_count_table');
+        const teacherChart = document.getElementById('teacher_count_chart');
+        const showNotif = document.getElementById('show-notif');
+
+
+        announcement_form.addEventListener('submit', postAnn);
+        showTcountBtn.addEventListener('click', showTeacherCount);
+        annBtnShow.click(fetchAnnouncement());
+        teacherTable.style.display = "none";
+        teacherChart.style.display = "block";
+        showNotif.style.display = "none";
+
+        // Toggle function for Teacher Count Table and Chart
+        function showTeacherCount() {
+            if (teacherTable.style.display === "none") {
+                teacherChart.style.display = "none";
+                teacherTable.style.display = "block";
+                showTcountBtn.value = "Show Table"
+            } else {
+                teacherTable.style.display = "none";
+                teacherChart.style.display = "block";
+                showTcountBtn.value = "Show Chart"
+            }
+        }
+
+
+        /* Chart for Teacher Count Chart */
         google.charts.load('current', {
             packages: ['corechart', 'bar']
         });
@@ -106,7 +154,7 @@
             ]);
 
             var options = {
-                title: 'List of Teachers and Master Teachers',
+                title: 'Live Count of Teachers and Master Teachers',
                 chartArea: {
                     width: '60%'
                 },
@@ -139,17 +187,94 @@
                     }
                 }
             };
-            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+            var chart = new google.visualization.BarChart(document.getElementById('teacher_chart'));
             chart.draw(data, options);
         }
+        //  End of Sample Chart for Admin
+
+
+
+
+
+
+        // Functions
+
+        function sendNotif() {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'includes/login.inc.php', true);
+            xhr.onload = function() {};
+        }
+        // ADD NEW ANNOUNCEMENT THRU AJAX 
+        function postAnn(e) {
+            e.preventDefault();
+            let user_id = document.getElementById('user_id').value;
+            let sy = document.getElementById('sy').value;
+            let position = document.getElementById('position').value;
+            let school = document.getElementById('school').value;
+            let subject = document.getElementById('subject').value;
+            let title = document.getElementById('title').value;
+            let message = document.getElementById('message').value;
+
+            let params = `user_id=${user_id}&sy=${sy}&position=${position}&school=${school}&subject=${subject}&title=${title}&message=${message}`;
+
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', 'includes/processannouncement.php', true);
+            console.log(xhr.statusText);
+            xhr.setRequestHeader("Content-Type", 'application/x-www-form-urlencoded');
+
+            xhr.onload = function() {}
+            try {
+                xhr.send(params);
+                showNotif.style.display = "block";
+                showNotif.innerHTML = "New Announcement has been added!";
+                setInterval(function() {
+                    showNotif.style.display = "none"
+                }, 3000);
+                document.getElementById('subject').value = '';
+                document.getElementById('title').value = '';
+                document.getElementById('message').value = '';
+            } catch (error) {
+                console.log(error)
+            }
+
+            setInt = setInterval(fetchAnnouncement(), 1000);
+            clearInterval(setInt);
+
+        }
+
+        function fetchAnnouncement() {
+
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'ajax/announcement_ajax.php');
+            xhr.onload = function() {
+                console.log('Fetch_Ann_status: ' + this.statusText);
+                let results = this.responseText;
+                if (results) {
+                    setTimeout(document.getElementById('fetch-announcement').innerHTML = results, 1000);
+                } else {
+                    document.getElementById('fetch-announcement').innerHTML = 'No Result';
+                }
+            }
+            xhr.send();
+        }
+
+        function toggleTeacherCount() {
+
+        }
     </script>
-    <!-- End of Sample Chart for Admin -->
+
+    <!-- Scripts  -->
     <script src="includes/func.lib.js"></script>
     <script src="ajax/updateAnnouncement_ajax.php"></script>
     <script src="bootstrap4/scripts/jquery.min.js"></script>
     <script src="bootstrap4/scripts/bootstrap.min.js"></script>
     <script src="bootstrap4/scripts/jquery-3.2.1.slim.min.js"></script>
     <script src="bootstrap4/scripts/popper.min.js"></script>
+
+    <!-- End of Scripts -->
+
+
 </footer>
 
 </html>

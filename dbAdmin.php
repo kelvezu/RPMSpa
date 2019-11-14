@@ -142,19 +142,28 @@ include_once 'sampleheader.php'; ?>
 
 
 
-<!-- Adding BORDERS to determine the width and height of each div -->
+
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
 <!-- Main Container -->
 <div class="container-fluid">
 
     <div class="row">
+
         <!-- First row -->
 
-        <div class="col">
+
+
+        <div class="col-sm-6">
+            <input type="button" id="show-tcount-btn" value="Show Table">
             <!-- First column -->
+
             <!-- Total of Active Teachers -->
-            <div class="col">
+
+            <div class="col" id="teacher_count_table">
                 <!-- Card -->
-                <div class="card border border-dark">
+                <div class="card">
                     <div class="card-header">
                         <h6>Total of Active Teachers</h6>
                     </div>
@@ -204,20 +213,22 @@ include_once 'sampleheader.php'; ?>
             </div>
             <!-- Total of Active Teachers -->
             <!-- End of First Column -->
+
+            <!-- Chart for Teacher Count -->
+            <div class="col-sm" id="teacher_count_chart">
+
+                <!-- Chart -->
+                <div style="width:max-width; height:350px;" id="teacher_chart"></div>
+                <!-- End of Chart -->
+            </div>
+            <!-- End of Chart for Teacher Count -->
         </div>
 
 
-        <!-- 1st row 2nd column -->
 
-        <div class="col border border-dark">
-            <!-- Top Teacher Table -->
 
-            <!-- Chart -->
-            <div class="box" id="chart_div" style="width: 90em; height: 30em;"></div>
-            <!-- End of Chart -->
 
-            <!-- End of Table -->
-        </div>
+
 
 
     </div>
