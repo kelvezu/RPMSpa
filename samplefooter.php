@@ -154,13 +154,15 @@
             ]);
 
             var options = {
+
+
                 title: 'Live Count of Teachers and Master Teachers',
                 chartArea: {
-                    width: '60%'
+                    width: '50%'
                 },
                 hAxis: {
                     title: 'Total of Master Teachers and Teachers: <?= $totalCount ?>',
-                    minValue: 0,
+                    minValue: 1,
                     maxValue: <?= $totalCount / 2 ?>,
                     textStyle: {
                         bold: false,
@@ -174,7 +176,7 @@
                     }
                 },
                 vAxis: {
-                    title: 'School',
+                    // title: 'School',
                     textStyle: {
                         fontSize: 12,
                         bold: true,

@@ -155,7 +155,7 @@ include_once 'sampleheader.php'; ?>
 
 
 
-        <div class="col-sm-6">
+        <div class="col-sm-6 box">
             <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
             <!-- First column -->
 
@@ -215,10 +215,10 @@ include_once 'sampleheader.php'; ?>
             <!-- End of First Column -->
 
             <!-- Chart for Teacher Count -->
-            <div class="col-sm" id="teacher_count_chart">
+            <div class="col-sm box" id="teacher_count_chart">
 
                 <!-- Chart -->
-                <div style="width:max-width; height:350px;" id="teacher_chart"></div>
+                <div style="width:max-width; height:340px;" id="teacher_chart"></div>
                 <!-- End of Chart -->
             </div>
             <!-- End of Chart for Teacher Count -->
