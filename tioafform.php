@@ -18,7 +18,7 @@ include_once 'libraries/func.lib.php';
 
                     <div class = "h3 bg-success text-white">Teacher I-III</div>
                     <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
-                    <input type="hidden" name="sy" value="<?php echo $_SESSION['sy_id']; ?>" />
+                    <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
                     <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
                 <h4> Inter-Observer Agreement Form</h4>
@@ -42,7 +42,7 @@ include_once 'libraries/func.lib.php';
                     <div class="col-lg-6">
                     <label>OBSERVER 2: </label>&nbsp;
                             <select name="observer2">
-                            <option value="">Select Observer</option>
+                            <option value="<?=NULL?>">Select Observer</option>
                                 <?php
                                     $school = $_SESSION['school_id'];
                                     $rater = $_SESSION['user_id'];
@@ -93,7 +93,7 @@ include_once 'libraries/func.lib.php';
                     <div class="col-lg-6">
                     <label>OBSERVER 3: </label>&nbsp;
                         <select name="observer3">
-                        <option value="">Select Observer</option>
+                        <option value="<?=NULL?>">Select Observer</option>
                                 <?php
                                     $school = $_SESSION['school_id'];
                                     $rater = $_SESSION['user_id'];
