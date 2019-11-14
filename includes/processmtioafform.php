@@ -37,7 +37,7 @@ if (isset($_POST['save'])) {
 
         mysqli_query($conn, $qry) or die($conn->error . ' qry1');
     }
-    $query2 = mysqli_query($conn, 'INSERT INTO b_mtioafrating_tbl(`rater_id1`,`rater_id2`,`rater_id3`,`date`,`user_id`,`subject_id`,`gradelvltaught_id`,`obs_period`,`comment`,`sy`,`school_id`) VALUES("' . $rater_id . '",' . $rater_id2 . ' , ' . $rater_id3 . ' ,"' . $date . '","' . $user_id . '","' . $subject . '","' . $gradelvltaught . '","' . $obs_period . '","' . $comment . '","' . $sy_id . '","' . $school_id . '","' . $status . '" )') or die($conn->error . 'qry2');
+    $query2 = mysqli_query($conn, 'INSERT INTO b_mtioafrating_tbl(`rater_id1`,`rater_id2`,`rater_id3`,`date`,`user_id`,`subject_id`,`gradelvltaught_id`,`obs_period`,`comment`,`sy`,`school_id`,`status`) VALUES("' . $rater_id . '",' . $rater_id2 . ' , ' . $rater_id3 . ' ,"' . $date . '","' . $user_id . '","' . $subject . '","' . $gradelvltaught . '","' . $obs_period . '","' . $comment . '","' . $sy_id . '","' . $school_id . '","' . $status . '" )') or die($conn->error . 'qry2');
 
     header('location:../mtioafform.php');
 }
