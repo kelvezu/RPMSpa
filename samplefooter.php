@@ -158,7 +158,7 @@
 
                 title: 'Live Count of Teachers and Master Teachers',
                 chartArea: {
-                    width: '50%'
+                    width: '45%'
                 },
                 hAxis: {
                     title: 'Total of Master Teachers and Teachers: <?= $totalCount ?>',

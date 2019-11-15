@@ -161,97 +161,77 @@ include_once 'sampleheader.php'; ?>
 
             <!-- Total of Active Teachers -->
 
-            <div class="col" id="teacher_count_table">
+            <div class="col">
                 <!-- Card -->
-                <div class="card box">
+                <div class="card">
                     <div class="card-header">
                         <div class="d-flex">
-                            <div class="p-2">
+                            <div class="p-2 w-100">
                                 <h6>Total of Active Teachers</h6>
                             </div>
-                            <div class="p-2">
+                            <div class="p-2 left-shrink">
                                 <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
                             </div>
                         </div>
                     </div>
                     <!-- Card Body -->
-                    <div class="card-body">
-                        <table class=" table table-sm table-responsive-sm table-hover ">
-                            <thead class="bg-light">
+                    <div class="card-body box">
+                        <div class="" id="teacher_count_table">
+                            <table class=" table table-sm table-responsive-sm table-hover ">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>School Name</th>
+                                        <th>T</th>
+                                        <th>MT</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="box">
+                                    <?php
+                                    //  and $sch_t['T'] || $sch_t['MT']
+                                    $num = 1;
+                                    $t_total = RPMSdb::totalTeacherPerSchool($conn);
+                                    foreach ($t_total as $sch_t) :
+                                        if (!empty($sch_t['school_id'])) : ?>
+                                            <td><?= $num++ ?></td>
+                                            <td><?= displaySchool($conn, $sch_t['school_id']); ?></td>
+                                            <td class="font-weight-bold text-success"><?= $sch_t['T'] ?></td>
+                                            <td class="font-weight-bold text-primary"><?= $sch_t['MT'] ?></td>
+                                            <td class="font-weight-bold"><?= $sch_t['T'] + $sch_t['MT']  ?></td>
+                                        <?php endif ?>
+                                </tbody>
+
+                            <?php endforeach; ?>
+                            <tfoot class="bg-light font-weight-bold">
                                 <tr>
-                                    <th>#</th>
-                                    <th>School Name</th>
-                                    <th>T</th>
-                                    <th>MT</th>
-                                    <th>Total</th>
+                                    <td class=" text-right" colspan="2">Total:</td>
+                                    <td> <?= RPMSdb::totalTOnlyCount($conn) ?></td>
+                                    <td> <?= RPMSdb::totalMTOnlyCount($conn) ?></td>
+                                    <td><?= $totalCount = RPMSdb::totalTeachersCount($conn) ?></td>
                                 </tr>
-                            </thead>
-                            <tbody class="box">
-                                <?php
-                                //  and $sch_t['T'] || $sch_t['MT']
-                                $num = 1;
-                                $t_total = RPMSdb::totalTeacherPerSchool($conn);
-                                foreach ($t_total as $sch_t) :
-                                    if (!empty($sch_t['school_id'])) : ?>
-                                        <td><?= $num++ ?></td>
-                                        <td><?= displaySchool($conn, $sch_t['school_id']); ?></td>
-                                        <td class="font-weight-bold text-success"><?= $sch_t['T'] ?></td>
-                                        <td class="font-weight-bold text-primary"><?= $sch_t['MT'] ?></td>
-                                        <td class="font-weight-bold"><?= $sch_t['T'] + $sch_t['MT']  ?></td>
-                                    <?php endif ?>
-                            </tbody>
+                            </tfoot>
+                            </table>
 
-                        <?php endforeach; ?>
-                        <tfoot class="bg-light font-weight-bold">
-                            <tr>
-                                <td class=" text-right" colspan="2">Total:</td>
-                                <td> <?= RPMSdb::totalTOnlyCount($conn) ?></td>
-                                <td> <?= RPMSdb::totalMTOnlyCount($conn) ?></td>
-                                <td><?= $totalCount = RPMSdb::totalTeachersCount($conn) ?></td>
+                        </div>
 
-                            </tr>
-                        </tfoot>
-                        </table>
+
+                        <!-- Total Chart for Teacher -->
+                        <div id="teacher_count_chart">
+                            <div style="width:max-width; height:300px;" id="teacher_chart"></div>
+                        </div>
+                        <!-- End of Total Chart for Teacher -->
 
                     </div>
                     <!-- end of card-body -->
                 </div>
                 <!-- end of card -->
             </div>
-            <!-- Total of Active Teachers -->
-            <!-- End of First Column -->
 
-            <!-- Chart for Teacher Count -->
-            <div class="col-sm box" id="teacher_count_chart">
-
-                <!-- Chart -->
-                <div class="card box">
-                    <div class="card-header">
-                        <div class="d-flex">
-                            <div class="p-2">
-                                <h6>Total of Active Teachers</h6>
-                            </div>
-                            <div class="p-2">
-                                <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div style="width:max-width; height:340px;" id="teacher_chart"></div>
-                    </div>
-                </div>
-                <!-- End of Chart -->
-            </div>
-            <!-- End of Chart for Teacher Count -->
 
         </div>
 
-
-
-        <div id="total-chart">
-            <!-- Top Teacher Table -->
-        </div>
-
+        <!-- Table for Principal List -->
         <div class="col-sm box">
             <div class="card">
                 <div class="card-header">Principals</div>
@@ -276,7 +256,9 @@ include_once 'sampleheader.php'; ?>
                     </table>
                 </div>
             </div>
-        </div> <!-- End of First Row -->
+        </div>
+        <!-- End Table for Principal List  -->
+        <!-- End of First Row -->
     </div>
 
     <!-- Second Row -->
