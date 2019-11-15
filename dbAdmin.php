@@ -155,17 +155,24 @@ include_once 'sampleheader.php'; ?>
 
 
 
-        <div class="col-sm-6 box">
-            <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
+        <div class="col-sm-6">
+
             <!-- First column -->
 
             <!-- Total of Active Teachers -->
 
             <div class="col" id="teacher_count_table">
                 <!-- Card -->
-                <div class="card">
+                <div class="card box">
                     <div class="card-header">
-                        <h6>Total of Active Teachers</h6>
+                        <div class="d-flex">
+                            <div class="p-2">
+                                <h6>Total of Active Teachers</h6>
+                            </div>
+                            <div class="p-2">
+                                <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
+                            </div>
+                        </div>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -218,7 +225,21 @@ include_once 'sampleheader.php'; ?>
             <div class="col-sm box" id="teacher_count_chart">
 
                 <!-- Chart -->
-                <div style="width:max-width; height:340px;" id="teacher_chart"></div>
+                <div class="card box">
+                    <div class="card-header">
+                        <div class="d-flex">
+                            <div class="p-2">
+                                <h6>Total of Active Teachers</h6>
+                            </div>
+                            <div class="p-2">
+                                <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="width:max-width; height:340px;" id="teacher_chart"></div>
+                    </div>
+                </div>
                 <!-- End of Chart -->
             </div>
             <!-- End of Chart for Teacher Count -->
@@ -232,29 +253,30 @@ include_once 'sampleheader.php'; ?>
         </div>
 
         <div class="col-sm box">
-            <table class="table table-sm">
-
-                <thead>
-                    <tr>
-                        <th>Principal</th>
-                        <th>School</th>
-                    </tr>
-                </thead>
-
-                <?php
-                $principal = RPMSdb::showAllPrincipal($conn);
-                foreach ($principal as $prin) : ?>
-
-
-
-                <?php
-                endforeach;
-                ?>
-
-
-            </table>
-        </div>
-        <!-- End of First Row -->
+            <div class="card">
+                <div class="card-header">Principals</div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Principal</th>
+                                <th>School</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $principal = RPMSdb::showAllPrincipal($conn);
+                            foreach ($principal as $prin) : ?>
+                                <tr>
+                                    <td><?= displayName($conn, $prin['user_id']) ?></td>
+                                    <td><?= displaySchool($conn, $prin['school_id']) ?></td>
+                                <?php endforeach; ?>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> <!-- End of First Row -->
     </div>
 
     <!-- Second Row -->
