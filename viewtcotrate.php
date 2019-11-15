@@ -5,9 +5,11 @@ include 'includes/header.php';
 if (isset($_GET['view'])) {
     $user_id = $_GET['view'];
 
-    $query = $conn->query('SELECT subject_tbl.subject_name,gradelvltaught_tbl.gradelvltaught_name,account_tbl.surname,account_tbl.firstname,account_tbl.middlename,b_tcotrating_tbl.* FROM (b_tcotrating_tbl INNER JOIN account_tbl ON b_tcotrating_tbl.user_id = account_tbl.user_id INNER JOIN subject_tbl ON b_tcotrating_tbl.subject_id = subject_tbl.subject_id INNER JOIN gradelvltaught_tbl ON b_tcotrating_tbl.gradelvltaught_id = gradelvltaught_tbl.gradelvltaught_id ) WHERE b_tcotrating_tbl.user_id = ' . $user_id . '');
+    $query = $conn->query('SELECT subject_tbl.subject_name,gradelvltaught_tbl.gradelvltaught_name,account_tbl.surname,account_tbl.firstname,account_tbl.middlename,b_tioafrating_tbl.* FROM (b_tioafrating_tbl INNER JOIN account_tbl ON b_tioafrating_tbl.user_id = account_tbl.user_id INNER JOIN subject_tbl ON b_tioafrating_tbl.subject_id = subject_tbl.subject_id INNER JOIN gradelvltaught_tbl ON b_tioafrating_tbl.gradelvltaught_id = gradelvltaught_tbl.gradelvltaught_id ) WHERE b_tioafrating_tbl.user_id = ' . $user_id . '');
     while ($row = $query->fetch_assoc()) {
-        $rater_id = $row['rater_id'];
+        $rater_id = $row['rater_id1'];
+        $rater_id2 = $row['rater_id2'] ?? "NULL";
+        $rater_id3 = $row['rater_id3'] ?? "NULL";
         $date = $row['date'];
         $tobserved = $row['user_id'];
         $subject = $row['subject_name'];
@@ -49,11 +51,24 @@ if (isset($_GET['view'])) {
 
                         <div class="row">
                             <div class="col-lg-6">
+                                <label>OBSERVER 2:</label>&nbsp;
+                                <input type="text" name="rater" value="<?php echo displayname($conn, $rater_id2); ?>">
+                            </div>
 
-                                <label>
+                            <div class="col-lg-6">
+                               
+                            <label>
                                     TEACHER OBSERVED:
                                 </label>
                                 <input type="text" name="tobserved" value="<?php echo displayname($conn, $tobserved); ?>">
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                            <label>OBSERVER 3:</label>&nbsp;
+                                <input type="text" name="rater" value="<?php echo displayname($conn, $rater_id3); ?>">
                             </div>
 
                             <div class="col-lg-6">
@@ -96,11 +111,11 @@ if (isset($_GET['view'])) {
                     </thead>
                     <?php
                         $indicator_no = 1;
-                        $query1 = $conn->query('SELECT tindicator_tbl.indicator_name,a_tcotrating_tbl.* FROM (a_tcotrating_tbl INNER JOIN tindicator_tbl ON a_tcotrating_tbl.indicator_id = tindicator_tbl.indicator_id) WHERE a_tcotrating_tbl.user_id = ' . $user_id . '');
+                        $query1 = $conn->query('SELECT tindicator_tbl.indicator_name,a_tioafrating_tbl.* FROM (a_tioafrating_tbl INNER JOIN tindicator_tbl ON a_tioafrating_tbl.indicator_id = tindicator_tbl.indicator_id) WHERE a_tioafrating_tbl.user_id = ' . $user_id . '');
                         while ($rows = $query1->fetch_assoc()) :
 
                             $indicator_name = $rows['indicator_name'];
-                            $tcotrating = $rows['tcotrating'];
+                            $tcotrating = $rows['tioafrating'];
                             ?>
                         <tbody>
                             <tr>
