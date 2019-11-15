@@ -155,7 +155,7 @@ include_once 'sampleheader.php'; ?>
 
 
 
-        <div class="col-sm-6">
+        <div class="col">
 
             <!-- First column -->
 
@@ -166,17 +166,17 @@ include_once 'sampleheader.php'; ?>
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex">
-                            <div class="p-2 w-100">
-                                <h6>Total of Active Teachers</h6>
+                            <div class="w-100">
+                                <h6><i class="fa fa-users"></i> Total of Active Teachers</h6>
                             </div>
-                            <div class="p-2 left-shrink">
+                            <div class="left-shrink">
                                 <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
                             </div>
                         </div>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body box">
-                        <div class="" id="teacher_count_table">
+                        <div id="teacher_count_table">
                             <table class=" table table-sm table-responsive-sm table-hover ">
                                 <thead class="bg-light">
                                     <tr>
@@ -212,7 +212,6 @@ include_once 'sampleheader.php'; ?>
                                 </tr>
                             </tfoot>
                             </table>
-
                         </div>
 
 
@@ -232,11 +231,11 @@ include_once 'sampleheader.php'; ?>
         </div>
 
         <!-- Table for Principal List -->
-        <div class="col-sm box">
+        <div class="col">
             <div class="card">
-                <div class="card-header">Principals</div>
-                <div class="card-body">
-                    <table class="table table-sm">
+                <div class="card-header font-weight-bold"><i class="fa fa-user-circle"></i> Principals</div>
+                <div class="card-body box">
+                    <table class="table table-sm table-hover table-responsive-sm    ">
                         <thead>
                             <tr>
                                 <th>Principal</th>
