@@ -1,7 +1,6 @@
 <?php 
-include 'includes/conn.inc.php'; 
-?>
-<?php
+include 'conn.inc.php'; 
+
 
 if(isset($_POST["tyear1"]))
 {
@@ -22,9 +21,6 @@ if(isset($_POST["tyear1"]))
      echo json_encode($output);
 }
     
-?>
-
-<?php
 
 if(isset($_POST["tyear2"]))
 {
@@ -47,9 +43,6 @@ if(isset($_POST["tyear2"]))
      echo json_encode($output2);
 }
     
-?>
-
-<?php
 
 if(isset($_POST["mtyear1"]))
 {
@@ -70,9 +63,6 @@ if(isset($_POST["mtyear1"]))
      echo json_encode($output);
 }
     
-?>
-
-<?php
 
 if(isset($_POST["mtyear2"]))
 {
@@ -94,7 +84,25 @@ if(isset($_POST["mtyear2"]))
      }
      echo json_encode($output2);
 }
-    
+  
+if(isset($_POST["sy_esat"]))
+{
+     $query = "SELECT school_name, (With_ESAT/total_teacher) as Percentage,School_Year from tbl_rptwithesat WHERE School_Year IS NOT NULL group by school_name";
+     $result = mysqli_query($conn,$query);
+
+     foreach($result as $row)
+     {
+      $output[] = array(
+       'school_name'   => $row["school_name"],
+       'Percentage'  => floatval($row["Percentage"]),
+      );
+     }
+     echo json_encode($output);
+
+}
+
 ?>
+
+
 
 

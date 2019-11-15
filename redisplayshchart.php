@@ -144,10 +144,11 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT DISTINCT employment_status, COUNT(DISTINCT user_id) total FROM esat1_demographicst_tbl 
-                    UNION
-              SELECT DISTINCT employment_status, COUNT(DISTINCT user_id) total FROM esat1_demographicsmt_tbl 
-            ";
+	$query = "SELECT employment_status, sum(total) FROM
+				(SELECT employment_status, COUNT(DISTINCT user_id) total FROM esat1_demographicst_tbl GROUP BY employment_status
+				UNION ALL
+				SELECT employment_status, COUNT(DISTINCT user_id) total FROM esat1_demographicsmt_tbl GROUP BY employment_status) a
+				GROUP BY a.employment_status";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();

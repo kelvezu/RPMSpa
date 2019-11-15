@@ -11,6 +11,355 @@ use mysqli;
 
 class RPMSdb
 {
+    public static function mtobjectiveSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT  DISTINCT
+                    c.sy_desc
+                    
+                    from mtobj_tbl a INNER JOIN esat2_objectivesmt_tbl b ON a.mtobj_id = b.mtobj_id
+                    
+                INNER JOIN sy_tbl c on b.sy = c.sy_id
+                group by a.kra_id,a.mtobj_id";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function tobjectiveSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                    SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
+                    INNER JOIN esat1_demographicst_tbl b on a.reg_id = b.region GROUP by a.region_name
+                    
+                    UNION ALL
+                    
+                    SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
+                    INNER JOIN esat1_demographicsmt_tbl b on a.reg_id = b.region GROUP by a.region_name
+                    )a
+                    INNER JOIN sy_tbl b on a.sy = b.sy_id
+                    
+                    GROUP BY a.region_name";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function regionSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                    SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
+                    INNER JOIN esat1_demographicst_tbl b on a.reg_id = b.region GROUP by a.region_name
+                    
+                    UNION ALL
+                    
+                    SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
+                    INNER JOIN esat1_demographicsmt_tbl b on a.reg_id = b.region GROUP by a.region_name
+                    )a
+                    INNER JOIN sy_tbl b on a.sy = b.sy_id
+                    
+                    GROUP BY a.region_name";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function curriclassSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                    SELECT curri_class,COUNT(DISTINCT user_id)total,sy FROM esat1_demographicst_tbl GROUP BY curri_class
+                    UNION ALL
+                    SELECT curri_class,COUNT(DISTINCT user_id)total,sy FROM esat1_demographicsmt_tbl GROUP BY curri_class
+                    )a
+                    INNER JOIN sy_tbl b on a.sy=b.sy_id
+                    INNER JOIN curriclass_tbl c on a.curri_class = c.curriclass_id
+                    GROUP BY c.curriclass_name";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function gradelvlSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                     SELECT a.gradelvltaught_name, COUNT(b.user_id)total,sy from gradelvltaught_tbl a 
+                    INNER JOIN esat1_demographicst_tbl b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
+                    GROUP by a.gradelvltaught_id
+                    
+                    UNION ALL
+                    
+                    SELECT a.gradelvltaught_name, COUNT(b.user_id)total,sy from gradelvltaught_tbl a 
+                    INNER JOIN esat1_demographicsmt_tbl b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
+                    GROUP by a.gradelvltaught_id
+                    ) a
+                    INNER JOIN sy_tbl b on a.sy = b.sy_id
+                    GROUP BY a.gradelvltaught_name";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function subjtaughtSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                    SELECT a.subject_name, COUNT(b.user_id)total,sy from subject_tbl a INNER JOIN esat1_demographicst_tbl b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') GROUP by a.subject_name
+                    UNION ALL
+                    SELECT a.subject_name, COUNT(b.user_id)total,sy from subject_tbl a INNER JOIN esat1_demographicsmt_tbl b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') GROUP by a.subject_name
+                    ) a
+                    INNER JOIN sy_tbl b on a.sy = b.sy_id
+                    GROUP BY a.subject_name";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+
+    public static function totalyearSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                    SELECT totalyear,COUNT(user_id)total,sy from esat1_demographicst_tbl GROUP by totalyear
+                    UNION ALL
+                    SELECT totalyear,COUNT(user_id)total,sy from esat1_demographicsmt_tbl GROUP by totalyear
+                    ) a
+                    
+                    INNER JOIN sy_tbl b on a.sy = b.sy_id
+                    INNER JOIN totalyear_tbl c on a.totalyear=c.totalyear_id
+                    
+                    GROUP BY c.totalyear_name";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function degreeSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                    SELECT highest_degree, COUNT(user_id) total,sy from esat1_demographicst_tbl GROUP by highest_degree
+                    UNION ALL
+                    SELECT highest_degree, COUNT(user_id) total,sy from esat1_demographicsmt_tbl GROUP by highest_degree
+                    )a
+                    
+                    INNER JOIN sy_tbl b on a.sy=b.sy_id
+                    
+                    GROUP BY a.highest_degree";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function positionSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM
+                    (
+                    SELECT position, COUNT(user_id)total,sy from  esat1_demographicst_tbl  GROUP by position
+                    UNION ALL
+                    SELECT position, COUNT(user_id)total,sy from  esat1_demographicsmt_tbl  GROUP by position
+                    ) a
+                    
+                    INNER JOIN sy_tbl b on a.sy = b.sy_id
+                    GROUP BY a.position
+                    order BY a.position desc";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function empstatSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT b.sy_desc FROM 
+                    (
+                        SELECT employment_status, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY employment_status
+                        UNION ALL
+                        SELECT  employment_status, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY employment_status
+                    ) a 
+                INNER JOIN sy_tbl b on a.sy = b.sy_id
+                GROUP BY a.employment_status";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+
+    public static function genderSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT c.sy_desc FROM
+                    (                        
+                    SELECT gender, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY gender
+                    UNION ALL
+                    SELECT gender, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY gender
+                    ) a
+                    
+                    INNER JOIN sy_tbl c on a.sy = c.sy_id
+                    INNER JOIN gender_tbl b on a.gender = b.gender_id
+                    GROUP BY a.gender";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function ageSy($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT c.sy_desc FROM
+                    (                        
+                    SELECT age, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY age
+                    UNION ALL
+                    SELECT age, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY age
+                    ) a
+                    
+                    INNER JOIN age_tbl b on a.age = b.age_id
+                    INNER JOIN sy_tbl c on a.sy = c.sy_id
+                    GROUP BY b.age_name";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+    
+    public static function esatSY($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT DISTINCT School_Year as sy_esat from tbl_rptwithesat where School_Year is not null";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+    public static function mteacherSYass($conn)
+    {
+        $result_arr = [];
+        $query2 = "SELECT distinct c.sy_desc as mtyear2
+            FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
+            INNER JOIN sy_tbl c on a.sy = c.sy_id
+            group by c.sy_desc";
+
+        $result2 = mysqli_query($conn,$query2);
+        foreach ($result2 as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+    
+    public static function mteacherSYcbc($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT distinct c.sy_desc as mtyear1 FROM core_behavioral_tbl a 
+            INNER JOIN 
+            esat3_core_behavioralmt_tbl b  on a.cbc_id = b.cbc_id 
+            INNER JOIN sy_tbl c on b.sy = c.sy_id
+            group by c.sy_desc";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+
+
+    public static function teacherSYcbc($conn)
+    {
+        $result_arr = [];
+        $query = "SELECT distinct c.sy_desc as tyear1 FROM core_behavioral_tbl a 
+                INNER JOIN 
+                esat3_core_behavioralt_tbl b  on a.cbc_id = b.cbc_id 
+                INNER JOIN sy_tbl c on b.sy = c.sy_id
+                group by c.sy_desc";
+
+        $result = mysqli_query($conn,$query);
+        foreach ($result as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+    
+    public static function teacherSYass($conn)
+    {
+        $result_arr = [];
+        $query2 = "SELECT distinct c.sy_desc as tyear2
+            FROM esat2_objectivest_tbl a INNER JOIN tobj_tbl b on a.tobj_id = b.tobj_id
+            INNER JOIN sy_tbl c on a.sy = c.sy_id
+            group by c.sy_desc";
+
+        $result2 = mysqli_query($conn,$query2);
+        foreach ($result2 as $res) :
+            array_push($result_arr, $res);
+        endforeach;
+        return $result_arr;
+        exit;
+    }
+    
     // DISPLAY ALL TEACHERS ACCORDING TO USERS SCHOOL
     public static function displayMasterList($conn)
     {

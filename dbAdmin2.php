@@ -1,6 +1,8 @@
 <?php include 'includes/header.php'; ?>
 
 
+        </script>
+ 
 <!-- Breadcome start-->
 <div class="breadcome-area des-none">
     <div class="container-fluid">
@@ -148,11 +150,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="dashone-adminprowrap shadow-reset mg-b-30">
-                    <h4><b> ESAT Progress</b><span class="bar">5,3,9,6,5,9,7,3,5,2</span></h4>
-                    <div class="text-center">
-                    <?php include 'includes/drawchart.php'; ?>
-                    </div>
+                <div class="dashone-adminprowrap shadow-reset mg-b-30">  
+                        <div class="analytics-rounded-content">
+                              <?php include "includes/drawchart.php";?>     
+                        </div>
                 </div>
                 <div class="dashone-adminprowrap shadow-reset mg-b-30">
                     <div class="analytics-rounded-content">

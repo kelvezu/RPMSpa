@@ -30,16 +30,16 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.age_name,
-				b.age_no FROM age_tbl a 
-						LEFT JOIN 
-						(
-							SELECT DISTINCT age, 
-								COUNT(user_id) age_no
-								FROM 
-								esat1_demographics_tbl a
-							GROUP BY age
-						) as b on a.age_id = b.age";
+	$query = "SELECT b.age_name, SUM(a.total) Total,c.sy_desc FROM
+				(                        
+				SELECT age, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY age
+				UNION ALL
+				SELECT age, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY age
+				) a
+				
+				INNER JOIN age_tbl b on a.age = b.age_id
+				INNER JOIN sy_tbl c on a.sy = c.sy_id
+				GROUP BY b.age_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -67,7 +67,7 @@ $user_id = $_SESSION['user_id'];
 								<tr>
 
 									<td>' . $row['age_name'] . '</td>
-									<td>' . $row['age_no'] . '</td>
+									<td>' . $row['Total'] . '</td>
 								</tr>
 								';
 					}
@@ -100,16 +100,16 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT DISTINCT a.gender_name,
-				b.gcount FROM gender_tbl a 
-				LEFT JOIN 
-				(
-					SELECT DISTINCT gender, 
-						COUNT(user_id) gcount
-						FROM 
-						esat1_demographics_tbl a
-					GROUP BY gender
-				) as b on a.gender_id = b.gender";
+	$query = "SELECT b.gender_name, SUM(a.total)total,c.sy_desc FROM
+				(                        
+				SELECT gender, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY gender
+				UNION ALL
+				SELECT gender, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY gender
+				) a
+				
+				INNER JOIN sy_tbl c on a.sy = c.sy_id
+				INNER JOIN gender_tbl b on a.gender = b.gender_id
+				GROUP BY a.gender";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -138,7 +138,7 @@ $user_id = $_SESSION['user_id'];
 								<tr>
 
 									<td>' . $row['gender_name'] . '</td>
-									<td>' . $row['gcount'] . '</td>
+									<td>' . $row['total'] . '</td>
 								</tr>
 								';
 					}
@@ -165,12 +165,14 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT DISTINCT a.employment_status, 
-								COUNT(b.user_id)emp_stat 
-									FROM esat1_demographics_tbl a
-			  LEFT JOIN esat1_demographics_tbl b 
-									on a.employment_status like CONCAT('%', b.employment_status, '%')
-										GROUP BY b.employment_status";
+	$query = "SELECT DISTINCT b.sy_desc FROM 
+				(
+					SELECT employment_status, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY employment_status
+					UNION ALL
+					SELECT  employment_status, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY employment_status
+				) a 
+			INNER JOIN sy_tbl b on a.sy = b.sy_id
+			GROUP BY a.employment_status";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -198,7 +200,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['employment_status'] . '</td>
-											<td>' . $row['emp_stat'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -226,13 +228,16 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT DISTINCT position, 
-								COUNT(user_id)pos_count 
-								from  
-							esat1_demographics_tbl 
-								WHERE 
-								position LIKE '%Master%' or position LIKE 'Teacher%'
-							GROUP by position";
+	$query = "SELECT a.position,sum(a.total)total,b.sy_desc FROM
+				(
+				SELECT position, COUNT(user_id)total,sy from  esat1_demographicst_tbl  GROUP by position
+				UNION ALL
+				SELECT position, COUNT(user_id)total,sy from  esat1_demographicsmt_tbl  GROUP by position
+				) a
+				
+				INNER JOIN sy_tbl b on a.sy = b.sy_id
+				GROUP BY a.position
+				order BY a.position desc";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -260,7 +265,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['position'] . '</td>
-											<td>' . $row['pos_count'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -288,15 +293,16 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT DISTINCT highest_degree,
-								COUNT(user_id) deg_count 
-								from 
-							esat1_demographics_tbl
-								WHERE 
-								highest_degree LIKE '%Bachelor%' 
-								or highest_degree LIKE 'Master%' 
-								or highest_degree LIKE '%Doctorate%'
-							GROUP by highest_degree";
+	$query = "SELECT DISTINCT b.sy_desc FROM
+				(
+				SELECT highest_degree, COUNT(user_id) total,sy from esat1_demographicst_tbl GROUP by highest_degree
+				UNION ALL
+				SELECT highest_degree, COUNT(user_id) total,sy from esat1_demographicsmt_tbl GROUP by highest_degree
+				)a
+				
+				INNER JOIN sy_tbl b on a.sy=b.sy_id
+				
+				GROUP BY a.highest_degree";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -327,7 +333,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['highest_degree'] . '</td>
-											<td>' . $row['deg_count'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -356,12 +362,17 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.totalyear_name,
-							COUNT(b.user_id)totalyear 
-									from totalyear_tbl a 
-				LEFT JOIN esat1_demographics_tbl
-						b on a.totalyear_id = b.totalyear
-								GROUP by a.totalyear_name";
+	$query = "SELECT c.totalyear_name, SUM(a.total)total,b.sy_desc FROM
+		(
+		SELECT totalyear,COUNT(user_id)total,sy from esat1_demographicst_tbl GROUP by totalyear
+		UNION ALL
+		SELECT totalyear,COUNT(user_id)total,sy from esat1_demographicsmt_tbl GROUP by totalyear
+		) a
+		
+		INNER JOIN sy_tbl b on a.sy = b.sy_id
+		INNER JOIN totalyear_tbl c on a.totalyear=c.totalyear_id
+		
+		GROUP BY c.totalyear_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -392,7 +403,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['totalyear_name'] . '</td>
-											<td>' . $row['totalyear'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -420,12 +431,14 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.subject_name,
-							COUNT(b.user_id)subtotal 
-									from subject_tbl a 
-			LEFT JOIN esat1_demographics_tbl
-						b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') 
-									GROUP by a.subject_name";
+	$query = "SELECT a.subject_name, SUM(a.total) total,b.sy_desc FROM
+				(
+				SELECT a.subject_name, COUNT(b.user_id)total,sy from subject_tbl a INNER JOIN esat1_demographicst_tbl b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') GROUP by a.subject_name
+				UNION ALL
+				SELECT a.subject_name, COUNT(b.user_id)total,sy from subject_tbl a INNER JOIN esat1_demographicsmt_tbl b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') GROUP by a.subject_name
+				) a
+				INNER JOIN sy_tbl b on a.sy = b.sy_id
+				GROUP BY a.subject_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -456,7 +469,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['subject_name'] . '</td>
-											<td>' . $row['subtotal'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -484,12 +497,22 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.gradelvltaught_name,
-							COUNT(b.user_id)grdtotal 
-								from gradelvltaught_tbl a 
-						LEFT JOIN esat1_demographics_tbl
-								b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
-								GROUP by a.gradelvltaught_id";
+	$query = "SELECT a.gradelvltaught_name, SUM(a.total)total, b.sy_desc FROM
+			(
+			
+			SELECT a.gradelvltaught_name, COUNT(b.user_id)total,sy from gradelvltaught_tbl a 
+			INNER JOIN esat1_demographicst_tbl b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
+			GROUP by a.gradelvltaught_id
+			
+			UNION ALL
+			
+			SELECT a.gradelvltaught_name, COUNT(b.user_id)total,sy from gradelvltaught_tbl a 
+			INNER JOIN esat1_demographicsmt_tbl b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
+			GROUP by a.gradelvltaught_id
+			) a
+			
+			INNER JOIN sy_tbl b on a.sy = b.sy_id
+			GROUP BY a.gradelvltaught_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -520,7 +543,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['gradelvltaught_name'] . '</td>
-											<td>' . $row['grdtotal'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -549,12 +572,15 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.curriclass_name, b.count FROM curriclass_tbl a
-					LEFT JOIN 
-							(
-								SELECT curri_class,COUNT(DISTINCT user_id)count FROM esat1_demographics_tbl
-								GROUP BY curri_class
-							) AS b on a.curriclass_id = b.curri_class";
+	$query = "SELECT c.curriclass_name,SUM(a.total)total,b.sy_desc FROM
+				(
+				SELECT curri_class,COUNT(DISTINCT user_id)total,sy FROM esat1_demographicst_tbl GROUP BY curri_class
+				UNION ALL
+				SELECT curri_class,COUNT(DISTINCT user_id)total,sy FROM esat1_demographicsmt_tbl GROUP BY curri_class
+				)a
+				INNER JOIN sy_tbl b on a.sy=b.sy_id
+				INNER JOIN curriclass_tbl c on a.curri_class = c.curriclass_id
+				GROUP BY c.curriclass_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -585,7 +611,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['curriclass_name'] . '</td>
-											<td>' . $row['count'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -615,11 +641,19 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.region_name,
-						COUNT(b.user_id)rtotal 
-								from region_tbl a 
-					LEFT JOIN esat1_demographics_tbl b on a.reg_id = b.region 
-								GROUP by a.region_name";
+	$query = "SELECT a.region_name,SUM(a.total)total,b.sy_desc FROM
+				(
+				SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
+				INNER JOIN esat1_demographicst_tbl b on a.reg_id = b.region GROUP by a.region_name
+				
+				UNION ALL
+				
+				SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
+				INNER JOIN esat1_demographicsmt_tbl b on a.reg_id = b.region GROUP by a.region_name
+				)a
+				INNER JOIN sy_tbl b on a.sy = b.sy_id
+				
+				GROUP BY a.region_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -637,7 +671,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th width="10%">Region</th>
-							<th width="10%">Total</th>
+							<th width="10%">No. of Teacher</th>
 
 						</tr>
 					</thead>
@@ -649,7 +683,7 @@ $user_id = $_SESSION['user_id'];
 										<tr>
 
 											<td>' . $row['region_name'] . '</td>
-											<td>' . $row['rtotal'] . '</td>
+											<td>' . $row['total'] . '</td>
 										</tr>
 										';
 					}
@@ -678,19 +712,22 @@ $user_id = $_SESSION['user_id'];
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
 	$query = "SELECT CONCAT(a.kra_id,'.',a.tobj_id) 
-					AS OBJECTIVES, 
-					CASE WHEN b.lvlcap = 1 then count(DISTINCT user_id) END AS L_LOW,
-					CASE WHEN b.lvlcap = 2 then count(DISTINCT user_id) END AS L_MODERATE,
-					CASE WHEN b.lvlcap = 3 then count(DISTINCT user_id) END AS L_HIGH,
-					CASE WHEN b.lvlcap = 4 then count(DISTINCT user_id) END AS L_VERY_HIGH,
-					
-					CASE WHEN b.priodev = 1 then count(DISTINCT user_id) END AS P_LOW,
-					CASE WHEN b.priodev = 2 then count(DISTINCT user_id) END AS P_MODERATE,
-					CASE WHEN b.priodev = 3 then count(DISTINCT user_id) END AS P_HIGH,
-					CASE WHEN b.priodev = 4 then count(DISTINCT user_id) END AS P_VERY_HIGH
-					from tobj_tbl a LEFT JOIN esat2_objectivest_tbl b ON a.tobj_id = b.tobj_id
-					
-					group by a.kra_id,a.tobj_id";
+				AS OBJECTIVES, 
+				CASE WHEN b.lvlcap = 1 then count(DISTINCT user_id) END AS L_LOW,
+				CASE WHEN b.lvlcap = 2 then count(DISTINCT user_id) END AS L_MODERATE,
+				CASE WHEN b.lvlcap = 3 then count(DISTINCT user_id) END AS L_HIGH,
+				CASE WHEN b.lvlcap = 4 then count(DISTINCT user_id) END AS L_VERY_HIGH,
+				
+				CASE WHEN b.priodev = 1 then count(DISTINCT user_id) END AS P_LOW,
+				CASE WHEN b.priodev = 2 then count(DISTINCT user_id) END AS P_MODERATE,
+				CASE WHEN b.priodev = 3 then count(DISTINCT user_id) END AS P_HIGH,
+				CASE WHEN b.priodev = 4 then count(DISTINCT user_id) END AS P_VERY_HIGH,
+				c.sy_desc
+				
+				from tobj_tbl a INNER JOIN esat2_objectivest_tbl b ON a.tobj_id = b.tobj_id
+				
+			INNER JOIN sy_tbl c on b.sy = c.sy_id
+			group by a.kra_id,a.tobj_id";
 
 	$statement = $connect->prepare($query);
 	$statement->execute();
@@ -722,6 +759,7 @@ $user_id = $_SESSION['user_id'];
 							<th width="auto">MODERATE</th>
 							<th width="auto">HIGH</th>
 							<th width="auto	">VERY HIGH</th>
+							
 
 
 						</tr>
@@ -769,18 +807,22 @@ $user_id = $_SESSION['user_id'];
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
 	$query = "SELECT CONCAT(a.kra_id,'.',a.mtobj_id) 
-					AS OBJECTIVES, 
-					CASE WHEN b.lvlcap = 1 then count(DISTINCT user_id) END AS L_LOW,
-					CASE WHEN b.lvlcap = 2 then count(DISTINCT user_id) END AS L_MODERATE,
-					CASE WHEN b.lvlcap = 3 then count(DISTINCT user_id) END AS L_HIGH,
-					CASE WHEN b.lvlcap = 4 then count(DISTINCT user_id) END AS L_VERY_HIGH,
-					
-					CASE WHEN b.priodev = 1 then count(DISTINCT user_id) END AS P_LOW,
-					CASE WHEN b.priodev = 2 then count(DISTINCT user_id) END AS P_MODERATE,
-					CASE WHEN b.priodev = 3 then count(DISTINCT user_id) END AS P_HIGH,
-					CASE WHEN b.priodev = 4 then count(DISTINCT user_id) END AS P_VERY_HIGH
-					from mtobj_tbl a LEFT JOIN esat2_objectivesmt_tbl b ON a.mtobj_id = b.mtobj_id
-					group by a.kra_id,a.mtobj_id";
+				AS OBJECTIVES, 
+				CASE WHEN b.lvlcap = 1 then count(DISTINCT user_id) END AS L_LOW,
+				CASE WHEN b.lvlcap = 2 then count(DISTINCT user_id) END AS L_MODERATE,
+				CASE WHEN b.lvlcap = 3 then count(DISTINCT user_id) END AS L_HIGH,
+				CASE WHEN b.lvlcap = 4 then count(DISTINCT user_id) END AS L_VERY_HIGH,
+				
+				CASE WHEN b.priodev = 1 then count(DISTINCT user_id) END AS P_LOW,
+				CASE WHEN b.priodev = 2 then count(DISTINCT user_id) END AS P_MODERATE,
+				CASE WHEN b.priodev = 3 then count(DISTINCT user_id) END AS P_HIGH,
+				CASE WHEN b.priodev = 4 then count(DISTINCT user_id) END AS P_VERY_HIGH,
+				c.sy_desc
+				
+				from mtobj_tbl a INNER JOIN esat2_objectivesmt_tbl b ON a.mtobj_id = b.mtobj_id
+				
+			INNER JOIN sy_tbl c on b.sy = c.sy_id
+			group by a.kra_id,a.mtobj_id";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -865,7 +907,7 @@ $user_id = $_SESSION['user_id'];
 								score3,
 									score4,
 										score5 
-											FROM tbl_rptselfmanagement";
+											FROM tbl_rptcorebehavioral";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -875,14 +917,14 @@ $user_id = $_SESSION['user_id'];
 
 	<div class="container">
 		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>CORE BEHAVIORAL - SELF ASSESSMENT</strong></h3>
+			<h3 align="center"><strong>CORE BEHAVIORAL COMPETENCIES</strong></h3>
 			<br />
 
 			<div class="table-responsive">
 				<table class="table table-bordered table-striped table-hover" id="for_chart10">
 					<thead>
 						<tr>
-							<th width="auto">CBC_NAME</th>
+							<th width="auto">Core Behavioral Competencies</th>
 							<th width="auto">1-SCALE</th>
 							<th width="auto">2-SCALE</th>
 							<th width="auto">3-SCALE</th>
@@ -927,365 +969,7 @@ $user_id = $_SESSION['user_id'];
 
 	<!--end of Core Behavioral Self Assessment-->
 
-	<!--Start of Core Behavioral Professionalism and Ethics-->
-
-	<?php
-	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptprofessionalismethics";
-	$statement = $connect->prepare($query);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	?>
-
-
-
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>CORE BEHAVIORAL - Professionalism and Ethics</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart13">
-					<thead>
-						<tr>
-							<th width="auto">CBC_NAME</th>
-							<th width="auto">1-SCALE</th>
-							<th width="auto">2-SCALE</th>
-							<th width="auto">3-SCALE</th>
-							<th width="auto">4-SCALE</th>
-							<th width="auto">5-SCALE</th>
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-										<tr>
-											<td>' . $row['cbc_name'] . '</td>
-											<td>' . $row['score1'] . '</td>
-											<td>' . $row['score2'] . '</td>
-											<td>' . $row['score3'] . '</td>
-											<td>' . $row['score4'] . '</td>
-											<td>' . $row['score5'] . '</td>
-										</tr>
-										';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area13" title="Objectives">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart13" id="view_chart13" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-		</div>
-	</div>
-
-	<br />
-	<br />
-
-
-
-	<!--end of Core Behavioral Professionalism and Ethics-->
-
-	<!--Start of Core Behavioral Results Focus-->
-
-	<?php
-	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptresultfocus";
-	$statement = $connect->prepare($query);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	?>
-
-
-
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>CORE BEHAVIORAL - Results Focus</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart14">
-					<thead>
-						<tr>
-							<th width="auto">CBC_NAME</th>
-							<th width="auto">1-SCALE</th>
-							<th width="auto">2-SCALE</th>
-							<th width="auto">3-SCALE</th>
-							<th width="auto">4-SCALE</th>
-							<th width="auto">5-SCALE</th>
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-										<tr>
-											<td>' . $row['cbc_name'] . '</td>
-											<td>' . $row['score1'] . '</td>
-											<td>' . $row['score2'] . '</td>
-											<td>' . $row['score3'] . '</td>
-											<td>' . $row['score4'] . '</td>
-											<td>' . $row['score5'] . '</td>
-										</tr>
-										';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area14" title="Objectives">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart14" id="view_chart14" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-		</div>
-	</div>
-
-	<br />
-	<br />
-
-
-
-	<!--end of Core Behavioral Results Focus-->
-
-	<!--Start of Core Behavioral Teamwork-->
-
-	<?php
-	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptteamwork";
-	$statement = $connect->prepare($query);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	?>
-
-
-
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>CORE BEHAVIORAL - Teamwork</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart15">
-					<thead>
-						<tr>
-							<th width="auto">CBC_NAME</th>
-							<th width="auto">1-SCALE</th>
-							<th width="auto">2-SCALE</th>
-							<th width="auto">3-SCALE</th>
-							<th width="auto">4-SCALE</th>
-							<th width="auto">5-SCALE</th>
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-										<tr>
-											<td>' . $row['cbc_name'] . '</td>
-											<td>' . $row['score1'] . '</td>
-											<td>' . $row['score2'] . '</td>
-											<td>' . $row['score3'] . '</td>
-											<td>' . $row['score4'] . '</td>
-											<td>' . $row['score5'] . '</td>
-										</tr>
-										';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area15" title="Objectives">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart15" id="view_chart15" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-		</div>
-	</div>
-
-	<br />
-	<br />
-
-
-
-	<!--end of Core Behavioral Teamwork-->
-
-	<!--Start of Core Behavioral Service Orientation-->
-
-	<?php
-	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptserviceorientation";
-	$statement = $connect->prepare($query);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	?>
-
-
-
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>CORE BEHAVIORAL - Service Orientation</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart16">
-					<thead>
-						<tr>
-							<th width="auto">CBC_NAME</th>
-							<th width="auto">1-SCALE</th>
-							<th width="auto">2-SCALE</th>
-							<th width="auto">3-SCALE</th>
-							<th width="auto">4-SCALE</th>
-							<th width="auto">5-SCALE</th>
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-										<tr>
-											<td>' . $row['cbc_name'] . '</td>
-											<td>' . $row['score1'] . '</td>
-											<td>' . $row['score2'] . '</td>
-											<td>' . $row['score3'] . '</td>
-											<td>' . $row['score4'] . '</td>
-											<td>' . $row['score5'] . '</td>
-										</tr>
-										';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area16" title="Objectives">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart16" id="view_chart16" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-		</div>
-	</div>
-
-	<br />
-	<br />
-
-	<!--end of Core Behavioral Service Orientation-->
-
-	<!--Start of Core Behavioral Innovation-->
-
-	<?php
-	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-					score1,
-						score2,
-							score3,
-								score4,
-									score5 
-										FROM tblcbc_innovation";
-	$statement = $connect->prepare($query);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	?>
-
-
-
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>CORE BEHAVIORAL - Innovation</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart17">
-					<thead>
-						<tr>
-							<th width="auto">CBC_NAME</th>
-							<th width="auto">1-SCALE</th>
-							<th width="auto">2-SCALE</th>
-							<th width="auto">3-SCALE</th>
-							<th width="auto">4-SCALE</th>
-							<th width="auto">5-SCALE</th>
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-										<tr>
-											<td>' . $row['cbc_name'] . '</td>
-											<td>' . $row['score1'] . '</td>
-											<td>' . $row['score2'] . '</td>
-											<td>' . $row['score3'] . '</td>
-											<td>' . $row['score4'] . '</td>
-											<td>' . $row['score5'] . '</td>
-										</tr>
-										';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area17" title="Objectives">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart17" id="view_chart17" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-		</div>
-	</div>
-
-	<br />
-	<br />
-
-
-
-	<!--end of Core Behavioral Innovation-->
-
-
+	
 </body>
 
 </html>
