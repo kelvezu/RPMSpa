@@ -5,9 +5,11 @@ include 'includes/header.php';
 if (isset($_GET['view'])) {
     $user_id = $_GET['view'];
 
-    $query = $conn->query('SELECT subject_tbl.subject_name,gradelvltaught_tbl.gradelvltaught_name,account_tbl.surname,account_tbl.firstname,account_tbl.middlename,b_mtcotrating_tbl.* FROM (b_mtcotrating_tbl INNER JOIN account_tbl ON b_mtcotrating_tbl.user_id = account_tbl.user_id INNER JOIN subject_tbl ON b_mtcotrating_tbl.subject_id = subject_tbl.subject_id INNER JOIN gradelvltaught_tbl ON b_mtcotrating_tbl.gradelvltaught_id = gradelvltaught_tbl.gradelvltaught_id ) WHERE b_mtcotrating_tbl.user_id = ' . $user_id . '');
+    $query = $conn->query('SELECT subject_tbl.subject_name,gradelvltaught_tbl.gradelvltaught_name,account_tbl.surname,account_tbl.firstname,account_tbl.middlename,b_mtioafrating_tbl.* FROM (b_mtioafrating_tbl INNER JOIN account_tbl ON b_mtioafrating_tbl.user_id = account_tbl.user_id INNER JOIN subject_tbl ON b_mtioafrating_tbl.subject_id = subject_tbl.subject_id INNER JOIN gradelvltaught_tbl ON b_mtioafrating_tbl.gradelvltaught_id = gradelvltaught_tbl.gradelvltaught_id ) WHERE b_mtioafrating_tbl.user_id = ' . $user_id . '');
     while ($row = $query->fetch_assoc()) {
-        $rater_id = $row['rater_id'];
+        $rater_id = $row['rater_id1'];
+        $rater_id2 = $row['rater_id2'] ?? "NULL";
+        $rater_id3 = $row['rater_id3'] ?? "NULL";
         $date = $row['date'];
         $tobserved = $row['user_id'];
         $subject = $row['subject_name'];
@@ -45,15 +47,28 @@ if (isset($_GET['view'])) {
                                 <?php echo $date; ?>
                             </div>
 
+                        </div>  
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                            <label>OBSERVER 2:</label>&nbsp;
+                                <input type="text" name="rater" value="<?php echo displayname($conn, $rater_id2); ?>">
+                               
+                            </div>
+
+                            <div class="col-lg-6">
+                            <label>
+                                    MASTER TEACHER OBSERVED:
+                                </label>
+                                <input type="text" name="tobserved" value="<?php echo displayname($conn, $tobserved); ?>">
+                            </div>
                         </div>
 
                         <div class="row">
                             <div class="col-lg-6">
-
-                                <label>
-                                    MASTER TEACHER OBSERVED:
-                                </label>
-                                <input type="text" name="tobserved" value="<?php echo displayname($conn, $tobserved); ?>">
+                            <label>OBSERVER 3:</label>&nbsp;
+                                <input type="text" name="rater" value="<?php echo displayname($conn, $rater_id3); ?>">
+                                
                             </div>
 
                             <div class="col-lg-6">
@@ -96,11 +111,11 @@ if (isset($_GET['view'])) {
                     </thead>
                     <?php
                         $indicator_no = 1;
-                        $query1 = $conn->query('SELECT mtindicator_tbl.mtindicator_name,a_mtcotrating_tbl.* FROM (a_mtcotrating_tbl INNER JOIN mtindicator_tbl ON a_mtcotrating_tbl.indicator_id = mtindicator_tbl.mtindicator_id) WHERE a_mtcotrating_tbl.user_id = ' . $user_id . '');
+                        $query1 = $conn->query('SELECT mtindicator_tbl.mtindicator_name,a_mtioafrating_tbl.* FROM (a_mtioafrating_tbl INNER JOIN mtindicator_tbl ON a_mtioafrating_tbl.mtindicator_id = mtindicator_tbl.mtindicator_id) WHERE a_mtioafrating_tbl.user_id = ' . $user_id . '') or die($conn->error);
                         while ($rows = $query1->fetch_assoc()) :
 
                             $indicator_name = $rows['mtindicator_name'];
-                            $tcotrating = $rows['mtcotrating'];
+                            $tcotrating = $rows['tioafrating'];
                             ?>
                         <tbody>
                             <tr>
