@@ -232,9 +232,27 @@ include_once 'sampleheader.php'; ?>
         </div>
 
         <div class="col-sm box">
-            <p class="text-danger black-border">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum id tenetur, sunt dolores laudantium laboriosam reprehenderit eos obcaecati itaque non vel, aspernatur, voluptatibus eligendi. Nemo, porro necessitatibus. Praesentium, optio ipsam. Fuga tenetur consequuntur, voluptates at aut, voluptas architecto nihil quidem commodi ut alias sunt sequi? Aliquam ipsa, nihil deserunt, eum a neque laudantium tenetur quos iure ad odit aperiam magni dolores mollitia cumque aut autem nulla temporibus commodi adipisci voluptate et similique voluptatum. Animi, ex non cumque cum itaque deserunt culpa. Ut fuga hic aliquid autem, ipsa laboriosam quis provident debitis veniam excepturi dolor itaque rem atque minus fugiat consequuntur.
-            </p>
+            <table class="table table-sm">
+
+                <thead>
+                    <tr>
+                        <th>Principal</th>
+                        <th>School</th>
+                    </tr>
+                </thead>
+
+                <?php
+                $principal = RPMSdb::showAllPrincipal($conn);
+                foreach ($principal as $prin) : ?>
+
+
+
+                <?php
+                endforeach;
+                ?>
+
+
+            </table>
         </div>
         <!-- End of First Row -->
     </div>

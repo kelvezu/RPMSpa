@@ -22,7 +22,7 @@ class RPMSdb
                 INNER JOIN sy_tbl c on b.sy = c.sy_id
                 group by a.kra_id,a.mtobj_id";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -47,7 +47,7 @@ class RPMSdb
                     
                     GROUP BY a.region_name";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -72,7 +72,7 @@ class RPMSdb
                     
                     GROUP BY a.region_name";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -93,7 +93,7 @@ class RPMSdb
                     INNER JOIN curriclass_tbl c on a.curri_class = c.curriclass_id
                     GROUP BY c.curriclass_name";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -119,7 +119,7 @@ class RPMSdb
                     INNER JOIN sy_tbl b on a.sy = b.sy_id
                     GROUP BY a.gradelvltaught_name";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -139,7 +139,7 @@ class RPMSdb
                     INNER JOIN sy_tbl b on a.sy = b.sy_id
                     GROUP BY a.subject_name";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -163,7 +163,7 @@ class RPMSdb
                     
                     GROUP BY c.totalyear_name";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -185,7 +185,7 @@ class RPMSdb
                     
                     GROUP BY a.highest_degree";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -207,7 +207,7 @@ class RPMSdb
                     GROUP BY a.position
                     order BY a.position desc";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -227,7 +227,7 @@ class RPMSdb
                 INNER JOIN sy_tbl b on a.sy = b.sy_id
                 GROUP BY a.employment_status";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -250,7 +250,7 @@ class RPMSdb
                     INNER JOIN gender_tbl b on a.gender = b.gender_id
                     GROUP BY a.gender";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -272,20 +272,20 @@ class RPMSdb
                     INNER JOIN sy_tbl c on a.sy = c.sy_id
                     GROUP BY b.age_name";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
         return $result_arr;
         exit;
     }
-    
+
     public static function esatSY($conn)
     {
         $result_arr = [];
         $query = "SELECT DISTINCT School_Year as sy_esat from tbl_rptwithesat where School_Year is not null";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -301,14 +301,14 @@ class RPMSdb
             INNER JOIN sy_tbl c on a.sy = c.sy_id
             group by c.sy_desc";
 
-        $result2 = mysqli_query($conn,$query2);
+        $result2 = mysqli_query($conn, $query2);
         foreach ($result2 as $res) :
             array_push($result_arr, $res);
         endforeach;
         return $result_arr;
         exit;
     }
-    
+
     public static function mteacherSYcbc($conn)
     {
         $result_arr = [];
@@ -318,7 +318,7 @@ class RPMSdb
             INNER JOIN sy_tbl c on b.sy = c.sy_id
             group by c.sy_desc";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
@@ -336,14 +336,14 @@ class RPMSdb
                 INNER JOIN sy_tbl c on b.sy = c.sy_id
                 group by c.sy_desc";
 
-        $result = mysqli_query($conn,$query);
+        $result = mysqli_query($conn, $query);
         foreach ($result as $res) :
             array_push($result_arr, $res);
         endforeach;
         return $result_arr;
         exit;
     }
-    
+
     public static function teacherSYass($conn)
     {
         $result_arr = [];
@@ -352,14 +352,14 @@ class RPMSdb
             INNER JOIN sy_tbl c on a.sy = c.sy_id
             group by c.sy_desc";
 
-        $result2 = mysqli_query($conn,$query2);
+        $result2 = mysqli_query($conn, $query2);
         foreach ($result2 as $res) :
             array_push($result_arr, $res);
         endforeach;
         return $result_arr;
         exit;
     }
-    
+
     // DISPLAY ALL TEACHERS ACCORDING TO USERS SCHOOL
     public static function displayMasterList($conn)
     {
@@ -630,7 +630,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE  rater = "' . $_SESSION['user_id'] . '" AND NOT `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `user_id` IS NOT NULL AND status = "Active" AND school_id = 14 AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND school_id ="14" AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
+        $qry = 'SELECT * FROM `account_tbl` WHERE  rater = "' . $_SESSION['user_id'] . '" AND NOT `user_id` IN (SELECT `user_id` FROM a_tcotrating_tbl WHERE `user_id` IS NOT NULL AND status = "Active" AND school_id = ' . $_SESSION['school_id'] . ' AND position IN ("Teacher I", "Teacher II", "Teacher III")) AND school_id =' . $_SESSION['school_id'] . ' AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
 
         $result = mysqli_query($conn, $qry);
         if ($result) :
@@ -892,5 +892,22 @@ class RPMSdb
         else :
             return false;
         endif;
+    }
+
+    // display all Principal 
+
+    public static function showAllPrincipal($conn)
+    {
+        $qry = 'SELECT * FROM account_tbl WHERE position = "Principal" and `status` = "Active"';
+        $result = mysqli_query($conn, $qry);
+
+        if (mysqli_num_rows($result) > 0) {
+            $result_array = [];
+
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+            endforeach;
+            return $result_array;
+        }
     }
 }

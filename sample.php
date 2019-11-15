@@ -200,15 +200,20 @@ echo BR;
 // echo ucwords($position) . BR;
 
 
-echo RPMSdb::totalTeachers($conn);
-pre_r(RPMSdb::showNotif($conn));
-echo BR;
-$admin = Dashboard::adminOnly();
-if ($admin) {
-    echo 'admin ka!';
-} else {
-    echo 'd ka admin!';
-}
+// echo RPMSdb::totalTeachers($conn);
+// pre_r(RPMSdb::showNotif($conn));
+// echo BR;
+// $admin = Dashboard::adminOnly();
+// if ($admin) {
+//     echo 'admin ka!';
+// } else {
+//     echo 'd ka admin!';
+// }
+
+$prin =  RPMSdb::showAllPrincipal($conn);
+foreach ($prin as $pri) :
+    echo displayName($conn, $pri['user_id']) . BR;
+endforeach;
 
 
 
