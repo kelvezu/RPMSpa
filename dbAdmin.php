@@ -8,13 +8,13 @@ include_once 'sampleheader.php'; ?>
     <p>
         <!-- Button for Announcement -->
         <button id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Announcements
+            <i class=" fa fa-newspaper"></i> Announcements
         </button>
         <!-- end btn for announcement -->
 
         <!-- btn for notif -->
         <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#notifCollapse" aria-expanded="false" aria-controls="collapseExample">
-            Notifications
+            <i class=" fa fa-bell"></i> Notifications
         </button>
         <!-- end of btn notif -->
 
@@ -34,7 +34,17 @@ include_once 'sampleheader.php'; ?>
     <!-- Notification Collapse -->
     <div class="collapse m-2 border border-dark" id="notifCollapse">
         <div class="card">
-            <div class="card-header font-weight-bold">Notification List</div>
+            <div class="card-header font-weight-bold">
+                <div class="d-flex">
+                    <div class="p-2 w-100">
+                        Notification List
+                    </div>
+                    <div class="p-2 flex-shrink-1">
+                        <a href="settings/notification_settings.php" class="btn btn-sm btn-primary">View All Notifications</a>
+                    </div>
+                </div>
+
+            </div>
             <div class="card card-body">
                 <div class="list-group">
                     <?php
@@ -51,7 +61,7 @@ include_once 'sampleheader.php'; ?>
                             <br />
                     <?php
                         endforeach;
-                    else : echo "<p class='font-weight-bold text-center'>No notification!</p>";
+                    else : echo "<p class='text-danger font-weight-bold text-center'>No notification!</p>";
                     endif;
                     ?>
                 </div>
@@ -60,12 +70,20 @@ include_once 'sampleheader.php'; ?>
     </div>
     <!-- End of Notification List -->
     <!-- Announcement List -->
-    <div class="collapse m-2 border border-dark" id="announcementCollapse">
-        <div class="card">
+
+    <div class="collapse " id="announcementCollapse">
+        <div class="card box">
             <div class=" card card-header font-weight-bold">
                 <div class="d-flex justify-content-between">
-                    <div class="p-2-">Announcement List</div>
-                    <div class="p-2-"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
+                    <div class="p-2">Announcement List</div>
+                    <div class="row">
+                        <div class="p-2"> <input type="submit" value="Add Announcement" class="btn btn-sm btn-success" data-toggle="modal" data-target="#AddAnnouncement"></div>
+
+                        <div class="p-2">
+                            <a href="settings/announcement_settings.php" class="btn btn-sm btn-primary">Announcement Settings</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class=" card-body text-dark">
@@ -77,6 +95,7 @@ include_once 'sampleheader.php'; ?>
             </div>
         </div>
     </div>
+
     <!-- End of announcement list -->
 
     <!-- Start of Abang 1 -->
@@ -123,19 +142,28 @@ include_once 'sampleheader.php'; ?>
 
 
 
-<!-- Adding BORDERS to determine the width and height of each div -->
+
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
 <!-- Main Container -->
 <div class="container-fluid">
 
     <div class="row">
+
         <!-- First row -->
 
-        <div class="col">
+
+
+        <div class="col-sm-6 box">
+            <input type="button" id="show-tcount-btn" class="btn btn-sm btn-primary" value="Show Table">
             <!-- First column -->
+
             <!-- Total of Active Teachers -->
-            <div class="col">
+
+            <div class="col" id="teacher_count_table">
                 <!-- Card -->
-                <div class="card border border-dark">
+                <div class="card">
                     <div class="card-header">
                         <h6>Total of Active Teachers</h6>
                     </div>
@@ -151,12 +179,13 @@ include_once 'sampleheader.php'; ?>
                                     <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="box">
                                 <?php
+                                //  and $sch_t['T'] || $sch_t['MT']
                                 $num = 1;
                                 $t_total = RPMSdb::totalTeacherPerSchool($conn);
                                 foreach ($t_total as $sch_t) :
-                                    if (!empty($sch_t['school_id']) and $sch_t['T'] || $sch_t['MT']) : ?>
+                                    if (!empty($sch_t['school_id'])) : ?>
                                         <td><?= $num++ ?></td>
                                         <td><?= displaySchool($conn, $sch_t['school_id']); ?></td>
                                         <td class="font-weight-bold text-success"><?= $sch_t['T'] ?></td>
@@ -169,13 +198,14 @@ include_once 'sampleheader.php'; ?>
                         <tfoot class="bg-light font-weight-bold">
                             <tr>
                                 <td class=" text-right" colspan="2">Total:</td>
-                                <td> <?= RPMSdb::totalTOnlyCount($conn)["Total"] ?></td>
-                                <td> <?= RPMSdb::totalMTOnlyCount($conn)["Total"] ?></td>
-                                <td><?= RPMSdb::totalTeachersCount($conn)["Total"] ?></td>
+                                <td> <?= RPMSdb::totalTOnlyCount($conn) ?></td>
+                                <td> <?= RPMSdb::totalMTOnlyCount($conn) ?></td>
+                                <td><?= $totalCount = RPMSdb::totalTeachersCount($conn) ?></td>
 
                             </tr>
                         </tfoot>
                         </table>
+
                     </div>
                     <!-- end of card-body -->
                 </div>
@@ -183,22 +213,30 @@ include_once 'sampleheader.php'; ?>
             </div>
             <!-- Total of Active Teachers -->
             <!-- End of First Column -->
+
+            <!-- Chart for Teacher Count -->
+            <div class="col-sm box" id="teacher_count_chart">
+
+                <!-- Chart -->
+                <div style="width:max-width; height:340px;" id="teacher_chart"></div>
+                <!-- End of Chart -->
+            </div>
+            <!-- End of Chart for Teacher Count -->
         </div>
 
 
-        <!-- 1st row 2nd column -->
-        <div class="col-4  black-border text-danger">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
-        </div>
-        <!-- end  1st row 2nd column-->
 
-        <div class="col black-border text-warning ">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat quo officia suscipit delectus hic perspiciatis? Natus, id enim excepturi optio eaque dignissimos totam autem, maxime veritatis iste recusandae consequuntur molestiae ad. Officiis laboriosam provident ab nihil cumque assumenda aut molestias reprehenderit fugit, expedita ea sit quibusdam delectus quaerat doloremque voluptas.
+        <div id="total-chart">
+            <!-- Top Teacher Table -->
         </div>
 
-
+        <div class="col-sm-6">
+            <p class="text-danger black-border">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum id tenetur, sunt dolores laudantium laboriosam reprehenderit eos obcaecati itaque non vel, aspernatur, voluptatibus eligendi. Nemo, porro necessitatibus. Praesentium, optio ipsam. Fuga tenetur consequuntur, voluptates at aut, voluptas architecto nihil quidem commodi ut alias sunt sequi? Aliquam ipsa, nihil deserunt, eum a neque laudantium tenetur quos iure ad odit aperiam magni dolores mollitia cumque aut autem nulla temporibus commodi adipisci voluptate et similique voluptatum. Animi, ex non cumque cum itaque deserunt culpa. Ut fuga hic aliquid autem, ipsa laboriosam quis provident debitis veniam excepturi dolor itaque rem atque minus fugiat consequuntur.
+            </p>
+        </div>
+        <!-- End of First Row -->
     </div>
-    <!-- End of First Row -->
 
     <!-- Second Row -->
     <div class="row">

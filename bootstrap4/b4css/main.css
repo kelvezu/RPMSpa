@@ -101,3 +101,9 @@
     padding: 2%;
     font-weight: bolder;
 }
+
+.box {
+    width: auto;
+    height: 350px;
+    overflow: auto;
+}

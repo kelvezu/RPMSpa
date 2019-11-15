@@ -420,12 +420,13 @@ class RPMSdb
     //TOTAL OF ALL ACTIVE TEACHERS
     public static function totalTeachersCount($conn)
     {
-        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        // $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        $totalqry = 'SELECT * FROM account_tbl WHERE (POSITION LIKE "Master%" OR POSITION LIKE "Teacher%") AND school_id is not null AND `status` = "Active" ';
         $result = mysqli_query($conn, $totalqry);
 
 
         if (!empty($result)) :
-            return  mysqli_fetch_assoc($result);
+            return  mysqli_num_rows($result);
         else :
             return 0;
         endif;
@@ -433,10 +434,11 @@ class RPMSdb
 
     public static function totalTOnlyCount($conn)
     {
-        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III")';
+        // $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Teacher I", "Teacher II", "Teacher III")';
+        $totalqry = 'SELECT * FROM account_tbl WHERE POSITION LIKE "Teacher%" AND school_id is not null AND `status` = "Active" ';
         $result = mysqli_query($conn, $totalqry);
         if (!empty($result)) :
-            return  mysqli_fetch_assoc($result);
+            return  mysqli_num_rows($result);
         else :
             return 0;
         endif;
@@ -444,10 +446,11 @@ class RPMSdb
 
     public static function totalMTOnlyCount($conn)
     {
-        $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        // $totalqry = 'SELECT COUNT(IF(`status` = "Active",1,NULL)) as "Total" FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV")';
+        $totalqry = 'SELECT * FROM account_tbl WHERE POSITION LIKE "Master%" AND school_id is not null';
         $result = mysqli_query($conn, $totalqry);
         if (!empty($result)) :
-            return  mysqli_fetch_assoc($result);
+            return  mysqli_num_rows($result);
         else :
             return 0;
         endif;
@@ -815,8 +818,38 @@ class RPMSdb
     public static function showNotif($conn)
     {
         $notif_arr = [];
-
         $qry = 'SELECT * FROM notification_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id desc LIMIT 6';
+        $result = mysqli_query($conn, $qry);
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($notif_arr, $res);
+            endforeach;
+            return $notif_arr;
+        else :
+            return false;
+        endif;
+    }
+
+    public static function showAllNotif($conn)
+    {
+        $notif_arr = [];
+        $qry = 'SELECT * FROM notification_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id';
+        $result = mysqli_query($conn, $qry);
+        if ($result) :
+            foreach ($result as $res) :
+                array_push($notif_arr, $res);
+            endforeach;
+            return $notif_arr;
+        else :
+            return false;
+        endif;
+    }
+
+    public static function showAnnouncement($conn, $sy, $limit = 6)
+    {
+        $notif_arr = [];
+
+        $qry = "SELECT * FROM announcement_tbl WHERE `status` = 'Active' AND sy_id =  $sy ORDER BY id desc LIMIT $limit";
         $result = mysqli_query($conn, $qry);
 
         if ($result) :
@@ -829,13 +862,11 @@ class RPMSdb
         endif;
     }
 
-    public static function showAnnouncement($conn)
+    public static function showAllAnnouncement($conn)
     {
         $notif_arr = [];
-
-        $qry = 'SELECT * FROM announcement_tbl WHERE `status` = "Active" AND sy_id =  "' . $_SESSION['active_sy_id'] . '" ORDER BY notif_id desc LIMIT 6';
+        $qry = "SELECT * FROM announcement_tbl ORDER BY id desc";
         $result = mysqli_query($conn, $qry);
-
         if ($result) :
             foreach ($result as $res) :
                 array_push($notif_arr, $res);
