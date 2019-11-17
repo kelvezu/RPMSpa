@@ -210,11 +210,24 @@ echo BR;
 //     echo 'd ka admin!';
 // }
 
-$prin =  RPMSdb::showAllPrincipal($conn);
-foreach ($prin as $pri) :
-    echo displayName($conn, $pri['user_id']) . BR;
-endforeach;
+// $prin =  RPMSdb::showAllPrincipal($conn);
+// foreach ($prin as $pri) :
+//     echo displayName($conn, $pri['user_id']) . BR;
+// endforeach;
 
+$date = date('Y/m/d');
+$intdate = intval(strtotime($date));
+echo ($intdate) . '<br/>';
+
+$first_period_int = intval(strtotime($_SESSION['first_period']));
+echo ($first_period_int) . '<br/>';
+
+$second_period_int = intval(strtotime($_SESSION['second_period']));
+echo ($second_period_int) . '<br/>';
+$third_period_int = intval(strtotime($_SESSION['third_period']));
+echo ($third_period_int) . '<br/>';
+$fourth_period_int = intval(strtotime($_SESSION['final_period']));
+echo ($fourth_period_int) . '<br/>';
 
 
 ?>
