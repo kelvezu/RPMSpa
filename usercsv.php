@@ -29,17 +29,20 @@ include 'includes/header.php';
         <p><strong>Directions:</strong></p>
         <ol type="i">
           <strong>
+            <li>Download CSV file format. Click <a href="download.php?file=usercsv.csv">here</a>.</u></li>
             <li>If user doesnt have position yet, place <u class="text-danger">N/A.</u></li>
             <li>The date format must be numeric and must follow the ISO date format: <u class="text-danger">YYYY/MM/DD.</u> </li>
             <li><u class="text-danger">Email address </u>and <u class="text-danger">Contact Number</u> must be filled up. This will serve as the main part for account retrieval.</li>
             <li>Excel file must be <u class="text-danger">save as CSV.</u> </li>
             <li>Position must be <u class="text-danger">Master Teacher IV</u> and <u class="text-danger">Teacher I-III only</u>.</li>
+
           </strong>
         </ol>
 
 
       </div>
     </div>
+
 
 
 

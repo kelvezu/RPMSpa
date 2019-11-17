@@ -15,7 +15,7 @@
                         <p>You can reset your password here.</p>
                         <div class="panel-body">
 
-                            <form action="resetrequest.php" method="post">
+                            <form action="requestreset.php" method="post">
 
                                 <div class="form-group">
                                     <div class="input-group">
