@@ -911,5 +911,6 @@ class RPMSdb
         }
     }
 
-    public static function showAllCBC
+    public static function showAllCBC()
+    { }
 }
