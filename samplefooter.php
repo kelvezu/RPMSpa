@@ -139,11 +139,6 @@
         function drawAxisTickColors() {
             var data = google.visualization.arrayToDataTable([
                 ['School', 'Teacher', 'Master Teacher'],
-                // ['New York City, NY', 8175000, 8008000],
-                // ['Los Angeles, CA', 3792000, 3694000],
-                // ['Chicago, IL', 2695000, 2896000],
-                // ['Houston, TX', 2099000, 1953000],
-                // ['Philadelphia, PA', 1526000, 1517000]
                 <?php
                 // GET THE DATA FROM dbadmin.php
                 foreach ($t_total as $total) :
@@ -173,19 +168,6 @@
                         bold: true,
                         fontSize: 12,
                         color: '#4d4d4d'
-                    }
-                },
-                vAxis: {
-                    // title: 'School',
-                    textStyle: {
-                        fontSize: 12,
-                        bold: true,
-                        color: '#848484'
-                    },
-                    titleTextStyle: {
-                        fontSize: 14,
-                        bold: false,
-                        color: '#848484'
                     }
                 }
             };

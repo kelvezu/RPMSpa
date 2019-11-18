@@ -965,4 +965,7 @@ class RPMSdb
             return $result_array;
         }
     }
+
+    public static function showAllCBC()
+    { }
 }

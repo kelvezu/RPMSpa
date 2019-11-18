@@ -221,7 +221,7 @@ include 'includes/header.php';
                 <form action="includes/processESAT.php" method="POST">
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="region" id="region" placeholder="ex. Manila" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters">
+                            <input type="text" class="form-control" name="region" id="region" placeholder="ex. Manila" required pattern="[A-Za-z -.]{3,}" title="Input three or more characters and input should not include special characters">
                         </div>
                     </div>
                     <div>
@@ -268,7 +268,7 @@ include 'includes/header.php';
                     </div>
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="division" id="division" placeholder="ex. Makati" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <input type="text" class="form-control" name="division" id="division" placeholder="ex. Makati" required pattern="[A-Za-z -.]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>
@@ -315,7 +315,7 @@ include 'includes/header.php';
                     </div>
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="municipality" id="municipality" placeholder="ex. Makati City" required pattern="[A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <input type="text" class="form-control" name="municipality" id="municipality" placeholder="ex. Makati City" required pattern="[A-Za-z -.]{3,}" title="Input three or more characters and input should not include numbers and special characters">
                         </div>
                     </div>
                     <div>

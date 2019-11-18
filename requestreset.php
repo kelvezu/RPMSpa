@@ -19,7 +19,7 @@ if (isset($_POST["email"])) {
   $emailto = $_POST["email"];
 
   $code = uniqid(true);
-  $query = mysqli_query($conn, "INSERT INTO resetpass(code,email) VALUES ('$code','$emailto')");
+  $query = mysqli_query($conn, "INSERT INTO resetpassword(code,email) VALUES ('$code','$emailto')");
   if (!$query) {
     exit("Error!");
   }
@@ -49,6 +49,17 @@ if (isset($_POST["email"])) {
     $mail->Subject = 'Reset Password Link';
     $mail->Body    = "<h1>Hi $name,</h1>
                         You've requested to reset your RPMS password. Click <a href='$url'>here</a> to enter a new password.
+                        
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
                         ** This is a system-generated message and does not require a signature. Please do not reply to this email. **
                         DISCLAIMER:The information contained in this email message is intended only for the individual or entity to which it is addressed, and such information may be privileged or confidential and protected under applicable laws.  If you are not the intended recipient, you must not disseminate, distribute, store, print, copy or deliver this message.  Email transmission cannot be guaranteed to be error-free owing to the nature of the internet.  Therefore, you fully understand that Division Office shall not be liable for any omission or error in this message which may arise as a result of email transmission.  Further Division Office does not warrant against, and will not be liable and/or responsible for, any loss or damage that the receipt, use or other disposition of this e-mail and/or its attachments may cause to the recipient's computer or network. ";
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
