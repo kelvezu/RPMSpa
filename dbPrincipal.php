@@ -7,8 +7,8 @@ include_once 'sampleheader.php'; ?>
 <div class="container mb-4">
     <p>
         <!-- Button for Announcement -->
-        <button id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" data-target="#sampleCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-            <i class=" fa fa-newspaper"></i> Sample Collapse
+        <button id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <i class=" fa fa-newspaper"></i> Announcements
         </button>
         <!-- end btn for announcement -->
 
@@ -51,15 +51,40 @@ include_once 'sampleheader.php'; ?>
     <!-- End of Notification List -->
     <!-- Announcement List -->
 
-    <div class="collapse " id="sampleCollapse">
-        <div class="card box">
-            <div class=" card card-header font-weight-bold">
-                Header
+    <div class="collapse " id="announcementCollapse">
+        <div class="card">
+            <div class="card-header">
+                Announcement List
             </div>
-            <div class=" card-body text-dark">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt odit reiciendis doloribus magni eaque dolor, necessitatibus cumque similique vero sequi facilis quis ut aperiam ea blanditiis illo cum error aut repudiandae dicta laboriosam aliquid facere quasi odio. Nam facilis sequi optio quo et incidunt esse dolore, enim hic eaque a. Fugiat, reprehenderit quam a, accusantium temporibus tempore dolorum magnam sunt, dicta explicabo rerum! Error a sunt earum vero delectus. Assumenda necessitatibus rerum delectus repudiandae libero, aut deserunt perspiciatis dolorem beatae earum impedit iure distinctio sint. Nisi, corrupti dolores amet, voluptatibus beatae aliquam rem doloremque enim magni fugiat maiores. Dolorum, odit?
+            <div class="card-body box">
+                <?php
+                $result = RPMSdb::showAnnouncement($conn, $_SESSION['active_sy_id'], 5) or die($conn->error);
+                if ($result) :
+                    foreach ($result as $res) : ?>
+                        <div class="card box">
+                            <div class="card-header">
+                                <div class="d-flex">
+                                    <div class="px-2 bd-highlight">
+                                        <p><b>Subject: </b><?= $res['subject'] ?></p>
+                                    </div>
+                                    <div class="px-2 bd-highlight">
+                                        <p><b>Title: </b><?= $res['title'] ?></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-body"><?= $res['message'] ?></div>
+                            <div class="card-footer">
+                                <p><b>Date Posted:</b><?= $res['datetime_stamp'] ?></p>
+                            </div>
+                        </div><br />
+                <?php
+                    endforeach;
+                endif; ?>
+
             </div>
         </div>
+
     </div>
 
     <!-- End of announcement list -->
@@ -127,8 +152,34 @@ include_once 'sampleheader.php'; ?>
 
 
 
-            <div class="col text-warning black-border">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus hic incidunt molestias obcaecati nulla debitis fuga ipsam est modi quam mollitia recusandae veniam eos eveniet cupiditate, similique temporibus reprehenderit ratione asperiores officia sequi vitae rerum? Beatae, eum velit, laborum saepe cumque eaque architecto pariatur voluptas ratione accusamus accusantium facere modi at, quae dolorem incidunt voluptatem quibusdam repellat? Eius enim ipsa architecto ut, in sequi doloremque cum aperiam. Deserunt nihil maiores cumque dolorum. Itaque deleniti laboriosam sed voluptas eveniet corporis sint voluptate et eligendi! Ratione optio alias atque possimus veritatis aliquid commodi, quod deserunt cumque autem magnam consectetur quidem nobis. Tenetur voluptatum laboriosam dolor libero ratione minima id repudiandae est provident cum a, nesciunt soluta ipsam deleniti quo enim quasi tempora velit iste magnam distinctio veritatis. Veniam pariatur ad nihil reiciendis maiores? Modi officia molestias, dicta perferendis ut eligendi incidunt accusantium corrupti iste blanditiis nemo distinctio quasi odit libero porro, illo ipsam pariatur! Veritatis culpa dicta, nisi explicabo voluptas expedita necessitatibus eius officiis modi! Impedit, debitis cum. Praesentium aspernatur voluptate minima alias in minus pariatur incidunt ratione odit, enim harum ipsum quisquam assumenda maiores sint. A iure repellat dignissimos molestias recusandae eaque similique temporibus velit, alias sint qui sapiente expedita suscipit.
+            <div class="col text-dark font-weight-bold">
+                <div class="card">
+                    <div class="card-header bg-light">
+                        School Personnel List
+                    </div>
+                    <div class="card-body box">
+                        <table class="table table-sm ">
+                            <thead class="bg-light">
+                                <tr>
+                                    <td>#</td>
+                                    <td>Name: </td>
+                                    <td>Position </td>
+                                </tr>
+                            </thead>
+                            <tbody id="sch_personnel">
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <p class=" font-weight-normal">Total of School Personnel:</p>
+                    </div>
+                </div>
             </div>
 
 

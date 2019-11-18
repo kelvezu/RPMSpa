@@ -235,23 +235,35 @@ include_once 'sampleheader.php'; ?>
             <div class="card">
                 <div class="card-header font-weight-bold"><i class="fa fa-user-circle"></i> Principals</div>
                 <div class="card-body box">
-                    <table class="table table-sm table-hover table-responsive-sm    ">
-                        <thead>
+                    <table class="table table-sm  table-responsive-sm">
+                        <thead class="bg-light font-weight-bold">
                             <tr>
+                                <th>#</th>
                                 <th>Principal</th>
                                 <th>School</th>
+                                <th>Contact</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $principal = RPMSdb::showAllPrincipal($conn);
+                            $nump = 1;
                             foreach ($principal as $prin) : ?>
                                 <tr>
+                                    <td><?= $nump++ ?></td>
                                     <td><?= displayName($conn, $prin['user_id']) ?></td>
                                     <td><?= displaySchool($conn, $prin['school_id']) ?></td>
-                                <?php endforeach; ?>
+                                    <td><?= $prin['contact'] ?></td>
                                 </tr>
+                            <?php endforeach; ?>
+
                         </tbody>
+                        <tfoot class="bg-light font-weight-bold">
+                            <tr>
+
+                                <td colspan="5"> Principal Total: <?= count($principal) ?></td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

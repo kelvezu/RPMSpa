@@ -910,4 +910,19 @@ class RPMSdb
             return $result_array;
         }
     }
+
+    public static function showSchoolPersonnel($conn)
+    {
+        $qry = 'SELECT * FROM account_tbl WHERE school_id = ' . $_SESSION['school_id'] . ' AND `status` = "Active" ORDER BY FIELD (position,"Principal","Asst. Superintendent","School Head","Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I","Teacher III","Teacher II","Teacher I")';
+        $result = mysqli_query($conn, $qry);
+
+        if (mysqli_num_rows($result) > 0) {
+            $result_array = [];
+
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+            endforeach;
+            return $result_array;
+        }
+    }
 }
