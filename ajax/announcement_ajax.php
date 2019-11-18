@@ -37,7 +37,6 @@ if ($result) :
             </div>
         </div><br />
 
-        <script src="../includes/func.lib.js"></script>
 
 <?php
     endforeach;

@@ -155,7 +155,13 @@ include_once 'sampleheader.php'; ?>
             <div class="col text-dark font-weight-bold">
                 <div class="card">
                     <div class="card-header bg-light">
-                        School Personnel List
+                        <div class="d-flex justify-content-between">
+                            <div class="p-2"> School Personnel List</div>
+                            <div id="sel_pos" class="p-2 ">
+                                <!-- SELECT OPTION FOR FILTER SCHOOL PERSONNEL -->
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card-body box">
                         <table class="table table-sm ">
@@ -167,7 +173,7 @@ include_once 'sampleheader.php'; ?>
                                 </tr>
                             </thead>
                             <tbody id="sch_personnel">
-
+                                <!-- List of School Personnel -->
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -176,9 +182,9 @@ include_once 'sampleheader.php'; ?>
                             </tfoot>
                         </table>
                     </div>
-                    <div class="card-footer">
+                    <!-- <div class="card-footer">
                         <p class=" font-weight-normal">Total of School Personnel:</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -187,7 +193,7 @@ include_once 'sampleheader.php'; ?>
 
 
         <div class="col text-info black-border">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, facere quia cumque animi tempora optio! Ducimus illo nisi dolorum necessitatibus in tenetur atque, sit reiciendis porro sint a nulla praesentium fuga, fugiat voluptatum aut! Laboriosam similique voluptas doloremque odit optio, ducimus nam ipsa ipsum distinctio. Quod culpa rerum distinctio optio natus! Illum accusamus repellat architecto beatae error odio sapiente, animi minima eveniet fugiat dicta aliquam voluptatibus laboriosam praesentium consequuntur accusantium asperiores eum maxime minus explicabo vitae eaque similique! Nostrum placeat similique officia velit laborum accusantium delectus minus aliquam repellendus? Velit neque soluta accusantium sapiente culpa deleniti officiis, hic maiores quis?
+            <div id=""></div>
         </div>
 
         <!-- End of First Row -->
@@ -229,4 +235,9 @@ include_once 'sampleheader.php'; ?>
 </div>
 <!-- End of main container -->
 
+
 <?php include_once 'samplefooter.php' ?>
+<script>
+    showOptionPosition();
+    showAllPersonnel();
+</script>

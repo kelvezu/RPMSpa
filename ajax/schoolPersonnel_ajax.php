@@ -23,9 +23,13 @@ foreach ($schPersonnels as $schp) :
         $schClass = "text-dark";
     endif;
     ?>
-    <tr class="<?= $schClass ?>">
-        <td><?= $n++ ?></td>
-        <td><?= displayName($conn, $schp['user_id']) ?></td>
-        <td><?= $schPosition ?></td>
+
+    <tr>
+        <td> <?= $n++ ?> </td>
+        <td> <?= displayName($conn, $schp['user_id']) ?> </td>
+        <td> <?= $schPosition ?> </td>
     </tr>
-<?php endforeach ?>
+
+<?php
+endforeach;
+?>

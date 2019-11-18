@@ -309,3 +309,6 @@ include_once 'sampleheader.php'; ?>
 <!-- End of main container -->
 
 <?php include_once 'samplefooter.php' ?>
+<script>
+    annBtnShow.click(fetchAnnouncement());
+</script>
