@@ -11,6 +11,61 @@ use mysqli;
 
 class RPMSdb
 {
+    public static function mtlvlcap2($conn)
+    {
+        $result_arr = [];
+        $totalqry = "SELECT c.sy_desc,CONCAT(a.kra_id,'.',a.mtobj_id, '.',b.mtobj_name) 
+        AS OBJECTIVES,
+        
+        CASE WHEN (a.lvlcap) = 1 THEN 'Low' WHEN (a.lvlcap) = 2 THEN 'Moderate' 
+                        WHEN (a.lvlcap) = 3 THEN 'High'
+                            WHEN (a.lvlcap) = 4 THEN 'Very High' end as lvlcap
+                            
+                        ,  CASE WHEN (a.priodev) = 1 THEN 'Low' WHEN (a.priodev) = 2 THEN 'Moderate' 
+                        WHEN (a.priodev) = 3 THEN 'High'
+                            WHEN (a.priodev) = 4 THEN 'Very High' end as priodev 
+        
+        
+        
+        FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
+        INNER JOIN sy_tbl c on a.sy = c.sy_id
+        
+        group by c.sy_desc,a.mtobj_id";
+        $result = mysqli_query($conn, $totalqry);
+
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            //pre_r($result_arr);
+            endforeach;
+            return  $result_arr;
+        else :
+            return false;
+        endif;
+    }
+
+    public static function mtlvlcap($conn)
+    {
+        $result_arr = [];
+        $totalqry = "SELECT c.sy_desc,CONCAT(a.kra_id,'.',a.mtobj_id) 
+                    AS OBJECTIVES, lvlcap, priodev 
+                    FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
+                    INNER JOIN sy_tbl c on a.sy = c.sy_id
+                    group by c.sy_desc,a.mtobj_id,b.mtobj_name";
+        $result = mysqli_query($conn, $totalqry);
+
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            //pre_r($result_arr);
+            endforeach;
+            return  $result_arr;
+        else :
+            return false;
+        endif;
+    }
+
+
     public static function mtobjectiveSy($conn)
     {
         $result_arr = [];
@@ -925,4 +980,6 @@ class RPMSdb
             return $result_array;
         }
     }
+    public static function showAllCBC()
+    { }
 }
