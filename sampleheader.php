@@ -27,6 +27,7 @@ include_once 'includes/security.php';
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
     <!-- Script for Charts  -->
     <script src="bootstrap4/scripts/googlechart.js"></script>
+    <script src="bootstrap4/scripts/jquery3.min.js"></script>
 
 
 </head>
