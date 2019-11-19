@@ -10,6 +10,19 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <div class="container text-center">
+
+    <div>
+        <?php
+        if (isset($_GET['notif'])) :
+            if ($_GET['notif'] == "success") :
+                echo '<div class="green-notif-border">Classroom Observation has been submitted!</div>';
+            elseif ($_GET['notif'] == "recordexist") :
+                echo '<div class="red-notif-border">Classroom Observation already exists!</div>';
+            endif;
+        endif;
+        ?>
+    </div>
+
     <div class="breadcome-list shadow-reset">
         <form action="includes/processmtioafform.php" method="POST">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>

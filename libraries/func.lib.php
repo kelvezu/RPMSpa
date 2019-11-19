@@ -537,3 +537,56 @@
                     return false;
                 endif;
             }
+
+            // THIS FUNCTION IS FOR RATER 
+            function showObsRating($conn, $obs_period, $indicator_id)
+            {
+
+                // $qry  = 'SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = 1 AND `rater_id1` = 33 AND `obs_period` = 1 AND sy = 17 AND school_id = 14 AND `status` = "Active"';
+
+                $qry = "SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = $indicator_id AND  `rater_id1` = " . $_SESSION['user_id'] . " AND `obs_period` = $obs_period AND sy = " . $_SESSION['active_sy_id'] . " AND school_id = " . $_SESSION['school_id'] . " AND `status` = 'Active' ";
+
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                if ($results) {
+                    foreach ($results as $result) :
+                        return $result['tioafrating'];
+                    endforeach;
+                } else {
+                    return 0;
+                }
+            }
+
+            function showObsAverage($obs1_score, $obs2_score, $obs3_score, $obs4_score)
+            {
+                $num = 0;
+                if (is_integer($obs1_score)) {
+
+                    $num++;
+                } else {
+                    $obs1_score = 0;
+                }
+
+                if (is_integer($obs2_score)) {
+                    $num++;
+                } else {
+                    $obs2_score = 0;
+                }
+
+                if (is_integer($obs3_score)) {
+                    $num++;
+                } else {
+                    $obs3_score = 0;
+                }
+
+                if (is_integer($obs4_score)) {
+                    $num++;
+                } else {
+                    $obs4_score = 0;
+                }
+                $total = intval($obs1_score) + intval($obs2_score) + intval($obs3_score) + intval($obs4_score);
+                if ($total = NAN) {
+                    return 0;
+                } else {
+                    return $total / $num;
+                }
+            }

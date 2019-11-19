@@ -24,7 +24,7 @@ foreach ($schPersonnels as $schp) :
     endif;
     ?>
 
-    <tr>
+    <tr class="<?= $schClass ?>">
         <td> <?= $n++ ?> </td>
         <td> <?= displayName($conn, $schp['user_id']) ?> </td>
         <td> <?= $schPosition ?> </td>

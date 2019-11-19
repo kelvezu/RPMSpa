@@ -230,6 +230,9 @@ $fourth_period_int = intval(strtotime($_SESSION['final_period']));
 echo ($fourth_period_int) . '<br/>';
 
 
+// echo "rating of tioaf" . showObsRating($conn);
+
+
 ?>
 <!-- <select name="" id=""> -->
 <?php

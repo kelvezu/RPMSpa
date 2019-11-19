@@ -7,25 +7,25 @@ include_once 'sampleheader.php'; ?>
 <div class="container mb-4">
     <p>
         <!-- Button for Announcement -->
-        <button id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <button id="ann-btnshow" class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
             <i class=" fa fa-newspaper"></i> Announcements
         </button>
         <!-- end btn for announcement -->
 
         <!-- btn for notif -->
-        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#notifCollapse" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#notifCollapse" aria-expanded="false" aria-controls="collapseExample">
             <i class=" fa fa-bell"></i> Notifications
         </button>
         <!-- end of btn notif -->
 
         <!-- btn for abang1 -->
-        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#abang1" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#abang1" aria-expanded="false" aria-controls="collapseExample">
             Abang 1
         </button>
         <!-- end of btn abang1 -->
 
         <!-- btn for abang2 -->
-        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#abang2" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#abang2" aria-expanded="false" aria-controls="collapseExample">
             Abang 2
         </button>
         <!-- end of btn abang2 -->
@@ -310,5 +310,5 @@ include_once 'sampleheader.php'; ?>
 
 <?php include_once 'samplefooter.php' ?>
 <script>
-    annBtnShow.click(fetchAnnouncement());
+    // annBtnShow.click(fetchAnnouncement());
 </script>

@@ -28,6 +28,7 @@ include_once 'includes/security.php';
     <!-- Script for Charts  -->
     <script src="bootstrap4/scripts/googlechart.js"></script>
 
+
 </head>
 
 <body class="mb-5 bg-light">

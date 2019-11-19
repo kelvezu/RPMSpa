@@ -42,6 +42,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function mtlvlcap($conn)
@@ -63,6 +64,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
 
@@ -83,6 +85,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function tobjectiveSy($conn)
@@ -108,6 +111,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function regionSy($conn)
@@ -133,6 +137,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function curriclassSy($conn)
@@ -154,6 +159,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function gradelvlSy($conn)
@@ -180,6 +186,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function subjtaughtSy($conn)
@@ -200,6 +207,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
 
@@ -224,6 +232,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function degreeSy($conn)
@@ -246,6 +255,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function positionSy($conn)
@@ -268,6 +278,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function empstatSy($conn)
@@ -288,6 +299,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
 
@@ -311,6 +323,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function ageSy($conn)
@@ -333,6 +346,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function esatSY($conn)
@@ -346,6 +360,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function mteacherSYass($conn)
@@ -362,6 +377,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function mteacherSYcbc($conn)
@@ -379,6 +395,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
 
@@ -397,6 +414,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function teacherSYass($conn)
@@ -413,6 +431,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     // DISPLAY ALL TEACHERS ACCORDING TO USERS SCHOOL
@@ -430,6 +449,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     // DISPLAY ALL TEACHERS WITH FOR TRANSFER STATUS
@@ -447,6 +467,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function totalAllTeachers($conn)
@@ -459,6 +480,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function totalTeachers($conn)
@@ -471,6 +493,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
     //TOTAL OF ALL ACTIVE TEACHERS
     public static function totalTeachersCount($conn)
@@ -485,6 +508,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function totalTOnlyCount($conn)
@@ -497,6 +521,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function totalMTOnlyCount($conn)
@@ -509,6 +534,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function totalTeacherPerSchool($conn)
@@ -525,6 +551,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
 
@@ -538,6 +565,7 @@ class RPMSdb
         else :
             return null;
         endif;
+        mysqli_close($conn);
     }
 
     //CREATE A TOTAL OF TEACHERS WHO DONT HAVE AN ESAT
@@ -552,6 +580,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function teachersWithEsat1($conn)
@@ -564,6 +593,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function masterteachersWithEsat1($conn)
@@ -576,6 +606,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
 
@@ -590,6 +621,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function teachersNoEsat2($conn)
@@ -601,6 +633,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function masterteachersNoEsat2($conn)
@@ -613,6 +646,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function teachersNoEsat3($conn)
@@ -625,6 +659,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function masterteachersNoEsat3($conn)
@@ -636,6 +671,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function teachersWithCOT1($conn)
@@ -650,6 +686,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
     public static function teacherHasCOT1($conn, $user_id)
@@ -664,6 +701,7 @@ class RPMSdb
             endif;
         else : return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function masterteachersWithCOT1($conn)
@@ -678,6 +716,7 @@ class RPMSdb
         endforeach;
         return $result_arr;
         exit;
+        mysqli_close($conn);
     }
 
 
@@ -697,6 +736,7 @@ class RPMSdb
             return null;
         endif;
         exit;
+        mysqli_close($conn);
     }
 
     public static function masterteachersNoCOT1($conn)
@@ -715,6 +755,7 @@ class RPMSdb
             return null;
         endif;
         exit;
+        mysqli_close($conn);
     }
 
 
@@ -758,6 +799,7 @@ class RPMSdb
 
         else : return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function isEsatCompleteBool($conn, $position, $user_id)
@@ -799,6 +841,7 @@ class RPMSdb
 
         else : return false;
         endif;
+        mysqli_close($conn);
     }
 
     /* TOTAL OF T WITH WITH NO OR INCOMPLETE ESAT! */
@@ -812,6 +855,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
     /* TOTAL OF MT WITH WITH NO OR INCOMPLETE ESAT! */
     public  static function totalofNoESAT_mt($conn)
@@ -824,6 +868,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public  static function totalofCompleteESAT_mt($conn)
@@ -836,6 +881,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public  static function totalofCompleteESAT_t($conn)
@@ -848,6 +894,7 @@ class RPMSdb
         else :
             return 0;
         endif;
+        mysqli_close($conn);
     }
 
     public static function sessionObsPeriod($conn, $position)
@@ -868,6 +915,7 @@ class RPMSdb
             else : return false;
             endif;
         endif;
+        mysqli_close($conn);
     }
 
     public static function showNotif($conn)
@@ -883,6 +931,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function showAllNotif($conn)
@@ -898,6 +947,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function showAnnouncement($conn, $sy, $limit = 6)
@@ -915,6 +965,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function showAllAnnouncement($conn)
@@ -930,6 +981,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     public static function displayAnnouncement($conn, $id)
@@ -947,6 +999,7 @@ class RPMSdb
         else :
             return false;
         endif;
+        mysqli_close($conn);
     }
 
     // display all Principal 
@@ -964,6 +1017,7 @@ class RPMSdb
             endforeach;
             return $result_array;
         }
+        mysqli_close($conn);
     }
 
     public static function showSchoolPersonnel($conn)
@@ -979,7 +1033,8 @@ class RPMSdb
             endforeach;
             return $result_array;
         }
+        mysqli_close($conn);
     }
     public static function showAllCBC()
     { }
-}
+}// <- Endtag of class 

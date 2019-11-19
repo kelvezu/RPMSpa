@@ -86,14 +86,6 @@
 
     <!-- JavaScript Syntax -->
     <script>
-        // Variable Declaration
-
-
-
-
-
-
-
         // Toggle function for Teacher Count Table and Chart
 
 

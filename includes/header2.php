@@ -124,6 +124,8 @@ $position = $_SESSION['position'];
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown chart-left-menu-std animated flipInX">
                                 <a href="#" class="dropdown-item">View Teacher COT</a>
                                 <a href="#" class="dropdown-item">View Master Teacher COT</a>
+                                <a href="#" class="dropdown-item">View Teacher Average COT</a>
+                                <a href="#" class="dropdown-item">View Master Teacher Average COT</a>
                             </div>
                         </li>
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-table"></i> <span class="mini-dn">IPCRF</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
@@ -139,9 +141,7 @@ $position = $_SESSION['position'];
                         <li class="nav-item"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-files-o"></i> <span class="mini-dn">Forms</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown form-left-menu-std animated flipInX">
                                 <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                                <a href="tcotform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
                                 <a href="tioafform.php" class="dropdown-item">Teacher IOAF Rating Sheet</a>
-                                <a href="mtcotform.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
                                 <a href="mtioafform.php" class="dropdown-item">Master Teacher IOAF Rating Sheet</a>
                                 <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
                                 <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>

@@ -7,25 +7,25 @@ include_once 'sampleheader.php'; ?>
 <div class="container mb-4">
     <p>
         <!-- Button for Announcement -->
-        <button id="ann-btnshow" class="btn btn-outline-dark" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <button id="ann-btnshow" class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#announcementCollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
             <i class=" fa fa-newspaper"></i> Announcements
         </button>
         <!-- end btn for announcement -->
 
         <!-- btn for notif -->
-        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#sampleCollapse2" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#sampleCollapse2" aria-expanded="false" aria-controls="collapseExample">
             <i class=" fa fa-bell"></i> Sample Collapse 2
         </button>
         <!-- end of btn notif -->
 
         <!-- btn for abang1 -->
-        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#abang1" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#abang1" aria-expanded="false" aria-controls="collapseExample">
             Abang 1
         </button>
         <!-- end of btn abang1 -->
 
         <!-- btn for abang2 -->
-        <button class="btn btn-outline-dark" data-toggle="collapse" data-target="#abang2" aria-expanded="false" aria-controls="collapseExample">
+        <button class="btn btn-outline-dark btn-sm" data-toggle="collapse" data-target="#abang2" aria-expanded="false" aria-controls="collapseExample">
             Abang 2
         </button>
         <!-- end of btn abang2 -->
@@ -157,8 +157,10 @@ include_once 'sampleheader.php'; ?>
                     <div class="card-header bg-light">
                         <div class="d-flex justify-content-between">
                             <div class="p-2"> School Personnel List</div>
-                            <div id="sel_pos" class="p-2 ">
+                            <div class="p-2 ">
                                 <!-- SELECT OPTION FOR FILTER SCHOOL PERSONNEL -->
+                                <select id="sel_pos" class="form-control form-control-md">
+                                </select>
                             </div>
                         </div>
 
