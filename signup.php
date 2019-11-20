@@ -1,20 +1,23 @@
 <?php
-include_once 'includes/conn.inc.php';
-include_once 'includes/header.php';
+
+include_once 'sampleheader.php';
 
 ?>
 <main class="center">
-    <div class="container">
-        <div class="breadcome-list shadow-reset">
-
+    <div class="container col-sm-6">
+        <div class="card-header text-center bg-info">
+            <strong>Add Account</strong>
+        </div>
+        <div class="card-body p-5">
+            
             <?php
             if (isset($_SESSION['username'])) :
                 echo $_SESSION['username'];
             endif
             ?>
             <form action="includes/signup.inc.php" method="post">
-                <fieldset class="form-group">
-                    <legend class="form-legend">Add Account</legend>
+               
+                    
                     <?php
                     if (isset($_GET['error'])) {
                         //ERROR FOR EMPTY FIELDS 
@@ -24,6 +27,10 @@ include_once 'includes/header.php';
                         //ERROR FOR SHORT PRC ID
                         elseif ($_GET['error'] == "shortprc_id") {
                             echo '<p class="text-danger" align="center"><b>PRC ID too short!</b></p>';
+                        }
+                        //ERROR FOR DUPLICATE PRC ID
+                        elseif ($_GET['error'] == "prciderror"){
+                            echo '<p class="text-danger" align="center"><b>PRC ID is taken!</b></p>';
                         }
 
                         //ERROR FOR SPECIAL CHARACTERS FOR NAMES
@@ -78,6 +85,11 @@ include_once 'includes/header.php';
                         elseif ($_GET['error'] == "contactnotnumeirc") {
                             echo '<p class="text-danger" align="center"><b>Contact must be numeric</b></p>';
                         }
+                        //ERROR FOR ONE PRINCIPAL ONLY
+                        elseif ($_GET['error'] == "oneprincipalonly"){
+                            echo '<p class="text-danger" align="center"><b>One Principal is allowed for every school!</b></p>';
+                        }
+
                         //ERROR FOR CONTACT LENGTH IS EQUAL TO 11 
                         elseif ($_GET['error'] == "contactshort") {
                             echo '<p class="text-danger" align="center"><b>Contact must consist 11-digits</b></p>';
@@ -99,8 +111,10 @@ include_once 'includes/header.php';
                     }
                     ?>
 
+
+
                     <?php
-                    echo '<label for="prc_id" class="form-control-label ">PRC ID:</label>';
+                    echo '<label for="prc_id" class="form-control-label "><strong>PRC ID:</strong></label>';
                     if (!isset($_GET['prc_id'])) {
                         echo '<input type="number" class="form-control my-1" name="prc_id"  placeholder="Enter your PRC ID...">';
                     } else {
@@ -108,7 +122,7 @@ include_once 'includes/header.php';
                         echo '<input type="number" class="form-control my-1" name="prc_id"  placeholder="Enter your PRC ID..." value="' . $prc_id . '">';
                     }
 
-                    echo '<label for="surname" class="form-control-label ">Surname:</label>';
+                    echo '<label for="surname" class="form-control-label "><strong>Surname:</strong></label>';
                     if (!isset($_GET['surname'])) {
                         echo '<input type="text" class="form-control my-1" name="surname"  placeholder="Enter your Surname...">';
                     } else {
@@ -116,7 +130,7 @@ include_once 'includes/header.php';
                         echo '<input type="text" class="form-control my-1" name="surname"  placeholder="Enter your Surname..." value="' . $surname . '">';
                     }
 
-                    echo '<label for="firstname" class="form-control-label ">Firstname:</label>';
+                    echo '<label for="firstname" class="form-control-label "><strong>Firstname:</strong></label>';
                     if (!isset($_GET['firstname'])) {
                         echo '<input type="text" class="form-control my-1" name="firstname"  placeholder="Enter your Firstname...">';
                     } else {
@@ -124,7 +138,7 @@ include_once 'includes/header.php';
                         echo '<input type="text" class="form-control my-1" name="firstname"  placeholder="Enter your Firstname..." value="' . $firstname . '">';
                     }
 
-                    echo '<label for="middlename" class="form-control-label ">Middlename:</label>';
+                    echo '<label for="middlename" class="form-control-label "><strong>Middlename:</strong></label>';
                     if (!isset($_GET['middlename'])) {
 
                         echo '<input type="text" class="form-control my-1" name="middlename"  placeholder="Enter your Middlename...">';
@@ -133,7 +147,7 @@ include_once 'includes/header.php';
                         echo '<input type="text" class="form-control my-1" name="middlename"  placeholder="Enter your Middlename..." value="' . $middlename . '">';
                     }
                     ?>
-                    <label for="position" class="form-control-label ">Position:</label>
+                    <label for="position" class="form-control-label "><strong>Position:</strong></label>
                     <select name="position" id="" class="form-control">
                         <option>--Select Position--</option>
                         <?php
@@ -147,7 +161,7 @@ include_once 'includes/header.php';
                             </option>
                     </select>
                     <?php
-                    echo '<label for="email" class="form-control-label ">Email Address:</label>';
+                    echo '<label for="email" class="form-control-label "><strong>Email Address:</strong></label>';
                     if (!isset($_GET['email'])) {
                         echo '<input type="email" class="form-control my-1" name="email"  placeholder="Enter your Email Address...">';
                     } else {
@@ -155,7 +169,7 @@ include_once 'includes/header.php';
                         echo '<input type="email" class="form-control my-1" name="email"  placeholder="Enter your Email Address..." value="' . $email . '">';
                     }
 
-                    echo '<label for="contact" class="form-control-label ">Contact Number:</label>';
+                    echo '<label for="contact" class="form-control-label "><strong>Contact Number:</strong></label>';
                     if (!isset($_GET['contact'])) {
                         echo '<input type="text" class="form-control my-1" name="contact" placeholder="Enter your Contact number..." maxlength="11" >';
                     } else {
@@ -163,9 +177,9 @@ include_once 'includes/header.php';
                         echo '<input type="text" class="form-control my-1" name="contact"  placeholder="Enter your Contact number..." value="' . $contact . '" maxlength="11">';
                     }
 
-                    echo '<label for="gender" class="form-control-label ">Gender:</label>';
+                    echo '<label for="gender" class="form-control-label "><strong>Gender:</strong></label>';
                     ?>
-                    <label for="gender" class="form-control-label ">Gender:</label>
+                    <label for="gender" class="form-control-label "><strong>Gender:</strong></label>
                     <select name="gender" id="" class="form-control">
                         <option>--Select Gender--</option>
                         <?php
@@ -179,7 +193,7 @@ include_once 'includes/header.php';
                     </select>
 
                     <?php
-                    echo '<label for="date" class="form-control-label ">Birth date: <small><i>Day/Month/Year</i></small></label>';
+                    echo '<label for="date" class="form-control-label "><strong>Birth date:</strong> <small><i>Day/Month/Year</i></small></label>';
                     if (!isset($_GET['birthdate'])) {
                         echo '
                     <input type="date"  class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..."  >';
@@ -189,7 +203,7 @@ include_once 'includes/header.php';
                 <input type="date" class="form-control my-1" name="birthdate"  placeholder="Enter birthdate..." value="' . $birthdate . '">';
                     }
                     ?>
-                    <label for="school" class="form-control-label ">Select School or Division:</label>
+                    <label for="school" class="form-control-label "><strong>Select School or Division:</strong></label>
                     <select name="school" id="" class="form-control">
                         <option>--Select school--</option>
                         <?php
@@ -202,12 +216,13 @@ include_once 'includes/header.php';
                             <?php endwhile ?>
                             </option>
                     </select>
-
-                    <label for="pwd" class="form-control-label ">Password:</label>
-                    <input type="password" class="form-control my-1" name="pwd" placeholder="Enter your Password...">
-                    <label for="pwd-repeat" class="form-control-label ">Re-type Password:</label>
-                    <input type="password" class="form-control my-1" name="pwd-repeat" placeholder="Re-type Password">
                     <br>
+
+                    <!-- <label for="pwd" class="form-control-label "><strong>Password:</strong></label>
+                    <input type="password" class="form-control my-1" name="pwd" placeholder="Enter your Password...">
+                    <label for="pwd-repeat" class="form-control-label "><strong>Re-type Password:</strong></label>
+                    <input type="password" class="form-control my-1" name="pwd-repeat" placeholder="Re-type Password">
+                    <br> -->
                     <button type="submit" class="btn btn-primary btn-block" name="signup-submit"> Submit</button>
                     <br>
                     <a href="usercsv.php" role="button" class="btn btn-success btn-block" name="signup-submit"> Mass Upload</a>
@@ -217,9 +232,9 @@ include_once 'includes/header.php';
                 </fieldset>
             </form>
         </div>
-    </div>
+        </div>
     <br>
     <?php
 
-    include 'includes/footer.php';
+    include 'samplefooter.php';
     ?>
