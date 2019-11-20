@@ -9,8 +9,8 @@ if(isset($_POST['save'])){
     
     $kra_id = $_POST['kra_name'];
     $mtobj_id = $_POST['mtobj_name'];
-    $main_mov= $_POST['main_mov'];
-    $supp_mov= $_POST['supp_mov'];
+    $main_mov= filter_var($_POST['main_mov'], FILTER_SANITIZE_STRING);
+    $supp_mov= filter_var($_POST['supp_mov'], FILTER_SANITIZE_STRING);
 
     $query = "INSERT INTO mtmov_tbl(kra_id,mtobj_id,main_mov,supp_mov) VALUES('$kra_id','$mtobj_id','$main_mov','$supp_mov')";
     $query_run = mysqli_query($conn,$query);
@@ -41,8 +41,8 @@ if(isset($_POST['save'])){
         $mtmov_id = $_POST['mtmov_id'];
         $kra_id = $_POST['kra_name'];
         $mtobj_id = $_POST['mtobj_name'];
-        $main_mov= $_POST['main_mov'];
-        $supp_mov= $_POST['supp_mov'];
+        $main_mov= filter_var($_POST['main_mov'], FILTER_SANITIZE_STRING);
+        $supp_mov= filter_var($_POST['supp_mov'], FILTER_SANITIZE_STRING);
      
         $query = "UPDATE mtmov_tbl SET mtmov_id='$mtmov_id', kra_id='$kra_id', mtobj_id='$mtobj_id', main_mov='$main_mov', supp_mov='$supp_mov' WHERE mtmov_id='$mtmov_id'";
         $query_run = mysqli_query($conn,$query);

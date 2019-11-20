@@ -19,7 +19,7 @@ if (isset($_POST['signup-submit'])) {
     $status = "Active";
 
     //CHECK IF THE FIELDS ARE EMPTY 
-    if (empty($prc_id) || empty($surname) || empty($firstname) ||  empty($email) || empty($contact) || empty($password) || empty($passwordRepeat)) {
+    if (empty($prc_id) || empty($surname) || empty($firstname) ||  empty($email) || empty($contact)) {
         header("Location:../signup.php?error=emptyfields&prc_id=" . $prc_id . "&surname=" . $surname . "&firstname=" . $firstname . "&middlename=" . $middlename . "&email=" . $email . "&contact=" . $contact);
         exit();
     }
@@ -100,13 +100,22 @@ if (isset($_POST['signup-submit'])) {
     elseif (strlen($contact) != 11) {
         header("Location:../signup.php?error=contactshort&prc_id=" . $prc_id . "&surname=" . $surname . "&firstname=" . $firstname . "&middlename=" . $middlename . "&email=" . $email);
         exit();
-    } elseif (strlen($password) <= 7) {
-        header("Location:../signup.php?error=shortpwd&prc_id=" . $prc_id . "&surname=" . $surname . "&firstname=" . $firstname . "&middlename=" . $middlename . "&email=" . $email . "&contact=" . $contact);
-        exit();
-    } elseif ($password !== $passwordRepeat) {
-        header("Location:../signup.php?error=pwCheck&prc_id=" . $prc_id . "&surname=" . $surname . "&firstname=" . $firstname . "&middlename=" . $middlename . "&email=" . $email . "&contact=" . $contact);
-        exit();
     } else {
+        $prcquery = "SELECT prc_id FROM account_tbl WHERE prc_id=?";
+        $stmt = mysqli_stmt_init($conn);
+        if(!mysqli_stmt_prepare($stmt,$prcquery)){
+            header("Location:../signup.php?error=prciderror&surname=".$surname. "&firstname=" .$firstname. "&middlename=" .$middlename. "&contact=" .$contact);
+            exit();
+        }else{
+            mysqli_stmt_bind_param($stmt,"s",$prc_id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_store_result($stmt);
+            $prccheck = mysqli_stmt_num_rows($stmt);
+            if($prccheck > 0) {
+                header("Location../signup.php?error=prctaken&surname=".$surname. "&firstname=" .$firstname. "&middlename=" .$middlename. "&contact=" .$contact);
+                exit();
+            }else{
+
         $sql = "SELECT email FROM account_tbl WHERE email=?";
         $stmt = mysqli_stmt_init($conn);
         if (!mysqli_stmt_prepare($stmt, $sql)) {
@@ -121,6 +130,15 @@ if (isset($_POST['signup-submit'])) {
                 header("Location:../signup.php?error=emailtaken&prc_id=" . $prc_id . "&surname=" . $surname . "&firstname=" . $firstname . "&middlename=" . $middlename . "&contact=" . $contact);
                 exit();
             } else {
+                // VALIDATE PRINCIPAL POSITION
+            if($position == "Principal"):
+                    $check_qry = "SELECT * FROM account_tbl WHERE school_id = 14 AND position = 'Principal'";
+                    $chk_result = mysqli_query($conn,$check_qry) or die($conn->error);
+                    if(mysqli_num_rows($chk_result)>0):
+                        header('location:../signup.php?error=oneprincipalonly');
+                        exit();
+                endif;
+            endif;
 
                 if (!empty($school)) {
                     $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,school_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -146,9 +164,12 @@ if (isset($_POST['signup-submit'])) {
             }
         }
     }
+}
     mysqli_stmt_close($stmt);
     mysqli_close($stmt);
-} else {
+} 
+}else {
     header("Location:signup.php");
     exit();
 }
+

@@ -47,11 +47,11 @@ mysqli_select_db($connection, "rpms");
                         </div>
                         <div class="col-lg">
                             <label for="mtmain-mov" class="col-form-label"><strong>Main MOV</strong></label>
-                            <input type="text" name="main_mov" id="main-mov" class="form-control" placeholder="Enter the main mov..." required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <input type="text" name="main_mov" id="main-mov" class="form-control" placeholder="Enter the main mov..." required>
                         </div>
                         <div class="col-lg">
                             <label for="supp-mov" class="col-form-label"><strong>Supporting MOV</strong></label>
-                            <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required>
                         </div>
                         <div class="m-2">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
