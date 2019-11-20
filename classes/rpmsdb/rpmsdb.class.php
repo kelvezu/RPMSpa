@@ -1022,7 +1022,7 @@ class RPMSdb
 
     public static function showSchoolPersonnel($conn)
     {
-        $qry = 'SELECT * FROM account_tbl WHERE school_id = ' . $_SESSION['school_id'] . ' AND `status` = "Active" ORDER BY FIELD (position,"Principal","Asst. Superintendent","School Head","Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I","Teacher III","Teacher II","Teacher I")';
+        $qry = 'SELECT * FROM account_tbl WHERE rater IS NOT NULL AND school_id IS NOT NULL  AND  `status` = "Active" ORDER BY FIELD (position,"Principal","Asst. Superintendent","School Head","Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I","Teacher III","Teacher II","Teacher I")';
         $result = mysqli_query($conn, $qry);
 
         if (mysqli_num_rows($result) > 0) {
@@ -1035,6 +1035,160 @@ class RPMSdb
         }
         mysqli_close($conn);
     }
-    public static function showAllCBC()
-    { }
-}// <- Endtag of class 
+
+    public static function MTcheckResult_Obs1($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_mtioafrating_tbl WHERE obs_period = 1 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function MTcheckResult_Obs2($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_mtioafrating_tbl WHERE obs_period = 2 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function MTcheckResult_Obs3($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_mtioafrating_tbl WHERE obs_period = 3 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function MTcheckResult_Obs4($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_mtioafrating_tbl WHERE obs_period = 4 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function TcheckResult_Obs1($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 1 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function TcheckResult_Obs2($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 2 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function TcheckResult_Obs3($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 3 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function TcheckResult_Obs4($conn, $user_id)
+    {
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 4 AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
+        $isResult = mysqli_num_rows($mt_qry_result);
+
+        if ($isResult) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+
+    public static function generateCOTaverage($conn)
+    {
+        $qry = "SELECT * FROM account_tbl WHERE position IN ('Teacher I','Teacher II','Teacher III','Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') AND `status` = 'Active' ";
+        $results = mysqli_query($conn, $qry) or die($conn->error);
+
+        // DISPLAY ALL MT AND T THAT ACTIVE
+        if ($results) :
+            $account_arr = [];
+            foreach ($results as $result) :
+                array_push($account_arr, $result);
+            endforeach;
+        else : return false;
+            exit('no to auto generate hehehe');
+        endif;
+
+
+
+        foreach ($account_arr as $acc) :
+            $position = $acc['position'];
+            $user_id = $acc['user_id'];
+
+            if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
+
+                //    METHODS IN MT
+                $mt_obs1 = self::MTcheckResult_Obs1($conn, $user_id);
+                $mt_obs2 = self::MTcheckResult_Obs2($conn, $user_id);
+                $mt_obs3 = self::MTcheckResult_Obs3($conn, $user_id);
+                $mt_obs4 = self::MTcheckResult_Obs4($conn, $user_id);
+
+                if ($mt_obs1 and $mt_obs2 and $mt_obs3 and $mt_obs4) :
+                    echo "Pwde mo na auto-generate master teacher si " . displayName($conn, $user_id) . "<p/>";
+                else :
+                    echo "You cannot auto-gen " . displayName($conn, $user_id) . "<p/>";
+                endif;
+
+            // TEACHER
+            elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
+
+                //METHODS IN T
+                $t_obs1 = self::TcheckResult_Obs1($conn, $user_id);
+                $t_obs2 = self::TcheckResult_Obs2($conn, $user_id);
+                $t_obs3 = self::TcheckResult_Obs3($conn, $user_id);
+                $t_obs4 = self::TcheckResult_Obs4($conn, $user_id);
+
+                if ($t_obs1 and $t_obs2 and $t_obs3 and $t_obs4) :
+                    echo "Pwde mo na auto-generate teacher si " . displayName($conn, $user_id) . "<p/>";
+                else :
+                    echo "You cannot auto-gen " . displayName($conn, $user_id) . "<p/>";
+                endif;
+
+
+            // IF NOT T AND MT 
+            else : return false;
+
+            endif;
+        endforeach;
+        mysqli_close($conn);
+    }
+}  // <- Endtag of class 

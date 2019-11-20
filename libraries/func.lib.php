@@ -434,6 +434,19 @@
                 endif;
             }
 
+            function displaySY($conn, $sy_id)
+            {
+                $qry = "SELECT * FROM sy_tbl WHERE sy_id = $sy_id";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return $res['sy_desc'];
+                    endforeach;
+                else :
+                    return false;
+                endif;
+            }
+
             function displaySchool($conn, $school_id)
             {
                 $qry = "SELECT * FROM school_tbl WHERE school_id = $school_id";
@@ -556,37 +569,40 @@
                 }
             }
 
+            // THIS WILL OUTPUT THE AVERAGE IN COT RATING
             function showObsAverage($obs1_score, $obs2_score, $obs3_score, $obs4_score)
             {
-                $num = 0;
-                if (is_integer($obs1_score)) {
 
-                    $num++;
+                if (preg_match('/^[0-9]+$/', $obs1_score)) {
+                    $num1 = 1;
                 } else {
                     $obs1_score = 0;
+                    $num1 = 0;
                 }
 
-                if (is_integer($obs2_score)) {
-                    $num++;
+                if (preg_match('/^[0-9]+$/', $obs2_score)) {
+                    $num2 = 1;
                 } else {
                     $obs2_score = 0;
+                    $num2 = 0;
                 }
 
-                if (is_integer($obs3_score)) {
-                    $num++;
+                if (preg_match('/^[0-9]+$/', $obs3_score)) {
+                    $num3 = 1;
                 } else {
                     $obs3_score = 0;
+                    $num3 = 0;
                 }
 
-                if (is_integer($obs4_score)) {
-                    $num++;
+                if (preg_match('/^[0-9]+$/', $obs4_score)) {
+                    $num4 = 1;
                 } else {
                     $obs4_score = 0;
+                    $num4 = 0;
                 }
                 $total = intval($obs1_score) + intval($obs2_score) + intval($obs3_score) + intval($obs4_score);
-                if ($total = NAN) {
-                    return 0;
-                } else {
-                    return $total / $num;
-                }
+                $num = $num1 + $num2 + $num3 + $num4;
+                $ave = $total / $num;
+
+                return $ave;
             }

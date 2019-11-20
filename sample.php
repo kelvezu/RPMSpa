@@ -230,7 +230,11 @@ $fourth_period_int = intval(strtotime($_SESSION['final_period']));
 echo ($fourth_period_int) . '<br/>';
 
 
-// echo "rating of tioaf" . showObsRating($conn);
+echo showObsAverage(3, 4, 5, "-") . BR;
+
+RPMSdb::generateCOTaverage($conn);
+
+
 
 
 ?>
