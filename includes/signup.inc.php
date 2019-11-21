@@ -1,4 +1,8 @@
 <?php
+
+require '../PHPMailer/PHPMailerAutoload.php';
+require '../credential.php';
+
 if (isset($_POST['signup-submit'])) {
     require_once "conn.inc.php";
     include_once "../libraries/func.lib.php";
@@ -14,8 +18,9 @@ if (isset($_POST['signup-submit'])) {
     $birthdate = $_POST['birthdate'];
     $username = usernameGen($firstname, $surname, $contact);
     $school = $_POST['school'];
-    $password = $_POST['pwd'];
-    $passwordRepeat = $_POST['pwd-repeat'];
+    $added_by = $_POST['added_by'];
+
+    $activation_code = md5(rand('10000','99999'));
     $status = "Active";
 
     //CHECK IF THE FIELDS ARE EMPTY 
@@ -137,29 +142,69 @@ if (isset($_POST['signup-submit'])) {
                     if(mysqli_num_rows($chk_result)>0):
                         header('location:../signup.php?error=oneprincipalonly');
                         exit();
-                endif;
+                endif;              
             endif;
 
-                if (!empty($school)) {
-                    $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,school_id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-                } else {
-                    $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,`status`) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-                }
 
-                $stmt = mysqli_stmt_init($conn);
-                if (!mysqli_stmt_prepare($stmt, $sql)) {
-                    header("Location:../signup.php?error=sqlerror");
-                    exit();
-                } else {
-                    $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
-                    if (!empty($school)) {
-                        mysqli_stmt_bind_param($stmt, "issssssssssi", $prc_id, nameFormat($surname), nameFormat($firstname), nameFormat($middlename), positionFormat($position), $email, $contact, ucwords($gender), $birthdate, $username, $hashedPwd, $school);
+                if (!empty($school)) {
+                    $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,added_by,school_id,activation_code) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+                    $stmt = mysqli_stmt_init($conn);
+                    if (!mysqli_stmt_prepare($stmt, $sql)) {
+                        header("Location:../signup.php?error=sqlerror");
+                        exit();
                     } else {
-                        mysqli_stmt_bind_param($stmt, "isssssssssss", $prc_id, ucwords($surname), ucwords($firstname), ucwords($middlename), positionFormat($position), $email, $contact, ucwords($gender), $birthdate, $username, $hashedPwd, $status);
+                        $password = defaultPwd();
+                        // $hashedPwd = password_hash($password, PASSWORD_DEFAULT);
+                        if (!empty($school)) {
+                            
+                            mysqli_stmt_bind_param($stmt, "issssssssssiis", $prc_id, nameFormat($surname), nameFormat($firstname), nameFormat($middlename), positionFormat($position), $email, $contact, ucwords($gender), $birthdate, $username, $password, $added_by, $school, $activation_code);
+                        
+                        $resultInsert = mysqli_stmt_execute($stmt) or die($conn->error);
+
+                        $lastId = mysqli_insert_id($conn);
+
+                        $url = 'http://'.$_SERVER['SERVER_NAME'].'/rpmspa/verify.php?id='.$lastId.'&activation_code='.$activation_code;
+
+                        $output = '<div>Thanks for registering with localhost. Please click this link to complete this registation <br>'.$url.'</div>';
+
+                        if($resultInsert == true){
+                            $mail = new PHPMailer();
+                            $mail->isSMTP();  
+                            $mail->Host = 'smtp.gmail.com';
+                            $mail->SMTPAuth = true;
+                            $mail->Username = EMAIL;
+                            $mail->Password = PASS; 
+                            $mail->SMTPSecure = 'tls';
+                            $mail->Port = 587;
+                            $mail->setFrom(EMAIL, 'RPMSSupport@noreply.com');
+                            $mail->addAddress($email, $firstname);
+
+                            $mail->isHTML(true);
+                            $mail->Subject = 'Email Verification';
+                            $mail->Body    = $output;
+
+                            if(!$mail->send()) {
+                                header("Location../sign.up.php?signup=mailerror");
+                                exit();
+                            } else {
+                                header("Location:../signup.php?signup=success&uname=" . $username);
+                                exit();
+                            }
+
+                        }
+
+                        header("Location:../signup.php?signup=success&uname=" . $username);
+                        exit();
                     }
-                    mysqli_stmt_execute($stmt);
-                    header("Location:../signup.php?signup=success&uname=" . $username);
+                        }
+                } else {
+                    header('location:../signup.php?error=emptyschool');
                     exit();
+        
+                
+
+               
                 }
             }
         }

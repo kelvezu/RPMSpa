@@ -20,11 +20,11 @@ include 'sampleheader.php';
     endif;
   endif;
 
-  if(isset($_SESSION['dup_email'])):
-   foreach($_SESSION['dup_email'] as $dup_email){
-     echo $dup_email;
-   }
-  endif;
+//   if(isset($_SESSION['dup_email'])):
+//    foreach($_SESSION['dup_email'] as $dup_email){
+//      echo $dup_email;
+//    }
+//   endif;
 ?>
     <br />
     <h3 align="center">Enter CSV Account Information</h3>
@@ -43,7 +43,7 @@ include 'sampleheader.php';
 
           </strong>
         </ol>
-
+ 
 
       </div>
     </div>
