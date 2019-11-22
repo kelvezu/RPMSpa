@@ -552,15 +552,13 @@
             }
 
             // THIS FUNCTION IS FOR RATER 
-            function showObsRating($conn, $obs_period, $indicator_id)
+            function showObsRating($conn, $obs_period, $indicator_id, $user_id, $sy)
             {
-
-                // $qry  = 'SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = 1 AND `rater_id1` = 33 AND `obs_period` = 1 AND sy = 17 AND school_id = 14 AND `status` = "Active"';
-
-                $qry = "SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = $indicator_id AND  `rater_id1` = " . $_SESSION['user_id'] . " AND `obs_period` = $obs_period AND sy = " . $_SESSION['active_sy_id'] . " AND school_id = " . $_SESSION['school_id'] . " AND `status` = 'Active' ";
+                $qry = "SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $_SESSION['school_id'] . " AND `status` = 'Active' ";
 
                 $results = mysqli_query($conn, $qry) or die($conn->error);
-                if ($results) {
+                $count_results = mysqli_num_rows($results);
+                if ($count_results > 0) {
                     foreach ($results as $result) :
                         return $result['tioafrating'];
                     endforeach;
@@ -602,7 +600,11 @@
                 }
                 $total = intval($obs1_score) + intval($obs2_score) + intval($obs3_score) + intval($obs4_score);
                 $num = $num1 + $num2 + $num3 + $num4;
-                $ave = $total / $num;
+                if (!empty($total) and (!empty($num))) :
+                    $ave = $total / $num;
 
-                return $ave;
+
+                    return $ave;
+                else : return "-";
+                endif;
             }

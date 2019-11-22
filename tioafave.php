@@ -83,27 +83,28 @@ endif;
                 </thead>
                 <?php
                 $query1 = $conn->query('SELECT * FROM tindicator_tbl ');
+                $num = 1;
                 while ($rows = $query1->fetch_assoc()) :
                     $indicator_no = $rows['indicator_id'];
                     $indicator_name = $rows['indicator_name'];
                     ?>
                     <tbody>
                         <tr>
-                            <td class="font-weight-bold"><?php echo $indicator_no . '.' ?></td>
+                            <td class="font-weight-bold"><?php echo $num++ . '.' ?></td>
                             <td class="font-italic"><?php echo $indicator_name; ?></td>
                             <td class="font-weight-bold text-center">
-                                <p class="d-none"><?= $obs1 = showObsRating($conn, 1, $indicator_no) ?? "-" ?></p>
+                                <p><?= $obs1 = showObsRating($conn, 1, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
                             </td>
                             <td class="font-weight-bold text-center">
-                                <p class="d-none"><?= $obs2 = showObsRating($conn, 2, $indicator_no) ?? "-" ?></p>
+                                <p><?= $obs2 = showObsRating($conn, 2, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
                             </td>
                             <td class="font-weight-bold text-center">
-                                <p class="d-none"><?= $obs3 = showObsRating($conn, 3, $indicator_no) ?? "-" ?></p>
+                                <p><?= $obs3 = showObsRating($conn, 3, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
                             </td>
                             <td class="font-weight-bold text-center">
-                                <p class="d-none"><?= $obs4 = showObsRating($conn, 4, $indicator_no) ?? "-" ?></p>
+                                <p><?= $obs4 = showObsRating($conn, 4, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
                             </td>
-                            <td class=" text-center font-weight-bold apple-color"><?= showObsAverage($obs1, $obs2, $obs3, $obs4)  ?></p>
+                            <td class=" text-center font-weight-bold apple-color"><?= showObsAverage($obs1, $obs2, $obs3, $obs4) ?? "-"  ?></p>
                             </td>
                         </tr>
                     </tbody>
