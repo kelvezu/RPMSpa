@@ -556,15 +556,30 @@
             }
 
             // THIS FUNCTION IS FOR RATER 
-            function showObsRating($conn, $obs_period, $indicator_id, $user_id, $sy)
+            function showObsRatingT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
             {
-                $qry = "SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $_SESSION['school_id'] . " AND `status` = 'Active' ";
+                $qry = "SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
 
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_results = mysqli_num_rows($results);
                 if ($count_results > 0) {
                     foreach ($results as $result) :
-                        return $result['tioafrating'];
+                        return floatval($result['tioafrating']);
+                    endforeach;
+                } else {
+                    return 0;
+                }
+            }
+
+            function showObsRatingMT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
+            {
+                $qry = "SELECT * FROM `a_mtioafrating_tbl` WHERE mtindicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
+
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_results = mysqli_num_rows($results);
+                if ($count_results > 0) {
+                    foreach ($results as $result) :
+                        return floatval($result['tioafrating']);
                     endforeach;
                 } else {
                     return 0;
@@ -602,13 +617,13 @@
                     $obs4_score = 0;
                     $num4 = 0;
                 }
-                $total = intval($obs1_score) + intval($obs2_score) + intval($obs3_score) + intval($obs4_score);
+                $total = floatval($obs1_score) + floatval($obs2_score) + floatval($obs3_score) + floatval($obs4_score);
                 $num = $num1 + $num2 + $num3 + $num4;
                 if (!empty($total) and (!empty($num))) :
                     $ave = $total / $num;
 
 
-                    return $ave;
-                else : return "-";
+                    return floatval($ave);
+                else : return 0;
                 endif;
             }

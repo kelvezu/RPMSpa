@@ -13,7 +13,7 @@ $school = "";
 
 
 
-$query = $conn->query('SELECT tindicator_tbl.indicator_id,tindicator_tbl.indicator_name,a_tioafrating_tbl.* FROM (a_tioafrating_tbl INNER JOIN tindicator_tbl ON a_tioafrating_tbl.indicator_id = tindicator_tbl.indicator_id) WHERE a_tioafrating_tbl.user_id = 32 ');
+$query = $conn->query('SELECT mtindicator_tbl.indicator_id,mtindicator_tbl.indicator_name,a_mtioafrating_tbl.* FROM (a_mtioafrating_tbl INNER JOIN mtindicator_tbl ON a_mtioafrating_tbl.indicator_id = mtindicator_tbl.indicator_id) WHERE a_mtioafrating_tbl.user_id = 32 ');
 if ($query) :
     while ($row = $query->fetch_assoc()) :
 
@@ -21,7 +21,7 @@ if ($query) :
         $rater_id2 = $row['rater_id2'] ?? "NULL";
         $rater_id3 = $row['rater_id3'] ?? "NULL";
         $date = $row['date'];
-        $tobserved = $row['user_id'];
+        $tobserved = 33;
         $obs_period = $row['obs_period'];
         $sy = $row['sy'];
         $school = $row['school_id'];
@@ -82,27 +82,27 @@ endif;
                     </tr>
                 </thead>
                 <?php
-                $query1 = $conn->query('SELECT * FROM tindicator_tbl ');
+                $query1 = $conn->query('SELECT * FROM mtindicator_tbl ');
                 $num = 1;
                 while ($rows = $query1->fetch_assoc()) :
-                    $indicator_no = $rows['indicator_id'];
-                    $indicator_name = $rows['indicator_name'];
+                    $indicator_no = $rows['mtindicator_id'];
+                    $indicator_name = $rows['mtindicator_name'];
                     ?>
                     <tbody>
                         <tr>
-                            <td class="font-weight-bold"><?php echo $num++ . '.' ?></td>
+                            <td class="font-weight-bold"><?php echo $indicator_no . '.' ?></td>
                             <td class="font-italic"><?php echo $indicator_name; ?></td>
                             <td class="font-weight-bold text-center">
-                                <p><?= $obs1 = showObsRating($conn, 1, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
+                                <p><?= $obs1 = showObsRatingMT($conn, 1, $indicator_no, 33, $_SESSION['active_sy_id'], $_SESSION['school_id']) ?? "-" ?></p>
                             </td>
                             <td class="font-weight-bold text-center">
-                                <p><?= $obs2 = showObsRating($conn, 2, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
+                                <p><?= $obs2 = showObsRatingMT($conn, 2, $indicator_no, 33, $_SESSION['active_sy_id'], $_SESSION['school_id']) ?? "-" ?></p>
                             </td>
                             <td class="font-weight-bold text-center">
-                                <p><?= $obs3 = showObsRating($conn, 3, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
+                                <p><?= $obs3 = showObsRatingMT($conn, 3, $indicator_no, 33, $_SESSION['active_sy_id'], $_SESSION['school_id']) ?? "-" ?></p>
                             </td>
                             <td class="font-weight-bold text-center">
-                                <p><?= $obs4 = showObsRating($conn, 4, $indicator_no, 32, $_SESSION['active_sy_id']) ?? "-" ?></p>
+                                <p><?= $obs4 = showObsRatingMT($conn, 4, $indicator_no, 33, $_SESSION['active_sy_id'], $_SESSION['school_id']) ?? "-" ?></p>
                             </td>
                             <td class=" text-center font-weight-bold apple-color"><?= showObsAverage($obs1, $obs2, $obs3, $obs4) ?? "-"  ?></p>
                             </td>
