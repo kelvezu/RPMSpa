@@ -1167,9 +1167,9 @@ class RPMSdb
         endif;
     }
 
-    public static function haveCOTaverageT($conn, $user_id, $sy)
+    public static function haveCOTaverageT($conn, $user_id, $sy, $indicator_id)
     {
-        $qry = "SELECT * FROM cot_t_indicator_ave_tbl WHERE `user_id`  =  $user_id  AND sy =  $sy ";
+        $qry = "SELECT * FROM cot_t_indicator_ave_tbl WHERE `user_id`  =  $user_id  AND sy =  $sy AND indicator_id = $indicator_id";
         $result = mysqli_query($conn, $qry) or die($conn->error);
         $count_result = mysqli_num_rows($result);
         if ($count_result > 0) {
@@ -1179,9 +1179,9 @@ class RPMSdb
         }
     }
 
-    public static function haveCOTaverageMT($conn, $user_id, $sy)
+    public static function haveCOTaverageMT($conn, $user_id, $sy, $indicator_id)
     {
-        $qry = "SELECT * FROM cot_mt_indicator_ave_tbl WHERE `user_id`  = " . $user_id . " AND sy = " . $sy . "";
+        $qry = "SELECT * FROM cot_mt_indicator_ave_tbl WHERE `user_id`  =  $user_id  AND sy =  $sy AND indicator_id = $indicator_id ";
         $result = mysqli_query($conn, $qry) or die($conn->error);
         $count_result = mysqli_num_rows($result);
         if ($count_result > 0) {
@@ -1189,6 +1189,55 @@ class RPMSdb
         } else {
             return false;
         }
+    }
+
+    public static function hasFinalAverageMT($conn, $user_id, $sy)
+    {
+        $qry = "SELECT * FROM cot_mt_final_ave_tbl WHERE `user_id` = $user_id AND sy = $sy `status`  = 'Active'  ";
+        $result = mysqli_query($conn, $qry) or error_log($conn->error, 2, "Error from has FinalAverageMT function");
+        $count_result = mysqli_num_rows($result);
+        if ($count_result > 0) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function hasFinalAverageT($conn, $user_id, $sy)
+    {
+        $qry = "SELECT * FROM cot_t_final_ave_tbl WHERE `user_id` = $user_id AND sy = $sy `status`  = 'Active'  ";
+        $result = mysqli_query($conn, $qry) or error_log($conn->error, 2, "Error from has FinalAverageT function");
+        $count_result = mysqli_num_rows($result);
+        if ($count_result > 0) :
+            return true;
+        else : return false;
+        endif;
+    }
+
+    public static function insertFinalAverageMT($conn, $user_id, $sy, $school, $rater)
+    {
+        $qry = "SELECT AVG(ALL average) AS ave FROM cot_mt_indicator_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND school = $school AND rater = $rater";
+        $results = mysqli_query($conn, $qry);
+        $count_res = mysqli_num_rows($conn, $results);
+
+
+
+        if ($count_res > 0) :
+
+            foreach ($results as $res) :
+                $ave = $res['ave'];
+            endforeach;
+
+            $ins_qry = "INSERT INTO `cot_mt_final_ave_tbl`( `user_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES ($user_id,$ave,$sy,$school,$rater,'Active')";
+            $ins_result = mysqli_query($conn, $ins_qry) or die($conn->error);
+            if (!$ins_result) :
+                return false;
+            endif;
+
+
+
+        else : false;
+
+        endif;
     }
 
 
@@ -1213,6 +1262,9 @@ class RPMSdb
         foreach ($account_arr as $acc) :
             $position = $acc['position'];
             $acc_id = $acc['user_id'];
+            $school = $acc['school_id'];
+            $rater =  $acc['rater'];
+            $status = $acc['status'];
 
             if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
 
@@ -1225,24 +1277,34 @@ class RPMSdb
                 if ($mt_obs1 and $mt_obs2 and $mt_obs3 and $mt_obs4) :
                     // echo "Pwde mo na auto-generate master teacher si " . displayName($conn, $acc_id) . "<p/>";
                     foreach (self::fetchMTindicator($conn) as $mt_res) :
-                        $mt_obsRate1 = showObsRating($conn, 1, $mt_res['mtindicator_id'], $acc_id, $sy);
-                        $mt_obsRate2 = showObsRating($conn, 2, $mt_res['mtindicator_id'], $acc_id, $sy);
-                        $mt_obsRate3 = showObsRating($conn, 3, $mt_res['mtindicator_id'], $acc_id, $sy);
-                        $mt_obsRate4 = showObsRating($conn, 4, $mt_res['mtindicator_id'], $acc_id, $sy);
-                        echo "<p class='apple-color'>" . showObsAverage($mt_obsRate1, $mt_obsRate2, $mt_obsRate3, $mt_obsRate4) . displayName($conn, $acc_id) . "</p>";
-                        echo '<p class="apple-color">' . displayname($conn, $acc_id) . '</p>';
-                        $hasCOTaveMT = self::haveCOTaverageMT($conn, $acc_id, $sy);
+                        $mt_obsRate1 = showObsRatingMT($conn, 1, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+                        $mt_obsRate2 = showObsRatingMT($conn, 2, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+                        $mt_obsRate3 = showObsRatingMT($conn, 3, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+                        $mt_obsRate4 = showObsRatingMT($conn, 4, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
 
-                        //   INSERT SAVE METHOD FOR MT
-                        $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['indicator_id'] . ',' . showObsAverage($mt_obsRate1, $mt_obsRate2, $mt_obsRate3, $mt_obsRate4) . ',' . $mt_res['sy'] . ',' . $mt_res['school'] . ',' . $mt_res['rater_id1'] . ',' . $mt_res['status'] . ')';
+                        $mt_ave = showObsAverage($mt_obsRate1, $mt_obsRate2, $mt_obsRate3, $mt_obsRate4);
+                        $hasCOTaveMT = self::haveCOTaverageMT($conn, $acc_id, $sy, $mt_res['mtindicator_id']);
+                        if (!$hasCOTaveMT) :
+                            //   INSERT SAVE METHOD FOR MT
 
-                        $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error);
-                        $mt_record_result = mysqli_num_rows($mt_record_ave);
+                            $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['mtindicator_id'] . ',' . $mt_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
 
-                        if ($mt_record_result == 0) {
-                            return false;
-                        }
+                            $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error . $mt_ave);
+                            //$t_record_result = mysqli_num_rows($t_record_ave);
 
+
+                            if ($mt_record_ave) {
+                                echo "<p class='apple-color'>" . $acc_id . " has been added to average cot_mt!</p>";
+                            } else {
+                                return $conn->error;
+                            } else :
+                            // INSERT THE SAVE METHOD FOR FINAL AVERAGE
+
+                            if (!(self::hasFinalAverageMT($conn, $acc_id, $sy))) :
+                            // INSERT THE SAVE METHOD HERE
+                            endif;
+
+                        endif;
                     endforeach;
                 else :
                     echo "<p class='tomato-color'>You cannot auto-gen " . displayName($conn, $acc_id) . "ID =" . $acc_id . "<p/>";
@@ -1259,24 +1321,26 @@ class RPMSdb
 
                 if ($t_obs1 and $t_obs2 and $t_obs3 and $t_obs4) :
                     foreach (self::fetchTindicator($conn) as $t_res) :
-                        $t_obsRate1 = showObsRating($conn, 1, $t_res['indicator_id'], $acc_id, $sy);
-                        $t_obsRate2 = showObsRating($conn, 2, $t_res['indicator_id'], $acc_id, $sy);
-                        $t_obsRate3 = showObsRating($conn, 3, $t_res['indicator_id'], $acc_id, $sy);
-                        $t_obsRate4 = showObsRating($conn, 4, $t_res['indicator_id'], $acc_id, $sy);
+                        $t_obsRate1 = showObsRatingT($conn, 1, $t_res['indicator_id'], $acc_id, $sy, $school);
+                        $t_obsRate2 = showObsRatingT($conn, 2, $t_res['indicator_id'], $acc_id, $sy, $school);
+                        $t_obsRate3 = showObsRatingT($conn, 3, $t_res['indicator_id'], $acc_id, $sy, $school);
+                        $t_obsRate4 = showObsRatingT($conn, 4, $t_res['indicator_id'], $acc_id, $sy, $school);
                         $t_ave = showObsAverage($t_obsRate1, $t_obsRate2, $t_obsRate3, $t_obsRate4);
                         // INSERT THE SAVE METHOD.
-                        $hasCOTaveT = self::haveCOTaverageT($conn, $acc_id, $sy);
+                        $hasCOTaveT = self::haveCOTaverageT($conn, $acc_id, $sy, $t_res['indicator_id']);
+                        if ($hasCOTaveT == false) :
+                            $insertqryT = 'INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $t_res['indicator_id'] . ',' . $t_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
 
-                        $insertqryT = 'INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $t_res['indicator_id'] . ',' . $t_ave . ',' . $sy . ',' . $t_res['school'] . ',' . $t_res['rater_id1'] . ',' . $t_res['status'] . ')';
+                            $t_record_ave = mysqli_query($conn, $insertqryT) or die($conn->error);
+                            //$t_record_result = mysqli_num_rows($t_record_ave);
 
-                        $t_record_ave = mysqli_query($conn, $insertqryT) or die($conn->error);
-                        $t_record_result = mysqli_num_rows($t_record_ave);
 
-                        if ($t_record_result > 0) {
-                            echo "Success!";
-                        } else {
-                            echo "Record in ave Failed";
-                        }
+                            if ($t_record_ave) {
+                                echo "<p class='apple-color font-weight-bold'>" . displayName($conn, $acc_id) . " has been added to average cot_t!</p>";
+                            } else {
+                                return $conn->error;
+                            }
+                        endif;
 
 
                     endforeach;
