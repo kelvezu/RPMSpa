@@ -6,7 +6,7 @@ include_once 'sampleheader.php';
 <main class="center">
     <div class="container col-sm-6">
         <div class="card-header text-center bg-info">
-            <strong>Add Account</strong>
+            <strong>Add Account</strong> 
         </div>
         <div class="card-body p-5">
             
@@ -16,6 +16,7 @@ include_once 'sampleheader.php';
             endif
             ?>
             <form action="includes/signup.inc.php" method="post">
+            <input type="hidden" class="form-control my-1" name="added_by" value="<?=($_SESSION['user_id'])?>">;
                
                     
                     <?php
@@ -89,6 +90,10 @@ include_once 'sampleheader.php';
                         elseif ($_GET['error'] == "oneprincipalonly"){
                             echo '<p class="text-danger" align="center"><b>One Principal is allowed for every school!</b></p>';
                         }
+                        //ERROR FOR SCHOOL
+                        elseif ($_GET['error'] == "emptyschool"){
+                            echo '<p class="text-danger" align="center"><b>Please enter school!</b></p>';
+                        }
 
                         //ERROR FOR CONTACT LENGTH IS EQUAL TO 11 
                         elseif ($_GET['error'] == "contactshort") {
@@ -114,6 +119,7 @@ include_once 'sampleheader.php';
 
 
                     <?php
+                    
                     echo '<label for="prc_id" class="form-control-label "><strong>PRC ID:</strong></label>';
                     if (!isset($_GET['prc_id'])) {
                         echo '<input type="number" class="form-control my-1" name="prc_id"  placeholder="Enter your PRC ID...">';

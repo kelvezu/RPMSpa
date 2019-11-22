@@ -502,6 +502,10 @@
                         echo 'User does not exist!';
                         break;
 
+                    case 'emailnotverified':
+                        echo 'Your email is not yet verified! Please check your email for verification!';
+                        break;
+
                     default:
                         return false;
                         break;
