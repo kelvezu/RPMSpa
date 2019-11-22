@@ -612,3 +612,75 @@
                 else : return "-";
                 endif;
             }
+
+            function displayKRA($conn,$kra_id){
+                $qry = "SELECT * FROM kra_tbl WHERE kra_id = $kra_id";
+                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if($count_res > 0){
+                   
+                    foreach($results as $res){
+                        return $res['kra_name'];
+                    }
+                  
+                }
+            }
+
+            function displayObjectiveT($conn,$tobj_id){
+                $qry = "SELECT * FROM tobj_tbl WHERE tobj_id = $tobj_id";
+                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if($count_res > 0){
+                   
+                    foreach($results as $res){
+                        return $res['tobj_name'];
+                    }
+                  
+                }
+            }
+
+            function displayObjectiveMT($conn,$mtobj_id){
+                $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
+                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if($count_res > 0){
+                   
+                    foreach($results as $res){
+                        return $res['mtobj_name'];
+                    }
+                  
+                }
+            }
+
+            function displayKRAidofTobj($conn,$tobj_id){
+                $qry = "SELECT * FROM tobj_tbl WHERE tobj_id = $tobj_id";
+                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if($count_res > 0){
+                   
+                    foreach($results as $res){
+                        return $res['kra_id'];
+                    }
+                  
+                }
+
+            }
+
+            function displayKRAidofMTobj($conn,$mtobj_id){
+                $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
+                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if($count_res > 0){
+                   
+                    foreach($results as $res){
+                        return $res['kra_id'];
+                    }
+                  
+                }
+
+            }

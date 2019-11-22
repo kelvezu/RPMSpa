@@ -28,6 +28,12 @@ include_once 'includes/security.php';
     <!-- Script for Charts  -->
     <script src="bootstrap4/scripts/googlechart.js"></script>
     <script src="bootstrap4/scripts/jquery3.min.js"></script>
+    <script>
+        // this will enable the tooltip in bootstrap 4
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+            })
+    </script>
 
 
 </head>

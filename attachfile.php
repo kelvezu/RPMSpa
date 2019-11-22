@@ -90,10 +90,17 @@ include 'sampleheader.php';
         <div class="card-header text-center">
             Upload
         </div>
-        <div class="card-body box">
+        <div class="card-body box"> 
             <div class="row">
                 <div class="col">
                     <form action="includes/upload.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'];?>">
+                        <input type="hidden" name="position" value="<?php echo $_SESSION['position'];?>">
+                        <input type="hidden" name="rater_id" value="<?php echo $_SESSION['rater'];?>">
+                        <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id'];?>">
+                        <input type="hidden" name="sy_id" value="<?php echo $_SESSION['active_sy_id'];?>">
+
+
                         <input type="file" name="file" class=" btn btn-outline-success form-control" required><br>
                         <label for="desc"><strong>Choose MOV Type:</strong></label><br>
                             <select name="mov_type" class="form-control" required>
@@ -102,32 +109,25 @@ include 'sampleheader.php';
                                 <option name="supp_mov" value="supp_mov">Supporting MOV</option>
                             </select><br>
                         <label for="desc"><strong>Description</strong></label><br>
-                        <textarea name="description" cols="40" rows="8" required></textarea><br>
-                        <button type="submit" name="submit" class="btn btn-success">Upload</button>
+                        <textarea name="description" cols="40" rows="10" required></textarea><br>
+                       
                 </div>
-                <div class="col">
-                    <label for="selectkra"><strong>Choose KRA</strong></label><br>
-                        <input type="checkbox" name="kra_one">KRA 1<br>
-                        <input type="checkbox" name="kra_two">KRA 2<br>
-                        <input type="checkbox" name="kra_three">KRA 3<br>
-                        <input type="checkbox" name="kra_four">KRA 4<br>
-                        <input type="checkbox" name="kra_five">KRA 5<br>
-                </div>
+               
                 <div class="col">
                     <label for="selectkra"><strong>Choose Objective</strong></label><br>
-                        <input type="checkbox" name="obj_one">Objective 1<br>
-                        <input type="checkbox" name="obj_two">Objective 2<br>
-                        <input type="checkbox" name="obj_three">Objective 3<br>
-                        <input type="checkbox" name="obj_four">Objective 4<br>
-                        <input type="checkbox" name="obj_five">Objective 5<br>
-                        <input type="checkbox" name="obj_six">Objective 6<br>
-                        <input type="checkbox" name="obj_seven">Objective 7<br>
-                        <input type="checkbox" name="obj_eight">Objective 8<br>
-                        <input type="checkbox" name="obj_nine">Objective 9<br>
-                        <input type="checkbox" name="obj_ten">Objective 10<br>
-                        <input type="checkbox" name="obj_eleven">Objective 11<br>
-                        <input type="checkbox" name="obj_twelve">Objective 12<br>
-                        <input type="checkbox" name="obj_thirteen">Objective 13<br>
+
+                    <?php
+                        $obj_id = 0;
+                        $qry = $conn->query("SELECT * FROM tobj_tbl");
+                        while ($resultQry = $qry->fetch_assoc()) :
+                            $kra_id = $resultQry['kra_id'];
+                            $obj_id = $resultQry['tobj_id'];
+
+                    ?>
+                         <input type="checkbox" name="obj[]" value="<?php echo $obj_id ;?>" /><?php echo "<a data-toggle='tooltip' data-placement='top' title='".displayKRA($conn,$kra_id)."'>KRA ". $kra_id . "</a> - <a data-toggle='tooltip' data-placement='top' title='".displayObjectiveT($conn,$obj_id)."'>Objective " . $obj_id. "</a>"; ?><br>
+                       
+                        <?php endwhile; ?>
+                        <button type="submit" name="submit" class="btn btn-success">Upload</button>
                 </div>
             </div>
         </div>
