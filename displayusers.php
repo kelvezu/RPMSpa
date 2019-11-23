@@ -88,7 +88,6 @@ $result = $conn->query($userqry)  or die($conn->error);
                             <td><?php echo $row['position'] ?></td>
                             <td><?php echo $row['email']; ?></td>
                             <td><?php echo $row['contact']; ?></td>
-
                             <td><?php echo $row['username']; ?></td>
                             <td><a href="update/updateusers.php?edit=<?php echo $row['user_id']; ?>" class="btn-sm btn-outline-primary btn-block text-center text-decoration-none">Update</a></td>
                             <td><a href="delete/deleteusers.php?delete=<?php echo $row['user_id']; ?>" class="btn-sm btn-outline-danger btn-block text-center text-decoration-none">Delete</a></td>
