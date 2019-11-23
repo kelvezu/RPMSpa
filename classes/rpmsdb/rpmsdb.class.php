@@ -1213,12 +1213,11 @@ class RPMSdb
         endif;
     }
 
-    public static function insertFinalAverageMT($conn, $user_id, $sy, $school, $rater)
+    public static function insertFinalCOTAverageMT($conn, $user_id, $sy, $school, $rater)
     {
         $qry = "SELECT AVG(ALL average) AS ave FROM cot_mt_indicator_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND school = $school AND rater = $rater";
         $results = mysqli_query($conn, $qry);
         $count_res = mysqli_num_rows($results);
-
         if ($count_res > 0) :
             foreach ($results as $res) :
                 $ave = $res['ave'];
@@ -1230,11 +1229,10 @@ class RPMSdb
             else : echo displayName($conn, $user_id) . " average has been generated!";
             endif;
         else : return false;
-
         endif;
     }
 
-    public static function insertFinalAverageT($conn, $user_id, $sy, $school, $rater)
+    public static function insertFinalCOTAverageT($conn, $user_id, $sy, $school, $rater)
     {
         $qry = "SELECT AVG(ALL average) AS ave FROM cot_t_indicator_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND school = $school AND rater = $rater";
         $results = mysqli_query($conn, $qry);
@@ -1255,16 +1253,91 @@ class RPMSdb
         endif;
     }
 
+    public static function updateFinalCOTaverageMT($conn, $user_id, $sy)
+    {
+        $qry  = "SELECT * FROM `cot_mt_final_ave_tbl` WHERE `user_id` = $user_id AND sy = $sy AND `status` = 'Active' ";
+        $results = mysqli_query($conn, $qry) or die($conn->error . 'error in updateFinalCOTaverageMT');
+        $count_results = mysqli_num_rows($results);
+
+        if ($count_results > 0) :
+            foreach ($results as $res) :
+                $current_ave = $res['average'];
+            endforeach;
+
+            $indicator_ave_qry = "SELECT AVG(average) AS ave FROM cot_mt_indicator_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND `status` = 'Active'";
+            $indicator_results = mysqli_query($conn, $indicator_ave_qry) or die($conn->error . '');
+            $count_indicator_results = mysqli_num_rows($indicator_results);
+
+            if ($count_indicator_results > 0) :
+                foreach ($indicator_results as $ind_res) :
+                    $updated_ave = $ind_res['ave'];
+                endforeach;
+
+                if ($current_ave != $updated_ave) :
+                    // update the final cot average
+                    $update_qry = "UPDATE `cot_mt_final_ave_tbl` SET `average`= $updated_ave WHERE `user_id` =  $user_id";
+                    $update_result_mt = mysqli_query($conn, $update_qry) or die('Failed to update the cot average MT' . $conn->error);
+                    if (!$update_result_mt) :
+                        return $conn->error;
+                    endif;
+
+                else : return false;
+                endif;
+
+            else :
+                return false;
+            endif;
+        else : return false;
+        endif;
+    }
+
+    public static function updateFinalCOTaverageT($conn, $user_id, $sy)
+    {
+        $qry  = "SELECT * FROM `cot_t_final_ave_tbl` WHERE `user_id` = $user_id AND sy = $sy AND `status` = 'Active' ";
+        $results = mysqli_query($conn, $qry) or die($conn->error . 'error in updateFinalCOTaverageT');
+        $count_results = mysqli_num_rows($results);
+
+        if ($count_results > 0) :
+            foreach ($results as $res) :
+                $current_ave = $res['average'];
+            endforeach;
+
+            $indicator_ave_qry = "SELECT AVG(average) AS ave FROM cot_t_indicator_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND `status` = 'Active'";
+            $indicator_results = mysqli_query($conn, $indicator_ave_qry) or die($conn->error . '');
+            $count_indicator_results = mysqli_num_rows($indicator_results);
+
+            if ($count_indicator_results > 0) :
+                foreach ($indicator_results as $ind_res) :
+                    $updated_ave = $ind_res['ave'];
+                endforeach;
+
+                if ($current_ave != $updated_ave) :
+                    // update the final cot average
+                    $update_qry = "UPDATE `cot_t_final_ave_tbl` SET `average`= $updated_ave WHERE `user_id` =  '$user_id'";
+                    $update_result_t  = mysqli_query($conn, $update_qry) or die('Failed to update the cot average T' . $conn->error);
+                    if (!$update_result_t) :
+                        return $conn->error;
+                    endif;
+                else : return false;
+                endif;
+
+            else :
+                return false;
+            endif;
+        else : return false;
+        endif;
+    }
 
 
 
+    // THIS METHOD WILL AUTO GENERATE THE COT INDICATOR AVERAGE AND THE FINAL COT AVERAGE
     public static function generateCOTaverage($conn, $sy)
     {
         $qry = "SELECT * FROM account_tbl WHERE position IN ('Teacher I','Teacher II','Teacher III','Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') AND `status` = 'Active' ";
         $results = mysqli_query($conn, $qry) or die($conn->error);
         $count_result = mysqli_num_rows($results);
 
-        // DISPLAY ALL MT AND T THAT ACTIVE
+        // DISPLAY ALL MT AND T THAT ARE ACTIVE
         if ($count_result > 0) :
             $account_arr = [];
             foreach ($results as $result) :
@@ -1298,33 +1371,37 @@ class RPMSdb
                         $mt_obsRate4 = showObsRatingMT($conn, 4, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
 
                         $mt_ave = showObsAverage($mt_obsRate1, $mt_obsRate2, $mt_obsRate3, $mt_obsRate4);
+                        // THIS METHOD WILL CHECK IF MT HAS INDICATOR AVERAGE FOR COT
                         $hasCOTaveMT = self::haveCOTaverageMT($conn, $acc_id, $sy, $mt_res['mtindicator_id']);
+
                         if (!$hasCOTaveMT) :
-                            //   INSERT SAVE METHOD FOR MT
+                            // IF USER DOESNT HAVE INDICATOR AVERAGE THIS WILL SAVE THE AVERAGE FOR EACH INDICATOR
 
                             $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['mtindicator_id'] . ',' . $mt_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
 
                             $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error . $mt_ave);
-
-
                             if ($mt_record_ave) :
                                 echo "<p class='apple-color'>" . $acc_id . " has been added to average cot_mt!</p>";
                             else :
-                                return $conn->error;
+                                return false;
                             endif;
 
                         else :
-                            // INSERT THE SAVE METHOD FOR FINAL AVERAGE
-
+                            // IF USER HAVE INDICATOR AVE THIS WILL CHECK IF THE USER HAS FINAL AVERAGE FOR COT
                             if (!(self::hasFinalAverageMT($conn, $acc_id, $sy))) :
-                                // INSERT THE SAVE METHOD HERE
-                                self::insertFinalAverageMT($conn, $acc_id, $sy, $school, $rater);
+                                // THIS WILL INSERT THE TOTAL AVERAGE OF COT'S 
+                                self::insertFinalCOTAverageMT($conn, $acc_id, $sy, $school, $rater);
+
+                            // ELSE THIS WILL UPDATE THE CURRENT FINAL AVERAGE IF THERE ARE CHANGES 
+                            elseif (self::hasFinalAverageMT($conn, $acc_id, $sy)) :
+                                self::updateFinalCOTaverageMT($conn, $acc_id, $sy);
+                            else : return false;
                             endif;
 
                         endif;
                     endforeach;
                 else :
-                    echo "<p class='tomato-color'>You cannot auto-gen " . displayName($conn, $acc_id) . "ID =" . $acc_id . "<p/>";
+                    return false;
                 endif;
 
             // TEACHER
@@ -1346,31 +1423,28 @@ class RPMSdb
                         // INSERT THE SAVE METHOD.
                         $hasCOTaveT = self::haveCOTaverageT($conn, $acc_id, $sy, $t_res['indicator_id']);
 
-                        if ($hasCOTaveT == false) :
+                        if (!$hasCOTaveT) :
                             $insertqryT = 'INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $t_res['indicator_id'] . ',' . $t_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
 
-                            $t_record_ave = mysqli_query($conn, $insertqryT) or die($conn->error);
-                            //$t_record_result = mysqli_num_rows($t_record_ave);
-
-
+                            $t_record_ave = mysqli_query($conn, $insertqryT) or die($conn->error . 'generateCOTaverage');
                             if ($t_record_ave) :
-                                echo "<p class='apple-color font-weight-bold'>" . displayName($conn, $acc_id) . " has been added to average cot_t!</p>";
-                            else :
-                                return $conn->error;
+                                return true;
                             endif;
 
                         else :
                             // INSERT THE SAVE METHOD FOR FINAL AVERAGE
-
                             if (!(self::hasFinalAverageT($conn, $acc_id, $sy))) :
                                 // INSERT THE SAVE METHOD HERE
-                                self::insertFinalAverageT($conn, $acc_id, $sy, $school, $rater);
+                                self::insertFinalCOTAverageT($conn, $acc_id, $sy, $school, $rater);
+                            elseif (self::hasFinalAverageT($conn, $acc_id, $sy)) :
+                                self::updateFinalCOTaverageT($conn, $acc_id, $sy);
+                            else : return false;
                             endif;
 
                         endif;
                     endforeach;
                 else :
-                    echo "<p class='tomato-color'>You cannot auto-gen " . displayName($conn, $acc_id) . "ID =" . $acc_id . "<p/>";
+                    return false;
                 endif;
 
 
@@ -1381,4 +1455,107 @@ class RPMSdb
         endforeach;
         mysqli_close($conn);
     }
-}  // <- Endtag of class 
+
+    public static function fetchtallT($conn, $school_id)
+    {
+        $qry = "SELECT * FROM account_tbl WHERE position IN('Teacher I','Teacher II','Teacher III') AND `status` = 'Active' AND school_id = $school_id ORDER BY FIELD(position,
+        'Teacher III',
+        'Teacher II',
+        'Teacher I'
+       ) ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetchtallT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+                return $result_array;
+            endforeach;
+        else :
+            return false;
+        endif;
+    }
+
+    public static function fetchtallMT($conn, $school_id)
+    {
+        $qry = "SELECT * FROM account_tbl WHERE position IN('Master Teacher I','Master Teacher II','Master Teacher III','Master Teacher IV') AND `status` = 'Active' AND school_id = $school_id ORDER BY FIELD(position,
+        'Master Teacher IV'
+        'Master Teacher III',
+        'Master Teacher II',
+        'Master Teacher I'
+       ) ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetchtallT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+                return $result_array;
+            endforeach;
+        else :
+            return false;
+        endif;
+    }
+
+    // FETCH FOR THE USER MT
+    public static function fetch_B_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id)
+    {
+        $qry = "SELECT * FROM mov_b_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_B_MT_MOV_ATT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+                return $result_array;
+            endforeach;
+        else :
+            return false;
+        endif;
+    }
+
+    // FETCH FOR THE RATER MT
+    public static function raterfetch_B_MT_MOV_ATT($conn, $user_id, $school_id, $rater_id, $sy_id)
+    {
+        $qry = "SELECT * FROM mov_b_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND rater_id = $rater_id AND sy_id = $sy_id ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'raterfetch_B_MT_MOV_ATT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+                return $result_array;
+            endforeach;
+        else :
+            return false;
+        endif;
+    }
+
+    // FETCH FOR THE USER T
+    public static function fetch_B_T_MOV_ATT($conn, $user_id, $school_id, $sy_id)
+    {
+        $qry = "SELECT * FROM mov_b_t_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id  ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_B_T_MOV_ATT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+                return $result_array;
+            endforeach;
+        else :
+            return false;
+        endif;
+    }
+
+    // FETCH FOR THE RATER T
+    public static function raterfetch_B_T_MOV_ATT($conn, $user_id, $school_id, $rater_id, $sy_id)
+    {
+        $qry = "SELECT * FROM mov_b_t_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND rater_id = $rater_id AND sy_id = $sy_id ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'raterfetch_B_T_MOV_ATT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+                return $result_array;
+            endforeach;
+        else :
+            return false;
+        endif;
+    }
+}

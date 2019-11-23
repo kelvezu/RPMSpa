@@ -233,16 +233,9 @@ echo ($fourth_period_int) . '<br/>';
 echo showObsAverage(3, 4, 5, "-") . BR;
 
 // $result = RPMSdb::generateCOTaverage($conn);
-pre_r(RPMSdb::generateCOTaverage($conn, $_SESSION['active_sy_id']));
 
-$qry = "SELECT * FROM cot_t_indicator_ave_tbl WHERE `user_id`  =  32 AND sy =  17 ";
-$result = mysqli_query($conn, $qry) or die($conn->error);
-$count_result = mysqli_num_rows($result);
-if ($count_result > 0) {
-    echo "mern na";
-} else {
-    echo "wala pa";
-}
+// echo RPMSdb::updateFinalCOTaverageT($conn, 32, $_SESSION['active_sy_id']);
+
 
 
 
