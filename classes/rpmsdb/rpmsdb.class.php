@@ -1468,8 +1468,8 @@ class RPMSdb
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-                return $result_array;
             endforeach;
+            return $result_array;
         else :
             return false;
         endif;
@@ -1488,8 +1488,8 @@ class RPMSdb
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-                return $result_array;
             endforeach;
+            return $result_array;
         else :
             return false;
         endif;
@@ -1498,14 +1498,15 @@ class RPMSdb
     // FETCH FOR THE USER MT
     public static function fetch_B_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id)
     {
-        $qry = "SELECT * FROM mov_b_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id ";
+        $qry = "SELECT * FROM mov_b_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active'";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_B_MT_MOV_ATT');
         if (mysqli_num_rows($result) > 0) :
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-                return $result_array;
+
             endforeach;
+            return $result_array;
         else :
             return false;
         endif;
@@ -1514,30 +1515,52 @@ class RPMSdb
     // FETCH FOR THE RATER MT
     public static function raterfetch_B_MT_MOV_ATT($conn, $user_id, $school_id, $rater_id, $sy_id)
     {
-        $qry = "SELECT * FROM mov_b_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND rater_id = $rater_id AND sy_id = $sy_id ";
+        $qry = "SELECT * FROM mov_b_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND rater_id = $rater_id AND sy_id = $sy_id AND `status` = 'Active' ";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'raterfetch_B_MT_MOV_ATT');
         if (mysqli_num_rows($result) > 0) :
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-                return $result_array;
+
             endforeach;
+            return $result_array;
         else :
             return false;
         endif;
     }
 
-    // FETCH FOR THE USER T
+    // FETCH FOR THE USER T A
+    public static function fetch_A_T_MOV_ATT($conn, $user_id, $school_id, $sy_id)
+    {
+        $qry = "SELECT * FROM mov_a_t_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active' ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_A_T_MOV_ATT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+
+            endforeach;
+            return $result_array;
+        else :
+            return false;
+        endif;
+    }
+
+    //FETCH THE OBJECTIVE
+
+
+    // FETCH FOR THE USER T B
     public static function fetch_B_T_MOV_ATT($conn, $user_id, $school_id, $sy_id)
     {
-        $qry = "SELECT * FROM mov_b_t_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id  ";
+        $qry = "SELECT * FROM mov_b_t_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id  AND `status` = 'Active'";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_B_T_MOV_ATT');
         if (mysqli_num_rows($result) > 0) :
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-                return $result_array;
+
             endforeach;
+            return $result_array;
         else :
             return false;
         endif;
@@ -1546,14 +1569,14 @@ class RPMSdb
     // FETCH FOR THE RATER T
     public static function raterfetch_B_T_MOV_ATT($conn, $user_id, $school_id, $rater_id, $sy_id)
     {
-        $qry = "SELECT * FROM mov_b_t_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND rater_id = $rater_id AND sy_id = $sy_id ";
+        $qry = "SELECT * FROM mov_b_t_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND rater_id = $rater_id AND sy_id = $sy_id AND `status` = 'Active' ";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'raterfetch_B_T_MOV_ATT');
         if (mysqli_num_rows($result) > 0) :
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-                return $result_array;
             endforeach;
+            return $result_array;
         else :
             return false;
         endif;
