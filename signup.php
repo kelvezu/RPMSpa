@@ -16,7 +16,7 @@ include_once 'sampleheader.php';
             endif
             ?>
             <form action="includes/signup.inc.php" method="post">
-            <input type="hidden" class="form-control my-1" name="added_by" value="<?=($_SESSION['user_id'])?>">;
+            <input type="hidden" class="form-control my-1" name="added_by" value="<?=($_SESSION['user_id'])?>">
                
                     
                     <?php
