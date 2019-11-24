@@ -4,6 +4,7 @@ use RPMSdb\RPMSdb;
 
 $num_t = 1;
 $num_mt = 1;
+$obsMTperiod = 0;
 
 include 'sampleheader.php';
 $teacher_result = RPMSdb::fetchtallT($conn, $_SESSION['school_id']);
@@ -87,17 +88,127 @@ $masterteacher_result = RPMSdb::fetchtallMT($conn, $_SESSION['school_id']);
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center font-weight-bold">
                     <?php foreach ($masterteacher_result as $mt_res) : ?>
                         <tr>
                             <td><?= $num_mt++ ?></td>
                             <td><?= displayname($conn, $mt_res['user_id']) ?></td>
                             <td><?= $mt_res['position'] ?></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+
+                            <td><?= $mtcot1 = RPMSdb::MTcheckResult_Obs1($conn, $mt_res['user_id']) ?
+                                        '<a data-toggle="modal" data-target="#viewCOTmodalMT1' . $mt_res['user_id'] . '"> <li class="fa fa-check-circle text-success"></li></a>' : '<i class="fa fa-times-circle text-danger"></i>';
+                                    ?> </td>
+
+                            <td><?= $mtcot2 =  RPMSdb::MTcheckResult_Obs2($conn, $mt_res['user_id']) ?
+                                        '<a data-toggle="modal" data-target="#viewCOTmodalMT2' . $mt_res['user_id'] . '"> <li class="fa fa-check-circle text-success"></li></a>' : '<i class="fa fa-times-circle text-danger"></i>';
+                                    ?></td>
+
+                            <td><?= $mtcot3 =  RPMSdb::MTcheckResult_Obs3($conn, $mt_res['user_id']) ?
+                                        '<a data-toggle="modal" data-target="#viewCOTmodalMT3' . $mt_res['user_id'] . '"> <li class="fa fa-check-circle text-success"></li></a>' : '<i class="fa fa-times-circle text-danger"></i>';
+                                    ?></td>
+
+                            <td><?= $mtcot4 =  RPMSdb::MTcheckResult_Obs4($conn, $mt_res['user_id']) ?
+                                        '<a data-toggle="modal" data-target="#viewCOTmodalMT4' . $mt_res['user_id'] . '"> <li class="fa fa-check-circle text-success"></li></a>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+
+                            <td><?php
+                                    if (
+                                        RPMSdb::MTcheckResult_Obs1($conn, $mt_res['user_id']) &&
+                                        RPMSdb::MTcheckResult_Obs2($conn, $mt_res['user_id']) &&
+                                        RPMSdb::MTcheckResult_Obs3($conn, $mt_res['user_id']) &&
+                                        RPMSdb::MTcheckResult_Obs4($conn, $mt_res['user_id'])
+                                    ) :
+                                        echo '<a class="btn btn-sm btn-primary text-white">View Rating</a>';
+                                    else : echo '---';
+                                    endif;
+                                    ?>
+                            </td>
+                            <!-- View COT MT Obs1 Period Modal -->
+                            <div class="modal fade" id="viewCOTmodalMT1<?= $mt_res['user_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Observation Period 1 </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal -->
+
+                            <!-- View COT MT Obs2 Period Modal -->
+                            <div class="modal fade" id="viewCOTmodalMT2<?= $mt_res['user_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Observation Period 2 </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal -->
+
+                            <!-- View COT MT Obs3 Period Modal -->
+                            <div class="modal fade" id="viewCOTmodalMT3<?= $mt_res['user_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Observation Period 3 </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal -->
+
+                            <!-- View COT MT Obs4 Period Modal -->
+                            <div class="modal fade" id="viewCOTmodalMT4<?= $mt_res['user_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Observation Period 4 </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Modal -->
                         <?php endforeach; ?>
                         </tr>
                 </tbody>

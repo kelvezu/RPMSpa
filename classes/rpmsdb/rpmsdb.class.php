@@ -678,7 +678,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM a_tioafrating_tbl WHERE obs_period = 1 AND `tioafrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III"))  AND school_id =' . $_SESSION['school_id'] . ' AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
+        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM a_tioafrating_tbl WHERE obs_period = 1 AND `rating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Teacher I", "Teacher II", "Teacher III"))  AND school_id =' . $_SESSION['school_id'] . ' AND position IN ("Teacher I", "Teacher II", "Teacher III") AND `status` = "Active"';
 
         $result = mysqli_query($conn, $qry);
         foreach ($result as $res) :
@@ -708,7 +708,7 @@ class RPMSdb
     {
         //THE OUTPUT OF THIS FUNCTION WILL BE AN ARRAY
         $result_arr = [];
-        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM a_mtioafrating_tbl WHERE `tioafrating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV"))  AND school_id = ' . $_SESSION['school_id'] . ' AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active" ';
+        $qry = 'SELECT * FROM `account_tbl` WHERE  `user_id` IN (SELECT `user_id` FROM a_mtioafrating_tbl WHERE `rating` IS NOT NULL AND status = "Active" AND  school_id ="' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV"))  AND school_id = ' . $_SESSION['school_id'] . ' AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III","Master Teacher IV") AND `status` = "Active" ';
 
         $result = mysqli_query($conn, $qry);
         foreach ($result as $res) :
@@ -1086,7 +1086,7 @@ class RPMSdb
 
     public static function TcheckResult_Obs1($conn, $user_id)
     {
-        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 1 AND tioafrating IS NOT NULL  AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 1 AND rating IS NOT NULL  AND `status` = 'Active' AND `user_id` = $user_id  ";
         $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
         $isResult = mysqli_num_rows($mt_qry_result);
 
@@ -1098,7 +1098,7 @@ class RPMSdb
 
     public static function TcheckResult_Obs2($conn, $user_id)
     {
-        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 2 AND tioafrating IS NOT NULL AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 2 AND rating IS NOT NULL AND `status` = 'Active' AND `user_id` = $user_id  ";
         $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
         $isResult = mysqli_num_rows($mt_qry_result);
 
@@ -1110,7 +1110,7 @@ class RPMSdb
 
     public static function TcheckResult_Obs3($conn, $user_id)
     {
-        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 3 AND tioafrating IS NOT NULL AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 3 AND rating IS NOT NULL AND `status` = 'Active' AND `user_id` = $user_id  ";
         $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
         $isResult = mysqli_num_rows($mt_qry_result);
 
@@ -1122,7 +1122,7 @@ class RPMSdb
 
     public static function TcheckResult_Obs4($conn, $user_id)
     {
-        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 4 AND tioafrating IS NOT NULL AND `status` = 'Active' AND `user_id` = $user_id  ";
+        $mt_qry = "SELECT * FROM a_tioafrating_tbl  WHERE obs_period = 4 AND rating IS NOT NULL AND `status` = 'Active' AND `user_id` = $user_id  ";
         $mt_qry_result = mysqli_query($conn, $mt_qry) or die($conn->error);
         $isResult = mysqli_num_rows($mt_qry_result);
 
@@ -1226,7 +1226,7 @@ class RPMSdb
             $ins_result = mysqli_query($conn, $ins_qry) or die($conn->error);
             if (!$ins_result) :
                 return false;
-            else : echo displayName($conn, $user_id) . " average has been generated!";
+            //else : echo displayName($conn, $user_id) . " average has been generated!";
             endif;
         else : return false;
         endif;
@@ -1246,7 +1246,7 @@ class RPMSdb
             $ins_result = mysqli_query($conn, $ins_qry) or die($conn->error . 'error in insertFinalAverage');
             if (!$ins_result) :
                 return false;
-            else : echo displayName($conn, $user_id) . " average has been generated!";
+            //else : echo displayName($conn, $user_id) . " average has been generated!";
             endif;
         else : return false;
 
@@ -1380,9 +1380,9 @@ class RPMSdb
                             $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['mtindicator_id'] . ',' . $mt_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
 
                             $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error . $mt_ave);
-                            if ($mt_record_ave) :
-                                echo "<p class='apple-color'>" . $acc_id . " has been added to average cot_mt!</p>";
-                            else :
+                            if (!$mt_record_ave) :
+                                //     echo "<p class='apple-color'>" . $acc_id . " has been added to average cot_mt!</p>";
+                                // else :
                                 return false;
                             endif;
 
@@ -1422,13 +1422,12 @@ class RPMSdb
                         $t_ave = showObsAverage($t_obsRate1, $t_obsRate2, $t_obsRate3, $t_obsRate4);
                         // INSERT THE SAVE METHOD.
                         $hasCOTaveT = self::haveCOTaverageT($conn, $acc_id, $sy, $t_res['indicator_id']);
-
                         if (!$hasCOTaveT) :
                             $insertqryT = 'INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $t_res['indicator_id'] . ',' . $t_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
 
                             $t_record_ave = mysqli_query($conn, $insertqryT) or die($conn->error . 'generateCOTaverage');
-                            if ($t_record_ave) :
-                                return true;
+                            if (!$t_record_ave) :
+                                return false;
                             endif;
 
                         else :
@@ -1579,6 +1578,28 @@ class RPMSdb
             return $result_array;
         else :
             return false;
+        endif;
+    }
+
+    public static function fetchCOTrating($conn, $user, $obs_period, $sy, $school, $table_name1, $table_name2)
+    {
+        $result_arr = [];
+        $qry1 = "SELECT * FROM `$table_name1` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school";
+        $qry2 = "SELECT * FROM `$table_name2` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school";
+        $qry1_results = mysqli_query($conn, $qry1) or die($conn->error . 'fetchCOTrating');
+        $qry2_results = mysqli_query($conn, $qry2) or die($conn->error . 'fetchCOTrating');
+
+        if (mysqli_num_rows($qry1_results) > 0 and mysqli_num_rows($qry2_results) > 0) :
+            foreach ($qry1_results as $res1) :
+                array_push($result_arr, $res1);
+            endforeach;
+
+            foreach ($qry2_results as $res2) :
+                array_push($result_arr, $res2);
+            endforeach;
+
+            return $result_arr;
+        else : return false;
         endif;
     }
 }

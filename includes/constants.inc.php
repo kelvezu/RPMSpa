@@ -10,4 +10,10 @@ const DB_PASSWORD = '';
 
 const DEV_EMAIL = 'chrisraycun08@gmail.com';
 
+const OBS_PERIOD_1 = "1";
+const OBS_PERIOD_2 = "2";
+const OBS_PERIOD_3 = "3";
+const OBS_PERIOD_4 = "4";
+
+
 //

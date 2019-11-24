@@ -564,7 +564,7 @@
                 $count_results = mysqli_num_rows($results);
                 if ($count_results > 0) {
                     foreach ($results as $result) :
-                        return floatval($result['tioafrating']);
+                        return floatval($result['rating']);
                     endforeach;
                 } else {
                     return 0;
@@ -573,13 +573,13 @@
 
             function showObsRatingMT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
             {
-                $qry = "SELECT * FROM `a_mtioafrating_tbl` WHERE mtindicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
+                $qry = "SELECT * FROM `a_mtioafrating_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
 
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_results = mysqli_num_rows($results);
                 if ($count_results > 0) {
                     foreach ($results as $result) :
-                        return floatval($result['tioafrating']);
+                        return floatval($result['rating']);
                     endforeach;
                 } else {
                     return 0;
@@ -628,74 +628,72 @@
                 endif;
             }
 
-            function displayKRA($conn,$kra_id){
+            function displayKRA($conn, $kra_id)
+            {
                 $qry = "SELECT * FROM kra_tbl WHERE kra_id = $kra_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['kra_name'];
                     }
-                  
                 }
             }
 
-            function displayObjectiveT($conn,$tobj_id){
+            function displayObjectiveT($conn, $tobj_id)
+            {
                 $qry = "SELECT * FROM tobj_tbl WHERE tobj_id = $tobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['tobj_name'];
                     }
-                  
                 }
             }
 
-            function displayObjectiveMT($conn,$mtobj_id){
+            function displayObjectiveMT($conn, $mtobj_id)
+            {
                 $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['mtobj_name'];
                     }
-                  
                 }
             }
 
-            function displayKRAidofTobj($conn,$tobj_id){
+            function displayKRAidofTobj($conn, $tobj_id)
+            {
                 $qry = "SELECT * FROM tobj_tbl WHERE tobj_id = $tobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['kra_id'];
                     }
-                  
                 }
-
             }
 
-            function displayKRAidofMTobj($conn,$mtobj_id){
+            function displayKRAidofMTobj($conn, $mtobj_id)
+            {
                 $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['kra_id'];
                     }
-                  
                 }
-
             }
