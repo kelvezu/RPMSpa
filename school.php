@@ -1,6 +1,5 @@
 <?php
-include_once 'includes/conn.inc.php';
-include_once 'includes/header.php';
+include_once 'sampleheader.php';
 
 
 $connection = mysqli_connect("localhost", "root", "");
@@ -204,5 +203,5 @@ mysqli_select_db($connection, "rpms");
 </div>
 <br>
 <?php
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

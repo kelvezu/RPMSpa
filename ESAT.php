@@ -1,6 +1,6 @@
 <?php
-include 'includes/conn.inc.php';
-include 'includes/header.php';
+
+include 'sampleheader.php';
 ?>
 <b />
 
@@ -801,5 +801,5 @@ include 'includes/header.php';
 
 <?php
 
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

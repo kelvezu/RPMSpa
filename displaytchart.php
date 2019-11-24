@@ -1,10 +1,7 @@
 <?php
 
-include_once 'includes/header.php';
-include_once 'includes/conn.inc.php';
-include_once 'libraries/func.lib.php';
-include_once 'includes/constants.inc.php';
-include_once 'libraries/db.library.php';
+include_once 'sampleheader.php';
+
 $user_id = $_SESSION['user_id'];
 
 ?>
@@ -230,3 +227,8 @@ $result = $statement->fetchAll();
 
 	});
 </script>
+
+<?php
+
+include 'samplefooter.php';
+?>

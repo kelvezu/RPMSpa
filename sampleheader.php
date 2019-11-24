@@ -14,6 +14,7 @@ include_once 'includes/classautoloader.inc.php';
 include_once 'libraries/db.library.php';
 include_once 'libraries/func.lib.php';
 include_once 'includes/security.php';
+include_once 'libraries/queries.library.php';
 ?>
 
 <head>
@@ -30,9 +31,9 @@ include_once 'includes/security.php';
     <script src="bootstrap4/scripts/jquery3.min.js"></script>
     <script>
         // this will enable the tooltip in bootstrap 4
-        $(function () {
+        $(function() {
             $('[data-toggle="tooltip"]').tooltip()
-            })
+        })
     </script>
 
 

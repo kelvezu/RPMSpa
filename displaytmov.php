@@ -1,6 +1,6 @@
     <?php
-    include 'includes/conn.inc.php';
-    include 'includes/header.php';
+
+    include 'sampleheader.php';
 
     $connection = mysqli_connect("localhost", "root", "");
     mysqli_select_db($connection, "rpms");
@@ -51,7 +51,7 @@
                             </div>
                             <div class="col-lg">
                                 <label for="supp-mov" class="col-form-label"><strong>Supporting MOV</strong></label>
-                                <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required >
+                                <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required>
                             </div>
                             <div class="m-2">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -143,5 +143,5 @@
     <br>
     <?php
 
-    include 'includes/footer.php';
+    include 'samplefooter.php';
     ?>

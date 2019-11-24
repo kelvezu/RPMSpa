@@ -1,7 +1,7 @@
 <?php
-include 'includes/header.php';
+include 'sampleheader.php';
 RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
-$verifyEsat = FilterUser\FilterUser::filterEsatCbc($conn, $position);
+$verifyEsat = FilterUser\FilterUser::filterEsatCbc($conn, $_SESSION['position']);
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR CORE BEHAVIORAL COMPETENCIES 
@@ -89,5 +89,5 @@ $numind = 1;
 <br>
 <?php
 include 'includes/scripts.php';
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>
