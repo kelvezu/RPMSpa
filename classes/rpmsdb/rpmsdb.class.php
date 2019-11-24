@@ -1581,23 +1581,33 @@ class RPMSdb
         endif;
     }
 
-    public static function fetchCOTrating($conn, $user, $obs_period, $sy, $school, $table_name1, $table_name2)
+    public static function fetchCOTrating($conn, $user, $obs_period, $sy, $school, $table_name1)
     {
         $result_arr = [];
         $qry1 = "SELECT * FROM `$table_name1` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school";
-        $qry2 = "SELECT * FROM `$table_name2` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school";
-        $qry1_results = mysqli_query($conn, $qry1) or die($conn->error . 'fetchCOTrating');
-        $qry2_results = mysqli_query($conn, $qry2) or die($conn->error . 'fetchCOTrating');
 
-        if (mysqli_num_rows($qry1_results) > 0 and mysqli_num_rows($qry2_results) > 0) :
+        $qry1_results = mysqli_query($conn, $qry1) or die($conn->error . 'fetchCOTrating');
+
+
+        if (mysqli_num_rows($qry1_results) > 0) :
             foreach ($qry1_results as $res1) :
                 array_push($result_arr, $res1);
             endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
 
-            foreach ($qry2_results as $res2) :
-                array_push($result_arr, $res2);
+    public static function fetchCOTcomment($conn, $user, $obs_period, $sy, $school, $table_name1)
+    {
+        $result_arr = [];
+        $qry1 = "SELECT * FROM `$table_name1` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school";
+        $qry1_results = mysqli_query($conn, $qry1) or die($conn->error . 'fetchCOTrating');
+
+        if (mysqli_num_rows($qry1_results) > 0) :
+            foreach ($qry1_results as $res1) :
+                array_push($result_arr, $res1);
             endforeach;
-
             return $result_arr;
         else : return false;
         endif;

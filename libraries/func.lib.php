@@ -697,3 +697,32 @@
                     }
                 }
             }
+
+            function displayTindicator($conn, $indicator_id)
+            {
+                $qry = "SELECT * FROM tindicator_tbl WHERE indicator_id = $indicator_id";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
+                        return $res['indicator_name'];
+                    }
+                }
+            }
+
+
+            function displayMTindicator($conn, $indicator_id)
+            {
+                $qry = "SELECT * FROM mtindicator_tbl WHERE mtindicator_id = $indicator_id";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
+                        return $res['mtindicator_name'];
+                    }
+                }
+            }
