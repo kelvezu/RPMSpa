@@ -558,7 +558,7 @@
             // THIS FUNCTION IS FOR RATER 
             function showObsRatingT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
             {
-                $qry = "SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
 
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_results = mysqli_num_rows($results);
@@ -573,8 +573,7 @@
 
             function showObsRatingMT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
             {
-                $qry = "SELECT * FROM `a_mtioafrating_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
-
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_results = mysqli_num_rows($results);
                 if ($count_results > 0) {
@@ -589,29 +588,28 @@
             // THIS WILL OUTPUT THE AVERAGE IN COT RATING
             function showObsAverage($obs1_score, $obs2_score, $obs3_score, $obs4_score)
             {
-
-                if (preg_match('/^[0-9]+$/', $obs1_score)) {
+                if (preg_match('/^[0-9]+$/', $obs1_score) and ($obs1_score != 0)) {
                     $num1 = 1;
                 } else {
                     $obs1_score = 0;
                     $num1 = 0;
                 }
 
-                if (preg_match('/^[0-9]+$/', $obs2_score)) {
+                if (preg_match('/^[0-9]+$/', $obs2_score) and ($obs2_score != 0)) {
                     $num2 = 1;
                 } else {
                     $obs2_score = 0;
                     $num2 = 0;
                 }
 
-                if (preg_match('/^[0-9]+$/', $obs3_score)) {
+                if (preg_match('/^[0-9]+$/', $obs3_score) and ($obs3_score != 0)) {
                     $num3 = 1;
                 } else {
                     $obs3_score = 0;
                     $num3 = 0;
                 }
 
-                if (preg_match('/^[0-9]+$/', $obs4_score)) {
+                if (preg_match('/^[0-9]+$/', $obs4_score) and ($obs4_score != 0)) {
                     $num4 = 1;
                 } else {
                     $obs4_score = 0;
@@ -711,7 +709,6 @@
                     }
                 }
             }
-
 
             function displayMTindicator($conn, $indicator_id)
             {

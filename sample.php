@@ -232,6 +232,9 @@ echo ($fourth_period_int) . '<br/>';
 
 echo showObsAverage(3, 4, 5, "-") . BR;
 
+$results = rpmsdb::getCOTavgMT($conn, 33, 1, $_SESSION['active_sy_id'], $_SESSION['school_id']);
+pre_r($results);
+
 // $result = RPMSdb::generateCOTaverage($conn);
 
 // echo RPMSdb::updateFinalCOTaverageT($conn, 32, $_SESSION['active_sy_id']);
