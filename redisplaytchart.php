@@ -1,6 +1,6 @@
 <?php
 
-include_once 'includes/header.php';
+include_once 'sampleheader.php';
 //include_once 'includes/conn.inc.php';
 //include_once 'libraries/func.lib.php';
 //include_once 'includes/constants.inc.php';
@@ -18,7 +18,7 @@ $query = "SELECT a.CBC_NAME,c.indicator FROM core_behavioral_tbl a
 			esat3_core_behavioralt_tbl b  on a.cbc_id = b.cbc_id
 			INNER JOIN cbc_indicators_tbl c on b.cbc_ind_id=c.cbc_ind_id
 			WHERE b.status='active' GROUP BY a.CBC_NAME,c.indicator order by a.cbc_id;";
-            
+
 $statement = $connect->prepare($query);
 $statement->execute();
 $result = $statement->fetchAll();
@@ -65,16 +65,16 @@ $result = $statement->fetchAll();
 								</tr>
 								';
 					}
-				
+
 					?>
 				</table>
 			</div>
 
 		</div>
 	</div>
-<br />
-<br />
-	
+	<br />
+	<br />
+
 
 	<!-- End of Core Behavioral Competencies -->
 
@@ -82,7 +82,7 @@ $result = $statement->fetchAll();
 
 
 	<?php
-	
+
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
 	$query = "SELECT CONCAT(a.kra_id,'.',b.tobj_id,'.',b.tobj_name) 
 				AS Objectives, 
@@ -143,3 +143,7 @@ $result = $statement->fetchAll();
 </body>
 
 </html>
+<?php
+
+include 'samplefooter.php';
+?>

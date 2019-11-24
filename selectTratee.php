@@ -1,14 +1,14 @@
     <?php
-    include_once 'includes/header.php';
+    include_once 'sampleheader.php';
     $school_id = $_SESSION['school_id'];
     $user_id = $_SESSION['user_id'];
-    $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $position = $_SESSION['position'];
     ?>
 
     <body>
-        <div class="container-fluid breadcome-list shadow-reset">
+        <div class="container">
             <div class=" row">
-                <div class="col-sm-6">
+                <div class="col">
                     <!-- With rater -->
                     <form action="includes/processratee.php" method="POST">
                         <div>
@@ -24,7 +24,7 @@
                                 <form action="includes/processratee.php" method="POST">
                                     <?php
                                     $showratee = showRatee($_SESSION['position']);
-                                    $fetchRateeresults = fetchAll($dbcon, $showratee);
+                                    $fetchRateeresults = mysqli_query($conn, $showratee);
                                     if (!empty($fetchRateeresults)) :
                                         ?>
                                         <table class="table table-hover table-borderless">
@@ -69,7 +69,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-sm-6">
+                <div class="col">
                     <!-- Without rater -->
                     <form action="includes/processratee.php" method="POST">
                         <div>
@@ -86,7 +86,7 @@
                                 </div>
                                 <?php
 
-                                $teacherresults = fetchAll($dbcon, showNoRater($_SESSION['position']));
+                                $teacherresults = fetchAll($conn, showNoRater($_SESSION['position']));
                                 if (!empty($teacherresults)) :
                                     ?>
 
@@ -131,7 +131,7 @@
     </body>
     <?php
 
-    include 'includes/footer.php';
+    include 'samplefooter.php';
     ?>
 
     </html>

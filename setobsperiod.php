@@ -2,7 +2,7 @@
 
 use FilterUser\FilterUser;
 
-include 'includes/header.php';
+include 'sampleheader.php';
 
 FilterUser::filterObsPeriod($_SESSION['position']);
 echo '</b>';
@@ -168,5 +168,5 @@ echo '</b>';
 
 
 <?php
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

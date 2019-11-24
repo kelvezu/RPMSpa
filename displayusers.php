@@ -1,5 +1,5 @@
 <?php
-include 'includes/header.php';
+include 'sampleheader.php';
 
 
 if (isset($_GET['usertype'])) :
@@ -109,6 +109,6 @@ $result = $conn->query($userqry)  or die($conn->error);
 <br>
 <?php
 
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>
 <script src="includes/scripts.js"></script>

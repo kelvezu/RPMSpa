@@ -1,6 +1,6 @@
 <?php
-include 'includes/conn.inc.php';
-include 'includes/header.php';
+
+include 'sampleheader.php';
 ?>
 
 <div class="modal fade" id="perftindicator-modal" tabindex="-1" role="dialog" aria-labelledby="perftindicatorModal" aria-hidden="true">
@@ -158,5 +158,5 @@ include 'includes/header.php';
 <br>
 <?php
 
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

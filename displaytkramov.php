@@ -1,6 +1,6 @@
 <?php
-include 'includes/conn.inc.php';
-include 'includes/header.php';
+
+include 'sampleheader.php';
 
 $kra_num = 0;
 $tobj_num = 1;
@@ -182,5 +182,5 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 <br>
 <?php
 include 'includes/scripts.php';
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

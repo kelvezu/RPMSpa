@@ -1,6 +1,6 @@
 <?php
 
-include_once 'includes/header.php';
+include_once 'sampleheader.php';
 // include_once 'includes/conn.inc.php';
 // include_once 'libraries/func.lib.php';
 // include_once 'includes/constants.inc.php';
@@ -142,3 +142,9 @@ $result = $statement->fetchAll();
 
 
 <!-- Start of Assessment of Capabilities and Prioties -->
+
+
+<?php
+
+include 'samplefooter.php';
+?>

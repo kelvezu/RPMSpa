@@ -4,7 +4,7 @@
     use FilterUser\FilterUser;
 
 
-    include_once 'includes/header.php';
+    include_once 'sampleheader.php';
     // devplan::checkDevPlanT($conn);
     FilterUser::filterDevplanTUsers($_SESSION['position']);
     // A.CHECK IF USER DID NOT TAKEN ESAT
@@ -348,5 +348,5 @@
                     endif;
                 /*--------------------------------------*/
                 endif;
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 ?>

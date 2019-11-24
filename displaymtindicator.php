@@ -1,6 +1,6 @@
 <?php
-include 'includes/conn.inc.php';
-include 'includes/header.php';
+
+include 'sampleheader.php';
 
 
 ?>
@@ -129,7 +129,7 @@ include 'includes/header.php';
                 </div>
 
                 <div class="modal fade" id="mtcot-modal" tabindex="-1" role="dialog" aria-labelledby="mtcotModal" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+                    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-lg modal-lg" role="docum modal-lgent">
                         <div class="modal-content">
                             <div class="modal-header bg-dark text-white">
                                 <h5 class="modal-title " id="exampleModalLabel">COT Master Teacher Rating Sheet</h5>
@@ -209,7 +209,7 @@ include 'includes/header.php';
 </div>
 
 <div class="modal fade" id="mtioaf-modal" tabindex="-1" role="dialog" aria-labelledby="mtioafModal" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title " id="exampleModalLabel">Master Teacher IOAF Rating Sheet</h5>
@@ -231,9 +231,10 @@ include 'includes/header.php';
 
                 <h4> Inter-Observer Agreement Form</h4>
 
+
                 <h5 class="text-left">OBSERVER 1<br>
                     OBSERVER 2<br>
-                    OBSERVER 3DATE<br>
+                    OBSERVER 3<br>DATE<br>
                     TEACHER OBSERVED<br>
                     SUBJECT<br>
                     GRADE LEVEL TAUGHT <br>OBSERVATION PERIOD
@@ -290,5 +291,5 @@ include 'includes/header.php';
 <br>
 <?php
 
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

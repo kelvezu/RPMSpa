@@ -4,7 +4,7 @@
     use FilterUser\FilterUser;
 
 
-    include_once 'includes/header.php';
+    include_once 'sampleheader.php';
     devplan::checkDevPlanT($conn);
     FilterUser::filterDevplanTUsers($_SESSION['position']);
     // A.CHECK IF USER DID NOT TAKEN ESAT
@@ -96,7 +96,7 @@
                                                             <?php
 
                                                                             $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, tobj_tbl.tobj_name, esat2_objectivest_tbl.* FROM ( esat2_objectivest_tbl INNER JOIN kra_tbl ON esat2_objectivest_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN tobj_tbl ON esat2_objectivest_tbl.tobj_id = tobj_tbl.tobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivest_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivest_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivest_tbl.school = "' . $LvlCap_result['school'] . '" AND esat2_objectivest_tbl.status = "Active" AND esat2_objectivest_tbl.lvlcap >= 3  LIMIT 2';
-                                                                            $mtobjLvlcapResults = mysqli_query($dbcon, $queryMTobjlvlcap);
+                                                                            $mtobjLvlcapResults = mysqli_query($conn, $queryMTobjlvlcap);
                                                                             if ($mtobjLvlcapResults) :
                                                                                 foreach ($mtobjLvlcapResults as $mtobjLvlcap) :
                                                                                     ?>
@@ -131,7 +131,7 @@
                                                         <ul class="ul-square">
                                                             <?php
                                                                             $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, tobj_tbl.tobj_name, esat2_objectivest_tbl.* FROM ( esat2_objectivest_tbl INNER JOIN kra_tbl ON esat2_objectivest_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN tobj_tbl ON esat2_objectivest_tbl.tobj_id = tobj_tbl.tobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '"  AND esat2_objectivest_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivest_tbl.school = "' . $PrioDev_result['school'] . '" AND esat2_objectivest_tbl.priodev >= 3  LIMIT 2';
-                                                                            $mtobjPrioDevResults = mysqli_query($dbcon, $queryMTobjpriodev);
+                                                                            $mtobjPrioDevResults = mysqli_query($conn, $queryMTobjpriodev);
                                                                             if (!empty($mtobjPrioDevResults)) :
                                                                                 foreach ($mtobjPrioDevResults as $mtobjPriodev) :
                                                                                     ?>
@@ -203,7 +203,7 @@
                                                                 <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
                                                                 <ul class="ul-square">
                                                                     <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralt_tbl.* FROM esat3_core_behavioralt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralt_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioralt_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioralt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralt_tbl.school = "' . $_SESSION['school_id'] . '" AND esat3_core_behavioralt_tbl.status = "Active" AND cbc_score = 1  LIMIT 3';
-                                                                                    $indicatorStrengthResults = mysqli_query($dbcon, $queryIndicatorStrength);
+                                                                                    $indicatorStrengthResults = mysqli_query($conn, $queryIndicatorStrength);
                                                                                     if ($indicatorStrengthResults) :
                                                                                         foreach ($indicatorStrengthResults as $indicatorStrength) :
                                                                                             ?>
@@ -235,7 +235,7 @@
                                                                 <ul class="ul-square">
                                                                     <?php
                                                                                     $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralt_tbl.* FROM esat3_core_behavioralt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralt_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioralt_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioralt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralt_tbl.school = "' . $cbc_devneeds['school'] . '" AND esat3_core_behavioralt_tbl.status = "Active" AND cbc_score = 0  LIMIT 2';
-                                                                                    $IndicatorDevNeedsResults = fetchAll($dbcon, $queryIndicatorDevneeds);
+                                                                                    $IndicatorDevNeedsResults = fetchAll($conn, $queryIndicatorDevneeds);
                                                                                     if ($IndicatorDevNeedsResults) :
                                                                                         foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
                                                                                             ?>
@@ -333,5 +333,5 @@
                     endif;
                 /*--------------------------------------*/
                 endif;
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 ?>

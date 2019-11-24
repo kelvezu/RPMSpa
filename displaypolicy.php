@@ -1,5 +1,5 @@
 <?php
-include 'includes/header.php';
+include 'sampleheader.php';
 ?>
 
 <div class="modal fade" id="policy-modal" tabindex="-1" role="dialog" aria-labelledby="policyModal" aria-hidden="true">
@@ -100,6 +100,6 @@ include 'includes/header.php';
 <footer>
     <?php
 
-    include 'includes/footer.php';
+    include 'samplefooter.php';
     ?>
 </footer>

@@ -1,10 +1,7 @@
 <?php
 
-include_once 'includes/header.php';
-include_once 'includes/conn.inc.php';
-include_once 'libraries/func.lib.php';
-include_once 'includes/constants.inc.php';
-include_once 'libraries/db.library.php';
+include_once 'sampleheader.php';
+
 $user_id = $_SESSION['user_id'];
 
 ?>
@@ -759,7 +756,7 @@ $user_id = $_SESSION['user_id'];
 							<th width="auto">MODERATE</th>
 							<th width="auto">HIGH</th>
 							<th width="auto	">VERY HIGH</th>
-							
+
 
 
 						</tr>
@@ -969,7 +966,7 @@ $user_id = $_SESSION['user_id'];
 
 	<!--end of Core Behavioral Self Assessment-->
 
-	
+
 </body>
 
 </html>
@@ -1420,3 +1417,8 @@ $user_id = $_SESSION['user_id'];
 
 	});
 </script>
+
+
+<?php
+include 'samplefooter.php';
+?>

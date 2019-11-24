@@ -2,16 +2,16 @@
 
     use RPMSdb\RPMSdb;
 
-    include_once 'includes/header.php';
+    include_once 'sampleheader.php';
     $school_id = $_SESSION['school_id'];
     $user_id = $_SESSION['user_id'];
     $dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     ?>
 
     <body>
-        <div class="container-fluid breadcome-list shadow-reset">
+        <div class="container">
             <div class=" row">
-                <div class="col-sm-6">
+                <div class="col">
                     <!-- With rater -->
                     <form action="includes/processselectteacher.php" method="POST">
                         <div>
@@ -25,7 +25,7 @@
                                 <form action="includes/processselectteacher.php" method="POST">
                                     <?php
 
-                                    $fetchRateeresults = RPMSdb::displayMasterList($conn);
+                                    $fetchRateeresults = RPMSdb::displayMasterList($conn, $_SESSION['school_id']);
                                     if (!empty($fetchRateeresults)) :
                                         ?>
                                         <table class="table table-hover table-borderless">
@@ -70,18 +70,17 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-sm-6">
+                <div class="col">
                     <!-- Without rater -->
                     <form action="includes/processselectteacher.php" method="POST">
                         <div>
                             <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>" />
                             <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
                             <div>
-                                <div class=" h3"><strong>
-                                        Teachers Available for Transfer
+                                <div class="font-weight-bold">
+                                    <h3>Teachers Available for Transfer</h3>
                                 </div>
                                 <?php
-
                                 $teacherresults = RPMSdb::displayVacantList($conn);
                                 if (!empty($teacherresults)) :
                                     ?> <table class="table table-hover table-borderless">
@@ -130,7 +129,7 @@
     </body>
     <?php
 
-    include 'includes/footer.php';
+    include 'samplefooter.php';
     ?>
 
     </html>
