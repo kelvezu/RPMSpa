@@ -240,7 +240,7 @@ echo showObsAverage(3, 4, 5, "-") . BR;
 // echo RPMSdb::updateFinalCOTaverageT($conn, 32, $_SESSION['active_sy_id']);
 $sy = $_SESSION['active_sy_id'];
 
-RPMSdb::generateCOTindicatorAVG($conn, $sy)
+echo RPMSdb::generateCOTindicatorAVG($conn, $sy);
 
 
 

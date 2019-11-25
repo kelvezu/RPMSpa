@@ -1334,7 +1334,7 @@ class RPMSdb
         $results = mysqli_query($conn, $qry);
         if (mysqli_num_rows($results) > 0) :
             foreach ($results as $res) :
-                return $res['average'];
+                return floatval($res['average']);
             endforeach;
         else : return false;
         endif;
@@ -1346,7 +1346,7 @@ class RPMSdb
         $results = mysqli_query($conn, $qry);
         if (mysqli_num_rows($results) > 0) :
             foreach ($results as $res) :
-                return $res['average'];
+                return floatval($res['average']);
             endforeach;
         else : return false;
         endif;
@@ -1421,7 +1421,7 @@ class RPMSdb
                             $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['mtindicator_id'], $sy, $school);
 
                             // DIFFERENTIATE THE t_ave and the t_ave_current IF TRUE IT WILL UPDATE
-                            if ($t_ave !== $t_ave_current) :
+                            if ($t_ave != $t_ave_current) :
                                 $qry_update = "UPDATE `cot_mt_indicator_ave_tbl` SET `average` = '$t_ave'  WHERE `user_id` = '$acc_id' AND indicator_id = " . $fetch_ind['mtindicator_id'] . "  AND `sy` = '$sy' AND school = '$school'";
                                 $upd_result = mysqli_query($conn, $qry_update) or die($conn->error . $qry_update);
                                 if (!$upd_result) :
@@ -1460,7 +1460,7 @@ class RPMSdb
                             $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
 
                             // DIFFERENTIATE THE t_ave and the t_ave_current IF TRUE IT WILL UPDATE
-                            if ($t_ave !== $t_ave_current) :
+                            if ($t_ave != $t_ave_current) :
                                 $qry_update = "UPDATE `cot_t_indicator_ave_tbl` SET `average` = '$t_ave'  WHERE `user_id` = '$acc_id' AND indicator_id = " . $fetch_ind['indicator_id'] . "  AND `sy` = '$sy' AND school = '$school'";
                                 $upd_result = mysqli_query($conn, $qry_update) or die($conn->error . $qry_update);
                                 if (!$upd_result) :
