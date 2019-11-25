@@ -6,7 +6,7 @@ $kra_num = 0;
 $tobj_num = 1;
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR KRA TABLE  
-$result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
+$result = $conn->query('SELECT * FROM kra_tbl WHERE `status` = "Active"')  or die($conn->error);
 ?>
 
 <!-- Add Objective  modal -->
@@ -98,17 +98,14 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 <?php endif ?>
 
 <div class="container">
-    <div class="breadcome-list shadow-reset">
-        <div class="right">
+
+<div class="h4 breadcrumb bg-dark text-white "><strong>Teacher Key Result Areas and Objectives </strong></div>
+    <div class="right">
             <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#kra-modal">Add KRA </button>
             <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#objective-modal">Add Objective for Key Result Areas </button>
         </div>
 
-        <div class="container">
-            <div class="col-sm-11">
-                <div class="h4 breadcrumb bg-success text-white "><strong>Teacher Key Result Areas and Objectives</strong> </div>
-
-
+            
 
                 <table class="table table-hover table-responsive-sm table-sm ">
                     <!-- Start loop for  KRA -->
@@ -123,9 +120,26 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                         <thead class="thead-dark">
                             <tr>
                                 <!-- ASSIGN THE VALUE FROM THE DB  -->
-                                <th colspan='3' class="bg-success"><?php echo "KRA " . $kra_num . ": " . $row['kra_name'] ?>
-                                    <a href="update/updatetkramov.php?editkra=<?php echo $row['kra_id']; ?>" class="btn-sm btn-outline-primary text-decoration-none">Update</a>
-                                    <a href="delete/deletetkramov.php?deletekra=<?php echo $row['kra_id']; ?>" class="btn-sm btn-outline-danger text-decoration-none">Delete</a></th>
+                                <th colspan='3' class="alert alert-success">
+                                    <div class="d-flex px-5">
+                                        <div class="p-2 w-100">
+                                        <a><?php echo "KRA " . $kra_num . ": " . $row['kra_name'] ?></a>
+                                        </div>
+                                        <div class="p-2 flex-shrink-1">
+                                            <a href="update/updatetkramov.php?editkra=<?php echo $row['kra_id']; ?>" class="btn btn-sm btn-outline-primary text-decoration-none">Update</a>
+                                          
+                                        </div>
+                                        <div class="p-2">
+                                        <a href="delete/deletetkramov.php?deletekra=<?php echo $row['kra_id']; ?>" class="btn btn-sm btn-outline-danger text-decoration-none">Set to Inactive</a>
+
+                                        </div>
+                                    </div>
+                                        </th>
+                                       
+                                   
+                                    
+                                   
+                                   
                             </tr>
                         </thead>
 
@@ -135,7 +149,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                                 <!-- START OF LOOP FROM OBJECTIVE -->
                                 <?php
                                     //QUERY FOR INDICATORS TABLE 
-                                    $indresult = $conn->query("SELECT * FROM tobj_tbl WHERE kra_id = '$kra_id'")  or die($conn->error);
+                                    $indresult = $conn->query("SELECT * FROM tobj_tbl WHERE kra_id = '$kra_id' AND `status`='Active'")  or die($conn->error);
                                     //FETCH THE DATA FROM INDICATOR TABLE
 
                                     while ($rows = $indresult->fetch_assoc()) :
@@ -150,9 +164,9 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 
                                                 ?>
                                     </td>
-                                    <td><a href="update/updatetkramov.php?edit=<?php echo $rows['tobj_id']; ?>" class="btn-sm btn-outline-primary text-decoration-none">Update</a></td>
+                                    <td><a href="update/updatetkramov.php?edit=<?php echo $rows['tobj_id']; ?>" class="btn btn-sm btn-outline-primary text-decoration-none">Update</a></td>
 
-                                    <td><a href="delete/deletetkramov.php?delete=<?php echo $rows['tobj_id']; ?>" class="btn-sm btn-outline-danger text-decoration-none">Delete</a></td>
+                                    <td><a href="delete/deletetkramov.php?delete=<?php echo $rows['tobj_id']; ?>" class=" btn btn-sm btn-outline-danger text-decoration-none  text-nowrap">Set to Inactive</a></td>
                             </tr>
                             <!-- END LOOP FOR THE CBC INDICATORS -->
                         <?php
@@ -170,12 +184,10 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                     ?>
 
                 </table>
-
-            </div>
-        </div>
-    </div>
-</div>
-</div>
+                </div>
+          
+    
+   
 <!--End tag of container -->
 
 
