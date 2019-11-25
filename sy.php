@@ -1,6 +1,7 @@
 <?php
 include_once 'sampleheader.php';
 
+
 if(isset($_GET['successset'])):
     echo '<div class="green-notif-border">You have successfully set school year!</div>';
 elseif(isset($_GET['successadd'])):
@@ -14,115 +15,142 @@ endif;
 ?>
 
 <!-- add a active status on the database! -->
-<legend class="legend-control text-center"><strong>School Year</strong> </legend>
+
+  <!-- Modal of Add School Year -->
+
+<div class="modal fade" id="schoolyr-modal" tabindex="-1" role="dialog" aria-labelledby="schoolModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title " id="exampleModalLabel">Add School Year</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                <form action="includes/addsy.php" method="post">
+                <div class="row mb-4">
+           
+                
+           <label for="start-month"><strong>Enter the start date: </strong></label>
+           <select name="start-month" class="form-control">
+               <option value="">--Choose Month--</option>
+               <option value="01">January</option>
+               <option value="02">February</option>
+               <option value="03">March</option>
+               <option value="04">April</option>
+               <option value="05">May</option>
+               <option value="06">June</option>
+               <option value="07">July</option>
+               <option value="08">August</option>
+               <option value="09">September</option>
+               <option value="10">October</option>
+               <option value="11">November</option>
+               <option value="12">December</option>
+           </select>
+         
 
   
-<form action="includes/addsy.php" method="post">
+       <select name="start-day[]" id="" class="form-control">
+           <?php for ($i = 1; $i < 32; $i++) : ?>
+               <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+           <?php
+           endfor ?>
+       </select>
+     
 
-    <div class="container col-md-6 text-center">
+     
+           <input type="text" name="start-year" id="start-year" class=" form-control" value="
+           <?php
+           $currYear = date('Y');
+           echo trim($currYear);
+           ?>" class="form-control-sm mx-2" maxlength="4" disabled />
+       
+   </div>
+
+
+
+
+   <!-- End of start year -->
+  <div class="row">
+     
+           <label for="end-month" class="form-control-label   "><strong>Enter the end date: </strong></label>
+           <select name="end-month" class="form-control">
+               <option value="">--Choose Month--</option>
+               <option value="01">January</option>
+               <option value="02">February</option>
+               <option value="03">March</option>
+               <option value="04">April</option>
+               <option value="05">May</option>
+               <option value="06">June</option>
+               <option value="07">July</option>
+               <option value="08">August</option>
+               <option value="09">September</option>
+               <option value="10">October</option>
+               <option value="11">November</option>
+               <option value="12">December</option>
+           </select>
+     
+
+    
+           <select name="end-day[]" id="" class="form-control">
+               <?php
+               for ($i = 1; $i < 32; $i++) :
+                   ?>
+                   <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+               <?php
+               endfor ?>
+           </select>
+      
+
+     
+           <input type="text" name="end-year" id="start-year" value="
+           <?php
+           $currentYear =  date('Y');
+           $nextYear = strtotime('next Year');
+           $nextYearDate = date('Y', $nextYear);
+           echo $nextYearDate;
+           ?>" class="form-control" maxlength="4" disabled />
+         
+             
+       
+   </div>
+<br>
+<div class="row">
    
-            <div class="row mb-4">
-                
-                        <label for="start-month"><strong>Enter the start date: </strong></label>
-                        <select name="start-month" class="form-control">
-                            <option value="">--Choose Month--</option>
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">August</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                      
+<button type="submit" class="btn btn-success" name="add">Add </button>
 
-               
-                    <select name="start-day[]" id="" class="form-control">
-                        <?php for ($i = 1; $i < 32; $i++) : ?>
-                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                        <?php
-                        endfor ?>
-                    </select>
-                  
+</div>
 
-                  
-                        <input type="text" name="start-year" id="start-year" class=" form-control" value="
-                        <?php
-                        $currYear = date('Y');
-                        echo trim($currYear);
-                        ?>" class="form-control-sm mx-2" maxlength="4" disabled />
-                    
-                </div>
-
-
-
-
-                <!-- End of start year -->
-               <div class="row">
-                  
-                        <label for="end-month" class="form-control-label   "><strong>Enter the end date: </strong></label>
-                        <select name="end-month" class="form-control">
-                            <option value="">--Choose Month--</option>
-                            <option value="01">January</option>
-                            <option value="02">February</option>
-                            <option value="03">March</option>
-                            <option value="04">April</option>
-                            <option value="05">May</option>
-                            <option value="06">June</option>
-                            <option value="07">July</option>
-                            <option value="08">August</option>
-                            <option value="09">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                  
-
-                 
-                        <select name="end-day[]" id="" class="form-control">
-                            <?php
-                            for ($i = 1; $i < 32; $i++) :
-                                ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                            <?php
-                            endfor ?>
-                        </select>
-                   
-
-                  
-                        <input type="text" name="end-year" id="start-year" value="
-                        <?php
-                        $currentYear =  date('Y');
-                        $nextYear = strtotime('next Year');
-                        $nextYearDate = date('Y', $nextYear);
-                        echo $nextYearDate;
-                        ?>" class="form-control" maxlength="4" disabled />
-                      
-                          
-                    
-                </div>
-          <br>
-            <div class="row">
-                
-            <button type="submit" class="btn btn-success" name="add">Add </button>
-
+</div>
+</form>
             </div>
-
             </div>
-    </form>
+            </div>
+            </div>      
+           
+    
+    <!-- End Modal of Add School Year -->
+
+  
+
+
+    <div class="container">
+    <div class="h4 breadcrumb bg-dark text-white ">School Year</div>
+
+    <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#schoolyr-modal">Add School Year</button>
+
+           
 
     <!-- Display list of School Year -->
 
 
 <br>
-    <div class="container col-md-6 text-center">
+
        
-        <table class="table table-bordered hover">
+        <table class="table table-bordered hover text-center table-sm   ">
             <thead class="bg-dark text-white">
                 <tr>
                     <td>Start Date</td>
@@ -149,19 +177,21 @@ endif;
              
                 <tr>
                     <input type="hidden" name="sy_id" value="<?= $sy_id;?>">
-                    <td><?php echo $start; ?></td>
-                    <td><?php echo $end; ?></td>
+                    <td><?php echo displayDate($start); ?></td>
+                    <td><?php echo displayDate($end); ?></td>
                     <td><?php echo $sy; ?></td>
                     <td><?php echo $status; ?></td>
                     <td><input type="button"  class="btn btn-outline-success"  data-toggle="modal" data-target="#exampleModalCenter<?= $sy_id;?>" value="Set"></button></td>
                   
                 </tr>
+                
                 <!-- Modal -->
+
 <div class="modal fade" id="exampleModalCenter<?= $sy_id;?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirm</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

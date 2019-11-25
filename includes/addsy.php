@@ -17,10 +17,11 @@ if (isset($_POST["add"])) {
 
     
     $query = "INSERT INTO sy_tbl(startDate,end_date,sy_desc,`status`) VALUES ('$sdate','$edate','$sy_desc','Inactive')";
-    if(mysqli_query($conn, $query2)):
+    if(mysqli_query($conn, $query)):
         header("Location:../sy.php?successadd");
-    else:
+    else: die ($conn->error);
         header("Location:../sy.php?erroradd");
+    endif;
 
 
     $syresult = $conn->query('SELECT * FROM sy_tbl WHERE status = "Active"')  or die($conn->error);
@@ -38,9 +39,8 @@ if (isset($_POST["add"])) {
     // endif;
 
 
-    if (mysqli_query($conn, $query)) {
-        header("location:../dbAdmin.php");
-    } else {
-        echo "Error: " . mysqli_error($conn);
+    // if (mysqli_query($conn, $query)) {
+    //     header("location:../dbAdmin.php");
+    // } else {
+    //     echo "Error: " . mysqli_error($conn);
     }
-}
