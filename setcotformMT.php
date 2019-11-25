@@ -1,6 +1,6 @@
 <?php
 
-include 'sampleheader.php';
+include 'sampleheader.php'; 
 include_once 'libraries/func.lib.php';
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
@@ -15,7 +15,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
             <h5>COT-RPMS</h5> 
 
-            <div class="h3 bg-success text-white">Teacher I-III</div>
+            <div class="h3 bg-success text-white">Master Teacher I-IV</div>
             <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
             <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
@@ -46,7 +46,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver2 = mysqli_query($conn, 'SELECT * FROM account_tbl WHERE `user_id` != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver2 = mysqli_query($conn, 'SELECT * FROM account_tbl WHERE `user_id` != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("School Head","Principal") ') or die($conn->error);
 
                                 if ($queryObserver2) :
                                     while ($row = $queryObserver2->fetch_assoc()) :
@@ -64,13 +64,13 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                         </div>
 
                         <div class="col-lg-6">
-                            <label>TEACHER OBSERVED: </label>
+                            <label>MASTER TEACHER OBSERVED: </label>
                             <select name="tobserved" required="required">
                                 <option value="" disabled selected>--Select Teacher--</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
-                                $queryObserved = $conn->query('SELECT * FROM account_tbl WHERE  rater =  ' . $rater . '  AND  position  IN ("Teacher I","Teacher II","Teacher III") ') or die($conn->error);
+                                $queryObserved = $conn->query('SELECT * FROM account_tbl WHERE  rater =  ' . $rater . '  AND  position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV") ') or die($conn->error);
 
                                 if ($queryObserved) :
                                     while ($row = $queryObserved->fetch_assoc()) :
@@ -97,7 +97,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("School Head","Principal") ') or die($conn->error);
 
                                 if ($queryObserver3) :
                                     while ($row = $queryObserver3->fetch_assoc()) :
@@ -172,7 +172,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                         }
                                     }
                                     // getuser.php is seprate php file. q is parameter 
-                                    xmlhttp.open("GET", "ajaxtioaf.php?period=" + str, true);
+                                    xmlhttp.open("GET", "ajaxmtioaf.php?period=" + str, true);
                                     xmlhttp.send();
                                 }
                             }
@@ -227,13 +227,13 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                         $fourth_period_int = intval(strtotime($_SESSION['final_period']));
 
                         if ($intdate >= $fourth_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period4=1';
+                            $periodqry = 'SELECT * FROM mtindicator_tbl WHERE period4=1';
                         elseif ($intdate >= $third_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period3=1';
+                            $periodqry = 'SELECT * FROM mtindicator_tbl WHERE period3=1';
                         elseif ($intdate >= $second_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period2=1';
+                            $periodqry = 'SELECT * FROM mtindicator_tbl WHERE period2=1';
                         elseif ($intdate >= $first_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period1=1';
+                            $periodqry = 'SELECT * FROM mtindicator_tbl WHERE period1=1';
                         else :
                             echo 'invalid period!';
                         endif;
@@ -258,13 +258,13 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                 ?>
 
 
-                                <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
-                                <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
+                                <input type="hidden" name="indicator_id[]" value="<?php echo $row['mtindicator_id']; ?>" />
+                                <input type="hidden" name="indicator_name[]" value="<?php echo $row['mtindicator_name']; ?>" />
 
                                 <tbody>
                                     <tr>
-                                        <td><?php echo $row['indicator_id']; ?></td>
-                                        <td><?php echo $row['indicator_name']; ?></td>
+                                        <td><?php echo $row['mtindicator_id']; ?></td>
+                                        <td><?php echo $row['mtindicator_name']; ?></td>
                                         <td>
                                             <select name="rating[]" required="required">
                                                 <option value="" disabled selected>--Select--</option>

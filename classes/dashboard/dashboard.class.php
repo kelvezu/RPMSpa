@@ -159,11 +159,10 @@ class Dashboard
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                     <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                    <a href="tioafform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
-                    <a href="mtioafform.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="setcotform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="setcotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
                     <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
                     <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
-                    <a href="devplan.php" class="dropdown-item">Development Plan</a>
                     <a href="pmcf.php" class="dropdown-item">PMCF</a>
                     <a href="mrf.php" class="dropdown-item">MRF</a>
                     </div>
@@ -175,8 +174,7 @@ class Dashboard
                                 <a href="displayusers.php" class="dropdown-item">View User</a>
                                 <a href="usercsv.php" class="dropdown-item">Mass Upload</a>
                                 <a href="signup.php" class="dropdown-item">Add User</a>
-                                <a href="selectteacher.php" class="dropdown-item">Select Teacher</a>
-                                <a href="selecttratee.php" class="dropdown-item">Select Ratee</a>
+
                     </div>
                 </li>
 
