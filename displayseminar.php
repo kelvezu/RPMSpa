@@ -6,6 +6,7 @@ include 'sampleheader.php';
 $connection = mysqli_connect("localhost", "root", "");
 mysqli_select_db($connection, "rpms");
 ?>
+
 <div class="modal fade" id="seminar-modal" tabindex="-1" role="dialog" aria-labelledby="seminarModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -56,7 +57,7 @@ mysqli_select_db($connection, "rpms");
     </div>
 <?php endif ?>
 <div class="container">
-    <div class="breadcome-list  shadow-reset">
+    
         <div class="right">
             <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#seminar-modal">Add Seminar<i class="fas fa-truck-moving    "></i> </button>
 
@@ -64,9 +65,7 @@ mysqli_select_db($connection, "rpms");
             <div class="h4 breadcrumb bg-dark text-white ">List of Seminars </div>
 
 
-            <main>
-                <div class="container">
-                    <div class="col-sm-10">
+           
                         <?php
 
                         $query2 = mysqli_query($connection, "SELECT * FROM seminar_tbl") or die($connection->error);
@@ -101,9 +100,6 @@ mysqli_select_db($connection, "rpms");
                         </table>
                     </div>
                 </div>
-        </div>
-    </div>
-</div>
 
 <br>
 <?php

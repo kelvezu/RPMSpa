@@ -32,10 +32,10 @@ if(isset($_POST['submit'])):
         if($fileError === 0):
             if($fileSize < 100000):
                 $filenameNew = uniqid('', true) . "." . $fileActualExt;
-                    $fileDestination = '../attachments/Teacher' . $filenameNew;
+                    $fileDestination = '../attachments/Teacher/' . $filenameNew;
                     move_uploaded_file($fileTmpName, $fileDestination);
 
-                    $filepath = "localhost/rpmspa/attachments/Teacher" . $filenameNew;
+                    $filepath = "localhost/rpmspa/attachments/Teacher/" . $filenameNew;
 
                     $mov_qry = "INSERT INTO `mov_a_t_attach_tbl` (`attachment`,`file_type`, `mov_type`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('".$filepath."','".$fileActualExt."','".$mov_type."',$user_id,'".$position."',$rater_id,$school_id,$sy_id)";
                     $mov_results = mysqli_query($conn,$mov_qry) OR die($conn->error);

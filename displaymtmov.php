@@ -9,7 +9,7 @@ mysqli_select_db($connection, "rpms");
 
 
 <div class="modal fade" id="mtmov-modal" tabindex="-1" role="dialog" aria-labelledby="mtmovModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title " id="exampleModalLabel">Add MOV</h5>
@@ -20,8 +20,7 @@ mysqli_select_db($connection, "rpms");
 
             <div class="modal-body">
                 <form action="includes/processmtmov.php" method="POST">
-                    <div class="form-group row">
-                        <div class="col-lg">
+                        <div class="col">
                             <label for="sel-kra" class="col-form-label"><strong>Select Key Result Areas</strong></label>
                             <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control">
                                 <option>Select KRA</option>
@@ -37,7 +36,7 @@ mysqli_select_db($connection, "rpms");
                                 ?>
                             </select>
                         </div>
-                        <div class="col-lg">
+                        <div class="col">
                             <label for="sel-mov" class=" col-form-label"><strong>Select Objective</strong></label>
                             <div id="objective">
                                 <select class="form-control">
@@ -45,21 +44,23 @@ mysqli_select_db($connection, "rpms");
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg">
+                        <div class="col">
                             <label for="mtmain-mov" class="col-form-label"><strong>Main MOV</strong></label>
                             <input type="text" name="main_mov" id="main-mov" class="form-control" placeholder="Enter the main mov..." required>
                         </div>
-                        <div class="col-lg">
+                        <div class="col">
                             <label for="supp-mov" class="col-form-label"><strong>Supporting MOV</strong></label>
                             <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required>
                         </div>
                         <div class="m-2">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary" name="save">Add MOV</button>
+                      
                         </div>
                     </div>
+                    
                 </form>
-            </div>
+           
         </div>
     </div>
 </div>
@@ -75,7 +76,7 @@ mysqli_select_db($connection, "rpms");
 
 <?php endif ?>
 <div class="container">
-    <div class="breadcome-list shadow-reset">
+   
         <div class="right">
             <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#mtmov-modal">Add MOV<i class="fas fa-truck-moving    "></i> </button>
 
@@ -94,9 +95,7 @@ mysqli_select_db($connection, "rpms");
             <div class="h4 breadcrumb bg-dark text-white ">Master Teacher Means of Verification </div>
 
 
-            <main>
-                <div class="container">
-                    <div class="col-sm-10">
+          
                         <?php
 
                         $query2 = mysqli_query($connection, "SELECT kra_tbl.kra_name,mtobj_tbl.mtobj_name,mtmov_tbl.* FROM (mtmov_tbl INNER JOIN kra_tbl ON mtmov_tbl.kra_id = kra_tbl.kra_id) 
@@ -135,9 +134,8 @@ mysqli_select_db($connection, "rpms");
                         </table>
                     </div>
                 </div>
-        </div>
-    </div>
-</div>
+      
+ 
 
 <br>
 <?php
