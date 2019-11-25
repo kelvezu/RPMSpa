@@ -4,15 +4,13 @@ include 'includes/conn.inc.php';
 include 'includes/header.php';
 include_once 'libraries/func.lib.php';
 
-
-
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
-$resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
+$resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-
 <div class="container text-center">
+
     <div>
         <?php
         if (isset($_GET['notif'])) :
@@ -24,19 +22,18 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
         endif;
         ?>
     </div>
+
     <div class="breadcome-list shadow-reset">
-
-
-        <form action="includes/processtioafform.php" method="POST">
+        <form action="includes/processcotformMT.php" method="POST">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
             <h5>COT-RPMS</h5>
 
-            <div class="h3 bg-success text-white">Teacher I-III</div>
+            <div class="h3 bg-info text-white">Master Teacher I-IV</div>
             <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
             <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
-            <h4> Classroom Observation Rating Form</h4>
+            <h4> Inter-Observer Agreement Form</h4>
             <h5 class="text-left">
 
                 <div class="breadcome-list shadow-reset">
@@ -57,19 +54,19 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                         <div class="col-lg-6">
                             <label>OBSERVER 2: </label>&nbsp;
                             <select name="observer2">
-                                <option value="<?= NULL ?>">Select Observer</option>
+                                <option value="<?= NULL ?>" disabled selected>Select Observer</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver2 = mysqli_query($conn, 'SELECT * FROM account_tbl WHERE `user_id` != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver2 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("School Head","Principal") ') or die($conn->error);
 
                                 if ($queryObserver2) :
                                     while ($row = $queryObserver2->fetch_assoc()) :
                                         $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'];
                                         ?>
 
-                                        <option value="<?= $row['user_id'] ?>"><?php echo $name; ?></option>
+                                        <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
                                     <?php
                                         endwhile;
                                     else : ?>
@@ -80,13 +77,13 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                         </div>
 
                         <div class="col-lg-6">
-                            <label>TEACHER OBSERVED: </label>
-                            <select name="tobserved" required="required">
-                                <option value="" disabled selected>--Select Teacher--</option>
+                            <label>MASTER TEACHER OBSERVED: </label>
+                            <select name="mtobserved" required="required">
+                                <option value="" disabled selected>Select Master Teacher</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
-                                $queryObserved = $conn->query('SELECT * FROM account_tbl WHERE  rater =  ' . $rater . '  AND  position  IN ("Teacher I","Teacher II","Teacher III") ') or die($conn->error);
+                                $queryObserved = $conn->query('SELECT * FROM account_tbl WHERE  rater =  ' . $rater . '  AND  position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV") ') or die($conn->error);
 
                                 if ($queryObserved) :
                                     while ($row = $queryObserved->fetch_assoc()) :
@@ -113,7 +110,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("School Head","Principal") ') or die($conn->error);
 
                                 if ($queryObserver3) :
                                     while ($row = $queryObserver3->fetch_assoc()) :
@@ -137,15 +134,15 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <label>
                                 SUBJECT:
                             </label>
-                            <select name="tsubject" required="required">
-                                <option value="" disabled selected>--Select Subject--</option>
+                            <select name="mtsubject" required="required">
+                                <option value="" disabled selected>Select Subject</option>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
                                 while ($subjrow = $querySubject->fetch_assoc()) :
                                     $subject_id = $subjrow['subject_id'];
                                     $subject = $subjrow['subject_name'];
                                     ?>
-                                    <option value=" <?php echo $subject_id; ?>"><?php echo $subject; ?></option>
+                                    <option value="<?php echo $subject_id; ?>"><?php echo $subject; ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -156,15 +153,15 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             <label for="gradeleveltaught">
                                 GRADE LEVEL TAUGHT:
                             </label>
-                            <select name="tgradelvltaught" required="required">
-                                <option value="" disabled selected>--Select Grade Level Taught--</option>
+                            <select name="mtgradelvltaught" required="required">
+                                <option value="" disabled selected>Select Grade Level Taught</option>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
                                 while ($gradelvltaught = $queryGlt->fetch_assoc()) :
                                     $glt_id = $gradelvltaught['gradelvltaught_id'];
                                     $glt = $gradelvltaught['gradelvltaught_name'];
                                     ?>
-                                    <option value=" <?php echo $glt_id; ?>"><?php echo $glt; ?></option>
+                                    <option value="<?php echo $glt_id; ?>"><?php echo $glt; ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -188,7 +185,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                         }
                                     }
                                     // getuser.php is seprate php file. q is parameter 
-                                    xmlhttp.open("GET", "ajaxtioaf.php?period=" + str, true);
+                                    xmlhttp.open("GET", "ajaxmtioaf.php?period=" + str, true);
                                     xmlhttp.send();
                                 }
                             }
@@ -208,7 +205,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 OBSERVATION PERIOD:
                             </label>
 
-                            <select name="obs" onchange="showIndicator(this.value)" required>
+                            <select name="mtobs" onchange="showIndicator(this.value)" required="required">
                                 <option value="" disabled selected>Select Period</option>
                                 <option value="1">1st</option>
                                 <option value="2">2nd</option>
@@ -231,7 +228,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
 
 
-            <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
+            <textarea class="form-control" name="mtioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
 

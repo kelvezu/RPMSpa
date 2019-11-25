@@ -151,7 +151,7 @@ mysqli_select_db($connection, "rpms");
 
     <main>
         <div class="container">
-            <div class="breadcome-list shadow-reset">
+         
                 <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#school-modal">Add School<i class="fas fa-truck-moving    "></i> </button>
 
 

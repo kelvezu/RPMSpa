@@ -149,11 +149,9 @@ class Dashboard
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                         <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
-                        <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
-                        <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
-                        <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                        <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
-                        <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
+                        <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
+                        <a class="dropdown-item" href="#">VIew Master Teacher Developmdeent Plan-IPCRF</a>
+                        <a class="dropdown-item" href="viewgendevplanmt.php">View Master Teacher General Development Plan</a>
                     </div>
                 </li>
 
@@ -161,11 +159,10 @@ class Dashboard
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                     <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                    <a href="tioafform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
-                    <a href="mtioafform.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="setcotform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="setcotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
                     <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
                     <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
-                    <a href="devplan.php" class="dropdown-item">Development Plan</a>
                     <a href="pmcf.php" class="dropdown-item">PMCF</a>
                     <a href="mrf.php" class="dropdown-item">MRF</a>
                     </div>
@@ -177,8 +174,7 @@ class Dashboard
                                 <a href="displayusers.php" class="dropdown-item">View User</a>
                                 <a href="usercsv.php" class="dropdown-item">Mass Upload</a>
                                 <a href="signup.php" class="dropdown-item">Add User</a>
-                                <a href="selectteacher.php" class="dropdown-item">Select Teacher</a>
-                                <a href="selecttratee.php" class="dropdown-item">Select Ratee</a>
+
                     </div>
                 </li>
 
@@ -369,7 +365,7 @@ class Dashboard
         
                     ';
             $nav .= '</ul>';
-        elseif ($_SESSION['position'] == "SchoolHead") :
+        elseif ($_SESSION['position'] == "School Head") :
             $nav .= '<ul class="navbar-nav mr-auto ">';
             $nav .= '  
                         <li class="nav-item active">
@@ -438,7 +434,7 @@ class Dashboard
                         </li>
                     ';
             $nav .= '</ul>';
-        elseif ($_SESSION['position'] == "Master Teacher I" or $_SESSION['position'] == "Master Teacher Ii" or $_SESSION['position'] == "Master Teacher III" or $_SESSION['position'] == "Master Teacher IV") :
+        elseif ($_SESSION['position'] == "Master Teacher I" or $_SESSION['position'] == "Master Teacher II" or $_SESSION['position'] == "Master Teacher III" or $_SESSION['position'] == "Master Teacher IV") :
             $nav .= '<ul class="navbar-nav mr-auto ">';
             $nav .= '  
                             <li class="nav-item active">

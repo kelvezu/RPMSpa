@@ -257,6 +257,6 @@
 
 
   <?php
-  include 'includes/scripts.php';
+  
   include 'samplefooter.php';
   ?>
