@@ -15,7 +15,7 @@ class FilterUser
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
                 </p>';
                 directLastPage();
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 die();
 
             elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
@@ -24,7 +24,7 @@ class FilterUser
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
                 if ($check_e1_t) :
                     echo  '<p class="green-notif-border">You have already taken the ESAT Demographics!</p>';
-                    include 'includes/footer.php';
+                    include 'samplefooter.php';
                     exit();
                 else :
                     return false;
@@ -37,7 +37,7 @@ class FilterUser
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
                 if ($check_e1_t) :
                     echo  '<p class="green-notif-border">You have already taken the ESAT Demographics!</p>';
-                    include 'includes/footer.php';
+                    include 'samplefooter.php';
                     exit();
                 else :
                     return false;
@@ -49,7 +49,7 @@ class FilterUser
         else :
             echo '<p class="red-notif-border">You dont have permission to take ESAT!</p>';
             directLastPage();
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             die();
         endif;
     }
@@ -63,13 +63,13 @@ class FilterUser
                 Click <a href="gendevplant.php">here</a> to proceed to the Development Plan.       
                 </p>';
                 directLastPage();
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 die();
 
             elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
                 echo '<p class="red-notif-border">This part of ESAT is for Teachers only!</p>';
                 directLastPage();
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 die();
             elseif ($position == 'Teacher I' || $position == 'Teacher II' || $position == 'Teacher III') :
                 $esat_objective_T = 'SELECT * FROM `esat2_objectivest_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
@@ -78,7 +78,7 @@ class FilterUser
                 if ($check_e2_t) :
                     echo '<p class="green-notif-border">You have already answer the ESAT Objectives!</p>';
                     directLastPage();
-                    include 'includes/footer.php';
+                    include 'samplefooter.php';
                     die();
                 else :
                     return false;
@@ -89,7 +89,7 @@ class FilterUser
         else :
             echo '<p class="red-notif-border">You dont have permission to take ESAT!</p>';
             directLastPage();
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             die();
         endif;
     }
@@ -103,13 +103,13 @@ class FilterUser
                 Click <a href="gendevplanmt.php">here</a> to proceed to the Development Plan.       
                 </p>';
                 directLastPage();
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 die();
 
             elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
                 echo '<p class="red-notif-border">This part of ESAT is for Master Teachers only!</p>';
                 directLastPage();
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 die();
             elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
                 $esat_objectivesmt_T = 'SELECT * FROM `esat2_objectivesmt_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
@@ -119,7 +119,7 @@ class FilterUser
                 if ($check_e2_mt) :
                     echo '<p class="green-notif-border">You have already answer the ESAT Objectives!</p>';
                     directLastPage();
-                    include 'includes/footer.php';
+                    include 'samplefooter.php';
                     die();
                 else :
                     return false;
@@ -131,7 +131,7 @@ class FilterUser
         else :
             echo '<p class="red-notif-border">You dont have permission to take ESAT!</p>';
             directLastPage();
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             die();
         endif;
     }
@@ -145,7 +145,7 @@ class FilterUser
                 Click <a href="devplan.php">here</a> to proceed to the Development Plan.       
                 </p>';
                 directLastPage();
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 die();
 
             elseif ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
@@ -154,7 +154,7 @@ class FilterUser
                 $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
                 if ($check_e3_t) :
                     echo  '<p class="green-notif-border">You have already taken the ESAT Core Behavioral Competencies!</p>';
-                    include 'includes/footer.php';
+                    include 'samplefooter.php';
                     exit();
                 else : return false;
                 endif;
@@ -165,7 +165,7 @@ class FilterUser
                 $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
                 if ($check_e3_t) :
                     echo  '<p class="green-notif-border">You have already taken the ESAT Core Behavioral Competencies!</p>';
-                    include 'includes/footer.php';
+                    include 'samplefooter.php';
                     exit();
                 else : return false;
                 endif;
@@ -175,7 +175,7 @@ class FilterUser
         else :
             echo '<p class="red-notif-border">You dont have permission to take ESAT!</p>';
             directLastPage();
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             die();
         endif;
     }
@@ -198,7 +198,7 @@ class FilterUser
         if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool') || stripos($position, 'aster')) :
             return true;
         else : echo '<p class="red-notif-border">You dont have access to this page!</p>';
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             exit();
         endif;
     }
@@ -208,7 +208,7 @@ class FilterUser
         if (stripos($position, 'dmin') || stripos($position, 'rincipal') || stripos($position, 'uperintendent') || stripos($position, 'chool')) :
             return true;
         else : echo '<p class="red-notif-border">You dont have access to this page!</p>';
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             exit();
         endif;
     }
@@ -218,7 +218,7 @@ class FilterUser
         if (!stripos($position, 'rincipal')) :
             echo '<p class="red-notif-border">Only the Principal can set the Obervation Period!</p><center/>';
             directLastPage();
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             exit();
 
         else : return false;

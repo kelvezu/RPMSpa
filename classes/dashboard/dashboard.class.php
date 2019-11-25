@@ -149,11 +149,9 @@ class Dashboard
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                         <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
-                        <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
-                        <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
-                        <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                        <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
-                        <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
+                        <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
+                        <a class="dropdown-item" href="#">VIew Master Teacher Developmdeent Plan-IPCRF</a>
+                        <a class="dropdown-item" href="viewgendevplanmt.php">View Master Teacher General Development Plan</a>
                     </div>
                 </li>
 
@@ -369,7 +367,7 @@ class Dashboard
         
                     ';
             $nav .= '</ul>';
-        elseif ($_SESSION['position'] == "SchoolHead") :
+        elseif ($_SESSION['position'] == "School Head") :
             $nav .= '<ul class="navbar-nav mr-auto ">';
             $nav .= '  
                         <li class="nav-item active">
@@ -438,7 +436,7 @@ class Dashboard
                         </li>
                     ';
             $nav .= '</ul>';
-        elseif ($_SESSION['position'] == "Master Teacher I" or $_SESSION['position'] == "Master Teacher Ii" or $_SESSION['position'] == "Master Teacher III" or $_SESSION['position'] == "Master Teacher IV") :
+        elseif ($_SESSION['position'] == "Master Teacher I" or $_SESSION['position'] == "Master Teacher II" or $_SESSION['position'] == "Master Teacher III" or $_SESSION['position'] == "Master Teacher IV") :
             $nav .= '<ul class="navbar-nav mr-auto ">';
             $nav .= '  
                             <li class="nav-item active">

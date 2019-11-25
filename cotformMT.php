@@ -24,7 +24,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
     </div>
 
     <div class="breadcome-list shadow-reset">
-        <form action="includes/processmtioafform.php" method="POST">
+        <form action="includes/processcotformMT.php" method="POST">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
             <h5>COT-RPMS</h5>
 

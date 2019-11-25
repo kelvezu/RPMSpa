@@ -1,22 +1,38 @@
 <?php
 
-include 'sampleheader.php';
+include 'includes/conn.inc.php';
+include 'includes/header.php';
 include_once 'libraries/func.lib.php';
+
+
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
-
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+
 <div class="container text-center">
+    <div>
+        <?php
+        if (isset($_GET['notif'])) :
+            if ($_GET['notif'] == "success") :
+                echo '<div class="green-notif-border">Classroom Observation has been submitted!</div>';
+            elseif ($_GET['notif'] == "recordexist") :
+                echo '<div class="red-notif-border">Classroom Observation already exists!</div>';
+            endif;
+        endif;
+        ?>
+    </div>
     <div class="breadcome-list shadow-reset">
-        <form action="includes/processtioafform.php" method="POST">
+
+
+        <form action="includes/processcotformT.php" method="POST">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
-            <h5>COT-RPMS</h5> 
+            <h5>COT-RPMS</h5>
 
             <div class="h3 bg-success text-white">Teacher I-III</div>
-            <input type="hidden" name="rater_id" value="<?php echo $_SESSION['  user_id']; ?>" />
+            <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
             <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
@@ -27,7 +43,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                     <div class="row">
                         <div class="col-lg-6">
                             <label>OBSERVER 1: </label>&nbsp;
-                            <?php echo $_SESSION['fullname']; ?>
+                            <?php echo $fullname; ?>
                         </div>
 
                         <div class="col-lg-6">
@@ -192,100 +208,21 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 OBSERVATION PERIOD:
                             </label>
 
-                            <?php
-                            $date = date('Y/m/d');
-                            $intdate = intval(strtotime($date));
-                            $first_period_int = intval(strtotime($_SESSION['first_period']));
-                            $second_period_int = intval(strtotime($_SESSION['second_period']));
-                            $third_period_int = intval(strtotime($_SESSION['third_period']));
-                            $fourth_period_int = intval(strtotime($_SESSION['final_period']));
-
-                            if ($intdate >= $fourth_period_int) :
-                                $period = "4th";
-                            elseif ($intdate >= $third_period_int) :
-                                $period = "3rd";
-                            elseif ($intdate >= $second_period_int) :
-                                $period = "2nd";
-                            elseif ($intdate >= $first_period_int) :
-                                $period = "1st";
-                            else :
-                                $period = "Invalid Period";
-                            endif;
-                            ?>
-
-                            <input type="text" name="obs" value="<?php echo $period; ?>" disabled />
+                            <select name="obs" onchange="showIndicator(this.value)" required>
+                                <option value="" disabled selected>Select Period</option>
+                                <option value="1">1st</option>
+                                <option value="2">2nd</option>
+                                <option value="3">3rd</option>
+                                <option value="4">4th</option>
+                            </select>
                         </div>
 
                         <br>
+                        <div id="show">
 
-                        <?php
-                        $date = date('Y/m/d');
-                        $intdate = intval(strtotime($date));
-                        $first_period_int = intval(strtotime($_SESSION['first_period']));
-                        $second_period_int = intval(strtotime($_SESSION['second_period']));
-                        $third_period_int = intval(strtotime($_SESSION['third_period']));
-                        $fourth_period_int = intval(strtotime($_SESSION['final_period']));
-
-                        if ($intdate >= $fourth_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period4=1';
-                        elseif ($intdate >= $third_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period3=1';
-                        elseif ($intdate >= $second_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period2=1';
-                        elseif ($intdate >= $first_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period1=1';
-                        else :
-                            echo 'invalid period!';
-                        endif;
-
-                        $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
-                        $resultqry = $conn->query($periodqry)  or die($conn->error);
-                        ?>
+                        </div>
 
 
-                        <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-                            <thead class="legend-control bg-success text-white ">
-                                <tr>
-                                    <th>Indicator No</th>
-                                    <th>Indicator Name</th>
-                                    <th>COT Rating</th>
-                                </tr>
-                            </thead>
-
-                            <?php
-                            $indicator_no = 1;
-                            while ($row = $resultqry->fetch_assoc()) :
-                                ?>
-
-
-                                <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
-                                <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
-
-                                <tbody>
-                                    <tr>
-                                        <td><?php echo $row['indicator_id']; ?></td>
-                                        <td><?php echo $row['indicator_name']; ?></td>
-                                        <td>
-                                            <select name="rating[]" required="required">
-                                                <option value="" disabled selected>--Select--</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="3">NO*</option>
-                                            </select>
-
-                                        </td>
-
-
-                                    <?php
-                                        $indicator_no++;
-                                    endwhile;
-                                    ?>
-                                </tbody>
-                                </tr>
-                        </table>
                     </div>
                 </div>
 
@@ -305,5 +242,5 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
 <?php
 
-include 'samplefooter.php';
+include 'includes/footer.php';
 ?>

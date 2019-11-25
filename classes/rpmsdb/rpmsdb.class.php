@@ -791,7 +791,7 @@ class RPMSdb
             if ($esat1res and $esat2res and $esat3res) :
                 echo '<p class="green-notif-border">You have already taken the ESAT.</p>';
                 directLastPage();
-                include 'includes/footer.php';
+                include 'samplefooter.php';
                 exit();
             else :
                 return false;
