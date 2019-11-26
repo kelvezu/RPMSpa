@@ -679,6 +679,7 @@ $user_id = $_SESSION['user_id'];
 					<thead>
 						<tr>
 							<th>
+							<td></td>
 							<td colspan="4" ALIGN="CENTER"><strong>LEVEL OF CAPABILITY</strong> </td>
 							<td colspan="4" ALIGN="CENTER"><strong>LEVEL OF PRIORITY</strong> </td>
 							</th>

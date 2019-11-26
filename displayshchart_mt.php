@@ -1,29 +1,14 @@
 <?php
 
-include_once 'includes/header.php';
-include_once 'includes/conn.inc.php';
-include_once 'libraries/func.lib.php';
-include_once 'includes/constants.inc.php';
-include_once 'libraries/db.library.php';
+include_once 'sampleheader.php';
 $user_id = $_SESSION['user_id'];
 
 ?>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-	<script src="js/charts/jquery.min.js"></script>
-	<link rel="stylesheet" href="js/charts/bootstrap.min.css" />
-	<link rel="stylesheet" href="js/charts/jquery-ui.css">
-	<script src="js/charts/bootstrap.min.js"></script>
-	<script src="js/charts/jquery.highchartTable.js"></script>
-	<script src="js/charts/highcharts.js"></script>
-	<script src="js/charts/jquery-ui.js"></script>
 
-</head>
 
-<body>
+
 
 
 	<!--Demographic Age -->
@@ -814,10 +799,7 @@ $user_id = $_SESSION['user_id'];
 
 	<!--end of Core Behavioral Self Assessment-->
 
-	
-</body>
 
-</html>
 
 <script>
 	$(document).ready(function() {
@@ -1265,3 +1247,11 @@ $user_id = $_SESSION['user_id'];
 
 	});
 </script>
+
+
+
+<?php
+
+include 'samplefooter.php';
+
+?>

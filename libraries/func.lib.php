@@ -723,3 +723,93 @@
                     }
                 }
             }
+
+            function countDB($conn,$sy,$school,$table_name){
+                $qry = "SELECT *,COUNT(`user_id`) AS `total` FROM $table_name WHERE sy = '$sy' AND school = '$school'";
+                $result = mysqli_query($conn,$qry) or die($conn->error.$qry);
+                if(mysqli_num_rows($result)>0){
+                    foreach($result as $res){
+                    return $res['total'];
+                    }
+                   
+                }
+
+            }
+
+            function displayAgeDesc($conn,$age_id){
+                $qry = "SELECT * FROM `age_tbl` WHERE age_id = '$age_id'";
+                $res = mysqli_query($conn,$qry);
+
+                if(mysqli_num_rows($res) > 0){
+                    foreach($res as $re){
+                        return $re['age_name'];
+                    }
+                }
+            }
+
+            function displaygenderDesc($conn,$gender){
+                $qry = "SELECT * FROM `gender_tbl` WHERE gender_id = '$gender'";
+                $res = mysqli_query($conn,$qry) or die ($conn->error);
+
+                if(mysqli_num_rows($res) > 0){
+                    foreach($res as $re){
+                        return $re['gender_name'];
+                    }
+                }
+            }
+
+            function displaycurri($conn,$curriclass_id){
+                $qry = "SELECT * FROM `curriclass_tbl` WHERE curriclass_id = '$curriclass_id'";
+                $res = mysqli_query($conn,$qry);
+
+                if(mysqli_num_rows($res) > 0){
+                    foreach($res as $re){
+                        return $re['curriclass_name'];
+                    }
+                }
+            }
+
+            function displayregion($conn,$region_id){
+                $qry = "SELECT * FROM `region_tbl` WHERE reg_id = '$region_id'";
+                $res = mysqli_query($conn,$qry);
+
+                if(mysqli_num_rows($res) > 0){
+                    foreach($res as $re){
+                        return $re['region_name'];
+                    }
+                }
+            }
+
+            function displaySydesc($conn,$sy_id){
+                $qry = "SELECT * FROM `sy_tbl` WHERE sy_id = '$sy_id'";
+                $res = mysqli_query($conn,$qry);
+
+                if(mysqli_num_rows($res) > 0){
+                    foreach($res as $re){
+                        return $re['sy_desc'];
+                    }
+                }
+            }
+
+            function displayTotalyear($conn,$totalyr){
+                $qry = "SELECT * FROM `totalyear_tbl` WHERE totalyear_id = '$totalyr'";
+                $res = mysqli_query($conn,$qry);
+
+                if(mysqli_num_rows($res) > 0){
+                    foreach($res as $re){
+                        return $re['totalyear_name'];
+                    }
+                }
+            }
+
+            function displayGradelvltaught($conn,$glt_id){
+                $qry = "SELECT * FROM `gradelvltaught_tbl` WHERE gradelvltaught_id = '$glt_id'";
+                $res = mysqli_query($conn,$qry);
+
+                if(mysqli_num_rows($res) > 0){
+                    foreach($res as $re){
+                        return $re['gradelvltaught_name'];
+                    }
+                }
+            }
+            

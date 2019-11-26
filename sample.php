@@ -240,7 +240,17 @@ echo showObsAverage(3, 4, 5, "-") . BR;
 // echo RPMSdb::updateFinalCOTaverageT($conn, 32, $_SESSION['active_sy_id']);
 $sy = $_SESSION['active_sy_id'];
 
-echo RPMSdb::generateCOTindicatorAVG($conn, $sy);
+// echo RPMSdb::generateCOTindicatorAVG($conn, $sy);
+
+// $result =countDB($conn,$sy,$_SESSION['school_id'],'esat1_demographicst_tbl');
+
+// foreach($result as $res){
+//     echo $res['age'].'<br>';
+//     echo displayAgeDesc($conn,$res['age']);
+//     echo $res['total'];
+// }
+
+echo displaygenderDesc($conn,8);
 
 
 
