@@ -1,5 +1,7 @@
 <?php
 
+use RPMSdb\RPMSdb;
+
 include 'sampleheader.php';
 
 $rater_id = "";
@@ -43,14 +45,6 @@ endif;
 
     <div class="card">
         <div class="card-header bg-dark text-white">
-            <table>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
             <div class="row">
                 <div class="col">
                     <p>
@@ -63,7 +57,6 @@ endif;
                     <p>
                         <b> OBSERVER:</b> <?= displayname($conn, $rater_id) ?><br />
                         <b> School Year:</b> <?= displaySY($conn, $sy) ?><br />
-
                     </p>
                 </div>
             </div>
@@ -113,8 +106,21 @@ endif;
                 endwhile; ?>
             </table>
 
+
+
         </div>
     </div>
+
+    <div class="container">
+
+        <?php
+        pre_r(RPMSdb::fetchCOTrating($conn, 32, 1, $_SESSION['active_sy_id'], $_SESSION['school_id'], 'a_tioafrating_tbl', 'b_tioafrating_tbl'));
+        // pre_r(RPMSdb::fetchtallMT($conn, $_SESSION['school_id']));
+
+        ?>
+    </div>
+
+
 
 
 

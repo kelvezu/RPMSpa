@@ -5,8 +5,8 @@
 
 
     include_once 'sampleheader.php';
-    devplan::checkDevPlanT($conn);
-    FilterUser::filterDevplanTUsers($_SESSION['position']);
+    // devplan::checkDevPlanMT($conn);
+    FilterUser::filterDevplanMTUsers($_SESSION['position']);
     // A.CHECK IF USER DID NOT TAKEN ESAT
     $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
     //A.1 DISPLAY ERRORS IF THE USER DID NOT TAKE ESAT 
@@ -26,35 +26,30 @@
             <main>
                 <div class="container ">
                     <div class="breadcome-list shadow-reset">
-                        <h2 class="text-center"><strong>PART IV: General Teacher Development Plan</strong></h2>
+                        <h2 class="text-center"><strong>PART IV: General Master Teacher Development Plan</strong></h2>
                         <div>
                             <div class="bg-black"><label for="a_strength" class="form-control-label">Select Rater and the Approving Authority: </label>
                             </div>
-                            <form action="includes/processgendevplant.php" method="post" class="form-group">
+                            <form action="" method="post" class="form-group">
                                 <div>
                                     <div class="row black-border">
                                         <div class="col-sm-6">
-                                            <label for="select-rater" class="form-control-label">Select Rater: </label>
-                                            <select name="rater" id="" class="form-control " required>
-                                                <?php
-                                                        $raterformt = DevPlan::showAllAvailRaterforT($conn);
-                                                        foreach ($raterformt as $res) :
-                                                            ?>
-                                                    <option value="<?= $res['user_id'] ?>"><?= fullnameFormat($res['firstname'], $res['middlename'], $res['surname']) . ' - ' . $res['position'] ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                            <label for="select-rater" class="form-control-label"> Rater: </label>
+                                            <?php
+                                                    $a1_str = DevPlan::showA1strengthMT($conn);
+                                                    foreach ($a1_str as $str) :
+                                                        $rater = $str['rater_id'];
+                                                        $position = $str['position'];
+                                                        $app_auth = $str['approving_authority'];
+                                                    endforeach;
+                                                    ?>
+                                            <input type="text" name="name" id="" value="<?= displayname($conn, $rater) ?>" disabled />
+
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="select-app-auth" class="form-control-label">Select Approving Authority: </label>
+                                            <label for="select-app-auth" class="form-control-label"> Approving Authority: </label>
+                                            <input type="text" name="name" id="" value="<?= displayname($conn, $app_auth) ?>" disabled />
 
-                                            <select name="app_auth" id="" class="form-control required">
-                                                <?php
-                                                        $app_auth = DevPlan::showAllAppAuthforT($conn);
-                                                        foreach ($app_auth as $sup) :
-                                                            ?>
-                                                    <option value="<?= $sup['user_id'] ?>"><?= fullnameFormat($sup['firstname'], $sup['middlename'], $sup['surname']) . ' - ' . $sup['position'] ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
                                         </div>
                                         <div class="col-sm-6"></div>
                                     </div>
@@ -82,7 +77,7 @@
                                             <ul class="ul">
                                                 <?php
 
-                                                        $esatForm2_LvlCap_results = DevPlan::showStrDevplanT($conn);
+                                                        $esatForm2_LvlCap_results = DevPlan::showStrDevplanMT($conn);
                                                         /* TURN THIS INTO FUNCTION */
                                                         if (!empty($esatForm2_LvlCap_results)) :
                                                             foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
@@ -95,13 +90,13 @@
                                                         <ul class="ul-square">
                                                             <?php
 
-                                                                            $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, tobj_tbl.tobj_name, esat2_objectivest_tbl.* FROM ( esat2_objectivest_tbl INNER JOIN kra_tbl ON esat2_objectivest_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN tobj_tbl ON esat2_objectivest_tbl.tobj_id = tobj_tbl.tobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivest_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivest_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivest_tbl.school = "' . $LvlCap_result['school'] . '" AND esat2_objectivest_tbl.status = "Active" AND esat2_objectivest_tbl.lvlcap >= 3  LIMIT 2';
-                                                                            $mtobjLvlcapResults = mysqli_query($conn, $queryMTobjlvlcap);
+                                                                            $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivesmt_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $LvlCap_result['school'] . '" AND esat2_objectivesmt_tbl.status = "Active" AND esat2_objectivesmt_tbl.lvlcap >= 3  LIMIT 2';
+                                                                            $mtobjLvlcapResults = mysqli_query($dbcon, $queryMTobjlvlcap);
                                                                             if ($mtobjLvlcapResults) :
                                                                                 foreach ($mtobjLvlcapResults as $mtobjLvlcap) :
                                                                                     ?>
-                                                                    <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjLvlcap['tobj_name'] ?></i></li><br />
-                                                                    <input type="hidden" name="lvlcapmtobj_id[]" value="<?php echo $mtobjLvlcap['tobj_id'] ?>" />
+                                                                    <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjLvlcap['mtobj_name'] ?></i></li><br />
+                                                                    <input type="hidden" name="lvlcapmtobj_id[]" value="<?php echo $mtobjLvlcap['mtobj_id'] ?>" />
                                                                     <input type="hidden" name="lvlcapkra_id[]" value="<?php echo  $mtobjLvlcap['kra_id'] ?>" />
                                                             <?php endforeach;
                                                                             else : echo '<p class="tomato-color">No record!</p>';
@@ -122,7 +117,7 @@
                                             <div class="bg-black"><label for="a_devneeds" class="form-control-label">Development Needs</label></div>
                                             <ul class="ul">
                                                 <?php
-                                                        $esatForm2_priodev_results = DevPlan::showPrioDevplanT($conn);
+                                                        $esatForm2_priodev_results = DevPlan::showPrioDevplanMT($conn);
                                                         if (!empty($esatForm2_priodev_results)) :
                                                             foreach ($esatForm2_priodev_results as $PrioDev_result) :
                                                                 ?>
@@ -130,13 +125,13 @@
 
                                                         <ul class="ul-square">
                                                             <?php
-                                                                            $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, tobj_tbl.tobj_name, esat2_objectivest_tbl.* FROM ( esat2_objectivest_tbl INNER JOIN kra_tbl ON esat2_objectivest_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN tobj_tbl ON esat2_objectivest_tbl.tobj_id = tobj_tbl.tobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '"  AND esat2_objectivest_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivest_tbl.school = "' . $PrioDev_result['school'] . '" AND esat2_objectivest_tbl.priodev >= 3  LIMIT 2';
-                                                                            $mtobjPrioDevResults = mysqli_query($conn, $queryMTobjpriodev);
+                                                                            $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '"  AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $PrioDev_result['school'] . '" AND esat2_objectivesmt_tbl.priodev >= 3  LIMIT 2';
+                                                                            $mtobjPrioDevResults = mysqli_query($dbcon, $queryMTobjpriodev);
                                                                             if (!empty($mtobjPrioDevResults)) :
                                                                                 foreach ($mtobjPrioDevResults as $mtobjPriodev) :
                                                                                     ?>
-                                                                    <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjPriodev['tobj_name']  ?></i></li><br />
-                                                                    <input type="hidden" name="priodevmtobj_id[]" value="<?php echo $mtobjPriodev['tobj_id'] ?>">
+                                                                    <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjPriodev['mtobj_name']  ?></i></li><br />
+                                                                    <input type="hidden" name="priodevmtobj_id[]" value="<?php echo $mtobjPriodev['mtobj_id'] ?>">
                                                                     <input type="hidden" name="priodevkra_id[]" value="<?php echo  $mtobjPriodev['kra_id'] ?>">
                                                             <?php endforeach;
                                                                             else : echo '<p class="tomato-color">No record!</p>';
@@ -153,18 +148,27 @@
                                         </div>
                                         <!-- Action Plan -->
                                         <div class="black-border">
+                                            <?php
+                                                    $action = devplan::showA3ActionMT($conn);
+                                                    foreach ($action as $act) :
+                                                        $inter = $act['a_intervention'];
+                                                        $learn = $act['a_learning_objectives'];
+                                                        $time = $act['a_timeline'];
+                                                        $resource = $act['a_resources_needed'];
+                                                    endforeach;
+                                                    ?>
                                             <div class="form-control-label bg-black">
                                                 <label for="learn-objectives" class="form-control-label">Action Plan</label>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="learning_objectives">Learning Objectives:</label>
-                                                    <textarea name="a_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
+                                                    <textarea name="a_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" disabled class="form-control textarea"><?php echo $learn ?></textarea>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="a_intervention">Interventions:</label>
-                                                    <textarea name="a_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"></textarea>
+                                                    <textarea name="a_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" disabled class="form-control textarea"><?php echo $inter ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,11 +180,11 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="timelines">Timelines:</label>
-                                                    <textarea name="a_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." class="form-control textarea"></textarea>
+                                                    <textarea name="a_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." disabled class="form-control textarea"><?php echo $time ?></textarea>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="resources_needed">Resources needed:</label>
-                                                    <textarea name="a_resources_needed" id="" cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"></textarea>
+                                                    <textarea name="a_resources_needed" id="" cols="30" disabled rows="10" placeholder="Enter the Resources needed." class="form-control textarea"><?php echo $resource ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -189,6 +193,7 @@
 
                                         <div class="bg-black">
                                             <label><strong>B. Core Behavioral Competencies</strong></label>
+
                                         </div>
                                         <div class="black-border">
                                             <div class="row">
@@ -196,14 +201,14 @@
                                                     <div class="bg-black"><label for="b_strength" class="form-control-label ">Strengths</label></div>
                                                     <ul class="ul">
                                                         <?php
-                                                                $esatForm3_strength_results = DevPlan::showStrIndicatorT($conn);
+                                                                $esatForm3_strength_results = DevPlan::showStrIndicatorMT($conn);
                                                                 if (!empty($esatForm3_strength_results)) :
                                                                     foreach ($esatForm3_strength_results as $cbc_strength) :
                                                                         ?>
                                                                 <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
                                                                 <ul class="ul-square">
-                                                                    <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralt_tbl.* FROM esat3_core_behavioralt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralt_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioralt_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioralt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralt_tbl.school = "' . $_SESSION['school_id'] . '" AND esat3_core_behavioralt_tbl.status = "Active" AND cbc_score = 1  LIMIT 3';
-                                                                                    $indicatorStrengthResults = mysqli_query($conn, $queryIndicatorStrength);
+                                                                    <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralmt_tbl.* FROM esat3_core_behavioralmt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralmt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralmt_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioralmt_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioralmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralmt_tbl.school = "' . $_SESSION['school_id'] . '" AND esat3_core_behavioralmt_tbl.status = "Active" AND cbc_score = 1  LIMIT 3';
+                                                                                    $indicatorStrengthResults = mysqli_query($dbcon, $queryIndicatorStrength);
                                                                                     if ($indicatorStrengthResults) :
                                                                                         foreach ($indicatorStrengthResults as $indicatorStrength) :
                                                                                             ?>
@@ -226,7 +231,7 @@
                                                 <div class="col-md-6">
                                                     <div class="bg-black"><label for="a_strength" class="form-control-label ">Development Needs</label></div>
                                                     <ul class="ul">
-                                                        <?php $esatForm3_devneeds_results = DevPlan::showDevNeedsIndicatorT($conn);
+                                                        <?php $esatForm3_devneeds_results = DevPlan::showDevNeedsIndicatorMT($conn);
                                                                 if (!empty($esatForm3_devneeds_results)) :
                                                                     foreach ($esatForm3_devneeds_results as $cbc_devneeds) :
                                                                         ?>
@@ -234,8 +239,8 @@
                                                                 <li><b><?php echo $cbc_devneeds['cbc_name'] ?></b></li>
                                                                 <ul class="ul-square">
                                                                     <?php
-                                                                                    $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralt_tbl.* FROM esat3_core_behavioralt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralt_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioralt_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioralt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralt_tbl.school = "' . $cbc_devneeds['school'] . '" AND esat3_core_behavioralt_tbl.status = "Active" AND cbc_score = 0  LIMIT 2';
-                                                                                    $IndicatorDevNeedsResults = fetchAll($conn, $queryIndicatorDevneeds);
+                                                                                    $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralmt_tbl.* FROM esat3_core_behavioralmt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralmt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralmt_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioralmt_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioralmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralmt_tbl.school = "' . $cbc_devneeds['school'] . '" AND esat3_core_behavioralmt_tbl.status = "Active" AND cbc_score = 0  LIMIT 2';
+                                                                                    $IndicatorDevNeedsResults = fetchAll($dbcon, $queryIndicatorDevneeds);
                                                                                     if ($IndicatorDevNeedsResults) :
                                                                                         foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
                                                                                             ?>
@@ -262,16 +267,25 @@
                                         <div class="black-border">
                                             <div class="form-control-label bg-black">
                                                 <label for="learn-objectives" class="form-control-label">Action Plan</label>
+                                                <?php
+                                                        $action = devplan::showB3ActionMT($conn);
+                                                        foreach ($action as $act) :
+                                                            $interb = $act['b_intervention'];
+                                                            $learnb = $act['b_learning_objectives'];
+                                                            $timeb = $act['b_timeline'];
+                                                            $resourceb = $act['b_resources_needed'];
+                                                        endforeach;
+                                                        ?>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="learning_objectives">Learning Objectives:</label>
-                                                    <textarea name="b_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"></textarea>
+                                                    <textarea name="b_learning_objectives" disabled id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"><?php echo $learnb; ?> </textarea>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="intervention">Interventions:</label>
-                                                    <textarea name="b_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"></textarea>
+                                                    <textarea name="b_intervention" id="" disabled cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"> <?php echo $interb; ?> </textarea>
                                                 </div>
                                             </div>
 
@@ -285,31 +299,32 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="timelines">Timelines:</label>
-                                                    <textarea name="b_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." class="form-control textarea"></textarea>
+                                                    <textarea name="b_timeline" id="" cols="30" disabled rows="10" placeholder="Enter Timelines." class="form-control textarea"> <?php echo $timeb; ?></textarea>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="resources_needed">Resources needed:</label>
-                                                    <textarea name="b_resources_needed" id="" cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"></textarea>
+                                                    <textarea name="b_resources_needed" id="" disabled cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"> <?php echo $resourceb; ?></textarea>
                                                 </div>
                                             </div>
 
                                             <div>
+                                                <?php
+                                                        $action3 = devplan::showDevCMT($conn);
+                                                        foreach ($action3 as $act3) :
+                                                            $act3 = $act3['feedback'];
+                                                        endforeach;
+                                                        ?>
                                                 <label for="learn-objectives" class="form-control-label">Feedback: </label>
-                                                <textarea name="feedback" id="" cols="30" rows="10" class="form-control textarea" placeholder=" _______________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________"></textarea>
+                                                <textarea name="feedback" id="" cols="30" disabled rows="10" class="form-control textarea" placeholder=""><?php echo $act3 ?></textarea>
                                             </div>
                                         </div>
 
                                         <br>
                                         <center>
-                                            <div class="row">
-                                                <div>
-                                                    <input type="submit" name="submit" class="btn btn-primary" value="Submit" />
-                                                    <input type="submit" name="save" class="btn btn-success" value="Save" />
-                                                    <input type="submit" name="edit" class="btn btn-info" value="Edit" />
-                                                    <?php directLastPage() ?>
-                                                </div>
-                                            </div>
+
+                                            <?php directLastPage() ?>
+
                                         </center>
 
                             </form>

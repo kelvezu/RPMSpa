@@ -1,14 +1,13 @@
     <?php
-    include 'includes/conn.inc.php';
-    include 'includes/header.php';
 
-    $connection = mysqli_connect("localhost", "root", "");
-    mysqli_select_db($connection, "rpms");
+    include 'sampleheader.php';
+
+
     ?>
 
 
     <div class="modal fade" id="mov-modal" tabindex="-1" role="dialog" aria-labelledby="movModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title " id="exampleModalLabel">Add MOV</h5>
@@ -19,13 +18,13 @@
 
                 <div class="modal-body">
                     <form action="includes/processtmov.php" method="POST">
-                        <div class="form-group row">
-                            <div class="col-lg">
+                     
+                            <div class="col">
                                 <label for="sel-kra" class="col-form-label"><strong>Select Key Result Areas</strong></label>
                                 <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control">
                                     <option>Select KRA</option>
                                     <?php
-                                    $query = mysqli_query($connection, "SELECT * from kra_tbl");
+                                    $query = mysqli_query($conn, "SELECT * from kra_tbl");
                                     while ($row = mysqli_fetch_array($query)) {
                                         $kra_id = $row['kra_id'];
                                         $kra_name = $row['kra_name'];
@@ -37,7 +36,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-lg">
+                            <div class="col">
                                 <label for="sel-mov" class=" col-form-label"><strong>Select Objective</strong></label>
                                 <div id="objective">
                                     <select class="form-control">
@@ -45,23 +44,25 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg">
+                            <div class="col">
                                 <label for="main-mov" class="col-form-label"><strong>Main MOV</strong></label>
                                 <input type="text" name="main_mov" id="main-mov" class="form-control" placeholder="Enter the main mov..." required>
                             </div>
-                            <div class="col-lg">
+                            <div class="col">
                                 <label for="supp-mov" class="col-form-label"><strong>Supporting MOV</strong></label>
-                                <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required >
+                                <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required>
                             </div>
                             <div class="m-2">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary" name="save">Add MOV</button>
                             </div>
+                            </div>
+                           
                     </form>
-                </div>
+              
             </div>
         </div>
-    </div>
+
     </div>
 
 
@@ -73,11 +74,9 @@
                 unset($_SESSION['message']);
                 ?>
         </div>
-    <?php endif ?>
+    <?php endif; ?>
 
     <div class="container">
-        <div class="breadcome-list shadow-reset">
-
             <div class="right">
                 <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#mov-modal">Add MOV<i class="fas fa-truck-moving    "></i> </button>
 
@@ -91,23 +90,18 @@
                     }
                 </script>
 
-
-
                 <div class="h4 breadcrumb bg-dark text-white "><strong>Teacher Means of Verification</strong> </div>
-
-
-                <main>
-                    <div class="container">
-                        <div class="col-sm-10">
+                   
+                      
                             <?php
 
-                            $query2 = mysqli_query($connection, "SELECT kra_tbl.kra_name,tobj_tbl.tobj_name,tmov_tbl.* FROM (tmov_tbl INNER JOIN kra_tbl ON tmov_tbl.kra_id = kra_tbl.kra_id) 
+                            $query2 = mysqli_query($conn, "SELECT kra_tbl.kra_name,tobj_tbl.tobj_name,tmov_tbl.* FROM (tmov_tbl INNER JOIN kra_tbl ON tmov_tbl.kra_id = kra_tbl.kra_id) 
                     INNER JOIN tobj_tbl ON tmov_tbl.tobj_id = tobj_tbl.tobj_id")
-                                or die($connection->error);
+                                or die($conn->error);
 
                             ?>
 
-                            <table class="table table-responsive-sm">
+                            <table class="table table-responsive-sm">   
                                 <caption>Teacher Means of Verification</caption>
                                 <thead class="bg-success text-white ">
                                     <tr>
@@ -137,11 +131,9 @@
                             </table>
                         </div>
                     </div>
-            </div>
-        </div>
-    </div>
+
     <br>
     <?php
 
-    include 'includes/footer.php';
+    include 'samplefooter.php';
     ?>

@@ -1,5 +1,5 @@
 <?php
-include_once 'includes/header.php';
+include_once 'sampleheader.php';
 RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
 FilterUser\FilterUser::filterEsatT($conn, $_SESSION['position']);
 
@@ -123,5 +123,5 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 <br>
 <?php
 include_once 'includes/scripts.php';
-include_once 'includes/footer.php';
+include_once 'samplefooter.php';
 ?>

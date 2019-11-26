@@ -1,5 +1,5 @@
   <?php
-  include 'includes/header.php';
+  include 'sampleheader.php';
 
   FilterUser\FilterUser::filterEsatMT($conn, $_SESSION['position']);
   RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
@@ -95,5 +95,5 @@
   <br>
   <?php
 
-  include 'includes/footer.php';
+  include 'samplefooter.php';
   ?>

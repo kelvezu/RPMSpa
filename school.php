@@ -1,6 +1,5 @@
 <?php
-include_once 'includes/conn.inc.php';
-include_once 'includes/header.php';
+include_once 'sampleheader.php';
 
 
 $connection = mysqli_connect("localhost", "root", "");
@@ -152,7 +151,7 @@ mysqli_select_db($connection, "rpms");
 
     <main>
         <div class="container">
-            <div class="breadcome-list shadow-reset">
+         
                 <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#school-modal">Add School<i class="fas fa-truck-moving    "></i> </button>
 
 
@@ -204,5 +203,5 @@ mysqli_select_db($connection, "rpms");
 </div>
 <br>
 <?php
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

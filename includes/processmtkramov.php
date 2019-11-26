@@ -20,7 +20,7 @@ else{
 //DELETE TOTAL YEAR
 if(isset($_GET['delete'])){
     $mtobj_id = $_GET['delete'];
-    $conn->query("DELETE FROM mtobj_tbl WHERE mtobj_id=$mtobj_id") or die($conn->error);
+    $conn->query("UPDATE mtobj_tbl SET `status`='Inactive' WHERE mtobj_id=$mtobj_id") or die($conn->error);
     $_SESSION['message'] = 'Objective has been deleted!';
     $_SESSION['msg_type'] = 'danger';
     header("location:../displaymtkramov.php");
@@ -69,7 +69,7 @@ if(isset($_POST['kraadd'])){
     //DELETE KRA
     if(isset($_GET['deletekra'])){
         $kra_id = $_GET['deletekra'];
-        $conn->query("DELETE FROM kra_tbl WHERE kra_id=$kra_id") or die($conn->error);
+        $conn->query("UPDATE kra_tbl SET `status` = 'Inactive' WHERE kra_id = $kra_id") or die($conn->error);
         $_SESSION['message'] = 'KRA has been deleted!';
         $_SESSION['msg_type'] = 'danger';
         header("location:../displaymtkramov.php");

@@ -1,16 +1,16 @@
 <?php
-    include 'includes/header.php';
-    include 'includes/conn.inc.php';
+include 'sampleheader.php';
 
-    $kra_num = 0;   
-    $tobj_num = 1;
-    $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error); 
+
+$kra_num = 0;
+$tobj_num = 1;
+$result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 ?>
 
- 
+
 <div class="container text-center">
     <div class="breadcome-list shadow-reset">
-    <div class="h4 breadcome-list shadow-reset"><strong> Master Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
+        <div class="h4 breadcome-list shadow-reset"><strong> Master Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
 
 
 
@@ -33,101 +33,102 @@
                     </tr>
                 </thead>
                 <?php
-     while($row = $result->fetch_assoc()):
-        $kra_id = $row['kra_id'];
-        
-?>
-            <tr>
-                <td rowspan="4"><?php echo "KRA ".$row['kra_id'];?></td>
-                
-                
-                <?php 
-                $kra_num++;
-                if($kra_num <= 4):
-                    ?>
-                    <td rowspan="4">22.5%</td>
-                    
-                <?php
-                else:
-                ?>
+                while ($row = $result->fetch_assoc()) :
+                    $kra_id = $row['kra_id'];
 
-                <td rowspan="2">10%</td>
-                <?php
-                endif;
-                 ?>
-            </tr>
-<?php
-    $objresult = $conn->query("SELECT * FROM tobj_tbl WHERE kra_id = '$kra_id'")  or die($conn->error);
-    while($rows = $objresult->fetch_assoc()): 
-        $tobj_id = $rows['tobj_id'];
-?>
-            <tr name="criteria"><td> <?php echo  "Objective " .$rows['tobj_id'];?></td>
-            
-            <?php 
-                    $tobj_num++;
-                    if($tobj_num <= 13):
-                        ?>
-                        <td>7.5%</td>
-                    
+                    ?>
+                    <tr>
+                        <td rowspan="4"><?php echo "KRA " . $row['kra_id']; ?></td>
+
+
+                        <?php
+                            $kra_num++;
+                            if ($kra_num <= 4) :
+                                ?>
+                            <td rowspan="4">22.5%</td>
+
+                        <?php
+                            else :
+                                ?>
+
+                            <td rowspan="2">10%</td>
+                        <?php
+                            endif;
+                            ?>
+                    </tr>
                     <?php
-                    else:
-                    ?>
+                        $objresult = $conn->query("SELECT * FROM tobj_tbl WHERE kra_id = '$kra_id'")  or die($conn->error);
+                        while ($rows = $objresult->fetch_assoc()) :
+                            $tobj_id = $rows['tobj_id'];
+                            ?>
+                        <tr name="criteria">
+                            <td> <?php echo  "Objective " . $rows['tobj_id']; ?></td>
 
-                    <td>10%</td>
-                    <?php
-                    endif;
-                    ?>
-                
-                <td><select name="num1[]" id="num1" class="form-control">
-                    <option value="">Select</option>
-                    <option value="5">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                </select></td>
+                            <?php
+                                    $tobj_num++;
+                                    if ($tobj_num <= 13) :
+                                        ?>
+                                <td>7.5%</td>
 
-                <td><select name="num2[]" id="num2" class="form-control">
-                    <option value="">Select</option>
-                    <option value="5">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                </select></td>
-                <td><select name="num3[]" id="num3" class="form-control">
-                <option value="">Select</option>
-                    <option value="5">5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                </select></td>
-                <td><input type="number" name="ave[]" id="ave" class="input form-control" disabled></td>
-                <td><input type="number" name="score[]" id="score" class="input form-control" disabled></td>
-                <script src="js/main2.js"></script>
-                
-            </tr>
+                            <?php
+                                    else :
+                                        ?>
 
-<?php endwhile ?>
-<?php endwhile ?>
-                
-            <td colspan="7" class="bg-info"><strong>Final Rating</strong></td>
-            <td><input type="number" name="f_rating" id="f_rating" class="input form-control" disabled></td>
-           <tr>
-            <td colspan="7" class="bg-info"><strong>Adjectival Rating</strong></td>
-            <td><input type="number" name="a_rating" id="a_rating" class="input form-control" disabled></td>
-           </tr>
-                  
+                                <td>10%</td>
+                            <?php
+                                    endif;
+                                    ?>
+
+                            <td><select name="num1[]" id="num1" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select></td>
+
+                            <td><select name="num2[]" id="num2" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select></td>
+                            <td><select name="num3[]" id="num3" class="form-control">
+                                    <option value="">Select</option>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select></td>
+                            <td><input type="number" name="ave[]" id="ave" class="input form-control" disabled></td>
+                            <td><input type="number" name="score[]" id="score" class="input form-control" disabled></td>
+                            <script src="js/main2.js"></script>
+
+                        </tr>
+
+                    <?php endwhile ?>
+                <?php endwhile ?>
+
+                <td colspan="7" class="bg-info"><strong>Final Rating</strong></td>
+                <td><input type="number" name="f_rating" id="f_rating" class="input form-control" disabled></td>
+                <tr>
+                    <td colspan="7" class="bg-info"><strong>Adjectival Rating</strong></td>
+                    <td><input type="number" name="a_rating" id="a_rating" class="input form-control" disabled></td>
+                </tr>
+
 
 
 
 
 
             </table>
-        
-        
-        
+
+
+
         </form>
     </div>
 </div>
@@ -135,5 +136,5 @@
 
 <br>
 <?php
-    include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

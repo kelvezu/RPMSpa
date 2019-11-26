@@ -1,6 +1,6 @@
 <?php
-include 'includes/conn.inc.php';
-include 'includes/header.php';
+
+include 'sampleheader.php';
 
 
 
@@ -142,5 +142,5 @@ $numind = 1;
 <?php
 
 
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

@@ -4,8 +4,12 @@ use RPMSdb\RPMSdb;
 
 $num_t = 1;
 $num_mt = 1;
+$obsMTperiod = 0;
+
 
 include 'sampleheader.php';
+$school = $_SESSION['school_id'];
+$sy = $_SESSION['active_sy_id'];
 $teacher_result = RPMSdb::fetchtallT($conn, $_SESSION['school_id']);
 
 // pre_r($teacher_result);
@@ -49,18 +53,22 @@ $masterteacher_result = RPMSdb::fetchtallMT($conn, $_SESSION['school_id']);
                             <td><?= $num_t++ ?></td>
                             <td><?= displayname($conn, $t_res['user_id']) ?></td>
                             <td><?= $t_res['position'] ?></td>
-                            <td><?= $tcot1 = RPMSdb::TcheckResult_Obs1($conn, $t_res['user_id']) ?  '<i class="fa fa-check-circle text-success"></i>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= $tcot2 =  RPMSdb::TcheckResult_Obs2($conn, $t_res['user_id']) ?  '<i class="fa fa-check-circle text-success"></i>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= $tcot3 =  RPMSdb::TcheckResult_Obs3($conn, $t_res['user_id']) ?  '<i class="fa fa-check-circle text-success"></i>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= $tcot4 =  RPMSdb::TcheckResult_Obs4($conn, $t_res['user_id']) ?  '<i class="fa fa-check-circle text-success"></i>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs1($conn, $t_res['user_id'], $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-success"></i>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs2($conn, $t_res['user_id'], $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-success"></i>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs3($conn, $t_res['user_id'], $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-success"></i>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs4($conn, $t_res['user_id'], $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-success"></i>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
                             <td><?php
                                     if (
-                                        RPMSdb::TcheckResult_Obs1($conn, $t_res['user_id']) &&
-                                        RPMSdb::TcheckResult_Obs2($conn, $t_res['user_id']) &&
-                                        RPMSdb::TcheckResult_Obs3($conn, $t_res['user_id']) &&
-                                        RPMSdb::TcheckResult_Obs4($conn, $t_res['user_id'])
+                                        RPMSdb::TcheckResult_Obs1($conn, $t_res['user_id'], $sy, $school) &&
+                                        RPMSdb::TcheckResult_Obs2($conn, $t_res['user_id'], $sy, $school) &&
+                                        RPMSdb::TcheckResult_Obs3($conn, $t_res['user_id'], $sy, $school) &&
+                                        RPMSdb::TcheckResult_Obs4($conn, $t_res['user_id'], $sy, $school)
                                     ) :
-                                        echo '<a class="btn btn-sm btn-success text-white">View Rating</a>';
+                                        echo '<a class="btn btn-success btn-sm text-white">View Rating</a>';
                                     else : echo '---';
                                     endif;
                                     ?>
@@ -87,25 +95,53 @@ $masterteacher_result = RPMSdb::fetchtallMT($conn, $_SESSION['school_id']);
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php foreach ($masterteacher_result as $mt_res) : ?>
+                <tbody class="text-center font-weight-bold">
+                    <?php
+                    foreach ($masterteacher_result as $mt_res) :
+                        $mt_user = $mt_res['user_id'];
+                        $mt_rater = $mt_res['rater'];
+
+                        ?>
                         <tr>
                             <td><?= $num_mt++ ?></td>
-                            <td><?= displayname($conn, $mt_res['user_id']) ?></td>
+                            <td><?= displayname($conn, $mt_user) ?></td>
                             <td><?= $mt_res['position'] ?></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+
+                            <td><?= $mtcot1 = RPMSdb::MTcheckResult_Obs1($conn, $mt_user, $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-primary"></i>' : '<i class="fa fa-times-circle text-danger"></i>';
+                                    ?> </td>
+
+                            <td><?= $mtcot2 =  RPMSdb::MTcheckResult_Obs2($conn, $mt_user, $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-primary"></i>'  : '<i class="fa fa-times-circle text-danger"></i>';
+                                    ?></td>
+
+                            <td><?= $mtcot3 =  RPMSdb::MTcheckResult_Obs3($conn, $mt_user, $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-primary"></i>'  : '<i class="fa fa-times-circle text-danger"></i>';
+                                    ?></td>
+
+                            <td><?= $mtcot4 =  RPMSdb::MTcheckResult_Obs4($conn, $mt_user, $sy, $school) ?
+                                        '<i class="fa fa-check-circle text-primary"></i>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+
+                            <td><?php
+                                    if (
+                                        RPMSdb::MTcheckResult_Obs1($conn, $mt_user, $sy, $school) &&
+                                        RPMSdb::MTcheckResult_Obs2($conn, $mt_user, $sy, $school) &&
+                                        RPMSdb::MTcheckResult_Obs3($conn, $mt_user, $sy, $school) &&
+                                        RPMSdb::MTcheckResult_Obs4($conn, $mt_user, $sy, $school)
+                                    ) :
+                                        echo '<a class="btn btn-primary btn-sm text-white">View Rating</a>';
+                                    else : echo '---';
+                                    endif;
+                                    ?>
+                            </td>
+
                         <?php endforeach; ?>
                         </tr>
                 </tbody>
-
-
             </table>
         </div>
         <!-- End Column for MT -->
     </div>
 </div>
+
 <?php include 'samplefooter.php'; ?>

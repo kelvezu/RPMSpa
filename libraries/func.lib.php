@@ -558,13 +558,13 @@
             // THIS FUNCTION IS FOR RATER 
             function showObsRatingT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
             {
-                $qry = "SELECT * FROM `a_tioafrating_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
 
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_results = mysqli_num_rows($results);
                 if ($count_results > 0) {
                     foreach ($results as $result) :
-                        return floatval($result['tioafrating']);
+                        return floatval($result['rating']);
                     endforeach;
                 } else {
                     return 0;
@@ -573,13 +573,12 @@
 
             function showObsRatingMT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
             {
-                $qry = "SELECT * FROM `a_mtioafrating_tbl` WHERE mtindicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
-
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_results = mysqli_num_rows($results);
                 if ($count_results > 0) {
                     foreach ($results as $result) :
-                        return floatval($result['tioafrating']);
+                        return floatval($result['rating']);
                     endforeach;
                 } else {
                     return 0;
@@ -589,29 +588,28 @@
             // THIS WILL OUTPUT THE AVERAGE IN COT RATING
             function showObsAverage($obs1_score, $obs2_score, $obs3_score, $obs4_score)
             {
-
-                if (preg_match('/^[0-9]+$/', $obs1_score)) {
+                if (preg_match('/^[0-9]+$/', $obs1_score) and ($obs1_score != 0)) {
                     $num1 = 1;
                 } else {
                     $obs1_score = 0;
                     $num1 = 0;
                 }
 
-                if (preg_match('/^[0-9]+$/', $obs2_score)) {
+                if (preg_match('/^[0-9]+$/', $obs2_score) and ($obs2_score != 0)) {
                     $num2 = 1;
                 } else {
                     $obs2_score = 0;
                     $num2 = 0;
                 }
 
-                if (preg_match('/^[0-9]+$/', $obs3_score)) {
+                if (preg_match('/^[0-9]+$/', $obs3_score) and ($obs3_score != 0)) {
                     $num3 = 1;
                 } else {
                     $obs3_score = 0;
                     $num3 = 0;
                 }
 
-                if (preg_match('/^[0-9]+$/', $obs4_score)) {
+                if (preg_match('/^[0-9]+$/', $obs4_score) and ($obs4_score != 0)) {
                     $num4 = 1;
                 } else {
                     $obs4_score = 0;
@@ -628,74 +626,100 @@
                 endif;
             }
 
-            function displayKRA($conn,$kra_id){
+            function displayKRA($conn, $kra_id)
+            {
                 $qry = "SELECT * FROM kra_tbl WHERE kra_id = $kra_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['kra_name'];
                     }
-                  
                 }
             }
 
-            function displayObjectiveT($conn,$tobj_id){
+            function displayObjectiveT($conn, $tobj_id)
+            {
                 $qry = "SELECT * FROM tobj_tbl WHERE tobj_id = $tobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['tobj_name'];
                     }
-                  
                 }
             }
 
-            function displayObjectiveMT($conn,$mtobj_id){
+            function displayObjectiveMT($conn, $mtobj_id)
+            {
                 $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['mtobj_name'];
                     }
-                  
                 }
             }
 
-            function displayKRAidofTobj($conn,$tobj_id){
+            function displayKRAidofTobj($conn, $tobj_id)
+            {
                 $qry = "SELECT * FROM tobj_tbl WHERE tobj_id = $tobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['kra_id'];
                     }
-                  
                 }
-
             }
 
-            function displayKRAidofMTobj($conn,$mtobj_id){
+            function displayKRAidofMTobj($conn, $mtobj_id)
+            {
                 $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
-                $results = mysqli_query($conn,$qry) or die($conn->error);
+                $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
-                if($count_res > 0){
-                   
-                    foreach($results as $res){
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
                         return $res['kra_id'];
                     }
-                  
                 }
+            }
 
+            function displayTindicator($conn, $indicator_id)
+            {
+                $qry = "SELECT * FROM tindicator_tbl WHERE indicator_id = $indicator_id";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
+                        return $res['indicator_name'];
+                    }
+                }
+            }
+
+            function displayMTindicator($conn, $indicator_id)
+            {
+                $qry = "SELECT * FROM mtindicator_tbl WHERE mtindicator_id = $indicator_id";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
+                        return $res['mtindicator_name'];
+                    }
+                }
             }

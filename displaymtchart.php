@@ -1,10 +1,7 @@
 <?php
 
-include_once 'includes/header.php';
-include_once 'includes/conn.inc.php';
-include_once 'libraries/func.lib.php';
-include_once 'includes/constants.inc.php';
-include_once 'libraries/db.library.php';
+include_once 'sampleheader.php';
+
 $user_id = $_SESSION['user_id'];
 
 ?>
@@ -22,19 +19,16 @@ $statement = $connect->prepare($query);
 $statement->execute();
 $result = $statement->fetchAll();
 ?>
-<!DOCTYPE html>
-<html>
 
-<head>
-	<script src="js/charts/jquery.min.js"></script>
-	<link rel="stylesheet" href="js/charts/bootstrap.min.css" />
-	<link rel="stylesheet" href="js/charts/jquery-ui.css">
-	<script src="js/charts/bootstrap.min.js"></script>
-	<script src="js/charts/jquery.highchartTable.js"></script>
-	<script src="js/charts/highcharts.js"></script>
-	<script src="js/charts/jquery-ui.js"></script>
+<script src="js/charts/jquery.min.js"></script>
+<link rel="stylesheet" href="js/charts/bootstrap.min.css" />
+<link rel="stylesheet" href="js/charts/jquery-ui.css">
+<script src="js/charts/bootstrap.min.js"></script>
+<script src="js/charts/jquery.highchartTable.js"></script>
+<script src="js/charts/highcharts.js"></script>
+<script src="js/charts/jquery-ui.js"></script>
 
-</head>
+
 
 <body>
 	<!-- Core Behavioral Competencies -->
@@ -148,89 +142,96 @@ $result = $statement->fetchAll();
 
 		</div>
 	</div>
-</body>
 
-</html>
 
-<script>
-	$(document).ready(function() {
 
-		$('#view_chart1').click(function() {
-			$('#for_chart1').data('graph-container', '#chart_area1');
-			$('#for_chart1').data('graph-type', 'column');
-			$("#chart_area1").dialog('open');
-			$('#for_chart1').highchartTable();
 
-			$('#remove_chart').attr('disabled', false);
+	<script>
+		$(document).ready(function() {
+
+			$('#view_chart1').click(function() {
+				$('#for_chart1').data('graph-container', '#chart_area1');
+				$('#for_chart1').data('graph-type', 'column');
+				$("#chart_area1").dialog('open');
+				$('#for_chart1').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area1').html('');
+			});
+
+			$("#chart_area1").dialog({
+				autoOpen: false,
+				width: 900,
+				height: 600
+			});
 		});
 
-		$('#remove_chart').click(function() {
-			$('#chart_area1').html('');
-		});
 
-		$("#chart_area1").dialog({
-			autoOpen: false,
-			width: 900,
-			height: 600
-		});
-	});
+		$(document).ready(function() {
+
+			$('#view_chart2').click(function() {
+				$('#for_chart2').data('graph-container', '#chart_area2');
+				$('#for_chart2').data('graph-type', 'column');
+				$("#chart_area2").dialog('open');
+				$('#for_chart2').highchartTable();
+
+				$('#remove_chart').attr('disabled', false);
+			});
+
+			$('#remove_chart').click(function() {
+				$('#chart_area2').html('');
+			});
+
+			$("#chart_area2").dialog({
+				autoOpen: false,
+				width: 1000,
+				height: 600
+			});
+
+			Highcharts.setOptions({
+				chart: {
+					backgroundColor: {
+						linearGradient: [0, 0, 500, 500],
+						stops: [
+							[0, 'rgb(255, 255, 255)'],
+							[1, 'rgb(240, 240, 255)']
+						]
+					},
+					borderWidth: 2,
+					plotBackgroundColor: 'rgba(255, 255, 255, .9)',
+					plotShadow: false,
+					plotBorderWidth: 2,
 
 
-	$(document).ready(function() {
-
-		$('#view_chart2').click(function() {
-			$('#for_chart2').data('graph-container', '#chart_area2');
-			$('#for_chart2').data('graph-type', 'column');
-			$("#chart_area2").dialog('open');
-			$('#for_chart2').highchartTable();
-
-			$('#remove_chart').attr('disabled', false);
-		});
-
-		$('#remove_chart').click(function() {
-			$('#chart_area2').html('');
-		});
-
-		$("#chart_area2").dialog({
-			autoOpen: false,
-			width: 1000,
-			height: 600
-		});
-
-		Highcharts.setOptions({
-			chart: {
-				backgroundColor: {
-					linearGradient: [0, 0, 500, 500],
-					stops: [
-						[0, 'rgb(255, 255, 255)'],
-						[1, 'rgb(240, 240, 255)']
-					]
 				},
-				borderWidth: 2,
-				plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-				plotShadow: false,
-				plotBorderWidth: 2,
+
+				plotOptions: {
+					series: {
+						pointWidth: 30,
+						dataLabels: {
+							enabled: true
+						}
 
 
-			},
-
-			plotOptions: {
-				series: {
-					pointWidth: 30,
-					dataLabels: {
-						enabled: true
 					}
 
+				},
 
-				}
+			});
 
-			},
+
 
 		});
+	</script>
+
+	<!-- Start of Assessment of Capabilities and Prioties -->
 
 
 
-	});
-</script>
+	<?php
 
-<!-- Start of Assessment of Capabilities and Prioties -->
+	include 'samplefooter.php';
+	?>

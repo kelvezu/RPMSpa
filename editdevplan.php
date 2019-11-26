@@ -1,4 +1,4 @@
-<?php include_once 'includes/header.php';
+<?php include_once 'sampleheader.php';
 
 use DevPlan\DevPlan;
 ?>
@@ -259,5 +259,5 @@ use DevPlan\DevPlan;
 
 
 
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

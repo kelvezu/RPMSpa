@@ -164,7 +164,8 @@
 
     <!-- End of Scripts -->
 
-    <?php rpmsdb\RPMSdb::generateCOTaverage($conn, $_SESSION['active_sy_id']); ?>
+    <?php //rpmsdb\RPMSdb::generateCOTaverage($conn, $_SESSION['active_sy_id']); 
+    ?>
 </footer>
 
 </html>
