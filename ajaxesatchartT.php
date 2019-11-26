@@ -359,7 +359,7 @@ endif;
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                <table class="table table-bordered hover table-sm">
+                <table class="table table-bordered hover table-sm text-nowrap">
                     <thead>
                         <tr>
                         <td></td>
@@ -428,7 +428,7 @@ endif;
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <table class="table table-bordered hover table-sm">
+                    <table class="table table-bordered hover table-sm text-nowrap">
                         <thead>
                             <tr>
                                 <th width="auto">Core Behavioral Competencies</th>
