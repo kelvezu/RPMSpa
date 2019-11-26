@@ -1232,6 +1232,21 @@ class RPMSdb
         endif;
     }
 
+    public static function fetchKRA($conn)
+    {
+        $qry = "SELECT * FROM kra_tbl WHERE `status` = 'Active'";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result)) :
+            $res_arr = [];
+            foreach ($result as $res) :
+                array_push($res_arr, $res);
+            endforeach;
+            return $res_arr;
+        else :
+            return false;
+        endif;
+    }
+
     // public static function insertFinalCOTAverageT($conn, $user_id, $sy, $school, $rater)
     // {
     //     $qry = "SELECT AVG(ALL average) AS ave FROM cot_t_indicator_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND school = $school AND rater = $rater";

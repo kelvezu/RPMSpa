@@ -240,7 +240,19 @@ echo showObsAverage(3, 4, 5, "-") . BR;
 // echo RPMSdb::updateFinalCOTaverageT($conn, 32, $_SESSION['active_sy_id']);
 $sy = $_SESSION['active_sy_id'];
 
-echo RPMSdb::generateCOTindicatorAVG($conn, $sy);
+// echo RPMSdb::generateCOTindicatorAVG($conn, $sy);
+
+var_dump(displayKRAandOBJ($conn, $_SESSION['position']));
+
+$qry = "SELECT * FROM `mtobj_tbl`";
+$results = mysqli_query($conn, $qry) or die($conn->error . $qry);
+if (mysqli_num_rows($results) > 0) :
+    foreach ($results as $res) :
+        echo $res['mtobj_name'] . '<br/>';
+    endforeach;
+endif;
+
+
 
 
 

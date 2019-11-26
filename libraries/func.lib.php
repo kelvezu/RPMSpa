@@ -3,6 +3,9 @@
 
 
             //GET THE START
+
+            use Dashboard\Dashboard;
+
             function getStartYear()
             {
                 return date('Y');
@@ -722,4 +725,37 @@
                         return $res['mtindicator_name'];
                     }
                 }
+            }
+
+            function console_log($data)
+            {
+                echo '<script>';
+                echo 'console.log(' . json_encode($data) . ')';
+                echo '</script>';
+            }
+
+            function displayKRAandOBJ($conn, $position)
+            {
+
+
+                if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
+
+                    $qry = "SELECT * FROM `mtobj_tbl`";
+                    $results = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                    if (mysqli_num_rows($results) > 0) :
+                        return $results;
+                    else : return false;
+                    endif;
+
+                elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
+                    $qry = "SELECT * FROM `tobj_tbl`";
+
+                    $results = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                    if (mysqli_num_rows($results) > 0) :
+                        return $results;
+                    else : return false;
+                    endif;
+
+                else : 'invalid pos';
+                endif;
             }
