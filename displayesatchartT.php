@@ -73,20 +73,6 @@ include 'sampleheader.php';
     }
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?php
 
 include 'samplefooter.php';
