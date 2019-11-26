@@ -24,23 +24,4 @@ endif;
   <!-- End of Age Table -->
   </div>
 
-  <!-- Age Chart Function -->
-<script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(AgeChart);
-
-function AgeChart() {
-    let data = google.visualization.arrayToDataTable([
-        ['Age', 'No. of Teacher'],
-        <?php $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'") or die ($conn->error);
-            while ($AgeChart = $qry->fetch_assoc()):
-                echo "['".displayAgeDesc($conn,$AgeChart['age'])."', ".countDB($conn,17,14,'esat1_demographicst_tbl')."],";
-            endwhile;?>
-]);
-
-    let options = {
-        title: 'Age'};
-        let chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);}
-
-</script>
+  

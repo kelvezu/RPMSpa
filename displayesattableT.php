@@ -6,6 +6,7 @@ include 'sampleheader.php';
 
 <div class="container col-md-9">
 <div class="bg-dark h4 text-white breadcrumb">General ESAT Teacher Result</div>
+<form id="form1" name="form1" onchange="showchart()">
     <div class="d-flex">    
         <div class="p-2 w-100">
             <!-- School Year Dropdown -->
@@ -32,12 +33,8 @@ include 'sampleheader.php';
            <!-- End of School Dropdown -->
           
         </div>
-        <div class="p-2 flex-shrink-0">
-        <label for="submit"><strong>Submit</strong></label>
-            <button name="showchart" onclick="showchart()" class="btn btn-outline-success">View</button>
         </div>
-        </div>
-        
+                </form>
 <br>
                 <div id="show">
 
