@@ -30,16 +30,10 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT b.age_name, SUM(a.total) Total,c.sy_desc FROM
-				(                        
-				SELECT age, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY age
-				UNION ALL
-				SELECT age, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY age
-				) a
-				
-				INNER JOIN age_tbl b on a.age = b.age_id
-				INNER JOIN sy_tbl c on a.sy = c.sy_id
-				GROUP BY b.age_name";
+	$query = "SELECT b.age_name, COUNT(a.user_id) total,c.sy_desc FROM esat1_demographicsmt_tbl a 
+	INNER JOIN age_tbl b on a.age = b.age_id
+   INNER JOIN sy_tbl c on a.sy = c.sy_id
+   GROUP BY b.age_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -67,7 +61,7 @@ $user_id = $_SESSION['user_id'];
 								<tr>
 
 									<td>' . $row['age_name'] . '</td>
-									<td>' . $row['Total'] . '</td>
+									<td>' . $row['total'] . '</td>
 								</tr>
 								';
 					}
@@ -100,16 +94,11 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT b.gender_name, SUM(a.total)total,c.sy_desc FROM
-				(                        
-				SELECT gender, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY gender
-				UNION ALL
-				SELECT gender, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY gender
-				) a
-				
-				INNER JOIN sy_tbl c on a.sy = c.sy_id
-				INNER JOIN gender_tbl b on a.gender = b.gender_id
-				GROUP BY a.gender";
+	$query = "SELECT b.gender_name, COUNT(a.user_id) total,c.sy_desc FROM esat1_demographicsmt_tbl a
+
+	INNER JOIN sy_tbl c on a.sy = c.sy_id
+	INNER JOIN gender_tbl b on a.gender = b.gender_id
+	GROUP BY b.gender_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -165,14 +154,9 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT DISTINCT b.sy_desc FROM 
-				(
-					SELECT employment_status, COUNT(user_id) total,sy FROM esat1_demographicst_tbl GROUP BY employment_status
-					UNION ALL
-					SELECT  employment_status, COUNT(user_id) total,sy FROM esat1_demographicsmt_tbl GROUP BY employment_status
-				) a 
-			INNER JOIN sy_tbl b on a.sy = b.sy_id
-			GROUP BY a.employment_status";
+	$query = "SELECT a.employment_status, COUNT(a.user_id) total,b.sy_desc FROM esat1_demographicsmt_tbl a
+	INNER JOIN sy_tbl b on a.sy = b.sy_id
+	GROUP BY a.employment_status";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -228,16 +212,10 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.position,sum(a.total)total,b.sy_desc FROM
-				(
-				SELECT position, COUNT(user_id)total,sy from  esat1_demographicst_tbl  GROUP by position
-				UNION ALL
-				SELECT position, COUNT(user_id)total,sy from  esat1_demographicsmt_tbl  GROUP by position
-				) a
-				
-				INNER JOIN sy_tbl b on a.sy = b.sy_id
-				GROUP BY a.position
-				order BY a.position desc";
+	$query = "SELECT a.position, COUNT(a.user_id)total,b.sy_desc from  esat1_demographicsmt_tbl a
+	INNER JOIN sy_tbl b on a.sy = b.sy_id
+	GROUP BY a.position
+	order BY a.position desc";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -293,16 +271,9 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT DISTINCT b.sy_desc FROM
-				(
-				SELECT highest_degree, COUNT(user_id) total,sy from esat1_demographicst_tbl GROUP by highest_degree
-				UNION ALL
-				SELECT highest_degree, COUNT(user_id) total,sy from esat1_demographicsmt_tbl GROUP by highest_degree
-				)a
-				
-				INNER JOIN sy_tbl b on a.sy=b.sy_id
-				
-				GROUP BY a.highest_degree";
+	$query = "SELECT a.highest_degree, COUNT(a.user_id) total,b.sy_desc from esat1_demographicsmt_tbl a
+	INNER JOIN sy_tbl b on a.sy=b.sy_id
+	GROUP BY a.highest_degree";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -362,17 +333,11 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT c.totalyear_name, SUM(a.total)total,b.sy_desc FROM
-		(
-		SELECT totalyear,COUNT(user_id)total,sy from esat1_demographicst_tbl GROUP by totalyear
-		UNION ALL
-		SELECT totalyear,COUNT(user_id)total,sy from esat1_demographicsmt_tbl GROUP by totalyear
-		) a
-		
-		INNER JOIN sy_tbl b on a.sy = b.sy_id
-		INNER JOIN totalyear_tbl c on a.totalyear=c.totalyear_id
-		
-		GROUP BY c.totalyear_name";
+	$query = "SELECT c.totalyear_name,COUNT(a.user_id)total,b.sy_desc from esat1_demographicst_tbl a
+	INNER JOIN sy_tbl b on a.sy = b.sy_id
+	INNER JOIN totalyear_tbl c on a.totalyear=c.totalyear_id
+	
+	GROUP BY c.totalyear_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -431,14 +396,10 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.subject_name, SUM(a.total) total,b.sy_desc FROM
-				(
-				SELECT a.subject_name, COUNT(b.user_id)total,sy from subject_tbl a INNER JOIN esat1_demographicst_tbl b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') GROUP by a.subject_name
-				UNION ALL
-				SELECT a.subject_name, COUNT(b.user_id)total,sy from subject_tbl a INNER JOIN esat1_demographicsmt_tbl b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%') GROUP by a.subject_name
-				) a
-				INNER JOIN sy_tbl b on a.sy = b.sy_id
-				GROUP BY a.subject_name";
+	$query = "SELECT a.subject_name, COUNT(b.user_id)total,c.sy_desc from subject_tbl a 
+	INNER JOIN esat1_demographicst_tbl b on b.subject_taught LIKE CONCAT('%', a.subject_name, '%')
+	INNER JOIN sy_tbl c on b.sy = c.sy_id
+	GROUP BY a.subject_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -497,22 +458,10 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.gradelvltaught_name, SUM(a.total)total, b.sy_desc FROM
-			(
-			
-			SELECT a.gradelvltaught_name, COUNT(b.user_id)total,sy from gradelvltaught_tbl a 
-			INNER JOIN esat1_demographicst_tbl b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
-			GROUP by a.gradelvltaught_id
-			
-			UNION ALL
-			
-			SELECT a.gradelvltaught_name, COUNT(b.user_id)total,sy from gradelvltaught_tbl a 
-			INNER JOIN esat1_demographicsmt_tbl b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
-			GROUP by a.gradelvltaught_id
-			) a
-			
-			INNER JOIN sy_tbl b on a.sy = b.sy_id
-			GROUP BY a.gradelvltaught_name";
+	$query = "SELECT a.gradelvltaught_name, COUNT(b.user_id)total,c.sy_desc from gradelvltaught_tbl a 
+	INNER JOIN esat1_demographicst_tbl b on b.grade_lvl_taught LIKE CONCAT('%', a.gradelvltaught_id, '%') 
+	INNER JOIN sy_tbl c on b.sy = c.sy_id
+	GROUP BY a.gradelvltaught_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -572,15 +521,10 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT c.curriclass_name,SUM(a.total)total,b.sy_desc FROM
-				(
-				SELECT curri_class,COUNT(DISTINCT user_id)total,sy FROM esat1_demographicst_tbl GROUP BY curri_class
-				UNION ALL
-				SELECT curri_class,COUNT(DISTINCT user_id)total,sy FROM esat1_demographicsmt_tbl GROUP BY curri_class
-				)a
-				INNER JOIN sy_tbl b on a.sy=b.sy_id
-				INNER JOIN curriclass_tbl c on a.curri_class = c.curriclass_id
-				GROUP BY c.curriclass_name";
+	$query = "SELECT c.curriclass_name,COUNT(DISTINCT a.user_id)total,b.sy_desc FROM esat1_demographicsmt_tbl a
+	INNER JOIN sy_tbl b on a.sy=b.sy_id
+	INNER JOIN curriclass_tbl c on a.curri_class = c.curriclass_id
+	GROUP BY c.curriclass_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -641,19 +585,10 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT a.region_name,SUM(a.total)total,b.sy_desc FROM
-				(
-				SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
-				INNER JOIN esat1_demographicst_tbl b on a.reg_id = b.region GROUP by a.region_name
-				
-				UNION ALL
-				
-				SELECT a.region_name, COUNT(b.user_id)total,b.sy from region_tbl a 
-				INNER JOIN esat1_demographicsmt_tbl b on a.reg_id = b.region GROUP by a.region_name
-				)a
-				INNER JOIN sy_tbl b on a.sy = b.sy_id
-				
-				GROUP BY a.region_name";
+	$query = "SELECT a.region_name, COUNT(b.user_id)total,c.sy_desc from region_tbl a 
+	INNER JOIN esat1_demographicsmt_tbl b on a.reg_id = b.region
+	INNER JOIN sy_tbl c on b.sy = c.sy_id
+	GROUP BY a.region_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();
@@ -707,101 +642,6 @@ $user_id = $_SESSION['user_id'];
 
 
 	<!-- End of Demographic Start Region-->
-	<!-- Start of Teacher Objective-->
-
-	<?php
-	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT CONCAT(a.kra_id,'.',a.tobj_id) 
-				AS OBJECTIVES, 
-				CASE WHEN b.lvlcap = 1 then count(DISTINCT user_id) END AS L_LOW,
-				CASE WHEN b.lvlcap = 2 then count(DISTINCT user_id) END AS L_MODERATE,
-				CASE WHEN b.lvlcap = 3 then count(DISTINCT user_id) END AS L_HIGH,
-				CASE WHEN b.lvlcap = 4 then count(DISTINCT user_id) END AS L_VERY_HIGH,
-				
-				CASE WHEN b.priodev = 1 then count(DISTINCT user_id) END AS P_LOW,
-				CASE WHEN b.priodev = 2 then count(DISTINCT user_id) END AS P_MODERATE,
-				CASE WHEN b.priodev = 3 then count(DISTINCT user_id) END AS P_HIGH,
-				CASE WHEN b.priodev = 4 then count(DISTINCT user_id) END AS P_VERY_HIGH,
-				c.sy_desc
-				
-				from tobj_tbl a INNER JOIN esat2_objectivest_tbl b ON a.tobj_id = b.tobj_id
-				
-			INNER JOIN sy_tbl c on b.sy = c.sy_id
-			group by a.kra_id,a.tobj_id";
-
-	$statement = $connect->prepare($query);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	?>
-
-
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>SELF ASSESSMENT OF TEACHER I-III</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart11">
-					<thead>
-						<tr>
-							<th>
-							<td colspan="4" ALIGN="CENTER"><strong>LEVEL OF CAPABILITY</strong> </td>
-							<td colspan="4" ALIGN="CENTER"><strong>LEVEL OF PRIORITY</strong> </td>
-							</th>
-						</tr>
-						<tr>
-							<th width="auto">OBJECTIVES</th>
-							<th width="auto">LOW</th>
-							<th width="auto">MODERATE</th>
-							<th width="auto">HIGH</th>
-							<th width="auto">VERY HIGH</th>
-							<th width="auto">LOW</th>
-							<th width="auto">MODERATE</th>
-							<th width="auto">HIGH</th>
-							<th width="auto	">VERY HIGH</th>
-							
-
-
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-										<tr>
-											<td>' . $row['OBJECTIVES'] . '</td>
-											<td>' . $row['L_LOW'] . '</td>
-											<td>' . $row['L_MODERATE'] . '</td>
-											<td>' . $row['L_HIGH'] . '</td>
-											<td>' . $row['L_VERY_HIGH'] . '</td>
-											<td>' . $row['P_LOW'] . '</td>
-											<td>' . $row['P_MODERATE'] . '</td>
-											<td>' . $row['P_HIGH'] . '</td>
-											<td>' . $row['P_VERY_HIGH'] . '</td>
-										</tr>
-										';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area11" title="Objectives">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart11" id="view_chart11" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-		</div>
-	</div>
-
-	<br />
-	<br />
-
-
-	<!-- End Teacher Objective-->
 	<!-- Start of Master Teacher Objective-->
 
 	<?php
@@ -901,13 +741,18 @@ $user_id = $_SESSION['user_id'];
 
 	<?php
 	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT cbc_name, 
-						score1,
-							score2,
-								score3,
-									score4,
-										score5 
-											FROM tbl_rptcorebehavioral";
+	$query = "SELECT b.cbc_name, 
+	CASE WHEN(a.score)=1 THEN COUNT(a.user_id) end as score1,
+	CASE WHEN(a.score)=2 THEN COUNT(a.user_id) end as score2,
+	CASE WHEN(a.score)=3 THEN COUNT(a.user_id) end as score3,
+	CASE WHEN(a.score)=4 THEN COUNT(a.user_id) end as score4,
+	CASE WHEN(a.score)=5 THEN COUNT(a.user_id) end as score5
+	FROM
+	(
+	select cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralmt_tbl GROUP BY cbc_id
+	) a
+	INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id
+	GROUP BY b.cbc_name";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	$result = $statement->fetchAll();

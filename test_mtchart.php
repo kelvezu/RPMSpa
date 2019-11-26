@@ -1,14 +1,13 @@
 <?php  
-include 'includes/header.php';
+include 'sampleheader.php';
 ?>
 
 <!DOCTYPE html>  
 <html>  
     <head>  
         <title>Create Dynamic Column Chart using PHP Ajax with Google Charts</title>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
-        <script type="text/javascript" src="includes/scripts.js"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="bootstrap4/scripts/jquery-3.2.1.slim.min.js"></script>
+        <script src="bootstrap4/scripts/bootstrap.min.js"></script>
         <script type="text/javascript">
         google.charts.load('current', {packages: ['corechart']});
         google.charts.setOnLoadCallback(draw_cbc_chart_mt);
@@ -78,3 +77,4 @@ include 'includes/header.php';
 <!-- END 2ND CHART -->
 </body>  
 </html>
+<!-- <?php include 'samplefooter' ?> -->

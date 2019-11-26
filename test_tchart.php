@@ -1,6 +1,6 @@
-<?php  
-include 'includes/header.php';
-?>
+  
+<?php include 'sampleheader.php' ?>
+
 
 <!DOCTYPE html>  
 <html>  
@@ -79,3 +79,4 @@ include 'includes/header.php';
 <!-- END 2ND CHART -->
 </body>  
 </html>
+<?php include_once 'samplefooter.php' ?>
