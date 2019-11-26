@@ -15,7 +15,7 @@ mysqli_select_db($connection, "rpms");
 <script type="text/javascript">
     $(document).ready(function() {
         $('#region').on('change', function() {
-            var regionID = $(this).val();
+            var regionID = $(this).val(); 
             if (regionID) {
                 $.ajax({
                     type: 'POST',

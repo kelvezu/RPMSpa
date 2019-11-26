@@ -253,6 +253,24 @@ $sy = $_SESSION['active_sy_id'];
 // endif;
 
 echo (showAttachmentMT($conn, 1, 33, 14, $sy, 'main_mov'));
+// $result =countDB($conn,$sy,$_SESSION['school_id'],'esat1_demographicst_tbl');
+
+// foreach($result as $res){
+//     echo $res['age'].'<br>';
+//     echo displayAgeDesc($conn,$res['age']);
+//     echo $res['total'];
+// }
+
+echo displaygenderDesc($conn, 8);
+var_dump(displayKRAandOBJ($conn, $_SESSION['position']));
+
+$qry = "SELECT * FROM `mtobj_tbl`";
+$results = mysqli_query($conn, $qry) or die($conn->error . $qry);
+if (mysqli_num_rows($results) > 0) :
+    foreach ($results as $res) :
+        echo $res['mtobj_name'] . '<br/>';
+    endforeach;
+endif;
 
 
 

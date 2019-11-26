@@ -35,7 +35,12 @@ include_once 'libraries/queries.library.php';
             $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
+    <!-- For Charts -->
+<script>
+    	
 
+	
+</script>
 
 </head>
 
