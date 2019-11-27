@@ -2,7 +2,7 @@
 
 if (!empty($_GET['file'])) {
     $filename = basename($_GET['file']);
-    $filepath = 'Master Teacher/' . $filename;
+    $filepath = 'attachments/Master Teacher/' . $filename;
     if (!empty($filename) && file_exists($filepath)) {
 
         header("Cache-Control: public");

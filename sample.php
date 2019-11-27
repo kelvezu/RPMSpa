@@ -252,7 +252,10 @@ $sy = $_SESSION['active_sy_id'];
 //     endforeach;
 // endif;
 
-echo (showAttachmentMT($conn, 1, 33, 14, $sy, 'main_mov'));
+pre_r(showAttachmentMT($conn, 1, 33, 14, $sy, 'main_mov'));
+// foreach ($res as $r) :
+//     echo ($r) . '<br>';
+// endforeach;
 // $result =countDB($conn,$sy,$_SESSION['school_id'],'esat1_demographicst_tbl');
 
 // foreach($result as $res){
@@ -274,10 +277,23 @@ echo (showAttachmentMT($conn, 1, 33, 14, $sy, 'main_mov'));
 
 $female = fetchCountAge($conn,$sy,$_SESSION['school_id'],'age','8');
 
+// $qry = "SELECT * FROM `mtobj_tbl`";
+// $results = mysqli_query($conn, $qry) or die($conn->error . $qry);
+// if (mysqli_num_rows($results) > 0) :
+//     foreach ($results as $res) :
+//         echo $res['mtobj_name'] . '<br/>';
+//     endforeach;
+// endif;
+?>
+
+
+<img src="attachments/Master Teacher/5ddd6bcf16b707.61177521.jpg" width='600' height='1000' alt="ironman" />
 
 
 
 
+
+<?php
 
 
 
