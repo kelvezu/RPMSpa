@@ -109,6 +109,13 @@ table.fixed td {
     max-width: 250px;
 }
 
+.chart_div {
+    overflow-x: scroll;
+    overflow-y: hidden;     
+    width: 500px;
+    height: 550px;
+   }
+
 
 /* .li-nostyle {
     list-style-type: none;

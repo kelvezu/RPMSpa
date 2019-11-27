@@ -5,36 +5,43 @@ include 'sampleheader.php';
 ?>
 
 <div class="container col-md-9">
-<div class="bg-dark h4 text-white breadcrumb">General ESAT Teacher Result</div>
-<form id="form1" name="form1" onchange="showchart()">
-    <div class="d-flex">    
-        <div class="p-2 w-100">
-            <!-- School Year Dropdown -->
-            <label for="sy"><strong>School Year:</strong></label>
-            <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
-            <select id="sy_id" class="form-control" >
-            <option value="" disabled selected>--Select School Year--</option>
-                <?php while($syrow = $schoolyr->fetch_assoc()): ?>
-                <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
-                <?php endwhile; ?>
-            </select>
-        </div>
-            <!-- End of School Year Dropdown -->
-        <div class="p-2 w-100">
-            <!-- School Dropdown -->
-            <label for="sy"><strong>School:</strong></label>
-            <?php $schoolqry = $conn->query("SELECT * FROM school_tbl")or die ($conn->error);?>
-            <select id="sch_id" class="form-control">
-            <option value="" disabled selected>--Select School--</option>
-                <?php while($schoolrow = $schoolqry->fetch_assoc()):?>
-                <option value="<?php echo $schoolrow['school_id'];?>"><?php echo $schoolrow['school_name'];?></option>
-                <?php endwhile; ?>
-            </select>       
-           <!-- End of School Dropdown -->
-          
-        </div>
-        </div>
-                </form>
+   
+    <div class="bg-dark h4 text-white breadcrumb">General ESAT Teacher Result</div>
+    <div class="px-3">
+       
+    
+        <form action="chartesatT.php" method="POST" class="form-inline"> 
+            <div class="form-row">
+                <div class="form-group mb-2">
+                    <!-- School Year Dropdown -->            
+                    <label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
+                    <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
+                    <select id="sy_id" name="sy_id" class="form-control" >
+                    <option value="" disabled selected>--Select School Year--</option>
+                        <?php while($syrow = $schoolyr->fetch_assoc()): ?>
+                        <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
+                        <?php endwhile; ?>
+                    </select>&nbsp;&nbsp;
+                </div>
+                    <!-- End of School Year Dropdown -->
+                <div class="form-group mb-2">
+                    <!-- School Dropdown -->
+                    <label for="sy"><strong>School:</strong></label>&nbsp;&nbsp;
+                    <?php $schoolqry = $conn->query("SELECT * FROM school_tbl")or die ($conn->error);?>
+                    <select id="sch_id" name="sch_id" class="form-control">
+                    <option value="" disabled selected>--Select School--</option>
+                        <?php while($schoolrow = $schoolqry->fetch_assoc()):?>
+                        <option value="<?php echo $schoolrow['school_id'];?>"><?php echo $schoolrow['school_name'];?></option>
+                        <?php endwhile; ?>
+                    </select>&nbsp;&nbsp;       
+                <!-- End of School Dropdown -->
+                </div>
+                <div class="form-group mb-2">
+                    <a onclick="showchart()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
+                    <button type="submit" name="view" class="btn btn-success">View Data in Charts</button>
+                </div>
+            </div>
+        </form>
 <br>
                 <div id="show">
 
@@ -42,7 +49,7 @@ include 'sampleheader.php';
       
 <!-- End tag of container -->
   </div>
-
+  </div>
 <script>
   
   
