@@ -37,14 +37,14 @@ if (isset($_POST['submit'])) :
 
                 $filepath = "localhost/rpms/attachments/Teacher/" . $filenameNew;
 
-                $mov_qry = "INSERT INTO `mov_a_t_attach_tbl` (`attachment`,`file_type`, `mov_type`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('" . $filepath . "','" . $fileActualExt . "','" . $mov_type . "',$user_id,'" . $position . "',$rater_id,$school_id,$sy_id)";
+                $mov_qry = "INSERT INTO `mov_a_t_attach_tbl` (`file_name`,`attachment`,`file_type`, `mov_type`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`,`file_desc`) VALUES ('$filename','$filenameNew','$fileActualExt','$mov_type','$user_id','$position','$rater_id','$school_id','$sy_id','$description')";
                 $mov_results = mysqli_query($conn, $mov_qry) or die($conn->error);
 
                 if ($mov_results) {
                     $last_id = mysqli_insert_id($conn);
 
                     for ($count = 0; $count < count($obj_id); $count++) {
-                        $qry = "INSERT INTO `mov_b_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('$last_id','" . $fileActualExt . "','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id')";
+                        $qry = "INSERT INTO `mov_b_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id')";
                         $mov_attach_qry = mysqli_query($conn, $qry) or die($conn->error);
                     }
                 }
