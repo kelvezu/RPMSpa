@@ -409,7 +409,7 @@ function SelfAssessmentChart() {
         CASE WHEN priodev = 2 THEN COUNT(user_id) END  AS priomoderate,
         CASE WHEN priodev = 3 THEN COUNT(user_id) END  AS priohigh,
         CASE WHEN priodev = 4 THEN COUNT(user_id) END  AS prioveryhigh
-        FROM esat2_objectivest_tbl WHERE sy = 17 and school = 14 GROUP BY tobj_id") or die ($conn->error.$qry);
+        FROM esat2_objectivest_tbl WHERE sy = '$sy' and school = '$school' GROUP BY tobj_id") or die ($conn->error.$qry);
     
             foreach($qry as $result):
              echo "
@@ -461,7 +461,7 @@ function LevelofPriority() {
         CASE WHEN priodev = 2 THEN COUNT(user_id) END  AS priomoderate,
         CASE WHEN priodev = 3 THEN COUNT(user_id) END  AS priohigh,
         CASE WHEN priodev = 4 THEN COUNT(user_id) END  AS prioveryhigh
-        FROM esat2_objectivest_tbl WHERE sy = 17 and school = 14 GROUP BY tobj_id") or die ($conn->error.$qry);
+        FROM esat2_objectivest_tbl WHERE sy = '$sy' and school = '$school' GROUP BY tobj_id") or die ($conn->error.$qry);
     
             foreach($qry as $result):
              echo "
@@ -493,6 +493,7 @@ function LevelofPriority() {
 </script>
 <!-- SELF ASSESSMENT OF TEACHER I-III Level of Priority Chart Function -->
 
+
 <!--Core Behavioral Competencies Chart Function -->
 <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});
@@ -504,7 +505,7 @@ function CoreBehavioralChart() {
 
         <?php
         
-        $qry = mysqli_query($conn,"SELECT b.cbc_name, 
+        $CoreBehavioralqry = mysqli_query($conn,"SELECT *,b.cbc_name, 
 		CASE WHEN(a.score)=1 THEN COUNT(a.user_id) end as score1,
         CASE WHEN(a.score)=2 THEN COUNT(a.user_id) end as score2,
         CASE WHEN(a.score)=3 THEN COUNT(a.user_id) end as score3,
@@ -512,19 +513,18 @@ function CoreBehavioralChart() {
         CASE WHEN(a.score)=5 THEN COUNT(a.user_id) end as score5
 		FROM
 		(
-		select cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralt_tbl GROUP BY cbc_id
+		select sy,school,cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralt_tbl GROUP BY cbc_id
 		) a
-		INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id
-		GROUP BY b.cbc_name") or die ($conn->error.$qry);
+		INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id WHERE sy = 17 AND school = 14 GROUP BY b.cbc_name") or die ($conn->error.$qry);
     
-            foreach($qry as $result):
+            foreach($CoreBehavioralqry as $resultQry):
              echo "
-                [".json_encode($result['cbc_name']) .", 
-                ".intval($result['score1']) ." ,
-                ".intval($result['score2']) .",
-                ".intval($result['score3'])  .",
-                ".intval($result['score4'])  .",
-                ".intval($result['score5'])  .",],
+                [".json_encode($resultQry['cbc_name']) .", 
+                ".intval($resultQry['score1']) ." ,
+                ".intval($resultQry['score2']) .",
+                ".intval($resultQry['score3'])  .",
+                ".intval($resultQry['score4'])  .",
+                ".intval($resultQry['score5'])  .",],
                 ";
             endforeach;
             
@@ -533,8 +533,7 @@ function CoreBehavioralChart() {
     let options = {
         title : 'Core Behavioral Competencies',
             vAxis: {title: 'No. of Teachers', maxValue: 10},
-            hAxis: {title: 'Core Behavioral and Scale', maxValue: 13, minValue: 1, 
-            ticks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]},
+            hAxis: {title: 'Core Behavioral and Scale',},
             explorer: {axis: 'horizontal', keepInBounds: true},
             seriesType: 'bars',
             bar: { groupWidth: 100 },
@@ -551,6 +550,9 @@ function CoreBehavioralChart() {
 
 
 <?php
+
+
+
 include 'samplefooter.php';
 
 ?>
