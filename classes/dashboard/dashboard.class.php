@@ -134,7 +134,7 @@ class Dashboard
             $nav .= '<ul class="navbar-nav mr-auto " >';
             $nav .= '  
                 <li class="nav-item active">
-                    <a id="home-btn" class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                    <a id="home-btn" class="nav-link" href="dbAdmin.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
                 </li>
 
                 <li class="nav-item dropdown active">
@@ -224,21 +224,19 @@ class Dashboard
             $nav .= '<ul class="navbar-nav mr-auto " >';
             $nav .= '  
                     <li class="nav-item active">
-                        <a id="home-btn" class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                        <a id="home-btn" class="nav-link" href="dbAsstSuperintendent.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
                     </li>
     
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chalkboard-teacher"></i> ESAT</a>
                             <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">View General Teacher ESAT</a>
-                                <a class="dropdown-item" href="#">View General Master Teacher ESAT</a>
+                                <a class="dropdown-item" href="esattablePrincipalMT.php">View General Master Teacher ESAT</a>
                             </div>
                     </li>
 
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Teacher Progress</a>
                         <div class="dropdown-menu " aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">Teacher Progress</a>
                             <a class="dropdown-item" href="#">Master Teacher Progress</a>
                         </div>
                 </li>
@@ -246,11 +244,8 @@ class Dashboard
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
-                            <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
                             <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
                             <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                            <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
                             <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
                         </div>
                     </li>
@@ -258,10 +253,7 @@ class Dashboard
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                        <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                        <a href="tioafform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
                         <a href="mtioafform.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
-                        <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
                         <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
                         <a href="devplan.php" class="dropdown-item">Development Plan</a>
                         <a href="pmcf.php" class="dropdown-item">PMCF</a>
@@ -269,20 +261,13 @@ class Dashboard
                         </div>
                     </li>
     
-                   
-    
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i> Reports</a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                            <a href="#" class="dropdown-item">Teacher KRA Challenges</a>
                             <a href="#" class="dropdown-item">Master Teacher KRA Challenges</a>
-                            <a href="#" class="dropdown-item">Teacher Performance Summary </a>
                             <a href="#" class="dropdown-item">Master Teacher Performance Summary </a>
-                            <a href="#" class="dropdown-item">Teacher IPCRF with MOV Rating</a>
                             <a href="#" class="dropdown-item">Master Teacher IPCRF with MOV Rating</a>
-                            <a href="#" class="dropdown-item">Teacher IPCRF Summary Rating</a>
                             <a href="#" class="dropdown-item">Master Teacher IPCRF Summary Rating</a>
-                            <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
                             <a href="#" class="dropdown-item">Master Teacher Recommended for Promotion</a>
                             <a href="#" class="dropdown-item">Seminar List</a>
                         </div>
@@ -297,22 +282,22 @@ class Dashboard
             $nav .= '<ul class="navbar-nav mr-auto " >';
             $nav .= '  
                         <li class="nav-item active">
-                            <a id="home-btn" class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                            <a id="home-btn" class="nav-link" href="dbPrincipal.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
                         </li>
         
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chalkboard-teacher"></i> ESAT</a>
                                 <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                    <a class="dropdown-item" href="#">View General Teacher ESAT</a>
-                                    <a class="dropdown-item" href="#">View General Master Teacher ESAT</a>
+                                    <a class="dropdown-item" href="esattablePrincipalT.php">View General Teacher ESAT</a>
+                                    <a class="dropdown-item" href="esattablePrincipalMT.php">View General Master Teacher ESAT</a>
                                 </div>
                         </li>
     
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Teacher Progress</a>
                             <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">Teacher Progress</a>
-                                <a class="dropdown-item" href="#">Master Teacher Progress</a>
+                                <a class="dropdown-item" href="displaytprogress.php">Teacher Progress</a>
+                                <a class="dropdown-item" href="displaymtprogress.php">Master Teacher Progress</a>
                             </div>
                     </li>
         
@@ -320,11 +305,11 @@ class Dashboard
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                 <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
-                                <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
+                                <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
-                                <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
+                                <a class="dropdown-item" href="viewgendevplanmt.php">View Master Teacher General Development Plan</a>
+                                <a class="dropdown-item" href="gendevplanT.php">Create Teacher General Development Plan</a>
+                                <a class="dropdown-item" href="gendevplanMT.php">Create Master Teacher General Development Plan</a>
                             </div>
                         </li>
     
@@ -361,7 +346,13 @@ class Dashboard
                             </div>
                         </li>
         
-                       
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs"></i> Settings</a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                            <a href="setobsperiod.php" class="dropdown-item">Set COT Period</a>
+
+                            </div>
+                        </li>
         
                     ';
             $nav .= '</ul>';
@@ -369,24 +360,16 @@ class Dashboard
             $nav .= '<ul class="navbar-nav mr-auto ">';
             $nav .= '  
                         <li class="nav-item active">
-                            <a id="home-btn" class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                            <a id="home-btn" class="nav-link" href="dbSchoolHead.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
                         </li>
         
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chalkboard-teacher"></i> ESAT</a>
                                 <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                    <a class="dropdown-item" href="#">View General Teacher ESAT</a>
-                                    <a class="dropdown-item" href="#">View General Master Teacher ESAT</a>
+                                    <a class="dropdown-item" href="esattablePrincipalT.php">View General Teacher ESAT</a>
+                                    <a class="dropdown-item" href="esattablePrincipalMT.php">View General Master Teacher ESAT</a>
                                 </div>
                         </li>
-    
-                        <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Teacher Progress</a>
-                            <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">Teacher Progress</a>
-                                <a class="dropdown-item" href="#">Master Teacher Progress</a>
-                            </div>
-                    </li>
         
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
@@ -438,7 +421,7 @@ class Dashboard
             $nav .= '<ul class="navbar-nav mr-auto ">';
             $nav .= '  
                             <li class="nav-item active">
-                                <a id="home-btn" class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                                <a id="home-btn" class="nav-link" href="dbMasterTeacher.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
                             </li>
             
                             <li class="nav-item dropdown active">
@@ -479,7 +462,7 @@ class Dashboard
                            
             
                             <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i> Reports</a>
+                            <a class="nav-link dropdown-toggle" href="dbTeacher.php" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i> Reports</a>
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                     <a href="#" class="dropdown-item">Teacher KRA Challenges</a>
                                     <a href="#" class="dropdown-item">Teacher Performance Summary </a>
