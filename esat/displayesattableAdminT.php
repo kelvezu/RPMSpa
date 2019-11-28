@@ -4,6 +4,10 @@ include 'sampleheader.php';
  
 ?>
 
+
+
+<!-- Admin View -->
+
 <div class="container col-md-9">
    
     <div class="bg-dark h4 text-white breadcrumb">General ESAT Teacher Result</div>
@@ -74,6 +78,14 @@ include 'sampleheader.php';
         }
     }
 </script>
+
+
+<!-- End of Admin View -->
+
+
+
+
+
 
 <?php
 
