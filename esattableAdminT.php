@@ -85,7 +85,6 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            // getuser.php is seprate php file. q is parameter 
             xmlhttp.open("GET", "esatajaxtableAdminT.php?sy=" + sy_id + "&sch=" + sch_id, true);
             xmlhttp.send();
         }
