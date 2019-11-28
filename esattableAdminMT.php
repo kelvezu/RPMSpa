@@ -10,7 +10,7 @@ include 'sampleheader.php';
     <div class="px-3">
        
     
-        <form action="chartesatMT.php" method="POST" class="form-inline"> 
+        <form action="esatchartAdminMT.php" method="POST" class="form-inline"> 
             <div class="form-row">
                 <div class="form-group mb-2">
                     <!-- School Year Dropdown -->            
@@ -69,7 +69,7 @@ include 'sampleheader.php';
                 }
             }
             // getuser.php is seprate php file. q is parameter 
-            xmlhttp.open("GET", "ajaxesattableMT.php?sy=" + sy_id + "&sch=" + sch_id, true);
+            xmlhttp.open("GET", "esatajaxtableAdminMT.php?sy=" + sy_id + "&sch=" + sch_id, true);
             xmlhttp.send();
         }
     }

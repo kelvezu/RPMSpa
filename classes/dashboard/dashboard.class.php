@@ -140,8 +140,8 @@ class Dashboard
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chalkboard-teacher"></i> ESAT</a>
                         <div class="dropdown-menu " aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="displayesattableAdminT">View General Teacher ESAT</a>
-                            <a class="dropdown-item" href="displayesattableAdminMT">View General Master Teacher ESAT</a>
+                            <a class="dropdown-item" href="displayesattableAdminT.php">View General Teacher ESAT</a>
+                            <a class="dropdown-item" href="displayesattableAdminMT.php">View General Master Teacher ESAT</a>
                         </div>
                 </li>
 
