@@ -157,7 +157,9 @@ endif;
     <div class="card-body">
         
     <div class="d-flex justify-content-center">
-        <div id="corebehavioral" style="width: 500px; height: 500px;"></div>
+        <div id=chart_div>
+        <div id="corebehavioral" style="width: 900px; height: 600px;"></div>
+        </div>
         </div>
 
         
@@ -413,7 +415,7 @@ function SelfAssessmentChart() {
     
             foreach($qry as $result):
              echo "
-                [".$result['Objective'] .", 
+                [".$result['Objective'].", 
                 ".intval($result['caplow']) ." ,
                 ".intval($result['capmoderate']) .",
                 ".intval($result['caphigh'])  .",
@@ -520,26 +522,26 @@ function CoreBehavioralChart() {
         GROUP BY b.cbc_name") or die ($conn->error.$qry);
     
             foreach($CoreBehavioralqry as $resultQry):
-             echo "
-                [".json_encode($resultQry['cbc_name']) .", 
-                ".intval($resultQry['score1']) ." ,
-                ".intval($resultQry['score2']) .",
-                ".intval($resultQry['score3'])  .",
-                ".intval($resultQry['score4'])  .",
-                ".intval($resultQry['score5'])  .",],
-                ";
+             echo 
+
+             "['".$resultQry['cbc_name']."', ".intval($resultQry['score1']).", ".intval($resultQry['score2']).", ".intval($resultQry['score3']).", ".intval($resultQry['score4']).",".intval($resultQry['score5']).",],";
+           
             endforeach;
             
         ?>
+ 
+ 
 ]); 
-    let options = {
+
+
+let options = {
         title : 'Core Behavioral Competencies',
             vAxis: {title: 'No. of Master Teachers', maxValue: 10},
-            hAxis: {title: 'Core Behavioral and Scale',},
-            explorer: {axis: 'horizontal', keepInBounds: true},
+            hAxis: {title: 'Core Behavioral and Scale'},
             seriesType: 'bars',
-            bar: { groupWidth: 100 },
+            bar: { groupWidth: 60 },
             series: {5: {type: 'line'}}        };
+
 
         let chart = new google.visualization.ComboChart(document.getElementById('corebehavioral'));
         chart.draw(data, options)
@@ -547,12 +549,13 @@ function CoreBehavioralChart() {
         
         };
 </script>
+
+
 <!-- Core Behavioral Competencies Chart Function -->
 
 
 
 <?php
-
 
 
 include 'samplefooter.php';
