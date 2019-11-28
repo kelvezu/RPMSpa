@@ -1267,7 +1267,3 @@ $user_id = $_SESSION['user_id'];
 	});
 </script>
 
-
-<?php
-include 'samplefooter.php';
-?>

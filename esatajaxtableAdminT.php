@@ -9,6 +9,8 @@ if(isset($_GET['sy']) AND isset($_GET['sch'])  ):
 
 endif;
 
+
+
 ?>
 
 <div class="card text-center">
@@ -22,19 +24,22 @@ endif;
                 <div class="col">
                     <table class="table table-bordered hover table-sm">
                         <thead>
-                            <th>Age</th>
-                            <th>No. of Teacher</th>
+                            <tr>
+                                <th>Age</th>
+                                <th>No. of Teacher</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <?php while ($esatresult = $qry->fetch_assoc()):?>
-                            <td><?php echo displayAgeDesc($conn,$esatresult['age']); ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <?php 
+                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name");
+                            while ($esatresult = $qry->fetch_assoc()):?>
+                            <tr>
+                            <td><?php echo $esatresult['age_name']; ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
+                            </tr>
                             <?php endwhile;?>
                         </tbody>
                     </table>
-                </div>
-                <div class="col">
-                    <div id="piechart" style="width: 400px; height: 400px;"></div>
                 </div>
             </div>
         </div> 
@@ -48,19 +53,25 @@ endif;
         <div class="card-body">
             <div class="row">
                 <div class="col">
+                    
                     <table class="table table-bordered hover table-sm">
                             <thead>
+                                <tr>
                                 <th>Gender</th>
                                 <th>No. of Teacher</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <?php 
-                                  $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                                  $qry = $conn->query("SELECT gender_tbl.gender_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN gender_tbl on esat1_demographicst_tbl.gender = gender_tbl.gender_id WHERE sy = '$sy' AND school = '$school' GROUP BY gender_tbl.gender_name");
                                 while ($esatresult = $qry->fetch_assoc()):?>
-                                <td><?php echo displaygenderDesc($conn,$esatresult['gender']); ?></td>
-                                <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                                <tr>
+                                <td><?php echo $esatresult['gender_name']; ?></td>
+                                <td><?php echo $esatresult['total']; ?></td>
+                                </tr>
                                 <?php endwhile;?>
                             </tbody>
+                          
                         </table>
                 </div>
             </div>
@@ -77,15 +88,19 @@ endif;
                 <div class="col">
                     <table class="table table-bordered hover table-sm">
                         <thead>
+                            <tr>
                             <th>Employment Status</th>
                             <th>No. of Teacher</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <?php 
-                                $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                                $qry = $conn->query("SELECT esat1_demographicst_tbl.employment_status, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' AND school = '$school' GROUP BY esat1_demographicst_tbl.employment_status");
                             while ($esatresult = $qry->fetch_assoc()):?>
+                            <tr>
                             <td><?php echo $esatresult['employment_status']; ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
+                            </tr>
                             <?php endwhile;?>
                         </tbody>
                     </table>
@@ -105,15 +120,19 @@ endif;
                 <div class="col">
                     <table class="table table-bordered hover table-sm">
                         <thead>
+                            <tr>
                             <th>Position</th>
                             <th>No. of Teacher</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <?php 
-                                $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                                $qry = $conn->query("SELECT esat1_demographicst_tbl.position, COUNT(esat1_demographicst_tbl.user_id)total FROM  esat1_demographicst_tbl WHERE sy = '$sy' AND school = '$school' GROUP BY esat1_demographicst_tbl.position ORDER BY esat1_demographicst_tbl.position desc");
                             while ($esatresult = $qry->fetch_assoc()):?>
+                            <tr>
                             <td><?php echo $esatresult['position']; ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
+                            </tr>
                             <?php endwhile;?>
                         </tbody>
                     </table>
@@ -133,15 +152,19 @@ endif;
                 <div class="col">
                     <table class="table table-bordered hover table-sm">
                         <thead>
+                            <tr>
                             <th>Highest Degree Obtained</th>
                             <th>No. of Teacher</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <?php 
-                                $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                                $qry = $conn->query("SELECT esat1_demographicst_tbl.highest_degree, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' AND school = '$school' GROUP BY esat1_demographicst_tbl.highest_degree");
                             while ($esatresult = $qry->fetch_assoc()):?>
+                            <tr>
                             <td><?php echo $esatresult['highest_degree']; ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
+                            </tr>
                             <?php endwhile;?>
                         </tbody>
                     </table>
@@ -161,15 +184,19 @@ endif;
                 <div class="col">
                     <table class="table table-bordered hover table-sm">
                         <thead>
+                            <tr>
                             <th>Total Number of Years in Teaching</th>
                             <th>No. of Teacher</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <?php 
-                                $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                                $qry = $conn->query("SELECT totalyear_tbl.totalyear_name,COUNT(esat1_demographicst_tbl.user_id)total from esat1_demographicst_tbl INNER JOIN totalyear_tbl on esat1_demographicst_tbl.totalyear=totalyear_tbl.totalyear_id WHERE sy = '$sy' AND school = '$school' GROUP BY totalyear_tbl.totalyear_name");
                             while ($esatresult = $qry->fetch_assoc()):?>
-                            <td><?php echo displayTotalyear($conn,$esatresult['totalyear']); ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <tr>
+                            <td><?php echo $esatresult['totalyear_name']; ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
+                            </tr>
                             <?php endwhile;?>
                         </tbody>
                     </table>
@@ -197,7 +224,7 @@ endif;
                         <tbody>
                         
                             <?php 
-                                $qry = $conn->query("SELECT subject_tbl.subject_name, COUNT(esat1_demographicst_tbl.user_id)total, esat1_demographicst_tbl.* FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy='$sy' AND school = '$school' GROUP BY subject_tbl.subject_name ");
+                                $qry = $conn->query("SELECT subject_tbl.subject_name, COUNT(esat1_demographicst_tbl.user_id)total, esat1_demographicst_tbl.* FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy' AND school = '$school' GROUP BY subject_tbl.subject_name ");
                                
                             foreach($qry as $row):
 
@@ -235,11 +262,11 @@ endif;
                         <tbody>
                         
                             <?php 
-                               $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                               $qry = $conn->query("SELECT gradelvltaught_tbl.gradelvltaught_name, COUNT(esat1_demographicst_tbl.user_id)total FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '$sy' AND school = '$school' GROUP BY gradelvltaught_tbl.gradelvltaught_name");
                                while ($esatresult = $qry->fetch_assoc()):?>
                             <tr>
-                            <td><?php echo displayGradelvltaught($conn,$esatresult['grade_lvl_taught']); ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <td><?php echo $esatresult['gradelvltaught_name']; ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
                             <?php endwhile;?>
                         </tr>
                         
@@ -270,11 +297,11 @@ endif;
                         <tbody>
                         
                             <?php 
-                               $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                               $qry = $conn->query("SELECT curriclass_tbl.curriclass_name,COUNT(DISTINCT esat1_demographicst_tbl.user_id)total FROM esat1_demographicst_tbl INNER JOIN curriclass_tbl ON esat1_demographicst_tbl.curri_class = curriclass_tbl.curriclass_id WHERE sy = '$sy' AND school = '$school' GROUP BY curriclass_tbl.curriclass_name");
                                while ($esatresult = $qry->fetch_assoc()):?>
                             <tr>
-                            <td><?php echo displaycurri($conn,$esatresult['curri_class']); ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <td><?php echo $esatresult['curriclass_name']; ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
                             <?php endwhile;?>
                         </tr>
                         </tbody>
@@ -303,11 +330,11 @@ endif;
                         <tbody>
                         
                             <?php 
-                               $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+                               $qry = $conn->query("SELECT *,region_tbl.region_name, COUNT(esat1_demographicst_tbl.user_id)total from region_tbl INNER JOIN esat1_demographicst_tbl ON region_tbl.reg_id = esat1_demographicst_tbl.region WHERE sy = '$sy' AND school = '$school' GROUP BY region_tbl.region_name");
                                while ($esatresult = $qry->fetch_assoc()):?>
                             <tr>
-                            <td><?php echo displayregion($conn,$esatresult['region']); ?></td>
-                            <td><?php echo countDB($conn,$sy,$school,'esat1_demographicst_tbl'); ?></td>
+                            <td><?php echo $esatresult['region_name']; ?></td>
+                            <td><?php echo $esatresult['total']; ?></td>
                             <?php endwhile;?>
                         </tr>
                         
@@ -348,7 +375,7 @@ endif;
                     </thead>
                     <tbody>
                         <?php
-                            $qry = $conn->query("SELECT CONCAT(tobj_tbl.kra_id,'.',tobj_tbl.tobj_id) 
+                            $qry = $conn->query("SELECT *,CONCAT(tobj_tbl.kra_id,'.',tobj_tbl.tobj_id) 
                             AS OBJECTIVES, 
                             CASE WHEN esat2_objectivest_tbl.lvlcap = 1 then count(DISTINCT user_id) END AS L_LOW,
                             CASE WHEN esat2_objectivest_tbl.lvlcap = 2 then count(DISTINCT user_id) END AS L_MODERATE,
@@ -360,8 +387,8 @@ endif;
                             CASE WHEN esat2_objectivest_tbl.priodev = 3 then count(DISTINCT user_id) END AS P_HIGH,
                             CASE WHEN esat2_objectivest_tbl.priodev = 4 then count(DISTINCT user_id) END AS P_VERY_HIGH
                            
-                            from tobj_tbl INNER JOIN esat2_objectivest_tbl ON tobj_tbl.tobj_id = esat2_objectivest_tbl.tobj_id
-                            
+                            FROM tobj_tbl INNER JOIN esat2_objectivest_tbl ON tobj_tbl.tobj_id = esat2_objectivest_tbl.tobj_id
+                            WHERE sy = '$sy' AND school = '$school'
                         group by tobj_tbl.kra_id,tobj_tbl.tobj_id") or die ($conn->error.$qry);
                             foreach($qry as $result):
                         ?>
@@ -406,7 +433,7 @@ endif;
                         </thead>
                         <tbody>
                             <?php
-                                $qry = $conn->query("SELECT core_behavioral_tbl.cbc_name, 
+                                $qry = $conn->query("SELECT *,core_behavioral_tbl.cbc_name, 
                                 CASE WHEN(a.score)=1 THEN COUNT(a.user_id) end as score1,
                                 CASE WHEN(a.score)=2 THEN COUNT(a.user_id) end as score2,
                                 CASE WHEN(a.score)=3 THEN COUNT(a.user_id) end as score3,
@@ -414,9 +441,10 @@ endif;
                                 CASE WHEN(a.score)=5 THEN COUNT(a.user_id) end as score5
                                 FROM
                                 (
-                                select cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralt_tbl GROUP BY cbc_id
+                                select sy,school,cbc_id, user_id,sum(cbc_score)score FROM esat3_core_behavioralt_tbl GROUP BY cbc_id
                                 ) a
                                 INNER JOIN core_behavioral_tbl on a.cbc_id = core_behavioral_tbl.cbc_id
+                                WHERE sy = '$sy' AND school = '$school'
                                 GROUP BY core_behavioral_tbl.cbc_name") or die ($conn->error.$qry);
                                 foreach ($qry as $result):
                             ?>
@@ -438,28 +466,7 @@ endif;
     
   <!--CORE BEHAVIORAL COMPETENCIES -->
 
-<!-- Age Chart Function -->
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
 
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(AgeChart);
-
-function AgeChart() {
-    let data = google.visualization.arrayToDataTable([
-        ['Age', 'No. of Teacher'],
-        <?php $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'") or die ($conn->error);
-            while ($AgeChart = $qry->fetch_assoc()):
-                echo "['".displayAgeDesc($conn,$AgeChart['age'])."', ".countDB($conn,$sy,$school,'esat1_demographicst_tbl')."],";
-            endwhile;?>
-]);
-
-    let options = {
-        title: 'Age'};
-        let chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);}
-
-</script>
 <!-- End tag of card -->
 </div>
 
