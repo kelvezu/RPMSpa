@@ -516,7 +516,7 @@ function CoreBehavioralChart() {
 		(
 		select sy,school,cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralt_tbl GROUP BY cbc_id
 		) a
-		INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id WHERE sy = 17 AND school = 14 GROUP BY b.cbc_name") or die ($conn->error.$qry);
+		INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id WHERE sy = '$sy' AND school = '$school' GROUP BY b.cbc_name") or die ($conn->error.$qry);
     
             foreach($CoreBehavioralqry as $resultQry):
              echo "
@@ -552,7 +552,7 @@ function CoreBehavioralChart() {
 
 
     else:
-        $sy = $_POST['sy_id'];
+        $sy_id = $_POST['sy_id'];
         $user = $_POST['teacher_id'];
 
 ?>
@@ -728,7 +728,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Age', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY age_tbl.age_name") or die ($conn->error);
+                $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY age_tbl.age_name") or die ($conn->error);
                     while ($AgeChart = $qry->fetch_assoc()):
                         echo "['".$AgeChart['age_name']."', ".$AgeChart['total']."],";
                     endwhile;?>
@@ -749,7 +749,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Gender', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT gender_tbl.gender_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN gender_tbl on esat1_demographicst_tbl.gender = gender_tbl.gender_id WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY gender_tbl.gender_name") or die ($conn->error);
+                $qry = $conn->query("SELECT gender_tbl.gender_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN gender_tbl on esat1_demographicst_tbl.gender = gender_tbl.gender_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY gender_tbl.gender_name") or die ($conn->error);
                     while ($GenderChart = $qry->fetch_assoc()):
                         echo "['".$GenderChart['gender_name']."', ".$GenderChart['total']."],";
                     endwhile;?>
@@ -771,7 +771,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Employment Status', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT esat1_demographicst_tbl.employment_status, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.employment_status") or die ($conn->error);
+                $qry = $conn->query("SELECT esat1_demographicst_tbl.employment_status, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.employment_status") or die ($conn->error);
                     while ($employStatus = $qry->fetch_assoc()):
                         echo "['".$employStatus['employment_status']."', ".$employStatus['total']."],";
                     endwhile;?>
@@ -792,7 +792,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Position', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT esat1_demographicst_tbl.position, COUNT(esat1_demographicst_tbl.user_id)total FROM  esat1_demographicst_tbl WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.position ORDER BY esat1_demographicst_tbl.position desc") or die ($conn->error);
+                $qry = $conn->query("SELECT esat1_demographicst_tbl.position, COUNT(esat1_demographicst_tbl.user_id)total FROM  esat1_demographicst_tbl WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.position ORDER BY esat1_demographicst_tbl.position desc") or die ($conn->error);
                     while ($positionQry = $qry->fetch_assoc()):
                         echo "['".$positionQry['position']."', ".$positionQry['total']."],";
                     endwhile;?>
@@ -814,7 +814,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Highest Degree Obtained', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT esat1_demographicst_tbl.highest_degree, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.highest_degree") or die ($conn->error);
+                $qry = $conn->query("SELECT esat1_demographicst_tbl.highest_degree, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.highest_degree") or die ($conn->error);
                     while ($highestChart = $qry->fetch_assoc()):
                         echo "['".$highestChart['highest_degree']."', ".$highestChart['total']."],";
                     endwhile;?>
@@ -835,7 +835,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Total Number of Years in Teaching', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT totalyear_tbl.totalyear_name,COUNT(esat1_demographicst_tbl.user_id)total from esat1_demographicst_tbl INNER JOIN totalyear_tbl on esat1_demographicst_tbl.totalyear=totalyear_tbl.totalyear_id WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY totalyear_tbl.totalyear_name") or die ($conn->error);
+                $qry = $conn->query("SELECT totalyear_tbl.totalyear_name,COUNT(esat1_demographicst_tbl.user_id)total from esat1_demographicst_tbl INNER JOIN totalyear_tbl on esat1_demographicst_tbl.totalyear=totalyear_tbl.totalyear_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY totalyear_tbl.totalyear_name") or die ($conn->error);
                     while ($TotalYear = $qry->fetch_assoc()):
                         echo "['".$TotalYear['totalyear_name']."', ".$TotalYear['total']."],";
                     endwhile;?>
@@ -856,7 +856,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Subject Taught', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT subject_tbl.subject_name, COUNT(esat1_demographicst_tbl.user_id)total, esat1_demographicst_tbl.* FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY subject_tbl.subject_name") or die ($conn->error);
+                $qry = $conn->query("SELECT subject_tbl.subject_name, COUNT(esat1_demographicst_tbl.user_id)total, esat1_demographicst_tbl.* FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY subject_tbl.subject_name") or die ($conn->error);
                     while ($SubjectTaught = $qry->fetch_assoc()):
                         echo "['".$SubjectTaught['subject_name']."', ".$SubjectTaught['total']."],";
                     endwhile;?>
@@ -877,7 +877,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Grade Level Taught', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT gradelvltaught_tbl.gradelvltaught_name, COUNT(esat1_demographicst_tbl.user_id)total FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die ($conn->error);
+                $qry = $conn->query("SELECT gradelvltaught_tbl.gradelvltaught_name, COUNT(esat1_demographicst_tbl.user_id)total FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die ($conn->error);
                     while ($GradelvlTaught = $qry->fetch_assoc()):
                         echo "['".$GradelvlTaught['gradelvltaught_name']."', ".$GradelvlTaught['total']."],";
                     endwhile;?>
@@ -899,7 +899,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Curricular Class of School', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT curriclass_tbl.curriclass_name,COUNT(DISTINCT esat1_demographicst_tbl.user_id)total FROM esat1_demographicst_tbl INNER JOIN curriclass_tbl ON esat1_demographicst_tbl.curri_class = curriclass_tbl.curriclass_id WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY curriclass_tbl.curriclass_name") or die ($conn->error);
+                $qry = $conn->query("SELECT curriclass_tbl.curriclass_name,COUNT(DISTINCT esat1_demographicst_tbl.user_id)total FROM esat1_demographicst_tbl INNER JOIN curriclass_tbl ON esat1_demographicst_tbl.curri_class = curriclass_tbl.curriclass_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY curriclass_tbl.curriclass_name") or die ($conn->error);
                     while ($CurriClass = $qry->fetch_assoc()):
                         echo "['".$CurriClass['curriclass_name']."', ".$CurriClass['total']."],";
                     endwhile;?>
@@ -921,7 +921,7 @@ function CoreBehavioralChart() {
             let data = google.visualization.arrayToDataTable([
                 ['Region', 'No. of Teacher'],
                 <?php
-                $qry = $conn->query("SELECT *,region_tbl.region_name, COUNT(esat1_demographicst_tbl.user_id)total from region_tbl INNER JOIN esat1_demographicst_tbl ON region_tbl.reg_id = esat1_demographicst_tbl.region WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY region_tbl.region_name") or die ($conn->error);
+                $qry = $conn->query("SELECT *,region_tbl.region_name, COUNT(esat1_demographicst_tbl.user_id)total from region_tbl INNER JOIN esat1_demographicst_tbl ON region_tbl.reg_id = esat1_demographicst_tbl.region WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY region_tbl.region_name") or die ($conn->error);
                     while ($Region = $qry->fetch_assoc()):
                         echo "['".$Region['region_name']."', ".$Region['total']."],";
                     endwhile;?>
@@ -954,7 +954,7 @@ function CoreBehavioralChart() {
                 CASE WHEN priodev = 2 THEN COUNT(user_id) END  AS priomoderate,
                 CASE WHEN priodev = 3 THEN COUNT(user_id) END  AS priohigh,
                 CASE WHEN priodev = 4 THEN COUNT(user_id) END  AS prioveryhigh
-                FROM esat2_objectivest_tbl WHERE sy = '$sy' and `user_id` = '$user' GROUP BY tobj_id") or die ($conn->error.$qry);
+                FROM esat2_objectivest_tbl WHERE sy = '$sy_id' and `user_id` = '$user' GROUP BY tobj_id") or die ($conn->error.$qry);
             
                     foreach($qry as $result):
                      echo "
@@ -1006,7 +1006,7 @@ function CoreBehavioralChart() {
                 CASE WHEN priodev = 2 THEN COUNT(user_id) END  AS priomoderate,
                 CASE WHEN priodev = 3 THEN COUNT(user_id) END  AS priohigh,
                 CASE WHEN priodev = 4 THEN COUNT(user_id) END  AS prioveryhigh
-                FROM esat2_objectivest_tbl WHERE sy = '$sy' and `user_id` = '$user' GROUP BY tobj_id") or die ($conn->error.$qry);
+                FROM esat2_objectivest_tbl WHERE sy = '$sy_id' and `user_id` = '$user' GROUP BY tobj_id") or die ($conn->error.$qry);
             
                     foreach($qry as $result):
                      echo "
@@ -1060,7 +1060,7 @@ function CoreBehavioralChart() {
                 (
                 select sy,school,cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralt_tbl GROUP BY cbc_id
                 ) a
-                INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id WHERE sy = '$sy' AND `user_id` = '$user' GROUP BY b.cbc_name") or die ($conn->error.$qry);
+                INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY b.cbc_name") or die ($conn->error.$qry);
             
                     foreach($CoreBehavioralqry as $resultQry):
                      echo "
@@ -1092,20 +1092,20 @@ function CoreBehavioralChart() {
         </script>
         <!-- Core Behavioral Competencies Chart Function -->
 
+
+ 
+
+
+
+
+
 <?php
-    endif;
+
+endif;
 
    
 
 endif;
-
-?>
-
-
-
-<?php
-
-
 
 include 'samplefooter.php';
 

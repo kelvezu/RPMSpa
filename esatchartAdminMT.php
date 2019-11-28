@@ -513,9 +513,10 @@ function CoreBehavioralChart() {
         CASE WHEN(a.score)=5 THEN COUNT(a.user_id) end as score5
         FROM
         (
-        select cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralmt_tbl GROUP BY cbc_id
+        select sy,school,cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralmt_tbl GROUP BY cbc_id
         ) a
         INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id
+        WHERE sy = '$sy' AND school = '$school'
         GROUP BY b.cbc_name") or die ($conn->error.$qry);
     
             foreach($CoreBehavioralqry as $resultQry):
