@@ -59,23 +59,19 @@ include 'sampleheader.php';
 <?php endif ?>
 
 <div class="container">
-    <div class="breadcome-list shadow-reset">
         <div class="right">
             <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#tindicator-modal">Add Indicator </button>
-            <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#cot-modal">View COT Form </button>
-            <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#ioaf-modal">View IOAF Form </button>
+            <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#ioaf-modal">View COT Form </button>
             <div class="h4 breadcrumb bg-dark text-white ">Teacher Indicator </div>
 
 
-            <main>
-                <div class="container">
-                    <div class="col-sm-10">
+    
                         <?php
                         $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
                         $result = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
                         ?>
 
-                        <table class="table table-responsive-sm">
+                        <table class="table table-responsive-sm table-sm">
                             <caption>Teacher Indicator</caption>
                             <thead class="bg-success text-white ">
                                 <tr>
@@ -127,96 +123,14 @@ include 'sampleheader.php';
                     </div>
                 </div>
 
-                <div class="modal fade" id="cot-modal" tabindex="-1" role="dialog" aria-labelledby="cotModal" aria-hidden="true">
-                    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header bg-dark text-white">
-                                <h5 class="modal-title " id="exampleModalLabel">COT Teacher Rating Sheet</h5>
-                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body text-center">
-                                <?php
-                                $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
-                                $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
-                                ?>
+            
 
-                                <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br><br>
-                                <h5><strong>COT-RPMS</strong></h5>
-
-
-                                <div class="h3 bg-success">Teacher I-III
-                                </div>
-
-                                <h4>Rating Sheet</h4>
-
-
-
-
-                                <h5 class="text-left">OBSERVER<br>DATE<br>
-                                    TEACHER OBSERVED<br>
-                                    SUBJECT<br>
-                                    GRADE LEVEL TAUGHT<br>OBSERVATION PERIOD
-                                    1<input type="checkbox" value="1">
-                                    2<input type="checkbox" value="2">
-                                    3<input type="checkbox" value="31">
-                                    4<input type="checkbox" value="4">
-                                    </h6>
-                            </div>
-                            <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-                                <thead class="legend-control bg-success text-white ">
-                                    <tr>
-                                        <th>Indicator No</th>
-                                        <th>Indicator Name</th>
-                                        <th>COT Rating</th>
-                                    </tr>
-                                </thead>
-                                <?php
-                                if ($resultquery) {
-                                    while ($row = mysqli_fetch_array($resultquery)) {
-                                        ?>
-                                        <tbody>
-                                            <tr>
-                                                <th><?php echo $row['indicator_no']; ?></th>
-                                                <th><?php echo $row['indicator_name']; ?></th>
-                                                <th>
-                                                    <select name="rating">
-                                                        <option value="">--select--</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
-                                                        <option value="6">6</option>
-                                                        <option value="7">7</option>
-                                                        <option value="3">NO*</option>
-                                                    </select>
-
-                                                </th>
-                                            </tr>
-                                        </tbody>
-                                <?php
-                                    }
-                                } else {
-                                    echo "No record found";
-                                }
-                                ?>
-
-                            </table>
-                            <textarea class="form-control" name="cot_comment" rows="5" placeholder="OTHER COMMENTS" required></textarea>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
 
 <div class="modal fade" id="ioaf-modal" tabindex="-1" role="dialog" aria-labelledby="ioafModal" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title " id="exampleModalLabel">Teacher IOAF Rating Sheet</h5>
+                <h5 class="modal-title " id="exampleModalLabel">Teacher COT Rating Sheet</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -233,11 +147,11 @@ include 'sampleheader.php';
                 <div class="h3 bg-success text-white">Teacher I-III
                 </div>
 
-                <h4> Inter-Observer Agreement Form</h4>
+                <h4> COT Rating Sheet</h4>
 
 
 
-                <h5 class="text-left">OBSERVER 1<br>
+                <h6 class="text-left">OBSERVER 1<br>
                     OBSERVER 2<br>
                     OBSERVER 3 <br>
                     DATE<br>
@@ -248,7 +162,7 @@ include 'sampleheader.php';
                     2<input type="checkbox" value="2">
                     3<input type="checkbox" value="31">
                     4<input type="checkbox" value="4">
-                </h5>
+                </h6>
             </div>
             <table class="table table-bordered" style="background-color: white; table-layout: 10;">
                 <thead class="legend-control bg-success text-white ">

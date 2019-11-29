@@ -72,7 +72,7 @@ mysqli_select_db($connection, "rpms");
 
                         ?>
 
-                        <table class="table table-responsive-sm">
+                        <table class="table table-sm">
                             <caption>Seminar</caption>
                             <thead class="bg-success text-white ">
                                 <tr>

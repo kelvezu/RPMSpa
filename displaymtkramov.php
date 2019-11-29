@@ -6,7 +6,7 @@ $kra_num = 0;
 $mtobj_num = 1;
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR KRA TABLE  
-$result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
+$result = $conn->query('SELECT * FROM kra_tbl ')  or die($conn->error);
 ?>
 
 <!-- Add Objective  modal -->

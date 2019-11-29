@@ -354,7 +354,7 @@ include 'sampleheader.php';
             $subjqry = 'SELECT * FROM subject_tbl ORDER BY `status`';
             $qry_run = mysqli_query($conn, $subjqry);
             ?>
-            <table class=" table table-sm  table-hover">
+            <table class=" table table-sm table-hover">
                 <thead class="bg-info">
                     <tr>
                         <th>Options</th>

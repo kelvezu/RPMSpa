@@ -6,7 +6,7 @@ $kra_num = 0;
 $tobj_num = 1;
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR KRA TABLE  
-$result = $conn->query('SELECT * FROM kra_tbl WHERE `status` = "Active"')  or die($conn->error);
+$result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 ?>
 
 <!-- Add Objective  modal -->
@@ -38,6 +38,8 @@ $result = $conn->query('SELECT * FROM kra_tbl WHERE `status` = "Active"')  or di
         </div>
     </div>
 </div>
+
+
 <div class="modal fade" id="objective-modal" tabindex="-1" role="dialog" aria-labelledby="addObjectModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

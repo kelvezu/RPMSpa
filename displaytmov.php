@@ -101,7 +101,7 @@
 
                             ?>
 
-                            <table class="table table-responsive-sm">   
+                            <table class="table table-sm">   
                                 <caption>Teacher Means of Verification</caption>
                                 <thead class="bg-success text-white ">
                                     <tr>

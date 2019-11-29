@@ -61,7 +61,7 @@ include 'sampleheader.php';
                             $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
                             $result = $conn->query('SELECT * FROM policy_tbl') or die($conn->error);
                             ?>
-                            <table class="table table-borderless">
+                            <table class="table table-borderless table-sm">
                                 <?php while ($row = $result->fetch_assoc()) : ?>
 
                                     <tr>

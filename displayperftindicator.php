@@ -91,7 +91,7 @@ include 'sampleheader.php';
 <?php endif ?>
 
 <div class="container">
-    <div class="breadcome-list shadow-reset">
+  
         <div class="right">
             <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#perftindicator-modal">Add Indicator </button>
 
@@ -108,18 +108,16 @@ include 'sampleheader.php';
             </script>
 
 
-            <main>
-                <div class="container">
-                    <div class="col-sm-10">
+         
                         <?php
                         $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
                         $result = $conn->query('SELECT kra_tbl.kra_name,tobj_tbl.tobj_name,perftindicator_tbl.* FROM (perftindicator_tbl INNER JOIN kra_tbl ON perftindicator_tbl.kra_id = kra_tbl.kra_id) 
                     INNER JOIN tobj_tbl ON perftindicator_tbl.tobj_id = tobj_tbl.tobj_id')  or die($conn->error);
                         ?>
 
-                        <table class="table table-responsive-sm">
+                        <table class="table table-sm">
                             <caption>Teacher Performance Indicator</caption>
-                            <thead class="bg-success text-nowrap ">
+                            <thead class="bg-success text-nowrap text-white ">
                                 <tr>
                                     <th class="text-center">KRA</th>
                                     <th class="text-center">Objective</th>
@@ -151,10 +149,7 @@ include 'sampleheader.php';
                         </table>
                     </div>
                 </div>
-        </div>
-    </div>
-</div>
-</main>
+
 <br>
 <?php
 

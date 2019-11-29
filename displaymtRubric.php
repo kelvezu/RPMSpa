@@ -53,21 +53,17 @@ include 'sampleheader.php';
     </div>
 <?php endif ?>
 <div class="container">
-    <div class="breadcome-list shadow-reset">
         <div class="right">
             <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#mtrubric-modal">Add Rubric </button>
             <div class="h4 breadcrumb bg-dark text-white ">Master Teacher Rubric Summary </div>
 
 
-
-            <div class="container">
-                <div class="col-sm-10">
                     <?php
                     $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
                     $result = $conn->query('SELECT * FROM mtrubric_tbl')  or die($conn->error);
                     ?>
 
-                    <table class="table table-responsive-sm">
+                    <table class="table table-responsive-sm table-sm">
                         <caption>Rubric Level for Master Teacher I-IV</caption>
                         <thead class="bg-primary text-white ">
                             <tr>
@@ -95,9 +91,6 @@ include 'sampleheader.php';
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 <br>
 </main>
 
