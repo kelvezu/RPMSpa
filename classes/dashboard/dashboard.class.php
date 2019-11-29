@@ -434,11 +434,22 @@ class Dashboard
                             </li>
         
                             <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Teacher Progress</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> My Progress</a>
                                 <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                    <a class="dropdown-item" href="#">Teacher Progress</a>
+                                    <a class="dropdown-item" href="#">My RPMS Progress</a>
                                 </div>
                         </li>
+
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-folder-open"></i> Means of Verification</a>
+                            <div class="dropdown-menu " aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="attachfileMT.php">Attach File</a>
+                                <a class="dropdown-item" href="viewattachment.userMT.php">View MOV</a>
+                            </div>
+                    </li>
+
+
+
             
                             <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
@@ -499,6 +510,14 @@ class Dashboard
                                         <a class="dropdown-item" href="#">My RPMS Progress</a>
                                     </div>
                             </li>
+
+                            <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-folder-open"></i> Means of Verification</a>
+                            <div class="dropdown-menu " aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="attachfile.php">Attach File</a>
+                                <a class="dropdown-item" href="viewattachment.userT.php">View MOV</a>
+                            </div>
+                    </li>
                 
                                 <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
