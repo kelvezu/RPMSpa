@@ -15,6 +15,9 @@ include 'sampleheader.php';
        
     
         <form action="esatchartAdminT.php" method="POST" class="form-inline"> 
+
+        <input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>"> 
+
             <div class="form-row">
                 <div class="form-group mb-2">
                     <!-- School Year Dropdown -->            
@@ -55,15 +58,25 @@ include 'sampleheader.php';
   </div>
   </div>
 <script>
-  
+  showchart()
   
     function showchart() {
         let sy_id = document.getElementById('sy_id').value;
         let sch_id = document.getElementById('sch_id').value;
+        let active_sy_id = document.getElementById('active_sy').value;
         
         if ((sy_id == "") && (sch_id  == "")) {
-            document.getElementById("show").innerHTML = "";
-            return;
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("show").innerHTML = xmlhttp.responseText;
+                    console.log(this.responseText);
+                }
+            }
+            xmlhttp.open("GET", "esatajaxtableAdminGeneralT.php?activesy=" + active_sy_id  , true);
+            xmlhttp.send();
+
+
         } else {            
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onload = function() {
@@ -72,7 +85,6 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            // getuser.php is seprate php file. q is parameter 
             xmlhttp.open("GET", "esatajaxtableAdminT.php?sy=" + sy_id + "&sch=" + sch_id, true);
             xmlhttp.send();
         }

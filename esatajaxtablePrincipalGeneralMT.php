@@ -2,13 +2,10 @@
 include_once 'includes/conn.inc.php';
 include_once 'libraries/func.lib.php';
  
-if(isset($_GET['sy']) AND isset($_GET['sch'])  ):
+
     $sy = $_GET['sy'];
     $school = $_GET['sch'];
     $qry = $conn->query("SELECT * FROM `esat1_demographicsmt_tbl` WHERE sy = '$sy' AND school = '$school'");
-
-endif;
-
 
 
 ?>
@@ -395,7 +392,6 @@ endif;
                         
                             
                             from mtobj_tbl a INNER JOIN esat2_objectivesmt_tbl b ON a.mtobj_id = b.mtobj_id
-                            WHERE sy = '$sy' AND school = '$school'
                         group by a.kra_id,a.mtobj_id") or die ($conn->error.$qry);
 
                             foreach($qry as $result):
@@ -449,10 +445,9 @@ endif;
                                 CASE WHEN(a.score)=5 THEN COUNT(a.user_id) end as score5
                                 FROM
                                 (
-                                select sy,school,cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralmt_tbl GROUP BY cbc_id
+                                select cbc_id, user_id,sum(cbc_score)score from esat3_core_behavioralmt_tbl GROUP BY cbc_id
                                 ) a
                                 INNER JOIN core_behavioral_tbl b on a.cbc_id=b.cbc_id
-                                WHERE sy = '$sy' AND school = '$school'
                                 GROUP BY b.cbc_name") or die ($conn->error.$qry);
                                 foreach ($qry as $result):
                             ?>

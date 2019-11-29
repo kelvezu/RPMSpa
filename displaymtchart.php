@@ -229,9 +229,3 @@ $result = $statement->fetchAll();
 
 	<!-- Start of Assessment of Capabilities and Prioties -->
 
-
-
-	<?php
-
-	include 'samplefooter.php';
-	?>
