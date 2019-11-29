@@ -1463,7 +1463,7 @@ class RPMSdb
                                 $upd_result = mysqli_query($conn, $qry_update) or die($conn->error . $qry_update);
                                 if ($upd_result) :
                                     // $name = displayname($conn, $acc_id);
-                                    console_log("Update success MT!" . intval($acc_id) . 'AVG= ' . $t_ave);
+                                    console_log("Update success MT= " . intval($acc_id) . ' AVG= ' . $t_ave . ' indicator_id= ' . $fetch_ind['indicator_id']);
                                 // else : return "Update Success MT!" ;
                                 endif;
                             endif;
@@ -1474,7 +1474,7 @@ class RPMSdb
 
                             $ins_result = mysqli_query($conn, $qry_insert);
                             if ($ins_result) :
-                                console_log("Insert Success MT!" . intval($acc_id) . 'AVG= ' . $t_ave);
+                                console_log("Insert Success MT!" . intval($acc_id) . 'AVG= ' . $t_ave . ' indicator_id= ' . $fetch_ind['indicator_id']);
                             // else : return "Update Success MT!" . displayname($conn, $acc_id);
                             endif;
                         else : console_log($acc_id . 'Failed to Insert MT');
@@ -1503,7 +1503,7 @@ class RPMSdb
                                 $qry_update = "UPDATE `cot_t_indicator_ave_tbl` SET `average` = '$t_ave'  WHERE `user_id` = '$acc_id' AND indicator_id = " . $fetch_ind['indicator_id'] . "  AND `sy` = '$sy' AND school = '$school'";
                                 $upd_result = mysqli_query($conn, $qry_update) or die($conn->error . $qry_update);
                                 if ($upd_result) :
-                                    console_log("Update Success T!" . intval($acc_id) . 'AVG= ' . $t_ave);
+                                    console_log("Update success T= " . intval($acc_id) . ' AVG= ' . $t_ave . ' indicator_id= ' . $fetch_ind['indicator_id']);
                                 endif;
                             endif;
 
@@ -1512,7 +1512,7 @@ class RPMSdb
 
                             $ins_result = mysqli_query($conn, $qry_insert) or die($qry_insert);
                             if ($ins_result) :
-                                console_log("Insert Success T!" . intval($acc_id) . 'AVG= ' . $t_ave);
+                                console_log("Insert Success T!" . intval($acc_id) . 'AVG= ' . $t_ave . ' indicator_id= ' . $fetch_ind['indicator_id']);
                             // else : return "Update Success T!" . displayname($conn, $acc_id);
                             endif;
                         endif;

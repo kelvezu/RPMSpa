@@ -113,7 +113,8 @@ $position = $_SESSION['position'];
                         <li class="nav-item ">
                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fa big-icon fa-hourglass"></i> <span class="mini-dn">Observation Period</span> <span class="indicator-right-menu mini-dn"><i class="fa indicator-mn fa-angle-left"></i></span></a>
                             <div role="menu" class="dropdown-menu pre-scrollable left-menu-dropdown animated flipInX">
-                                <?php activeobsperiod($conn); ?>
+                                <?php //activeobsperiod($conn); 
+                                ?>
                                 <a class="dropdown-item"><?= '<b>First Period: </b><br/>' . displayDate($_SESSION['first_period'])  ?? 'N/A' ?></a>
                                 <a class="dropdown-item"><?= '<b>Second Period: </b><br/>' . displayDate($_SESSION['second_period']) ?? 'N/A' ?></a>
                                 <a class="dropdown-item"><?= '<b>Third Period: </b><br/>' . displayDate($_SESSION['third_period']) ?? 'N/A' ?></a>

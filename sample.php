@@ -284,12 +284,17 @@ $sy = $_SESSION['active_sy_id'];
 //         echo $res['mtobj_name'] . '<br/>';
 //     endforeach;
 // endif;
+
+echo $_SESSION['first_period'] . '<br>';
+echo $_SESSION['second_period'] . '<br>';
+echo $_SESSION['third_period'] . '<br>';
+echo $_SESSION['final_period'] . '<br>';
 ?>
-<img src="attachments/Master Teacher/5ddd6bcf16b707.61177521.jpg" width='600' height='1000' alt="ironman" />
+<!-- <img src="attachments/Master Teacher/5ddd6bcf16b707.61177521.jpg" width='600' height='1000' alt="ironman" /> -->
 
 <?php
 //echo generateAVGforCOT($conn, 'cot_mt_rating_a_tbl', 33, 1, $sy, $_SESSION['school_id']);
-rpmsdb::generateCOTindicatorAVG($conn, $sy);
+// rpmsdb::generateCOTindicatorAVG($conn, $sy);
 
 
 
