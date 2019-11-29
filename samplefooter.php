@@ -165,12 +165,13 @@
     <!-- End of Scripts -->
 
 
-	<script src="js/charts/jquery.highchartTable.js"></script>
-	<script src="js/charts/highcharts.js"></script>
+    <script src="js/charts/jquery.highchartTable.js"></script>
+    <script src="js/charts/highcharts.js"></script>
     <script src="js/charts/jquery-ui.js"></script>
 
 
-    <?php //rpmsdb\RPMSdb::generateCOTaverage($conn, $_SESSION['active_sy_id']); 
+    <?php
+    rpmsdb\rpmsdb::generateCOTindicatorAVG($conn, $_SESSION['active_sy_id']);
     ?>
 </footer>
 

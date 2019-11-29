@@ -6,7 +6,7 @@ use esat\ESAT;
 use FilterUser\FilterUser;
 use RPMSdb\RPMSdb;
 
-include 'includes/header.php';
+include 'sampleheader.php';
 
 
 
@@ -297,6 +297,18 @@ echo $_SESSION['final_period'] . '<br>';
 // rpmsdb::generateCOTindicatorAVG($conn, $sy);
 
 
+$school = $_SESSION['school_id'];
+$user =  $_SESSION['user_id'];
+
+
+// $res = showObsPeriod($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']);
+$res = RPMSdb::fetchSpecificMTindicator($conn, $sy, $school, $user);
+
+// pre_r($res);
+foreach ($res as $r) {
+    echo $r['indicator_id'] . BR;
+}
+
 
 
 
@@ -321,4 +333,4 @@ echo $_SESSION['final_period'] . '<br>';
 
 <?php //echo "</ul>";
 //endforeach; -->x
-include 'includes/footer.php';  ?>
+include 'samplefooter.php';  ?>

@@ -1152,7 +1152,7 @@ class RPMSdb
 
     public static function fetchSpecificTindicator($conn, $sy, $school, $user)
     {
-        $qry = "SELECT `indicator_id`,`user_id` FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
+        $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
         if (mysqli_num_rows($result) > 0) :
             $res_array = [];
@@ -1165,7 +1165,7 @@ class RPMSdb
 
     public static function fetchSpecificMTindicator($conn, $sy, $school, $user)
     {
-        $qry = "SELECT `indicator_id`,`user_id` FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
+        $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
         if (mysqli_num_rows($result) > 0) :
             $res_array = [];
@@ -1396,6 +1396,7 @@ class RPMSdb
 
     // GENERATE COT INDICATOR AVERAGE
     // currently working
+    //issue: none
     public static function generateCOTindicatorAVG($conn, $sy)
     {
         $qry = "SELECT * FROM account_tbl WHERE position IN ('Teacher I','Teacher II','Teacher III','Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') AND `status` = 'Active' ";
