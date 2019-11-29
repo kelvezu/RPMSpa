@@ -291,7 +291,7 @@ class Dashboard
                                     <a class="dropdown-item" href="esattablePrincipalT.php">View General Teacher ESAT</a>
                                     <a class="dropdown-item" href="esattablePrincipalMT.php">View General Master Teacher ESAT</a>
                                 </div>
-                        </li>
+                        </li> 
     
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Teacher Progress</a>
@@ -317,8 +317,8 @@ class Dashboard
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                             <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                            <a href="tioafform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
-                            <a href="mtioafform.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                            <a href="setcotform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                            <a href="setcotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
                             <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
                             <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
                             <a href="devplan.php" class="dropdown-item">Development Plan</a>
