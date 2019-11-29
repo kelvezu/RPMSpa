@@ -361,12 +361,12 @@
                     if (stripos(($position), 'aster')) :
                         $raw = substr($position, 15);
                         $raw_title = substr($smallcaps, 0, 15);
-                        return ucwords($raw_title) . ' ' . strtoupper($raw);
+                        return ucwords($raw_title)  . strtoupper($raw);
 
                     elseif (stripos(($position), 'eacher')) :
                         $raw = substr($position, 7);
                         $raw_title = substr($smallcaps, 0, 7);
-                        return ucwords($raw_title) . ' ' . strtoupper($raw);
+                        return ucwords($raw_title) . strtoupper($raw);
                     else :
                         return ucwords($position);
                     endif;
@@ -945,6 +945,20 @@
                     foreach ($result as $res) :
                         return floatval($res['ave']);
                     endforeach;
+                else : return false;
+                endif;
+            }
+
+            function showSchool($conn){
+                $qry = "SELECT * FROM school_tbl WHERE school_grade_lvl IN ('Elementary School','Secondary School')";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if ($result) :
+                    $res_arr = [];
+                    foreach ($result as $res) :
+                        array_push($res_arr,$res);
+                    endforeach;
+                    return $res_arr;
                 else : return false;
                 endif;
             }

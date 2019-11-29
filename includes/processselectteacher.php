@@ -61,9 +61,10 @@ if (isset($_POST['btn-t'])) :
     $school_id = $_POST['school_id'];
     $teacher = $_POST['teacher'];
 
+
     for ($count = 0; $count < count($teacher); $count++) {
-        $query = "UPDATE account_tbl SET school_id = " . $school_id . ",`status` = 'Active' WHERE `user_id` = '$teacher[$count]'";
-        $query_run = mysqli_query($conn, $query) or die($conn->error . `btn-t`);
+        $query = "UPDATE account_tbl SET school_id = " . $school_id[$count] . ",`status` = 'Active' WHERE `user_id` = '$teacher[$count]'";
+        $query_run = mysqli_query($conn, $query) or die($conn->error . $query);
     }
     if ($query_run) :
         header('location:../selectteacher.php');

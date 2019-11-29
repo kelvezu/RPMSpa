@@ -15,6 +15,10 @@ include 'sampleheader.php';
                 echo '<div class="green-notif-border">Users has been added successfully!</div>';
             elseif (($_GET['notif']) == "error") :
                 echo '<div class="red-notif-border">There was an error adding the users!</div>';
+            elseif(($_GET['notif'] == "emailerror")):
+                echo '<div class="red-notif-border">Duplicate Email Detected!</div>';
+                elseif(($_GET['notif'] == "mailerror")):
+                    echo '<div class="red-notif-border">Error Sending Verification Email!</div>';
             else :
                 echo 'Error!';
             endif;

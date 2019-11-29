@@ -435,10 +435,10 @@ class RPMSdb
     }
 
     // DISPLAY ALL TEACHERS ACCORDING TO USERS SCHOOL
-    public static function displayMasterList($conn, $school_id)
+    public static function displayMasterList($conn)
     {
         $user_arr = [];
-        $totalqry = 'SELECT * FROM account_tbl WHERE school_id = ' . $school_id . ' AND status = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") ORDER BY `user_id` desc  ';
+        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","School Head","Principal") ORDER BY `user_id` desc  ';
         $result = mysqli_query($conn, $totalqry);
         $total = mysqli_num_rows($result);
         if ($total > 0) :

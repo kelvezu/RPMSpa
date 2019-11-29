@@ -27,6 +27,11 @@ activeobsperiod($conn);
     <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
+
+<!-- Script for Dynamic Dropdown -->
+<script src="bootstrap4/scripts/jquery-3.4.1.min.js"></script>
+<!-- Script for Dynamic Dropdown -->
+
     <!-- Script for Charts  -->
     <script src="bootstrap4/scripts/googlechart.js"></script>
     <script src="bootstrap4/scripts/jquery3.min.js"></script>

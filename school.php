@@ -1,18 +1,16 @@
 <?php
-include_once 'sampleheader.php';
 
+include 'sampleheader.php';
 
 $connection = mysqli_connect("localhost", "root", "");
 mysqli_select_db($connection, "rpms");
 ?>
 
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
+<script>
 
-<script type="text/javascript">
     $(document).ready(function() {
         $('#region').on('change', function() {
             var regionID = $(this).val(); 
@@ -100,7 +98,7 @@ mysqli_select_db($connection, "rpms");
 
                             <?php
 
-                            include('includes/conn.inc.php');
+                            include 'includes/conn.inc.php';
                             $query = $conn->query("SELECT * FROM region_tbl");
 
                             $rowCount = $query->num_rows;
@@ -124,6 +122,7 @@ mysqli_select_db($connection, "rpms");
                             <label for="sel-reg" class=" col-form-label"><strong>Select Municipality</strong></label>
                             <select name="municipality" id="municipality" class="form-control">
                                 <option value="">Select Division first</option>
+                               
                             </select>
 
 
@@ -152,7 +151,7 @@ mysqli_select_db($connection, "rpms");
     <main>
         <div class="container">
          
-                <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#school-modal">Add School<i class="fas fa-truck-moving    "></i> </button>
+                <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#school-modal">Add School</button>
 
 
                 <div class="h4 breadcrumb bg-dark text-white ">School Information </div>
@@ -201,7 +200,13 @@ mysqli_select_db($connection, "rpms");
             </div>
         </div>
 </div>
+
+
+
+
 <br>
 <?php
+
 include 'samplefooter.php';
+
 ?>
