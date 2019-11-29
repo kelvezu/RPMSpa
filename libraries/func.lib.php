@@ -962,7 +962,7 @@
                     endforeach;
                     return $res_arr;
                 endif;
-                }
+            }
 
 
             function showObsPeriodMT($conn, $user, $sy, $school)
