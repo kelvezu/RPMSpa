@@ -574,6 +574,8 @@
                 }
             }
 
+            // THIS FUNCTION WILL RETRIEVE THE RATING IN INDICATOR 
+            // used in auto generate cot indicator average
             function showObsRatingMT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
             {
                 $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE indicator_id = $indicator_id AND `user_id` = $user_id  AND `obs_period` = $obs_period AND sy = $sy  AND school_id = " . $school_id . " AND `status` = 'Active' ";
@@ -856,7 +858,7 @@
             function showAttachmentMT($conn, $objective_id, $user, $school, $sy, $mov_type)
             {
                 $attach_arr = [];
-                $sql_mov_b = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
+                $sql_mov_b = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy' AND `status` = 'Active'";
                 $result_b = mysqli_query($conn, $sql_mov_b) or die($conn->error . $sql_mov_b);
                 if (mysqli_num_rows($result_b) > 0) :
                     foreach ($result_b as $res) :
@@ -959,6 +961,116 @@
                         array_push($res_arr,$res);
                     endforeach;
                     return $res_arr;
+                endif;
+                }
+
+
+            function showObsPeriodMT($conn, $user, $sy, $school)
+            {
+                $qry = "SELECT `obs_period` FROM cot_mt_rating_a_tbl where `user_id` = $user and `sy` = $sy and `school_id` = $school and `status` = 'Active' GROUP by `obs_period`";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+            function showObsPeriodT($conn, $user, $sy, $school)
+            {
+                $qry = "SELECT `obs_period` FROM cot_t_rating_a_tbl where `user_id` = $user and `sy` = $sy and `school_id` = $school and `status` = 'Active' GROUP by `obs_period`";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+            function fetchCOTratingMT($conn, $user, $obs_period, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+            function fetchCOTratingT($conn, $user, $obs_period, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+            function fetchIndicatorAVGmt($conn, $user, $indicator, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_mt_indicator_ave_tbl` where `user_id` = $user AND indicator_id = $indicator  and `sy` = $sy and `school` = $school and `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return floatval($res['average']);
+                    endforeach;
                 else : return false;
                 endif;
             }
+
+            function fetchIndicatorAVGt($conn, $user, $indicator, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_indicator_ave_tbl` where `user_id` = $user AND indicator_id = $indicator  and `sy` = $sy and `school` = $school and `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return floatval($res['average']);
+                    endforeach;
+                else : return false;
+                endif;
+            }
+
+            function fetchCOTraterMT($conn, $user, $sy, $school, $obs)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` where `user_id` = $user AND obs_period = $obs   and `sy` = $sy and `school_id` = $school and `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    $rater_arr = [];
+                    foreach ($result as $res) :
+                        $rater1 =  $res['rater_id1'];
+                        $rater2 =  $res['rater_id2'];
+                        $rater3 =  $res['rater_id3'];
+                    endforeach;
+                    array_push($rater_arr, $rater1, $rater2, $rater3);
+                    return $rater_arr;
+                else : return false;
+                endif;
+            }
+
+            function fetchCOTraterT($conn, $user, $sy, $school, $obs)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` where `user_id` = $user AND obs_period = $obs   and `sy` = $sy and `school_id` = $school and `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    $rater_arr = [];
+                    foreach ($result as $res) :
+                        $rater1 =  $res['rater_id1'];
+                        $rater2 =  $res['rater_id2'];
+                        $rater3 =  $res['rater_id3'];
+
+                    endforeach;
+                    array_push($rater_arr, $rater1, $rater2, $rater3);
+                    return $rater_arr;
+                else : return false;
+                endif;
+            }
+        
