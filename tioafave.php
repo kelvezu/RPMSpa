@@ -114,9 +114,8 @@ endif;
     <div class="container">
 
         <?php
-        pre_r(RPMSdb::fetchCOTrating($conn, 32, 1, $_SESSION['active_sy_id'], $_SESSION['school_id'], 'a_tioafrating_tbl', 'b_tioafrating_tbl'));
+        //pre_r(RPMSdb::fetchCOTrating($conn, 32, 1, $_SESSION['active_sy_id'], $_SESSION['school_id'], 'a_tioafrating_tbl', 'b_tioafrating_tbl'));
         // pre_r(RPMSdb::fetchtallMT($conn, $_SESSION['school_id']));
-
         ?>
     </div>
 

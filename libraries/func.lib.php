@@ -481,7 +481,7 @@
                         $_SESSION['third_period'] = $res['third_period'];
                         $_SESSION['final_period'] = $res['fourth_period'];
                     endforeach;
-                    return $result_arr;
+                // return $result_arr;
                 else :
                     $_SESSION['first_period'] = '';
                     $_SESSION['second_period'] = '';

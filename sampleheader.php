@@ -15,6 +15,7 @@ include_once 'libraries/db.library.php';
 include_once 'libraries/func.lib.php';
 include_once 'includes/security.php';
 include_once 'libraries/queries.library.php';
+activeobsperiod($conn);
 ?>
 
 <head>
@@ -36,11 +37,11 @@ include_once 'libraries/queries.library.php';
         })
     </script>
     <!-- For Charts -->
-<script>
-    	
+    <script>
 
-	
-</script>
+
+
+    </script>
 
 </head>
 
