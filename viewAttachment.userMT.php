@@ -27,6 +27,7 @@ $supp_mov_file = 'supp_mov';
                         <th>#</th>
                         <th>Key Result Area</th>
                         <th>Objectives</th>
+                        <th>COT</th>
                         <th class="text-nowrap">Main MOV</th>
                         <th class="text-nowrap">Supporting MOV</th>
                         <th class="text-nowrap">Attachment Status</th>
@@ -36,15 +37,24 @@ $supp_mov_file = 'supp_mov';
                 <tbody class="font-weight-bold">
                     <?php foreach ($KRAandOBJ as $kra) : ?>
                         <tr>
-                            <td><?= $num++ ?></td>
-                            <td><?= displayKRA($conn, $kra['kra_id']) ?></td>
-                            <td><?= displayObjectiveMT($conn, $kra['mtobj_id']) ?></td>
+                            <td>
+                                <p><?= $num++ ?></p>
+                            </td>
+                            <td>
+                                <p data-toggle="tooltip" data-placement="top" title="<?= displayKRA($conn, $kra['mtobj_id']) ?>" class="">
+                                    KRA <?= $kra['kra_id'] ?>
+                                </p>
+                            </td>
+                            <td>
+                                <p data-toggle="tooltip" data-placement="top" title="<?= displayObjectiveMT($conn, $kra['mtobj_id']) ?>">Objective <?= $kra['mtobj_id'] ?></p>
+                            </td>
+                            <td>COT 1</td>
                             <td class="text-justify">
                                 <?php
                                     $main_mov =  showAttachmentMT($conn, $kra['mtobj_id'], $_SESSION['user_id'], $_SESSION['school_id'], $_SESSION['active_sy_id'], 'main_mov');
                                     foreach ($main_mov as $mmov) :
-                                        if ($mmov) : ?>
-                                        <a href="<?= 'sy_id=' . $mmov['sy_id'] . 'school=' . $mmov['school_id'] . 'movID=' . $mmov['mov_id'] . 'objID=' . $kra['mtobj_id'] . 'movType=' . $mmov['mov_type'] ?>" data-toggle="modal" data-target="#updateModal<?= $mmov['mov_id'] .   $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?= $mmov['file_name'] ?></a>
+                                        if (isset($mmov)) : ?>
+                                        <a href="<?= 'sy_id=' . $mmov['sy_id'] . 'school=' . $mmov['school_id'] . 'movID=' . $mmov['mov_id'] . 'objID=' . $kra['mtobj_id'] . 'movType=' . $mmov['mov_type'] ?>" data-toggle="modal" data-target="#updateModal<?= $mmov['mov_id'] .   $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?= $mmov['file_name']  ?></a>
 
                                         <!--Main MOV Modal -->
                                         <div class="modal fade" id="updateModal<?= $mmov['mov_id'] .   $kra['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -59,8 +69,8 @@ $supp_mov_file = 'supp_mov';
                                                     <div class="modal-body">
                                                         <div class="card">
                                                             <div class="card-header bg-light">
-                                                                <p><b>Attached in KRA: </b>"<i><?= displayKRA($conn, $kra['kra_id']) ?></i>"</p>
-                                                                <b>Attached in Objective: </b>
+                                                                <p><b>Attached in KRA <?= $kra['kra_id'] ?>: </b>"<i><?= displayKRA($conn, $kra['kra_id']) ?></i>"</p>
+                                                                <b>Attached in Objective <?= $kra['mtobj_id'] ?>: </b>
                                                                 "<i><?= displayObjectiveMT($conn, $kra['mtobj_id']) ?></i>"
                                                             </div>
                                                             <div class="card-body">
@@ -71,11 +81,11 @@ $supp_mov_file = 'supp_mov';
                                                                                 <p><b>File name:</b> <?= $mmov['file_name'] ?></p>
                                                                             </div>
                                                                             <form action="includes/processAttachUser.php" method="POST">
-                                                                                <input type="text" value="<?= $mmov['sy_id'] ?>" name="sy">
-                                                                                <input type="text" value="<?= $mmov['school_id'] ?>" name="school">
-                                                                                <input type="text" value="<?= $mmov['mov_id'] ?>" name="mov_id">
-                                                                                <input type="text" value="<?= $kra['mtobj_id'] ?>" name="obj_id">
-                                                                                <input type="text" value="<?= $mmov['mov_type'] ?>" name="mov_type">
+                                                                                <input type="hidden" value="<?= $mmov['sy_id'] ?>" name="sy">
+                                                                                <input type="hidden" value="<?= $mmov['school_id'] ?>" name="school">
+                                                                                <input type="hidden" value="<?= $mmov['mov_id'] ?>" name="mov_id">
+                                                                                <input type="hidden" value="<?= $kra['mtobj_id'] ?>" name="obj_id">
+                                                                                <input type="hidden" value="<?= $mmov['mov_type'] ?>" name="mov_type">
                                                                                 <div class="p-2"><button type="submit" class="btn btn-sm btn-outline-danger" name="remove_mt_attach">Remove Attachment</button></div>
                                                                             </form>
                                                                         </div>
@@ -118,6 +128,8 @@ $supp_mov_file = 'supp_mov';
 
 
 
+                                    <?php else :  ?>
+                                        <p> --- </p>
                                 <?php endif;
                                     endforeach;
                                     ?>
@@ -142,8 +154,8 @@ $supp_mov_file = 'supp_mov';
                                                     <div class="modal-body">
                                                         <div class="card">
                                                             <div class="card-header bg-light">
-                                                                <p><b>Attached in KRA: </b>"<i><?= displayKRA($conn, $kra['kra_id']) ?></i>"</p>
-                                                                <b>Attached in Objective: </b>
+                                                                <p><b>Attached in KRA <?= $kra['kra_id'] ?>: </b>"<i><?= displayKRA($conn, $kra['kra_id']) ?></i>"</p>
+                                                                <b>Attached in Objective <?= $kra['mtobj_id'] ?>: </b>
                                                                 "<i><?= displayObjectiveMT($conn, $kra['mtobj_id']) ?></i>"
                                                             </div>
                                                             <div class="card-body">
@@ -154,11 +166,11 @@ $supp_mov_file = 'supp_mov';
                                                                                 <p><b>File name:</b> <?= $mmov['file_name'] ?></p>
                                                                             </div>
                                                                             <form action="includes/processAttachUser.php" method="POST">
-                                                                                <input type="text" value="<?= $mmov['sy_id'] ?>" name="sy">
-                                                                                <input type="text" value="<?= $mmov['school_id'] ?>" name="school">
-                                                                                <input type="text" value="<?= $mmov['mov_id'] ?>" name="mov_id">
-                                                                                <input type="text" value="<?= $kra['mtobj_id'] ?>" name="obj_id">
-                                                                                <input type="text" value="<?= $mmov['mov_type'] ?>" name="mov_type">
+                                                                                <input type="hidden" value="<?= $mmov['sy_id'] ?>" name="sy">
+                                                                                <input type="hidden" value="<?= $mmov['school_id'] ?>" name="school">
+                                                                                <input type="hidden" value="<?= $mmov['mov_id'] ?>" name="mov_id">
+                                                                                <input type="hidden" value="<?= $kra['mtobj_id'] ?>" name="obj_id">
+                                                                                <input type="hidden" value="<?= $mmov['mov_type'] ?>" name="mov_type">
                                                                                 <div class="p-2"><button type="submit" class="btn btn-sm btn-outline-danger" name="remove_mt_attach">Remove Attachment</button></div>
                                                                             </form>
                                                                         </div>

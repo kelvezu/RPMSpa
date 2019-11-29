@@ -1150,6 +1150,33 @@ class RPMSdb
         endif;
     }
 
+    public static function fetchSpecificTindicator($conn, $sy, $school, $user)
+    {
+        $qry = "SELECT `indicator_id`,`user_id` FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
+
+    public static function fetchSpecificMTindicator($conn, $sy, $school, $user)
+    {
+        $qry = "SELECT `indicator_id`,`user_id` FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
+
+
     public static function fetchMTindicator($conn)
     {
         $result_arr = [];
@@ -1179,9 +1206,9 @@ class RPMSdb
         }
     }
 
-    public static function haveCOTaverageMT($conn, $user_id, $sy, $indicator_id)
+    public static function haveCOTaverageMT($conn, $user_id, $sy, $indicator_id, $school)
     {
-        $qry = "SELECT * FROM cot_mt_indicator_ave_tbl WHERE `user_id`  =  $user_id  AND sy =  $sy AND indicator_id = $indicator_id ";
+        $qry = "SELECT * FROM cot_mt_indicator_ave_tbl WHERE `user_id`  =  $user_id  AND sy =  $sy AND school = $school AND indicator_id = $indicator_id ";
         $result = mysqli_query($conn, $qry) or die($conn->error);
         $count_result = mysqli_num_rows($result);
         if ($count_result > 0) {
@@ -1191,9 +1218,9 @@ class RPMSdb
         }
     }
 
-    public static function hasFinalAverageMT($conn, $user_id, $sy)
+    public static function hasFinalAverageMT($conn, $user_id, $sy, $school)
     {
-        $qry = "SELECT * FROM cot_mt_final_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND `status`  = 'Active'  ";
+        $qry = "SELECT * FROM cot_mt_final_ave_tbl WHERE `user_id` = $user_id AND sy = $sy AND school = $school AND `status`  = 'Active'  ";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'error in hasFinakAverageMT');
         $count_result = mysqli_num_rows($result);
         if ($count_result > 0) :
@@ -1369,7 +1396,6 @@ class RPMSdb
 
     // GENERATE COT INDICATOR AVERAGE
     // currently working
-
     public static function generateCOTindicatorAVG($conn, $sy)
     {
         $qry = "SELECT * FROM account_tbl WHERE position IN ('Teacher I','Teacher II','Teacher III','Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') AND `status` = 'Active' ";
@@ -1390,7 +1416,6 @@ class RPMSdb
             $acc_id = $acc['user_id'];
             $school = $acc['school_id'];
             $rater =  $acc['rater'];
-            $status = $acc['status'];
 
 
             // methods for MT
@@ -1399,8 +1424,7 @@ class RPMSdb
                 $check_obs2 = self::MTcheckResult_Obs2($conn, $acc_id, $sy, $school);
                 $check_obs3 = self::MTcheckResult_Obs3($conn, $acc_id, $sy, $school);
                 $check_obs4 = self::MTcheckResult_Obs4($conn, $acc_id, $sy, $school);
-                $fetchIndicator = self::fetchMTindicator($conn);
-
+                $fetchIndicator = self::fetchSpecificMTindicator($conn, $sy, $school, $acc_id);
 
             // methods for T
             elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
@@ -1408,55 +1432,53 @@ class RPMSdb
                 $check_obs2 = self::TcheckResult_Obs2($conn, $acc_id, $sy, $school);
                 $check_obs3 = self::TcheckResult_Obs3($conn, $acc_id, $sy, $school);
                 $check_obs4 = self::TcheckResult_Obs4($conn, $acc_id, $sy, $school);
-                $fetchIndicator = self::fetchTindicator($conn);
-
-
+                $fetchIndicator =  self::fetchSpecificTindicator($conn, $sy, $school, $acc_id);
             else : return false;
             endif;
 
-            // if 4 COT IS COMPLETE
-            if ($check_obs1 and $check_obs2 and $check_obs3 and $check_obs4) :
+            // IF USER HAS COT
+            if ($check_obs1 or $check_obs2 or $check_obs3 or $check_obs4) :
                 // FETCH ALL INDICATORS
                 foreach ($fetchIndicator as $fetch_ind) :
                     if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
-                        // FETCH RATING OF EACH MT INDICATORS
-                        $t_obsRate1 = showObsRatingMT($conn, 1, $fetch_ind['mtindicator_id'], $acc_id, $sy, $school);
-                        $t_obsRate2 = showObsRatingMT($conn, 2, $fetch_ind['mtindicator_id'], $acc_id, $sy, $school);
-                        $t_obsRate3 = showObsRatingMT($conn, 3, $fetch_ind['mtindicator_id'], $acc_id, $sy, $school);
-                        $t_obsRate4 = showObsRatingMT($conn, 4, $fetch_ind['mtindicator_id'], $acc_id, $sy, $school);
+                        // FETCH RATING OF EACH MT INDICATORS IN EACH OBS PERIOD
+                        $t_obsRate1 = showObsRatingMT($conn, 1, $fetch_ind['indicator_id'], $acc_id, $sy, $school);
+                        $t_obsRate2 = showObsRatingMT($conn, 2, $fetch_ind['indicator_id'], $acc_id, $sy, $school);
+                        $t_obsRate3 = showObsRatingMT($conn, 3, $fetch_ind['indicator_id'], $acc_id, $sy, $school);
+                        $t_obsRate4 = showObsRatingMT($conn, 4, $fetch_ind['indicator_id'], $acc_id, $sy, $school);
 
                         // GENERATE THE AVERAGE OF INDICATORS
-                        $t_ave = showObsAverage($t_obsRate1, $t_obsRate2, $t_obsRate3, $t_obsRate4);
-                        $hasCOTindicatorAVG = self::haveCOTaverageMT($conn, $acc_id, $sy, $fetch_ind['mtindicator_id']);
 
+                        $hasCOTindicatorAVG = self::haveCOTaverageMT($conn, $acc_id, $sy, $fetch_ind['indicator_id'], $school);
                         // IF THERE IS RECORD IN COT_MT_INDICATOR_AVE_TBL 
                         if ($hasCOTindicatorAVG) :
+                            $t_ave = generateAVGforCOT($conn, 'cot_mt_rating_a_tbl', $acc_id, $fetch_ind['indicator_id'], $sy, $school);
+                            $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
+                            // console_log('T_AVE= ' . floatval($t_ave) . ' ' . 'T_CURRENT= ' . floatval($t_ave_current));
 
-                            //INSERT FETCH cot_mt_indicator_ave_tbl TO CHECK IF THERE ARE DIFFERENCE IN CURRENT INDICATOR AVG
-                            $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['mtindicator_id'], $sy, $school);
 
                             // DIFFERENTIATE THE t_ave and the t_ave_current IF TRUE IT WILL UPDATE
-                            if ($t_ave != $t_ave_current) :
-                                $qry_update = "UPDATE `cot_mt_indicator_ave_tbl` SET `average` = '$t_ave'  WHERE `user_id` = '$acc_id' AND indicator_id = " . $fetch_ind['mtindicator_id'] . "  AND `sy` = '$sy' AND school = '$school'";
+                            if ($t_ave !== $t_ave_current) :
+                                $qry_update = "UPDATE `cot_mt_indicator_ave_tbl` SET `average` = '$t_ave'  WHERE `user_id` = '$acc_id' AND indicator_id = " . $fetch_ind['indicator_id'] . "  AND `sy` = '$sy' AND school = '$school'";
                                 $upd_result = mysqli_query($conn, $qry_update) or die($conn->error . $qry_update);
-                                if (!$upd_result) :
-                                    return "Update Failed MT!" . displayname($conn, $acc_id);
-                                else : return "Update Success MT!" . displayname($conn, $acc_id);
+                                if ($upd_result) :
+                                    // $name = displayname($conn, $acc_id);
+                                    console_log("Update success MT!" . intval($acc_id) . 'AVG= ' . $t_ave);
+                                // else : return "Update Success MT!" ;
                                 endif;
                             endif;
 
+
                         elseif (!$hasCOTindicatorAVG) :
-                            $qry_insert = "INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES ('$acc_id'," . $fetch_ind['mtindicator_id'] . ",'$t_ave','$sy','$school','$rater','Active')";
+                            $qry_insert = "INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES ('$acc_id'," . $fetch_ind['indicator_id'] . ",'$t_ave','$sy','$school','$rater','Active')";
 
                             $ins_result = mysqli_query($conn, $qry_insert);
-                            if (!$ins_result) :
-                                return "Update Failed MT!" . displayname($conn, $acc_id);
-                            else : return "Update Success MT!" . displayname($conn, $acc_id);
+                            if ($ins_result) :
+                                console_log("Insert Success MT!" . intval($acc_id) . 'AVG= ' . $t_ave);
+                            // else : return "Update Success MT!" . displayname($conn, $acc_id);
                             endif;
-                        else : return false;
+                        else : console_log($acc_id . 'Failed to Insert MT');
                         endif;
-
-
 
                     // FETCH RATING OF EACH T INDICATORS
                     elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
@@ -1466,31 +1488,32 @@ class RPMSdb
                         $t_obsRate4 = showObsRatingT($conn, 4, $fetch_ind['indicator_id'], $acc_id, $sy, $school);
 
                         // GENERATE THE AVERAGE OF INDICATORS
-                        $t_ave = showObsAverage($t_obsRate1, $t_obsRate2, $t_obsRate3, $t_obsRate4);
+                        $t_ave =  generateAVGforCOT($conn, 'cot_t_rating_a_tbl', $acc_id, $fetch_ind['indicator_id'], $sy, $school);
+                        $t_ave_current = self::currentCOTavgT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
                         $hasCOTindicatorAVG = self::haveCOTaverageT($conn, $acc_id, $sy, $fetch_ind['indicator_id']);
                         // THIS METHOD WILL CHECK IF THERE ARE CURRENT RECORD IN THE DATABASE
                         if ($hasCOTindicatorAVG) :
-                            //echo displayname($conn, $acc_id) . ' has record!' . '<br>';
+                            // $t_ave =  generateAVGforCOT($conn, 'cot_t_rating_a_tbl', $acc_id, $fetch_ind['indicator_id'], $sy, $school);
+                            // $t_ave_current = self::currentCOTavgT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
+                            // console_log('T_AVE= ' . floatval($t_ave) . ' ' . 'T_CURRENT= ' . floatval($t_ave_current));
                             //INSERT FETCH cot_mt_indicator_ave_tbl TO CHECK IF THERE ARE DIFFERENCE IN CURRENT INDICATOR AVG
-                            $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
 
                             // DIFFERENTIATE THE t_ave and the t_ave_current IF TRUE IT WILL UPDATE
-                            if ($t_ave != $t_ave_current) :
+                            if ($t_ave !== $t_ave_current) :
                                 $qry_update = "UPDATE `cot_t_indicator_ave_tbl` SET `average` = '$t_ave'  WHERE `user_id` = '$acc_id' AND indicator_id = " . $fetch_ind['indicator_id'] . "  AND `sy` = '$sy' AND school = '$school'";
                                 $upd_result = mysqli_query($conn, $qry_update) or die($conn->error . $qry_update);
-                                if (!$upd_result) :
-                                    return "Update Failed T!" . displayname($conn, $acc_id);
-                                else : return "Update Success T!" . displayname($conn, $acc_id);
+                                if ($upd_result) :
+                                    console_log("Update Success T!" . intval($acc_id) . 'AVG= ' . $t_ave);
                                 endif;
                             endif;
 
                         elseif (!$hasCOTindicatorAVG) :
                             $qry_insert = "INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES ('$acc_id'," . $fetch_ind['indicator_id'] . ",'$t_ave','$sy','$school','$rater','Active')";
 
-                            $ins_result = mysqli_query($conn, $qry_insert);
-                            if (!$ins_result) :
-                                return "Update Failed T!" . displayname($conn, $acc_id);
-                            else : return "Update Success T!" . displayname($conn, $acc_id);
+                            $ins_result = mysqli_query($conn, $qry_insert) or die($qry_insert);
+                            if ($ins_result) :
+                                console_log("Insert Success T!" . intval($acc_id) . 'AVG= ' . $t_ave);
+                            // else : return "Update Success T!" . displayname($conn, $acc_id);
                             endif;
                         endif;
                     else : return false;
@@ -1505,185 +1528,186 @@ class RPMSdb
 
 
     // THIS METHOD WILL AUTO GENERATE THE COT INDICATOR AVERAGE AND THE FINAL COT AVERAGE
-    public static function generateCOTaverage($conn, $sy)
-    {
-        $qry = "SELECT * FROM account_tbl WHERE position IN ('Teacher I','Teacher II','Teacher III','Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') AND `status` = 'Active' ";
-        $results = mysqli_query($conn, $qry) or die($conn->error);
-        $count_result = mysqli_num_rows($results);
+    // deprecated DO NOT USE THIS FUNCTION
+    // public static function generateCOTaverage($conn, $sy)
+    // {
+    //     $qry = "SELECT * FROM account_tbl WHERE position IN ('Teacher I','Teacher II','Teacher III','Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') AND `status` = 'Active' ";
+    //     $results = mysqli_query($conn, $qry) or die($conn->error);
+    //     $count_result = mysqli_num_rows($results);
 
-        // DISPLAY ALL MT AND T THAT ARE ACTIVE
-        if ($count_result > 0) :
-            $account_arr = [];
-            foreach ($results as $result) :
-                array_push($account_arr, $result);
-            endforeach;
-        else : return false;
-        endif;
-
-
-        foreach ($account_arr as $acc) :
-            $position = $acc['position'];
-            $acc_id = $acc['user_id'];
-            $school = $acc['school_id'];
-            $rater =  $acc['rater'];
-            $status = $acc['status'];
-
-            if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
-
-                // METHODS IN MT
-                $mt_obs1 = self::MTcheckResult_Obs1($conn, $acc_id, $sy, $school);
-                $mt_obs2 = self::MTcheckResult_Obs2($conn, $acc_id, $sy, $school);
-                $mt_obs3 = self::MTcheckResult_Obs3($conn, $acc_id, $sy, $school);
-                $mt_obs4 = self::MTcheckResult_Obs4($conn, $acc_id, $sy, $school);
-
-                if ($mt_obs1 or $mt_obs2 or $mt_obs3 or $mt_obs4) :
-                    foreach (self::fetchMTindicator($conn) as $mt_res) :
-                        $mt_obsRate1 = showObsRatingMT($conn, 1, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                        $mt_obsRate2 = showObsRatingMT($conn, 2, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                        $mt_obsRate3 = showObsRatingMT($conn, 3, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                        $mt_obsRate4 = showObsRatingMT($conn, 4, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                        $mt_ave = showObsAverage($mt_obsRate1, $mt_obsRate2, $mt_obsRate3, $mt_obsRate4);
-                        // THIS METHOD WILL CHECK IF MT HAS INDICATOR AVERAGE FOR COT
-                        $hasCOTaveMT = self::haveCOTaverageMT($conn, $acc_id, $sy, $mt_res['mtindicator_id']);
-                        if (!$hasCOTaveMT) :
-                            // IF USER DOESNT HAVE INDICATOR AVERAGE THIS WILL SAVE THE AVERAGE FOR EACH INDICATOR
-
-                            if ($mt_obsRate1 and $mt_obsRate2 and $mt_obsRate3 and $mt_obsRate4) :
-                                $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['mtindicator_id'] . ',' . $mt_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
-                                $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error . $mt_ave);
-                                if (!$mt_record_ave) :
-                                    return false;
-                                endif;
-                            endif;
+    //     // DISPLAY ALL MT AND T THAT ARE ACTIVE
+    //     if ($count_result > 0) :
+    //         $account_arr = [];
+    //         foreach ($results as $result) :
+    //             array_push($account_arr, $result);
+    //         endforeach;
+    //     else : return false;
+    //     endif;
 
 
+    //     foreach ($account_arr as $acc) :
+    //         $position = $acc['position'];
+    //         $acc_id = $acc['user_id'];
+    //         $school = $acc['school_id'];
+    //         $rater =  $acc['rater'];
+    //         $status = $acc['status'];
 
+    //         if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
 
+    //             // METHODS IN MT
+    //             $mt_obs1 = self::MTcheckResult_Obs1($conn, $acc_id, $sy, $school);
+    //             $mt_obs2 = self::MTcheckResult_Obs2($conn, $acc_id, $sy, $school);
+    //             $mt_obs3 = self::MTcheckResult_Obs3($conn, $acc_id, $sy, $school);
+    //             $mt_obs4 = self::MTcheckResult_Obs4($conn, $acc_id, $sy, $school);
 
-                        elseif ($hasCOTaveMT) :
+    //             if ($mt_obs1 or $mt_obs2 or $mt_obs3 or $mt_obs4) :
+    //                 foreach (self::fetchMTindicator($conn) as $mt_res) :
+    //                     $mt_obsRate1 = showObsRatingMT($conn, 1, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                     $mt_obsRate2 = showObsRatingMT($conn, 2, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                     $mt_obsRate3 = showObsRatingMT($conn, 3, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                     $mt_obsRate4 = showObsRatingMT($conn, 4, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                     $mt_ave = showObsAverage($mt_obsRate1, $mt_obsRate2, $mt_obsRate3, $mt_obsRate4);
+    //                     // THIS METHOD WILL CHECK IF MT HAS INDICATOR AVERAGE FOR COT
+    //                     $hasCOTaveMT = self::haveCOTaverageMT($conn, $acc_id, $sy, $mt_res['mtindicator_id'], $school);
+    //                     if (!$hasCOTaveMT) :
+    //                         // IF USER DOESNT HAVE INDICATOR AVERAGE THIS WILL SAVE THE AVERAGE FOR EACH INDICATOR
 
-                            $mt_obsRate1_current = showObsRatingMT($conn, 1, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                            $mt_obsRate2_current = showObsRatingMT($conn, 2, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                            $mt_obsRate3_current = showObsRatingMT($conn, 3, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                            $mt_obsRate4_current = showObsRatingMT($conn, 4, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
-                            $new_mt_ave = showObsAverage($mt_obsRate1_current, $mt_obsRate2_current, $mt_obsRate3_current, $mt_obsRate4_current);
-
-
-
-                            $mt_obsrate1_old =  self::getCOTavgMT($conn, $acc_id, 1, $mt_res['mtindicator_id'], $sy, $school);
-                            $mt_obsrate2_old =  self::getCOTavgMT($conn, $acc_id, 2, $mt_res['mtindicator_id'], $sy, $school);
-                            $mt_obsrate3_old =  self::getCOTavgMT($conn, $acc_id, 3, $mt_res['mtindicator_id'], $sy, $school);
-                            $mt_obsrate4_old =  self::getCOTavgMT($conn, $acc_id, 4, $mt_res['mtindicator_id'], $sy, $school);
-                            // THIS METHOD WILL CHECK IF MT HAS INDICATOR AVERAGE FOR COT
-                            if (($mt_obsRate1_current != $mt_obsrate1_old) or ($mt_obsRate2_current != $mt_obsrate2_old) or ($mt_obsRate3_current != $mt_obsrate3_old) or ($mt_obsRate4_current != $mt_obsrate4_old)) :
-                                $updateQryMT = "UPDATE `cot_mt_indicator_ave_tbl` SET `average`=$new_mt_ave,`sy`= $sy,`school`= $school WHERE `user_id` = $acc_id AND indicator_id = " . $mt_res['mtindicator_id'] . "  ";
-
-
-                            endif;
-                            $mt_record_ave = mysqli_query($conn, $updateQryMT) or die($conn->error . $mt_ave);
-                            if (!$mt_record_ave) :
-                                return false;
-                            endif;
-
-
-
-                        else :
-
-                            if ($mt_obsRate1 > 0) :
-                                $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['mtindicator_id'] . ',' . $mt_obsRate1 . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
-
-                                $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error . $mt_ave);
-                                if ($mt_record_ave) :
-                                    echo "record mt_obsRate1 success!" . displayName($conn, $acc_id);
-                                else :
-                                    echo "record failed";
-                                endif;
-                            endif;
-
-
-
-                        endif;
-                    endforeach;
-                else : return false;
-                endif;
-
-            // TEACHER
-            elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
-
-                //METHODS IN T
-                $t_obs1 = self::TcheckResult_Obs1($conn, $acc_id, $sy, $school);
-                $t_obs2 = self::TcheckResult_Obs2($conn, $acc_id, $sy, $school);
-                $t_obs3 = self::TcheckResult_Obs3($conn, $acc_id, $sy, $school);
-                $t_obs4 = self::TcheckResult_Obs4($conn, $acc_id, $sy, $school);
-
-                if ($t_obs1 or $t_obs2 or $t_obs3 or $t_obs4) :
-                    foreach (self::fetchTindicator($conn) as $t_res) :
-                        $t_obsRate1 = showObsRatingT($conn, 1, $t_res['indicator_id'], $acc_id, $sy, $school);
-                        $t_obsRate2 = showObsRatingT($conn, 2, $t_res['indicator_id'], $acc_id, $sy, $school);
-                        $t_obsRate3 = showObsRatingT($conn, 3, $t_res['indicator_id'], $acc_id, $sy, $school);
-                        $t_obsRate4 = showObsRatingT($conn, 4, $t_res['indicator_id'], $acc_id, $sy, $school);
-                        $t_ave = showObsAverage($t_obsRate1, $t_obsRate2, $t_obsRate3, $t_obsRate4);
-                        // INSERT THE SAVE METHOD.
-                        $hasCOTaveT = self::haveCOTaverageT($conn, $acc_id, $sy, $t_res['indicator_id']);
-                        if (!$hasCOTaveT) :
-                            $insertqryT = 'INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $t_res['indicator_id'] . ',' . $t_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
-
-                            $t_record_ave = mysqli_query($conn, $insertqryT) or die($conn->error . 'generateCOTaverage');
-                            if (!$t_record_ave) :
-                                return false;
-                            endif;
-
-                        elseif ($hasCOTaveT) :
-
-                            $t_obsRate1_current = showObsRatingT($conn, 1, $t_res['indicator_id'], $acc_id, $sy, $school);
-                            $t_obsRate2_current = showObsRatingT($conn, 2, $t_res['indicator_id'], $acc_id, $sy, $school);
-                            $t_obsRate3_current = showObsRatingT($conn, 3, $t_res['indicator_id'], $acc_id, $sy, $school);
-                            $t_obsRate4_current = showObsRatingT($conn, 4, $t_res['indicator_id'], $acc_id, $sy, $school);
-                            $new_t_ave = showObsAverage($t_obsRate1_current, $t_obsRate2_current, $t_obsRate3_current, $t_obsRate4_current);
-
-                            $t_obsrate1_old =  self::getCOTavgT($conn, $acc_id, 1, $t_res['indicator_id'], $sy, $school);
-                            $t_obsrate2_old =  self::getCOTavgT($conn, $acc_id, 2, $t_res['indicator_id'], $sy, $school);
-                            $t_obsrate3_old =  self::getCOTavgT($conn, $acc_id, 3, $t_res['indicator_id'], $sy, $school);
-                            $t_obsrate4_old =  self::getCOTavgT($conn, $acc_id, 4, $t_res['indicator_id'], $sy, $school);
-                            // THIS METHOD WILL CHECK IF T HAS INDICATOR AVERAGE FOR COT
-                            if (($t_obsRate1_current != $t_obsrate1_old) or ($t_obsRate2_current != $t_obsrate2_old) or ($t_obsRate3_current != $t_obsrate3_old) or ($t_obsRate4_current != $t_obsrate4_old)) :
-                                $updateQryT = "UPDATE `cot_t_indicator_ave_tbl` SET `average`=$new_t_ave,`sy`= $sy,`school`= $school WHERE `user_id` = $acc_id AND indicator_id = " . $t_res['indicator_id'] . "  ";
-
-                                $t_record_ave = mysqli_query($conn, $updateQryT) or die($conn->error . $t_ave);
-                                if (!$t_record_ave) :
-                                    return die($conn->error);
-                                endif;
+    //                         if ($mt_obsRate1 and $mt_obsRate2 and $mt_obsRate3 and $mt_obsRate4) :
+    //                             $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['mtindicator_id'] . ',' . $mt_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
+    //                             $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error . $mt_ave);
+    //                             if (!$mt_record_ave) :
+    //                                 return false;
+    //                             endif;
+    //                         endif;
 
 
 
 
-                            else : return false;
-                            endif;
-                        // INSERT THE SAVE METHOD FOR FINAL AVERAGE
-                        // if (!(self::hasFinalAverageT($conn, $acc_id, $sy))) :
-                        //     // INSERT THE SAVE METHOD HERE
-                        //     self::insertFinalCOTAverageT($conn, $acc_id, $sy, $school, $rater);
-                        // elseif (self::hasFinalAverageT($conn, $acc_id, $sy)) :
-                        //     self::updateFinalCOTaverageT($conn, $acc_id, $sy);
-                        // else : return false;
-                        // endif;
+
+    //                     elseif ($hasCOTaveMT) :
+
+    //                         $mt_obsRate1_current = showObsRatingMT($conn, 1, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                         $mt_obsRate2_current = showObsRatingMT($conn, 2, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                         $mt_obsRate3_current = showObsRatingMT($conn, 3, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                         $mt_obsRate4_current = showObsRatingMT($conn, 4, $mt_res['mtindicator_id'], $acc_id, $sy, $school);
+    //                         $new_mt_ave = showObsAverage($mt_obsRate1_current, $mt_obsRate2_current, $mt_obsRate3_current, $mt_obsRate4_current);
 
 
 
-                        endif;
-                    endforeach;
-                else :
-                    return false;
-                endif;
+    //                         $mt_obsrate1_old =  self::getCOTavgMT($conn, $acc_id, 1, $mt_res['mtindicator_id'], $sy, $school);
+    //                         $mt_obsrate2_old =  self::getCOTavgMT($conn, $acc_id, 2, $mt_res['mtindicator_id'], $sy, $school);
+    //                         $mt_obsrate3_old =  self::getCOTavgMT($conn, $acc_id, 3, $mt_res['mtindicator_id'], $sy, $school);
+    //                         $mt_obsrate4_old =  self::getCOTavgMT($conn, $acc_id, 4, $mt_res['mtindicator_id'], $sy, $school);
+    //                         // THIS METHOD WILL CHECK IF MT HAS INDICATOR AVERAGE FOR COT
+    //                         if (($mt_obsRate1_current != $mt_obsrate1_old) or ($mt_obsRate2_current != $mt_obsrate2_old) or ($mt_obsRate3_current != $mt_obsrate3_old) or ($mt_obsRate4_current != $mt_obsrate4_old)) :
+    //                             $updateQryMT = "UPDATE `cot_mt_indicator_ave_tbl` SET `average`=$new_mt_ave,`sy`= $sy,`school`= $school WHERE `user_id` = $acc_id AND indicator_id = " . $mt_res['mtindicator_id'] . "  ";
 
 
-            // IF NOT T AND MT 
-            else : return false;
+    //                         endif;
+    //                         $mt_record_ave = mysqli_query($conn, $updateQryMT) or die($conn->error . $mt_ave);
+    //                         if (!$mt_record_ave) :
+    //                             return false;
+    //                         endif;
 
-            endif;
-        endforeach;
-        mysqli_close($conn);
-    }
+
+
+    //                     else :
+
+    //                         if ($mt_obsRate1 > 0) :
+    //                             $insertqryMT = 'INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $mt_res['mtindicator_id'] . ',' . $mt_obsRate1 . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
+
+    //                             $mt_record_ave = mysqli_query($conn, $insertqryMT) or die($conn->error . $mt_ave);
+    //                             if ($mt_record_ave) :
+    //                                 echo "record mt_obsRate1 success!" . displayName($conn, $acc_id);
+    //                             else :
+    //                                 echo "record failed";
+    //                             endif;
+    //                         endif;
+
+
+
+    //                     endif;
+    //                 endforeach;
+    //             else : return false;
+    //             endif;
+
+    //         // TEACHER
+    //         elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
+
+    //             //METHODS IN T
+    //             $t_obs1 = self::TcheckResult_Obs1($conn, $acc_id, $sy, $school);
+    //             $t_obs2 = self::TcheckResult_Obs2($conn, $acc_id, $sy, $school);
+    //             $t_obs3 = self::TcheckResult_Obs3($conn, $acc_id, $sy, $school);
+    //             $t_obs4 = self::TcheckResult_Obs4($conn, $acc_id, $sy, $school);
+
+    //             if ($t_obs1 or $t_obs2 or $t_obs3 or $t_obs4) :
+    //                 foreach (self::fetchTindicator($conn) as $t_res) :
+    //                     $t_obsRate1 = showObsRatingT($conn, 1, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                     $t_obsRate2 = showObsRatingT($conn, 2, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                     $t_obsRate3 = showObsRatingT($conn, 3, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                     $t_obsRate4 = showObsRatingT($conn, 4, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                     $t_ave = showObsAverage($t_obsRate1, $t_obsRate2, $t_obsRate3, $t_obsRate4);
+    //                     // INSERT THE SAVE METHOD.
+    //                     $hasCOTaveT = self::haveCOTaverageT($conn, $acc_id, $sy, $t_res['indicator_id']);
+    //                     if (!$hasCOTaveT) :
+    //                         $insertqryT = 'INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES (' . $acc_id . ',' . $t_res['indicator_id'] . ',' . $t_ave . ',' . $sy . ',' . $school . ',' . $rater . ',"' . $status . '")';
+
+    //                         $t_record_ave = mysqli_query($conn, $insertqryT) or die($conn->error . 'generateCOTaverage');
+    //                         if (!$t_record_ave) :
+    //                             return false;
+    //                         endif;
+
+    //                     elseif ($hasCOTaveT) :
+
+    //                         $t_obsRate1_current = showObsRatingT($conn, 1, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                         $t_obsRate2_current = showObsRatingT($conn, 2, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                         $t_obsRate3_current = showObsRatingT($conn, 3, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                         $t_obsRate4_current = showObsRatingT($conn, 4, $t_res['indicator_id'], $acc_id, $sy, $school);
+    //                         $new_t_ave = showObsAverage($t_obsRate1_current, $t_obsRate2_current, $t_obsRate3_current, $t_obsRate4_current);
+
+    //                         $t_obsrate1_old =  self::getCOTavgT($conn, $acc_id, 1, $t_res['indicator_id'], $sy, $school);
+    //                         $t_obsrate2_old =  self::getCOTavgT($conn, $acc_id, 2, $t_res['indicator_id'], $sy, $school);
+    //                         $t_obsrate3_old =  self::getCOTavgT($conn, $acc_id, 3, $t_res['indicator_id'], $sy, $school);
+    //                         $t_obsrate4_old =  self::getCOTavgT($conn, $acc_id, 4, $t_res['indicator_id'], $sy, $school);
+    //                         // THIS METHOD WILL CHECK IF T HAS INDICATOR AVERAGE FOR COT
+    //                         if (($t_obsRate1_current != $t_obsrate1_old) or ($t_obsRate2_current != $t_obsrate2_old) or ($t_obsRate3_current != $t_obsrate3_old) or ($t_obsRate4_current != $t_obsrate4_old)) :
+    //                             $updateQryT = "UPDATE `cot_t_indicator_ave_tbl` SET `average`=$new_t_ave,`sy`= $sy,`school`= $school WHERE `user_id` = $acc_id AND indicator_id = " . $t_res['indicator_id'] . "  ";
+
+    //                             $t_record_ave = mysqli_query($conn, $updateQryT) or die($conn->error . $t_ave);
+    //                             if (!$t_record_ave) :
+    //                                 return die($conn->error);
+    //                             endif;
+
+
+
+
+    //                         else : return false;
+    //                         endif;
+    //                     // INSERT THE SAVE METHOD FOR FINAL AVERAGE
+    //                     // if (!(self::hasFinalAverageT($conn, $acc_id, $sy))) :
+    //                     //     // INSERT THE SAVE METHOD HERE
+    //                     //     self::insertFinalCOTAverageT($conn, $acc_id, $sy, $school, $rater);
+    //                     // elseif (self::hasFinalAverageT($conn, $acc_id, $sy)) :
+    //                     //     self::updateFinalCOTaverageT($conn, $acc_id, $sy);
+    //                     // else : return false;
+    //                     // endif;
+
+
+
+    //                     endif;
+    //                 endforeach;
+    //             else :
+    //                 return false;
+    //             endif;
+
+
+    //         // IF NOT T AND MT 
+    //         else : return false;
+
+    //         endif;
+    //     endforeach;
+    //     mysqli_close($conn);
+    // }
 
     public static function fetchtallT($conn, $school_id)
     {

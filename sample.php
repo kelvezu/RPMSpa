@@ -230,7 +230,7 @@ $fourth_period_int = intval(strtotime($_SESSION['final_period']));
 echo ($fourth_period_int) . '<br/>';
 
 
-echo showObsAverage(3, 4, 5, "-") . BR;
+// echo showObsAverage(3, 4, 5, "-") . BR;
 
 // $results = rpmsdb::getCOTavgMT($conn, 33, 1, $_SESSION['active_sy_id'], $_SESSION['school_id']);
 // pre_r($results);
@@ -252,7 +252,7 @@ $sy = $_SESSION['active_sy_id'];
 //     endforeach;
 // endif;
 
-pre_r(showAttachmentMT($conn, 1, 33, 14, $sy, 'main_mov'));
+// pre_r(showAttachmentMT($conn, 1, 33, 14, $sy, 'main_mov'));
 // foreach ($res as $r) :
 //     echo ($r) . '<br>';
 // endforeach;
@@ -275,7 +275,7 @@ pre_r(showAttachmentMT($conn, 1, 33, 14, $sy, 'main_mov'));
 //     endforeach;
 // endif;
 
-$female = fetchCountAge($conn,$sy,$_SESSION['school_id'],'age','8');
+// $female = fetchCountAge($conn, $sy, $_SESSION['school_id'], 'age', '8');
 
 // $qry = "SELECT * FROM `mtobj_tbl`";
 // $results = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -285,15 +285,18 @@ $female = fetchCountAge($conn,$sy,$_SESSION['school_id'],'age','8');
 //     endforeach;
 // endif;
 ?>
-
-
 <img src="attachments/Master Teacher/5ddd6bcf16b707.61177521.jpg" width='600' height='1000' alt="ironman" />
 
-
-
-
-
 <?php
+//echo generateAVGforCOT($conn, 'cot_mt_rating_a_tbl', 33, 1, $sy, $_SESSION['school_id']);
+rpmsdb::generateCOTindicatorAVG($conn, $sy);
+
+
+
+
+
+
+
 
 
 

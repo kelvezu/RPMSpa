@@ -934,3 +934,17 @@
                     endforeach;
                 }
             }
+            // this function is for average of COT only!
+
+            function generateAVGforCOT($conn, $table_name, $user, $indicator, $sy, $school)
+            {
+                $qry = "SELECT AVG(ALL rating) AS ave FROM `$table_name` WHERE `user_id` = '$user' AND indicator_id = '$indicator' AND `sy` = '$sy' AND `school_id` = '$school' AND `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if ($result) :
+                    foreach ($result as $res) :
+                        return floatval($res['ave']);
+                    endforeach;
+                else : return false;
+                endif;
+            }
