@@ -23,7 +23,7 @@ include 'sampleheader.php';
                     <!-- School Year Dropdown -->            
                     <label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
                     <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
-                    <select id="sy_id" name="sy_id" class="form-control" >
+                    <select id="sy_id" name="sy_id" class="form-control" required>
                     <option value="" disabled selected>--Select School Year--</option>
                         <?php while($syrow = $schoolyr->fetch_assoc()): ?>
                         <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
@@ -34,7 +34,7 @@ include 'sampleheader.php';
                 <div class="form-group mb-2">
                     <!--Obs Period Dropdown -->            
                     <label for="obs"><strong>Observation Period:</strong></label>&nbsp;&nbsp;
-                    <select id="obs_period" name="obs_period" class="form-control" >
+                    <select id="obs_period" name="obs_period" class="form-control" required>
                     <option value="" disabled selected>--Select Obs Period--</option>
                         <option value="1">1st Period</option>
                         <option value="2">2nd Period</option>
@@ -73,7 +73,7 @@ include 'sampleheader.php';
         
 
         
-        if ((sy_id == "" && user_id  == "")) {
+        if ((sy_id == "" || obs_period  == "")) {
             document.getElementById("show").innerHTML = "";
             return;
         } else {            

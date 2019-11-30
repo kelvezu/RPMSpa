@@ -235,7 +235,7 @@ class Dashboard
                     </li>
 
                     <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Teacher Progress</a>
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Master Teacher Progress</a>
                         <div class="dropdown-menu " aria-labelledby="dropdown03">
                             <a class="dropdown-item" href="#">Master Teacher Progress</a>
                         </div>
@@ -253,7 +253,8 @@ class Dashboard
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">View Master Teacher COT</a>
+                            <a class="dropdown-item" href="cotrateviewMTprincipal.php">View Master Teacher COT</a>
+                            <a class="dropdown-item" href="cotAveMTprincipal.php">View Master Teacher Average COT</a>
                         </div>
                     </li>
 
@@ -323,9 +324,9 @@ class Dashboard
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">View Teacher COT</a>
+                                <a class="dropdown-item" href="cotrateviewTprincipal.php">View Teacher COT</a>
                                 <a class="dropdown-item" href="cotAveTprincipal.php">View Teacher Average COT</a>
-                                <a class="dropdown-item" href="#">View Master Teacher COT</a>
+                                <a class="dropdown-item" href="cotrateviewMTprincipal.php">View Master Teacher COT</a>
                                 <a class="dropdown-item" href="cotAveMTprincipal.php">View Master Teacher Average COT</a>
                                 <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
                                 <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
@@ -405,15 +406,15 @@ class Dashboard
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">View Teacher COT</a>
-                                <a class="dropdown-item" href="#">View Teacher Average COT</a>
-                                <a class="dropdown-item" href="#">View Master Teacher COT</a>
-                                <a class="dropdown-item" href="#">View Master Teacher Average COT</a>
+                                <a class="dropdown-item" href="cotrateviewTschoolhead.php">View Teacher COT</a>
+                                <a class="dropdown-item" href="cotAveTschoolhead.php">View Teacher Average COT</a>
+                                <a class="dropdown-item" href="cotrateviewMTschoolhead.php">View Master Teacher COT</a>
+                                <a class="dropdown-item" href="cotAveMTschoolhead.php">View Master Teacher Average COT</a>
                                 <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
                                 <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
-    
+            
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
@@ -494,8 +495,8 @@ class Dashboard
                             <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">View Teacher COT</a>
-                                <a class="dropdown-item" href="#">View Teacher Average COT</a>
+                                <a class="dropdown-item" href="cotrateviewTschoolhead.php">View Teacher COT</a>
+                                <a class="dropdown-item" href="cotAveTschoolhead.php">View Teacher Average COT</a>
                                 <a class="dropdown-item" href="cotrateviewMT.php">View My COT Rating</a>
                                 <a class="dropdown-item" href="cotAveMT.php">View My Average COT</a>
                                 <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>

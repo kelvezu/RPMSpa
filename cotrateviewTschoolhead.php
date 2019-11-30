@@ -5,9 +5,9 @@ include 'sampleheader.php';
 ?>
 
 
-<div class="container col-md-9">
+<div class="container">
    
-    <div class="bg-dark h4 text-white breadcrumb">Master Teacher COT Rating</div>
+    <div class="bg-dark h4 text-white breadcrumb">Teacher COT Rating</div>
     <div class="px-3">
        
     
@@ -23,7 +23,7 @@ include 'sampleheader.php';
                     <!-- School Year Dropdown -->            
                     <label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
                     <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
-                    <select id="sy_id" name="sy_id" class="form-control" required>
+                    <select id="sy_id" name="sy_id"  class="form-control" required >
                     <option value="" disabled selected>--Select School Year--</option>
                         <?php while($syrow = $schoolyr->fetch_assoc()): ?>
                         <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
@@ -44,7 +44,15 @@ include 'sampleheader.php';
                 </div>
                     <!-- Obs Period Dropdown -->
                 <div class="form-group mb-2">
-                    <a onclick="showRating()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
+                <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
+                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND `status` = "Active" AND rater = "'.$_SESSION['user_id'].'"')or die ($conn->error);?>
+                    <select id="teacher_id" name="teacher_id" class="form-control" required>
+                    <option value="" disabled selected>--Select Teacher--</option>
+                        <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
+                        <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>
+                        <?php endwhile; ?>
+                    </select>&nbsp;&nbsp; 
+                    <a onclick="showRating()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
                 
                 </div>
             </div>
@@ -68,12 +76,12 @@ include 'sampleheader.php';
         let sy_id = document.getElementById('sy_id').value;
         let user_id = document.getElementById('user_id').value;
         let school_id = document.getElementById('school_id').value;
-        let rater_id = document.getElementById('rater_id').value;
         let obs_period = document.getElementById('obs_period').value;
+        let teacher_id = document.getElementById('teacher_id').value;
         
 
         
-        if ((sy_id == "" || obs_period  == "")) {
+        if ((sy_id == "" || teacher_id == "" || obs_period == "" )) {
             document.getElementById("show").innerHTML = "";
             return;
         } else {            
@@ -84,7 +92,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "cotrateviewMTajax.php?sy=" + sy_id + "&user=" + user_id + "&sch=" + school_id + "&rater=" + rater_id + "&obs=" + obs_period, true);
+            xmlhttp.open("GET", "cotrateviewTprincipalajax.php?sy=" + sy_id + "&user=" + user_id + "&sch=" + school_id + "&obs=" + obs_period + "&teacher=" + teacher_id, true);
             xmlhttp.send();
             return;
         }
