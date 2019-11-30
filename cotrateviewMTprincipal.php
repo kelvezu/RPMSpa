@@ -1,5 +1,5 @@
 <?php
-
+use RPMSdb\RPMSdb;
 include 'sampleheader.php';
  
 ?>
@@ -45,15 +45,18 @@ include 'sampleheader.php';
                     <!-- Obs Period Dropdown -->
                 <div class="form-group mb-2">
                 <label for="sy"><strong>Master Teacher:</strong></label>&nbsp;&nbsp;
-                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I") AND `status` = "Active"')or die ($conn->error);?>
+                   
                     <select id="teacher_id" name="teacher_id" class="form-control" required>
                     <option value="" disabled selected>Select Master Teacher</option>
-                        <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
-                        <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>
-                        <?php endwhile; ?>
+                    <?php foreach(RPMSdb::showAllMTwithCOT($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']) as $mt_ratee):
+                        ?>
+                        <option value="<?php echo $mt_ratee['user_id'];?>"><?php echo displayName($conn,$mt_ratee['user_id'])?></option>
+                        
+                        <?php endforeach; ?>
+                      
                     </select>&nbsp;&nbsp;   
                     <a onclick="showRating()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
-                
+
                 </div>
             </div>
         </form>

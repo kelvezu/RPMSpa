@@ -1948,7 +1948,7 @@ class RPMSdb
     public static function showMTwithCOT($conn, $user, $sy, $school)
     {
         $result_arr = [];
-        $qry =  "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
+        $qry =  "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND sy = '$sy' AND `school_id` = '$school' AND `status` = 'Active' GROUP BY `user_id`";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'showBmovMT');
 
         if (mysqli_num_rows($result) > 0) :
@@ -1962,9 +1962,61 @@ class RPMSdb
     public static function showTwithCOT($conn, $user, $sy, $school)
     {
         $result_arr = [];
-        $qry =  "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
+        $qry =  "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND sy = '$sy' AND `school_id` = '$school' AND `status` = 'Active' GROUP BY `user_id`";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'showTwithCOT');
 
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public static function showAllTwithCOT($conn,  $sy, $school)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `cot_t_rating_a_tbl` WHERE  sy = '$sy' AND `school_id` = '$school' AND `status` = 'Active' GROUP BY `user_id`";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showTwithCOT');
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public static function showAllMTwithCOT($conn,  $sy, $school)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `cot_mt_rating_a_tbl` WHERE  sy = '$sy' AND `school_id` = '$school' AND `status` = 'Active' GROUP BY `user_id`";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showAllMTwithCOTs');
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public static function showAllMTwithCOTavg($conn,  $sy, $school)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `cot_mt_indicator_ave_tbl` WHERE  sy = '$sy' AND `school` = '$school' AND `status` = 'Active' GROUP BY `user_id`";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showAllMTwithCOTs');
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public static function showAllTwithCOTavg($conn,  $sy, $school)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `cot_t_indicator_ave_tbl` WHERE  sy = '$sy' AND `school` = '$school' AND `status` = 'Active' GROUP BY `user_id`";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showAllMTwithCOTs');
         if (mysqli_num_rows($result) > 0) :
             foreach ($result as $res) :
                 array_push($result_arr, $res);

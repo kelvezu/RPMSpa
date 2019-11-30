@@ -303,7 +303,8 @@ $user =  $_SESSION['user_id'];
 
 // $res = showObsPeriod($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']);
 // $res = RPMSdb::showBmovMT($conn, $sy, $school, 'For Approval');
-$res = fetchRatee($conn, $user);
+$res =RPMSdb::showAllTwithCOTavg($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
+
 
 pre_r($res);
 // foreach ($res as $r) {
