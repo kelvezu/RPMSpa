@@ -1,22 +1,23 @@
 <?php
 
 include 'sampleheader.php';
- 
+
+
 ?>
 
 
 <div class="container col-md-9">
    
-    <div class="bg-dark h4 text-white breadcrumb">Master Teacher COT Rating</div>
+    <div class="bg-dark h4 text-white breadcrumb">Teacher COT Average</div>
     <div class="px-3">
        
     
         <form action="" method="POST" class="form-inline">
 
             <input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>"> 
-            <input type="hidden" id="school_id" name="school_id" value="<?php echo $_SESSION['school_id'] ?>">
-            <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
-            <input type="hidden" id="rater_id" name="rater_id" value="<?php echo $_SESSION['rater'] ?>">
+            <input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>"> 
+            <input type="hidden" id="school_id" name="school_id" value="<?php echo $_SESSION['school_id'] ?>"> 
+            
 
             <div class="form-row">
                 <div class="form-group mb-2">
@@ -32,20 +33,19 @@ include 'sampleheader.php';
                 </div>
                     <!-- End of School Year Dropdown -->
                 <div class="form-group mb-2">
-                    <!--Obs Period Dropdown -->            
-                    <label for="obs"><strong>Observation Period:</strong></label>&nbsp;&nbsp;
-                    <select id="obs_period" name="obs_period" class="form-control" required>
-                    <option value="" disabled selected>--Select Obs Period--</option>
-                        <option value="1">1st Period</option>
-                        <option value="2">2nd Period</option>
-                        <option value="3">3rd Period</option>
-                        <option value="4">4th Period</option>
-                    </select>&nbsp;&nbsp;
+                    <!-- Teacher Dropdown -->
+                    <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
+                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND `status` = "Active" AND rater = "'.$_SESSION['user_id'].'"') or die ($conn->error);?>
+                    <select id="teacher_id" name="teacher_id" class="form-control" required>
+                    <option value="" disabled selected>--Select Teacher--</option>
+                        <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
+                        <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>
+                        <?php endwhile; ?>
+                    </select>&nbsp;&nbsp;       
+                <!-- End of Teacher Dropdown -->
                 </div>
-                    <!-- Obs Period Dropdown -->
                 <div class="form-group mb-2">
-                    <a onclick="showRating()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
-                
+                    <a onclick="showAve()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
                 </div>
             </div>
         </form>
@@ -61,19 +61,14 @@ include 'sampleheader.php';
   </div>
   </div>
 <script>
-   
 
-  
-    function showRating() {
+    function showAve() {
         let sy_id = document.getElementById('sy_id').value;
-        let user_id = document.getElementById('user_id').value;
-        let school_id = document.getElementById('school_id').value;
-        let rater_id = document.getElementById('rater_id').value;
-        let obs_period = document.getElementById('obs_period').value;
+        let teacher_id = document.getElementById('teacher_id').value;
+        let school_id = document.getElementById('school_id').value; 
+        let active_sy_id = document.getElementById('active_sy').value;
         
-
-        
-        if ((sy_id == "" || obs_period  == "")) {
+        if ((sy_id == "" || teacher_id  == "")) {
             document.getElementById("show").innerHTML = "";
             return;
         } else {            
@@ -84,7 +79,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "cotrateviewMTajax.php?sy=" + sy_id + "&user=" + user_id + "&sch=" + school_id + "&rater=" + rater_id + "&obs=" + obs_period, true);
+            xmlhttp.open("GET", "cotAveTprincipaltable.php?sy=" + sy_id + "&user=" + teacher_id + "&sch=" + school_id, true);
             xmlhttp.send();
             return;
         }

@@ -22,7 +22,7 @@ include 'sampleheader.php';
                     <!-- School Year Dropdown -->            
                     <label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
                     <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
-                    <select id="sy_id" name="sy_id" class="form-control" >
+                    <select id="sy_id" name="sy_id" class="form-control" required >
                     <option value="" disabled selected>--Select School Year--</option>
                         <?php while($syrow = $schoolyr->fetch_assoc()): ?>
                         <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
@@ -34,7 +34,7 @@ include 'sampleheader.php';
                     <!-- Teacher Dropdown -->
                     <label for="sy"><strong>Master Teacher:</strong></label>&nbsp;&nbsp;
                     <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I") AND `status` = "Active"')or die ($conn->error);?>
-                    <select id="teacher_id" name="teacher_id" class="form-control">
+                    <select id="teacher_id" name="teacher_id" class="form-control" required>
                     <option value="" disabled selected>--Select Master Teacher--</option>
                         <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
                         <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>
@@ -69,7 +69,7 @@ include 'sampleheader.php';
         let school_id = document.getElementById('school_id').value; 
         let active_sy_id = document.getElementById('active_sy').value;
         
-        if ((sy_id == "" && teacher_id  == "")) {
+        if ((sy_id == "" || teacher_id  == "")) {
             document.getElementById("show").innerHTML = "";
             return;
         } else {            
