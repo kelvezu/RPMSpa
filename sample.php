@@ -302,12 +302,13 @@ $user =  $_SESSION['user_id'];
 
 
 // $res = showObsPeriod($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']);
-$res = RPMSdb::fetchSpecificMTindicator($conn, $sy, $school, $user);
+// $res = RPMSdb::showBmovMT($conn, $sy, $school, 'For Approval');
+$res = fetchRatee($conn, $user);
 
-// pre_r($res);
-foreach ($res as $r) {
-    echo $r['indicator_id'] . BR;
-}
+pre_r($res);
+// foreach ($res as $r) {
+//     echo $r['indicator_id'] . BR;
+// }
 
 
 

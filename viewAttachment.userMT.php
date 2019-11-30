@@ -25,7 +25,7 @@ $supp_mov_file = 'supp_mov';
                 <thead class="alert alert-primary">
                     <tr>
                         <th>#</th>
-                        <th>Key Result Area</th>
+                        <th class="text-nowrap">Key Result Area</th>
                         <th>Objectives</th>
                         <th>COT</th>
                         <th class="text-nowrap">Main MOV</th>
@@ -41,8 +41,8 @@ $supp_mov_file = 'supp_mov';
                                 <p><?= $num++ ?></p>
                             </td>
                             <td>
-                                <p data-toggle="tooltip" data-placement="top" title="<?= displayKRA($conn, $kra['mtobj_id']) ?>" class="">
-                                    KRA <?= $kra['kra_id'] ?>
+                                <p data-toggle="tooltip" data-placement="top" title="<?= displayKRA($conn, $kra['mtobj_id']) ?>" class="text-wrap">
+                                    <?= displayKRA($conn, $kra['kra_id']) ?>
                                 </p>
                             </td>
                             <td>
@@ -100,12 +100,12 @@ $supp_mov_file = 'supp_mov';
                                                                                         <p><?= (displayFileMT($conn, $mmov['mov_id'])); ?></p>
                                                                                     </p>
                                                                                 </div>
-                                                                                <div class="col">
-                                                                                    <p class="text-justify">
-                                                                                        <b>Description:</b>
-                                                                                        <p class="text-justify">" <i><?= $mmov['file_desc'] ?></i> "</p>
-                                                                                    </p>
-                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card-footer alert alert-dark">
+                                                                                <p class="text-justify">
+                                                                                    <b>Description:</b>
+                                                                                    <p class="text-justify">" <i><?= $mmov['file_desc'] ?></i> "</p>
+                                                                                </p>
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -136,7 +136,7 @@ $supp_mov_file = 'supp_mov';
                                     $supp_mov =  showAttachmentMT($conn, $kra['mtobj_id'], $_SESSION['user_id'], $_SESSION['school_id'], $_SESSION['active_sy_id'], 'supp_mov');
                                     foreach ($supp_mov as $smov) :
                                         if ($smov) : ?>
-                                        <button data-toggle="modal" data-target="#updateModal<?= $smov['mov_id'] .   $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?= $smov['file_name'] ?> <a href="includes/processattachuser.php?&user_id=<?= $smov['user_id'] ?>&sy_id=<?= $smov['sy_id'] ?>&school_id=<?= $smov['school_id'] ?>&mov_id=<?= $smov['mov_id'] ?>&obj_id=<?= $kra['mtobj_id'] ?>&mov_type=<?= $smov['mov_type'] ?>" class="fa fa-times text-danger"></a></button>
+                                        <button data-toggle="modal" data-target="#updateModal<?= $smov['mov_id'] .   $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?= $smov['file_name'] ?> <a href="includes/processattachuser.php?&attach_mov_id=<?= showAttachmentIDMT($conn, $smov['sy_id'], $smov['school_id'], $smov['mov_id'], $kra['mtobj_id'], $smov['mov_type'])  ?>" class="fa fa-times text-danger"></a></button>
 
                                         <!--Main MOV Modal -->
                                         <div class="modal fade" id="updateModal<?= $smov['mov_id'] .   $kra['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,7 +160,7 @@ $supp_mov_file = 'supp_mov';
                                                                     <div class="card-header bg-dark text-white">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div class="p-2">
-                                                                                <p><b>File name:</b> <?= $mmov['file_name'] ?></p>
+                                                                                <p><b>File name:</b> <?= $smov['file_name'] ?></p>
                                                                             </div>
 
                                                                         </div>
@@ -170,15 +170,15 @@ $supp_mov_file = 'supp_mov';
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <p><b>Attachment</b>
-                                                                                        <p><?= (displayFileMT($conn, $mmov['mov_id'])); ?></p>
+                                                                                        <p><?= (displayFileMT($conn, $smov['mov_id'])); ?></p>
                                                                                     </p>
                                                                                 </div>
-                                                                                <div class="col">
-                                                                                    <p class="text-justify">
-                                                                                        <b>Description:</b>
-                                                                                        <p class="text-justify">" <i><?= $mmov['file_desc'] ?></i> "</p>
-                                                                                    </p>
-                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card-footer alert alert-dark">
+                                                                                <p class="text-justify">
+                                                                                    <b>Description:</b>
+                                                                                    <p class="text-justify">" <i><?= $smov['file_desc'] ?></i> "</p>
+                                                                                </p>
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -204,7 +204,7 @@ $supp_mov_file = 'supp_mov';
                                     ?>
 
                             </td>
-                            <td class="text-center"><?= '<p class="my-4">' . showAttachmentStatusMT($conn, $kra['mtobj_id'], $_SESSION['user_id'], $_SESSION['school_id'], $_SESSION['active_sy_id']) . '</p>' ?></td>
+                            <td class="text-center"><?= '<p class="">' . showAttachmentStatusMT($conn, $kra['mtobj_id'], $_SESSION['user_id'], $_SESSION['school_id'], $_SESSION['active_sy_id']) . '</p>' ?></td>
 
                             <!-- <td><a href="obj_id=<?php //$kra['mtobj_id']  
                                                             ?>"  class="btn btn-sm btn-outline-warning  my-4">Update Attachment</a></td> -->

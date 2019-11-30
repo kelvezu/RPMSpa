@@ -1916,4 +1916,60 @@ class RPMSdb
     //     else : return 0;
     //     endif;
     // }
+
+    public static function showBmovMT($conn, $user, $sy, $school, $doc_status)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `doc_status` = '$doc_status' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showBmovMT');
+
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public static function showBmovT($conn, $user, $sy, $school, $doc_status)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `mov_b_t_attach_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `doc_status` = '$doc_status' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showBmovMT');
+
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public static function showMTwithCOT($conn, $user, $sy, $school)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showBmovMT');
+
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public static function showTwithCOT($conn, $user, $sy, $school)
+    {
+        $result_arr = [];
+        $qry =  "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'showTwithCOT');
+
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
 }

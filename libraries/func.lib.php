@@ -961,14 +961,15 @@
                 endif;
             }
 
-            function showSchool($conn){
+            function showSchool($conn)
+            {
                 $qry = "SELECT * FROM school_tbl WHERE school_grade_lvl IN ('Elementary School','Secondary School')";
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
 
                 if ($result) :
                     $res_arr = [];
                     foreach ($result as $res) :
-                        array_push($res_arr,$res);
+                        array_push($res_arr, $res);
                     endforeach;
                     return $res_arr;
                 endif;
@@ -1083,4 +1084,16 @@
                 else : return false;
                 endif;
             }
-        
+
+            function fetchRatee($conn, $user_id)
+            {
+                $qry = "SELECT * FROM account_tbl WHERE `rater` = '$user_id' AND `status` = 'Active' ORDER BY surname";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
