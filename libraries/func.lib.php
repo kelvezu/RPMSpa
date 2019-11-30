@@ -863,7 +863,6 @@
                 if (mysqli_num_rows($result_b) > 0) :
                     foreach ($result_b as $res) :
                         $mov_id = $res['mov_id'] . '<br>';
-
                         $sql_mov_a = " SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id =' $mov_id' AND mov_type = '$mov_type' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
                         $result_a = mysqli_query($conn, $sql_mov_a) or die($conn->error . $sql_mov_a);
                         if (mysqli_num_rows($result_a) > 0) :
@@ -898,10 +897,21 @@
                 return $attach_arr;
             }
 
+            function showAttachmentIDMT($conn, $sy, $school, $mov_id, $obj_id, $mov_type)
+            {
+                $qry = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE sy_id = $sy and school_id = $school AND mov_id = $mov_id AND obj_id = $obj_id AND mov_type = '$mov_type'";
+                $result = mysqli_query($conn, $qry);
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['attach_mov_id'];
+                    }
+                }
+            }
+
 
             function showAttachmentStatusMT($conn, $objective_id, $user, $school, $sy)
             {
-                $sql_mov_b = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
+                $sql_mov_b = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy' AND `status` = 'Active'";
                 $result_b = mysqli_query($conn, $sql_mov_b) or die($conn->error . $sql_mov_b);
 
                 if (mysqli_num_rows($result_b) > 0) :
