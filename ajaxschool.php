@@ -1,6 +1,6 @@
 <?php
 
-include('includes/conn.inc.php');
+include 'includes/conn.inc.php';
 
 if(isset($_POST["reg_id"]) && !empty($_POST["reg_id"])){
    

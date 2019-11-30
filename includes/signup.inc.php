@@ -137,7 +137,7 @@ if (isset($_POST['signup-submit'])) {
             } else {
                 // VALIDATE PRINCIPAL POSITION
             if($position == "Principal"):
-                    $check_qry = "SELECT * FROM account_tbl WHERE school_id = 14 AND position = 'Principal'";
+                    $check_qry = "SELECT * FROM account_tbl WHERE school_id = $school AND position = 'Principal'";
                     $chk_result = mysqli_query($conn,$check_qry) or die($conn->error);
                     if(mysqli_num_rows($chk_result)>0):
                         header('location:../signup.php?error=oneprincipalonly');

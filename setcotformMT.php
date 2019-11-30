@@ -15,7 +15,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
             <h5>COT-RPMS</h5> 
 
-            <div class="h3 bg-success text-white">Master Teacher I-IV</div>
+            <div class="h3 bg-info text-white">Master Teacher I-IV</div>
             <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
             <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
@@ -244,7 +244,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
 
                         <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-                            <thead class="legend-control bg-success text-white ">
+                            <thead class="legend-control bg-info text-white ">
                                 <tr>
                                     <th>Indicator No</th>
                                     <th>Indicator Name</th>

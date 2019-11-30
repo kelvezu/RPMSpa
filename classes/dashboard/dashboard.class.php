@@ -251,6 +251,13 @@ class Dashboard
                     </li>
 
                     <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
+                        <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                            <a class="dropdown-item" href="#">View Master Teacher COT</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                         <a href="setcotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
@@ -310,6 +317,18 @@ class Dashboard
                                 <a class="dropdown-item" href="viewgendevplanmt.php">View Master Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="gendevplanT.php">Create Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="gendevplanMT.php">Create Master Teacher General Development Plan</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="#">View Teacher COT</a>
+                                <a class="dropdown-item" href="cotAveTprincipal.php">View Teacher Average COT</a>
+                                <a class="dropdown-item" href="#">View Master Teacher COT</a>
+                                <a class="dropdown-item" href="cotAveMTprincipal.php">View Master Teacher Average COT</a>
+                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
     
@@ -380,6 +399,18 @@ class Dashboard
                                 <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="#">View Teacher COT</a>
+                                <a class="dropdown-item" href="#">View Teacher Average COT</a>
+                                <a class="dropdown-item" href="#">View Master Teacher COT</a>
+                                <a class="dropdown-item" href="#">View Master Teacher Average COT</a>
+                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
     
@@ -459,6 +490,17 @@ class Dashboard
                                     <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
                                 </div>
                             </li>
+
+                            <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="#">View Teacher COT</a>
+                                <a class="dropdown-item" href="#">View Teacher Average COT</a>
+                                <a class="dropdown-item" href="cotrateviewMT.php">View My COT Rating</a>
+                                <a class="dropdown-item" href="cotAveMT.php">View My Average COT</a>
+                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
+                            </div>
+                        </li>
         
                             <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
@@ -525,6 +567,14 @@ class Dashboard
                                         <a class="dropdown-item" href="#">My Teacher Development Plan-IPCRF</a>
                                         <a class="dropdown-item" href="#">My Teacher General Development Plan</a>
                                         <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
+                                    <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                        <a class="dropdown-item" href="cotrateviewT.php">View My COT Rating</a>
+                                        <a class="dropdown-item" href="cotAveT.php">View My Average COT</a>
                                     </div>
                                 </li>
             

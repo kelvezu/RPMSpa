@@ -10,7 +10,7 @@ include_once '../libraries/func.lib.php';
 
 
 
-if (isset($_POST["upload"])) {
+if (isset($_POST["upload"])) :
     $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 
     $prc_id = $_POST['prc_id'];
@@ -25,24 +25,18 @@ if (isset($_POST["upload"])) {
     $added_by = $_POST['adder_id'];
     $password = defaultPwd();
     // $username = usernameGen($firstname, $surname, $contact);
-    
-    
-    $status = "Active";
+
 
     
    
-    for ($count = 0; $count < count($prc_id); $count++){
+    for ($count = 0; $count < count($prc_id); $count++):
 
         $activation_code = uniqid(rand('1000','9999')) ;
-       
         // Check whether member already exists in the database with the same email
 
         $prevQuery = "SELECT * FROM account_tbl WHERE email = '$email[$count]'";
         $prevResult = $conn->query($prevQuery) or die($db->error);
-        if($prevResult){
-
-             if($prevResult->num_rows == 0){
-
+        if($prevResult->num_rows == 0):
                 $query1 = $conn->query('INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,added_by,activation_code) VALUES ("' . $prc_id[$count] . '","' . ucwords($surname[$count]) . '","' . ucwords($firstname[$count]) . '","' . ucwords($middlename[$count]) . '","' . positionFormat($position[$count]) . '","' . $email[$count] . '","' . $contact[$count] . '","' . ucwords($gender[$count]) . '","' . $bday[$count] . '","' . usernameGen($firstname[$count],$surname[$count],$contact[$count])   . '","' . $password . '", ' . $added_by . ',"' . $activation_code . '" )') or die($conn->error);
 
                 $lastId_array = [];
@@ -50,13 +44,12 @@ if (isset($_POST["upload"])) {
                 array_push($lastId_array, mysqli_insert_id($conn));
 
                 /* -----------------------------------------------------------------------------------------------*/
-                foreach($lastId_array as $LIA){
+                foreach($lastId_array as $LIA):
                    
-                    $url = 'http://'.$_SERVER['SERVER_NAME'].'/rpmspa/verify.php?id='.$LIA.'&activation_code='.$activation_code;
-            
+                    $url = 'http://'.$_SERVER['SERVER_NAME'].'/rpms/verify.php?id='.$LIA.'&activation_code='.$activation_code;
                 $output = '<div>Thanks for registering with localhost. Please click this link to complete this registation <br>'.$url.'</div>';
             
-                if($query1 == true){
+                if($query1 == true):
                     $mail = new PHPMailer();
                     $mail->isSMTP();  
                     $mail->Host = 'smtp.gmail.com';
@@ -72,17 +65,15 @@ if (isset($_POST["upload"])) {
                     $mail->Subject = 'Email Verification';
                     $mail->Body    = $output;
             
-                    if(!$mail->send()) {
-                        header("Location../signup.php?signup=mailerror");
+                    if(!$mail->send()):
+                        header("Location../usercsv.php?notif=mailerror");
                         exit();
-                    } else {
-                        header("Location:../signup.php?signup=success&uname=");
-                    }
-                }
-            
-            }
+                    else:
+                        header("Location:../usercsv.php?notif=success");
+                    endif;
+                endif;
                
-                if($query1){
+                if($query1):
                     $category = "User Management";
                     $adder_name = $_SESSION['fullname'];
                     $added_name = ucwords($firstname[$count]).' '.ucwords(substr($middlename[$count],0,1)).'. '.ucwords($surname[$count]);
@@ -96,25 +87,22 @@ if (isset($_POST["upload"])) {
                     
             
                     $query = $conn->query('INSERT INTO notification_tbl(category,title,`message`,`status`,`user_id`,rater_id,position,sy_id,school_id) VALUES ("' . $category . '","' . $title . '","' . $msg . '","' . $status . '","' . $adder_id . '","' . $adder_id . '","' . $adder_position . '","' . $sy_id . '","' . $school_id . '")') or die($conn->error);
-
-                }
-            
-                }else{
+                else:
                     header("Location:../usercsv.php?notif=error");
-                }
+                endif;
                
-
+            endforeach;
 
             
-            }else{
-                //echo "$email[$count] is already registered!<br>";
-                $dup_email_arr = array();
-                array_push($dup_email_arr,$email[$count]);
-                $_SESSION['dup_email'] = $dup_email_arr;
-            }
-        }
-        header("Location:../usercsv.php?notif=success");
-        }
+        else:
+            //echo "$email[$count] is already registered!<br>";
+            $dup_email_arr = array();
+            array_push($dup_email_arr,$email[$count]);
+            $_SESSION['dup_email'] = $dup_email_arr;
+            header("Location:../usercsv.php?notif=emailerror");
+        endif;
+    endfor;
+endif;
 
     
    
