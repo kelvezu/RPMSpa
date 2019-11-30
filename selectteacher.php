@@ -19,7 +19,7 @@
                             <!-- <input type="hidden" name="school_id" value=<?php //echo $_SESSION['school_id']; ?> /> -->
                             <div>
                                 <div class="font-weight-bold">
-                                    <h3 class="text-nowrap">Assign Teacher to School</h3>
+                                    <h3 class="text-nowrap"><strong>Assign Teacher to School</strong></h3>
                                 </div>
                                 <?php
                                 $teacherresults = RPMSdb::displayVacantList($conn);
@@ -42,7 +42,7 @@
                                                     <td><?= $teacher['status'] ?></td>
                                                     <td>
                                                         <select required name="school_id[]" class="form-control-sm">
-                                                            <option>Select School</option>
+                                                            <option value="" disabled selected>Select School</option>
                                                     <?php $school = showSchool($conn); foreach ($school as $sch):?>
                                                      <option value="<?= $sch['school_id'] ?>"> <?= $sch['school_name'] ?></option>
                                                     <?php endforeach; ?>
@@ -77,6 +77,8 @@
                                 <div class=" h3"><strong>
                                         Master List of Teachers
                                 </div>
+                                <br>
+                                <br>
                                 <!-- INSERT THE CONDITION AND THE TABLE HERE! -->
                                 <form action="includes/processselectteacher.php" method="POST">
                                     <?php

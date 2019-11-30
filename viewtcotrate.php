@@ -1,26 +1,8 @@
 <?php
 
-include 'includes/header.php';
+include 'sampleheader.php';
 
-if (isset($_GET['view'])) {
-    $user_id = $_GET['view'];
-
-    $query = $conn->query('SELECT subject_tbl.subject_name,gradelvltaught_tbl.gradelvltaught_name,account_tbl.surname,account_tbl.firstname,account_tbl.middlename,b_tioafrating_tbl.* FROM (b_tioafrating_tbl INNER JOIN account_tbl ON b_tioafrating_tbl.user_id = account_tbl.user_id INNER JOIN subject_tbl ON b_tioafrating_tbl.subject_id = subject_tbl.subject_id INNER JOIN gradelvltaught_tbl ON b_tioafrating_tbl.gradelvltaught_id = gradelvltaught_tbl.gradelvltaught_id ) WHERE b_tioafrating_tbl.user_id = ' . $user_id . '');
-    while ($row = $query->fetch_assoc()) {
-        $rater_id = $row['rater_id1'];
-        $rater_id2 = $row['rater_id2'] ?? "NULL";
-        $rater_id3 = $row['rater_id3'] ?? "NULL";
-        $date = $row['date'];
-        $tobserved = $row['user_id'];
-        $subject = $row['subject_name'];
-        $gradelvltaught = $row['gradelvltaught_name'];
-        $obs_period = $row['obs_period'];
-        $comment = $row['comment'];
-        $sy = $row['sy'];
-        $school = $row['school_id'];
-        $fullname = $row['firstname'] . ' ' .  substr($row['middlename'], 0, 1) . '. ' . $row['surname'];
-    }
-    ?>
+?>
 
     <div class="container text-center">
         <div class="breadcome-list shadow-reset">
@@ -135,6 +117,6 @@ if (isset($_GET['view'])) {
 
     </form>
     <br>
-<?php }
-include 'includes/footer.php';
+<?php 
+include 'samplefooter.php';
 ?>
