@@ -13,6 +13,19 @@ $school_id = $_GET['sch'];
 $sy_id = $_GET['sy'];
 $obs = $_GET['obs'];
 
+
+$cot_array = [];
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_t_rating_a_tbl WHERE sy = $sy_id AND `user_id` = $teacher_id AND obs_period = $obs") or die ($conn->error);
+
+    if(mysqli_num_rows($COTqry) == 0):
+        echo '<div class="red-notif-border">No Classroom Observation Record Available</div>';
+        exit();
+    else:
+        foreach ($COTqry as $cot):
+            array_push($cot_array,$cot);
+        endforeach;
+    endif;
+
 $indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $sy_id, $school_id,  $teacher_id);
 ?>
 

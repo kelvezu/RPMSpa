@@ -46,15 +46,18 @@ include 'sampleheader.php';
                 <div class="form-group mb-2">
                 <label for="sy"><strong>Master Teacher:</strong></label>&nbsp;&nbsp;
                    
-                    <select id="teacher_id" name="teacher_id" class="form-control" required>
+                <select id="teacher_id" name="teacher_id" class="form-control" required>
                     <option value="" disabled selected>Select Master Teacher</option>
-                    <?php foreach(RPMSdb::showAllMTwithCOT($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']) as $mt_ratee):
-                        ?>
-                        <option value="<?php echo $mt_ratee['user_id'];?>"><?php echo displayName($conn,$mt_ratee['user_id'])?></option>
-                        
-                        <?php endforeach; ?>
-                      
-                    </select>&nbsp;&nbsp;   
+                    <?php
+                        $qry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I") AND school_id = "'.$_SESSION['school_id'].'"');
+                        while ($row = $qry->fetch_assoc()):
+                    ?>
+                            
+                        <option value="<?= $row['user_id'] ?>"><?= displayName($conn,$row['user_id']) ?></option>
+
+                       <?php endwhile; ?>
+                       
+                    </select>&nbsp;&nbsp;     
                     <a onclick="showRating()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
 
                 </div>

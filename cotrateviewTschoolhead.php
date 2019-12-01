@@ -1,5 +1,5 @@
 <?php
-
+use RPMSdb\RPMSdb;
 include 'sampleheader.php';
  
 ?>
@@ -45,13 +45,19 @@ include 'sampleheader.php';
                     <!-- Obs Period Dropdown -->
                 <div class="form-group mb-2">
                 <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
-                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND `status` = "Active" AND rater = "'.$_SESSION['user_id'].'"')or die ($conn->error);?>
-                    <select id="teacher_id" name="teacher_id" class="form-control" required>
-                    <option value="" disabled selected>--Select Teacher--</option>
-                        <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
-                        <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>
-                        <?php endwhile; ?>
-                    </select>&nbsp;&nbsp; 
+                
+                <select id="teacher_id" name="teacher_id" class="form-control" required>
+                    <option value="" disabled selected>Select Teacher</option>
+                    <?php
+                        $qry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND school_id = "'.$_SESSION['school_id'].'" AND rater = "'.$_SESSION['user_id'].'"');
+                        while ($row = $qry->fetch_assoc()):
+                    ?>
+                            
+                        <option value="<?= $row['user_id'] ?>"><?= displayName($conn,$row['user_id']) ?></option>
+
+                       <?php endwhile; ?>
+                       
+                    </select>&nbsp;&nbsp;   
                     <a onclick="showRating()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
                 
                 </div>

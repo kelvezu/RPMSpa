@@ -10,6 +10,18 @@ $sy_id = $_GET['sy'];
 $teacher_id = $_GET['user'];
 $school_id = $_GET['sch'];
 
+$cot_array = [];
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy = $sy_id AND `user_id` = $teacher_id") or die ($conn->error);
+
+    if(mysqli_num_rows($COTqry) == 0):
+        echo '<div class="red-notif-border">Average COT is not available</div>';
+        exit();
+    else:
+        foreach ($COTqry as $cot):
+            array_push($cot_array,$cot);
+        endforeach;
+    endif;
+
 
 $obs_period_arr =  showObsPeriodMT($conn, $teacher_id, $sy_id, $school_id);
 $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id, $teacher_id);
@@ -89,16 +101,4 @@ $qry = $conn->query("SELECT * FROM account_tbl WHERE `user_id` = $teacher_id ") 
             </table>
         </div>
     </div>
-
-    <div class="container">
-
-        <?php
-        //pre_r(RPMSdb::fetchCOTrating($conn, 32, 1, $_SESSION['active_sy_id'], $_SESSION['school_id'], 'a_tioafrating_tbl', 'b_tioafrating_tbl'));
-        // pre_r(RPMSdb::fetchtallMT($conn, $_SESSION['school_id']));
-        ?>
-    </div>
 </div>
-
-
-
-<br>

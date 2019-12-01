@@ -6,11 +6,22 @@ include 'classes/rpmsdb/rpmsdb.class.php';
 include 'libraries/func.lib.php';
 include 'includes/conn.inc.php';
 
-
 $teacher_id = $_GET['teacher'] ;
 $school_id = $_GET['sch'];
 $sy_id = $_GET['sy'];
 $obs = $_GET['obs'];
+
+$cot_array = [];
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_rating_a_tbl WHERE sy = $sy_id AND `user_id` = $teacher_id AND obs_period = $obs") or die ($conn->error);
+
+    if(mysqli_num_rows($COTqry) == 0):
+        echo '<div class="red-notif-border">No Classroom Observation Record Available</div>';
+        exit();
+    else:
+        foreach ($COTqry as $cot):
+            array_push($cot_array,$cot);
+        endforeach;
+    endif;
 
 $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $teacher_id);
 
@@ -42,8 +53,8 @@ $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $t
                             $rater = $row['rater'] ?? "---";
                     ?>
                     <p>
-                        <b> Rater:</b> <?= displayName($conn, $rater) ?? "---" ?><br />
-                        <b> School Year:</b> <?= displaySY($conn, $sy_id)?? "---" ?><br />
+                        <b> Rater:</b> <?= displayName($conn, $rater) ?><br />
+                        <b> School Year:</b> <?= displaySY($conn, $sy_id)?><br />
                     </p>
                 </div>
             </div>
@@ -85,13 +96,4 @@ $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $t
             </table>
         </div>
     </div>
-
-    <div class="container">
-
-        <?php
-        //pre_r(RPMSdb::fetchCOTrating($conn, 32, 1, $_SESSION['active_sy_id'], $_SESSION['school_id'], 'a_tioafrating_tbl', 'b_tioafrating_tbl'));
-        // pre_r(RPMSdb::fetchtallMT($conn, $_SESSION['school_id']));
-        ?>
-    </div>
 </div>
-<br>

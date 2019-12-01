@@ -47,18 +47,22 @@ include 'sampleheader.php';
                     <!-- Obs Period Dropdown -->
                 <div class="form-group mb-2">
                 <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
-                    <select id="teacher_id" name="teacher_id" class="form-control" required>
-                    <option value="" disabled selected>--Select Teacher--</option>
-                        <?php 
-                       foreach(RPMSdb::showAllTwithCOT($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']) as $t_ratee):
-                        ?>
-                        <option value="<?php echo $t_ratee['user_id'];?>"><?php displayName($conn,$t_ratee['user_id'])?></option>
-                        
-                        <?php endforeach; ?>
-                    </select>&nbsp;&nbsp; 
+                
+                <select id="teacher_id" name="teacher_id" class="form-control" required>
+                    <option value="" disabled selected>Select Teacher</option>
+                    <?php
+                        $qry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND school_id = "'.$_SESSION['school_id'].'"');
+                        while ($row = $qry->fetch_assoc()):
+                    ?>
+                            
+                        <option value="<?= $row['user_id'] ?>"><?= displayName($conn,$row['user_id']) ?></option>
+
+                       <?php endwhile; ?>
+                       
+                    </select>&nbsp;&nbsp;   
                     <a onclick="showRating()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
                 
-                </div>
+                </div> 
             </div>
         </form>
         

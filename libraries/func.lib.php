@@ -1097,3 +1097,31 @@
                     return $res_array;
                 }
             }
+
+            function fetchAllMT($conn, $school)
+            {
+                $qry = "SELECT * FROM account_tbl WHERE position IN ('Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') AND school_id = $school";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+            function fetchAllt($conn, $school)
+            {
+                $qry = "SELECT * FROM account_tbl WHERE position IN ('Teacher III','Teacher II','Teacher I') AND school_id = $school";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+            

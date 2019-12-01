@@ -33,15 +33,13 @@ include 'sampleheader.php';
                 <div class="form-group mb-2">
                     <!-- Teacher Dropdown -->
                     <label for="sy"><strong>Master Teacher:</strong></label>&nbsp;&nbsp;
-                   
-                    <select id="teacher_id" name="teacher_id" class="form-control" required>
+                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I") AND `status` = "Active" AND school_id = "'.$_SESSION['school_id'].'"')or die ($conn->error);?>
+                    <select id="teacher_id" name="teacher_id" class="form-control">
                     <option value="" disabled selected>--Select Master Teacher--</option>
-                    <?php foreach(RPMSdb::showAllMTwithCOTavg($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']) as $mt_ratee):
-                        ?>
-                        <option value="<?php echo $mt_ratee['user_id'];?>"><?php echo displayName($conn,$mt_ratee['user_id'])?></option>
-                        
-                        <?php endforeach; ?>   
-                    </select>&nbsp;&nbsp;       
+                        <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
+                        <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>
+                        <?php endwhile; ?>
+                    </select>&nbsp;&nbsp;      
                 <!-- End of Teacher Dropdown -->
                 </div>
                 <div class="form-group mb-2">
