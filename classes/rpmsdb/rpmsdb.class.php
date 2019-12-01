@@ -1917,31 +1917,33 @@ class RPMSdb
     //     endif;
     // }
 
-    public static function showBmovMT($conn, $user, $sy, $school, $doc_status)
+    public static function showBmovMTrater($conn, $rater, $sy, $school, $doc_status)
     {
         $result_arr = [];
-        $qry =  "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `doc_status` = '$doc_status' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
-        $result = mysqli_query($conn, $qry) or die($conn->error . 'showBmovMT');
+        $qry =  "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `rater_id` = $rater AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `doc_status` = '$doc_status' AND `status` = 'Active' GROUP BY `user_id` ORDER BY `attach_mov_id` ASC";
+        $result = mysqli_query($conn, $qry) or die($conn->error .  $qry);
 
         if (mysqli_num_rows($result) > 0) :
             foreach ($result as $res) :
                 array_push($result_arr, $res);
             endforeach;
             return $result_arr;
+        else : return false;
         endif;
     }
 
-    public static function showBmovT($conn, $user, $sy, $school, $doc_status)
+    public static function showBmovMTuser($conn, $user, $sy, $school, $rater)
     {
         $result_arr = [];
-        $qry =  "SELECT * FROM `mov_b_t_attach_tbl` WHERE `user_id` = $user AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `doc_status` = '$doc_status' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
-        $result = mysqli_query($conn, $qry) or die($conn->error . 'showBmovMT');
+        $qry =  "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `user_id` = $user AND rater_id = $rater AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `status` = 'Active' ORDER BY `attach_mov_id` ASC";
+        $result = mysqli_query($conn, $qry) or die($conn->error .  $qry);
 
         if (mysqli_num_rows($result) > 0) :
             foreach ($result as $res) :
                 array_push($result_arr, $res);
             endforeach;
             return $result_arr;
+        else : return false;
         endif;
     }
 
