@@ -35,7 +35,7 @@ include 'sampleheader.php';
                     <!-- End of School Year Dropdown -->
                 <div class="form-group mb-2">
                     <!--Obs Period Dropdown -->            
-                    <label for="obs"><strong>Observation Period:</strong></label>&nbsp;&nbsp;
+                    <label for="obs"><strong>Observation Period:</strong></label>&nbsp;
                     <select id="obs_period" name="obs_period" class="form-control" required>
                     <option value="" disabled selected>--Select Obs Period--</option>
                         <option value="1">1st Period</option>
@@ -46,7 +46,7 @@ include 'sampleheader.php';
                 </div>
                     <!-- Obs Period Dropdown -->
                 <div class="form-group mb-2">
-                <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
+                <label for="sy"><strong>Teacher:</strong></label>&nbsp;
                 
                 <select id="teacher_id" name="teacher_id" class="form-control" required>
                     <option value="" disabled selected>Select Teacher</option>
@@ -59,9 +59,8 @@ include 'sampleheader.php';
 
                        <?php endwhile; ?>
                        
-                    </select>&nbsp;&nbsp;   
-                    <a onclick="showRating()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
-                
+                    </select>&nbsp;
+                    <a onclick="showRating()" class="btn btn-success text-white">View</a>&nbsp;
                 </div> 
             </div>
         </form>

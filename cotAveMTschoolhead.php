@@ -11,7 +11,7 @@ include 'sampleheader.php';
     <div class="px-3">
        
     
-        <form action="" method="POST" class="form-inline">
+        <form action="cotchartMTprincipal.php" method="POST" class="form-inline">
 
             <input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>"> 
             <input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>"> 
@@ -22,7 +22,7 @@ include 'sampleheader.php';
                     <!-- School Year Dropdown -->            
                     <label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
                     <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
-                    <select id="sy_id" name="sy_id" class="form-control" >
+                    <select id="sy_id" name="sy_id" class="form-control" required>
                     <option value="" disabled selected>--Select School Year--</option>
                         <?php while($syrow = $schoolyr->fetch_assoc()): ?>
                         <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
@@ -34,7 +34,7 @@ include 'sampleheader.php';
                     <!-- Teacher Dropdown -->
                     <label for="sy"><strong>Master Teacher:</strong></label>&nbsp;&nbsp;
                     <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I") AND `status` = "Active" AND rater = "'.$_SESSION['user_id'].'"')or die ($conn->error);?>
-                    <select id="teacher_id" name="teacher_id" class="form-control">
+                    <select id="teacher_id" name="teacher_id" class="form-control" required>
                     <option value="" disabled selected>--Select Master Teacher--</option>
                         <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
                         <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>

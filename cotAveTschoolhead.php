@@ -12,7 +12,7 @@ include 'sampleheader.php';
     <div class="px-3">
        
     
-        <form action="" method="POST" class="form-inline">
+        <form action="cotchartTprincipal.php" method="POST" class="form-inline">
 
             <input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>"> 
             <input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>"> 
@@ -46,6 +46,7 @@ include 'sampleheader.php';
                 </div>
                 <div class="form-group mb-2">
                     <a onclick="showAve()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
+                    <button type="submit" name="view" class="btn btn-success">View Data in Charts</button>
                 </div>
             </div>
         </form>
