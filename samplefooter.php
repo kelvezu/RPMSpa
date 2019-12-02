@@ -71,9 +71,9 @@
 
         <div class="p-1">
             <div class="d-flex flex-row bd-highlight">
-                <div class="p-2 bd-highlight"> <small><b>SY:</b> <?= $_SESSION['active_sy'] ?? "N/A" ?></small></div>
-                <div class="p-2 bd-highlight"><small><b>Start of Class:</b> <?= displayDate($_SESSION['start_date']) ?? "N/A" ?></small></div>
-                <div class="p-2 bd-highlight"><small><b>End of Class:</b> <?= displayDate($_SESSION['end_date']) ?? "N/A" ?></small></div>
+                <div class="p-2 bd-highlight"> <small><b>SY:</b> <?php echo $_SESSION['active_sy'] ?? "N/A" ?></small></div>
+                <div class="p-2 bd-highlight"><small><b>Start of Class:</b> <?php echo displayDate($_SESSION['start_date']) ?? "N/A" ?></small></div>
+                <div class="p-2 bd-highlight"><small><b>End of Class:</b> <?php echo displayDate($_SESSION['end_date']) ?? "N/A" ?></small></div>
             </div>
         </div>
         <div class="p-1">

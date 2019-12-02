@@ -283,5 +283,5 @@
                 endif;
             /*--------------------------------------*/
             endif;
-            include 'samplefooter.php';
+           
             ?>

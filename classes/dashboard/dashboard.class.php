@@ -487,11 +487,11 @@ class Dashboard
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                     <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
-                                    <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
-                                    <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
+                                    <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
+                                    <a class="dropdown-item" href="#">Create IPCRF Development Plan</a>
                                 </div>
                             </li>
-
+s
                             <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
@@ -508,7 +508,7 @@ class Dashboard
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                 <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
                                 <a href="setcotform.php" class="dropdown-item">Teacher COT Rating Sheet</a>                  <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a> 
-                                <a href="devplan.php" class="dropdown-item">Development Plan</a>
+                                <a href="viewgendevplanmt.php" class="dropdown-item">Development Plan</a>
                                 <a href="pmcf.php" class="dropdown-item">PMCF</a>
                                 <a href="mrf.php" class="dropdown-item">MRF</a>
                                 </div>
@@ -566,8 +566,8 @@ class Dashboard
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                         <a class="dropdown-item" href="#">My Teacher Development Plan-IPCRF</a>
-                                        <a class="dropdown-item" href="#">My Teacher General Development Plan</a>
                                         <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
+                                        <a class="dropdown-item" href="#">Create IPCRF Development Plan</a>
                                     </div>
                                 </li>
 
@@ -583,7 +583,7 @@ class Dashboard
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                     <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                                    <a href="devplan.php" class="dropdown-item">My Development Plan</a>
+                                    <a href="viewgendevplant.php" class="dropdown-item">My Development Plan</a>
                                     <a href="pmcf.php" class="dropdown-item">PMCF</a>
                                     <a href="mrf.php" class="dropdown-item">MRF</a>
                                     </div>

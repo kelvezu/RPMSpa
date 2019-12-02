@@ -1,104 +1,83 @@
 <?php
 
-use RPMSdb\RPMSdb;
-
 include 'sampleheader.php';
-$obs_period_arr =  showObsPeriodT($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']);
-$indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $_SESSION['active_sy_id'], $_SESSION['school_id'],  $_SESSION['user_id']);
+ 
 ?>
 
 <div class="container">
+   
+    <div class="bg-dark h4 text-white breadcrumb"> Teacher COT Rating</div>
+    <div class="px-3">
+       
+    
+        <form action="" method="POST" class="form-inline">
 
-    <div class="d-flex justify-content-center">
-        <img src="img\deped.png" width="100" height="100" class="rounded-circle">
-    </div>
+            <input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>"> 
+            <input type="hidden" id="school_id" name="school_id" value="<?php echo $_SESSION['school_id'] ?>">
+            <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
+            <input type="hidden" id="rater_id" name="rater_id" value="<?php echo $_SESSION['rater'] ?>">
 
-    <div class="d-flex justify-content-center my-2">
-        <h5><strong>COT-RPMS for Teacher I-III</strong></h5>
-    </div>
-
-    <div class="card">
-        <div class="card-header bg-dark text-white">
-            <div class="row">
-                <div class="col">
-                    <p>
-                        <b>Teacher Observed:</b> <?php displayname($conn, $_SESSION['user_id']) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?><br />
-                        <b>School :</b> <?= displaySchool($conn, $_SESSION['school_id']) ?>
-                    </p>
+            <div class="form-row">
+                <div class="form-group mb-2">
+                    <!-- School Year Dropdown -->            
+                    <label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
+                    <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
+                    <select id="sy_id" name="sy_id"  class="form-control" required>
+                    <option value="" disabled selected>--Select School Year--</option>
+                        <?php while($syrow = $schoolyr->fetch_assoc()): ?>
+                        <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
+                        <?php endwhile; ?>
+                    </select>&nbsp;&nbsp;
                 </div>
-                <div class="col">
-                    <p>
-                        <b> Rater:</b> <?= displayName($conn, $_SESSION['rater'])  ?><br />
-                        <b> School Year:</b> <?= displaySY($conn, $_SESSION['active_sy_id']) ?><br />
-                    </p>
-                </div>
+                
+                    <a onClick="showAve()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
+                
+               
             </div>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered table-responsive-sm table-sm">
-                <thead class="alert alert-success">
-                    <tr>
-                        <th>Indicator No</th>
-                        <th>Indicator Name</th>
-                        <th>1st COT</th>
-                        <th>2nd COT</th>
-                        <th>3rd COT</th>
-                        <th>4th COT</th>
-                        <th>Average</th>
-                    </tr>
-                </thead>
-                <?php
-                $num = 1;
-                foreach ($indicator_arr as $ind) :
-                    ?>
-                    <tbody>
-                        <tr>
-                            <td class="font-weight-bold"><?= $num++ . '.'; ?></td>
-                            <td class="font-italic"><?= displayTindicator($conn, $ind['indicator_id']); ?></td>
-                            <?php foreach ($obs_period_arr as $obsper) : ?>
+        </form>
+<br>
+                <div id="show">
 
-                                <td class="text-center text-success">
-                                    <?= fetchCOTratingT($conn, $_SESSION['user_id'], $obsper['obs_period'], $ind['indicator_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?>
-                                </td>
-                            <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-success"><?= fetchIndicatorAVGt($conn, $_SESSION['user_id'], $ind['indicator_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
-                        </tr>
-                    </tbody>
-                <?php endforeach; ?>
-            </table>
-        </div>
-    </div>
-
-    <div class="container">
-
-        <?php
-        //pre_r(RPMSdb::fetchCOTrating($conn, 32, 1, $_SESSION['active_sy_id'], $_SESSION['school_id'], 'a_tioafrating_tbl', 'b_tioafrating_tbl'));
-        // pre_r(RPMSdb::fetchtallMT($conn, $_SESSION['school_id']));
-        ?>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                </div>
 
 
 </div>
+      
+<!-- End tag of container -->
+  </div>
+  </div>
+<script>
+   
+    function showAve() {
+        let sy_id = document.getElementById('sy_id').value;
+        let school_id = document.getElementById('school_id').value;
+        let teacher_id = document.getElementById('user_id').value;
+        let rater = document.getElementById('rater_id').value;
+        
+
+        
+        if ((sy_id == "")) {
+            document.getElementById("show").innerHTML = "";
+            return;
+        } else {            
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("show").innerHTML = xmlhttp.responseText;
+                    console.log(this.responseText);
+                }
+            }
+            xmlhttp.open("GET", "cotAveTajax.php?sy=" + sy_id + "&user=" + teacher_id + "&sch=" + school_id + "&rater=" + rater, true);
+            xmlhttp.send();
+        }
+    }
+  
+
+</script>
 
 
-
-<br>
 <?php
+
 include 'samplefooter.php';
+
 ?>

@@ -6,7 +6,7 @@
 
     include_once 'sampleheader.php';
     // devplan::checkDevPlanMT($conn);
-    FilterUser::filterDevplanMTUsers($_SESSION['position']);
+    // FilterUser::filterDevplanMTUsers($_SESSION['position']);
     // A.CHECK IF USER DID NOT TAKEN ESAT
     $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
     //A.1 DISPLAY ERRORS IF THE USER DID NOT TAKE ESAT 
