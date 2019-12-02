@@ -10,7 +10,7 @@ include 'sampleheader.php';
     <div class="px-3">
        
     
-        <form action="" method="POST" class="form-inline">
+        <form action="cotchartMT.php" method="POST" class="form-inline">
 
             <input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>"> 
             <input type="hidden" id="school_id" name="school_id" value="<?php echo $_SESSION['school_id'] ?>">
@@ -30,8 +30,8 @@ include 'sampleheader.php';
                     </select>&nbsp;&nbsp;
                 </div>
                 
-                    <a onClick="showAve()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
-                
+                    <a onclick="showAve()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
+                    <button type="submit" name="view" class="btn btn-info">View Data in Charts</button>
                
             </div>
         </form>
