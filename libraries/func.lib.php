@@ -1177,7 +1177,7 @@
 
             function displayMainMOVstatus($conn, $attach_mov_id, $kra, $obj)
             {
-                $qry  = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id and mov_type = 'main_mov' AND kra_id = $kra AND obj_id = $obj";
+                $qry  = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id and mov_type = 'main_mov' AND kra_id = $kra AND obj_id = $obj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
@@ -1266,7 +1266,6 @@
             function ViewAdminCOTratingT($conn, $sy, $school)
             {
                 $qry = "SELECT * FROM `cot_t_indicator_ave_tbl` where sy = $sy and school = $school";
-                $qry  = 'SELECT * FROM `tindicator_tbl`';
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_arr = [];
                 foreach ($result as $res) {

@@ -160,7 +160,7 @@ endif
                             </td>
                             <!-- END OF COLUMN FOR MAIN MOV -->
                             <td>
-                                <p class="text-center"><?php echo displayMainMOVstatus($conn, $mov['attach_mov_id'], $mov['kra_id'], $mov['obj_id'])  ?? "-----" ?></p>
+                                <p class="text-center"><?php //echo displayMainMOVstatus($conn, $mov['attach_mov_id'], $mov['kra_id'], $mov['mtobj_id'])  ?? "-----" ?></p>
 
 
                             </td>
