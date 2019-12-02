@@ -156,6 +156,17 @@ class Dashboard
                 </li>
 
                 <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="cotAveTadmin.php">View Teacher COT</a>
+                                <a class="dropdown-item" href="">View Teacher Average COT</a>
+                                <a class="dropdown-item" href="">View Master Teacher COT</a>
+                                <a class="dropdown-item" href="">View Master Teacher Average COT</a>
+                            </div>
+                        </li>
+    
+
+                <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                     <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
