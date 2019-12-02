@@ -34,7 +34,7 @@ $supp_mov_file = 'supp_mov';
                         <select id="user_id" name="user_id" class="form-control-sm">
                             <option value="">--Select Master Teacher--</option>
                             <?php
-                            foreach (rpmsdb::showBmovMTrater($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id'], 'For Approval') as $ratees) : ?>
+                            foreach (rpmsdb::showRatees($conn, $_SESSION['user_id'],  $_SESSION['school_id'], 'For Approval') as $ratees) : ?>
                                 <option value=" <?php echo intval($ratees['user_id']) ?>"><?php echo displayName($conn, $ratees['user_id']) ?> </option>
                             <?php endforeach; ?>
                         </select>
@@ -76,26 +76,30 @@ endif
                 <tbody>
                     <tr>
                         <?php
-                        $mov_b = rpmsdb::fetch_B_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id']);
+                        $mov_b = displayKRAandOBJ($conn, $position);
+                        if (!$mov_b) :
+                            include 'samplefooter.php';
+                            exit();
+                        endif;
                         foreach ($mov_b as $mov) : ?>
                             <td>
                                 <p><?php echo $num++ ?></p>
                             </td>
                             <td>
-                                <p><?php echo displayKRA($conn, $mov['kra_id'])  ?></p>
+                                <p><?php echo  $mov['kra_id'] ?></p>
                             </td>
                             <td>
-                                <p><?php echo displayObjectiveMT($conn, $mov['obj_id']) ?? "-----" ?></p>
+                                <p><?php echo  $mov['obj_id'] ?? "-----" ?></p>
                             </td>
                             <!-- COLUMN FOR MAIN MOV -->
-                            <td><?php $main_att =  showAttachmentMT($conn, $mov['obj_id'], $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], 'main_mov');
+                            <td><?php $main_att = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $mov['mtobj_id'], $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], 'main_mov', $mov['kra_id']);
                                     foreach ($main_att as $mmov) :
                                         // if (isset($mmov)) : 
                                         ?>
-                                    <button data-toggle="modal" data-target="#updateModal<?php echo $mmov['mov_id'] . $mov['obj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo $mmov['file_name'] ?> <a href="includes/processattachuser.php?attach_mov_id=<?php echo showAttachmentIDMT($conn, $mov['sy_id'], $mov['school_id'], $mov['mov_id'], $mov['obj_id'], $mov['mov_type'])  ?>" class="fa fa-times text-danger"></a> </button>
+                                    <button data-toggle="modal" data-target="#updateModal<?php echo $mmov['mov_id'] . $mov['obj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo $mmov['file_name'] ?> <a href="includes/processattachuser.php?attach_mov_id=<?php echo showAttachmentIDMT($conn, $mov['sy_id'], $mov['school_id'], $mov['mov_id'], $mov['obj_id'], 'main_mov', $mov['kra_id'])  ?>" class="fa fa-times text-danger"></a> </button>
                                     <!-- ---------------------------------------------->
                                     <!--Main MOV Modal -->
-                                    <div class="modal fade" id="updateModal<?php echo $mmov['mov_id'] .   $mov['obj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="updateModal<?php echo $mov['mov_id'] .   $mov['obj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -163,10 +167,22 @@ endif
                             <td>
                                 <!-- COLUMN FOR SUPP MOV -->
                                 <?php
-                                    $supp_mov =  showAttachmentMT($conn, $mov['obj_id'], $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], 'supp_mov');
-                                    foreach ($supp_mov as $smov) :
-                                        if ($smov) : ?>
-                                        <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] .   $mov['obj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo $smov['file_name'] ?> <a href="includes/processattachuser.php?&attach_mov_id=<?php echo showAttachmentIDMT($conn, $smov['sy_id'], $smov['school_id'], $smov['mov_id'], $mov['obj_id'], $smov['mov_type'])  ?>" class="fa fa-times text-danger"></a></button>
+                                    $supp_mov =  showAttachmentMT($conn, $mov['obj_id'], $user_id, $mov['school_id'], $mov['sy_id'], 'supp_mov', $mov['kra_id']);
+                                    if ($supp_mov) :
+                                        foreach ($supp_mov as $smov) :
+
+                                            ?>
+                                        <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] .   $mov['obj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo $smov['file_name'] ?> <a href="includes/processattachuser.php?&attach_mov_id=
+                                        <?php
+                                                    echo showAttachmentIDMT(
+                                                        $conn,
+                                                        $mov['sy_id'],
+                                                        $mov['school_id'],
+                                                        $mov['mov_id'],
+                                                        $mov['obj_id'],
+                                                        'supp_mov',
+                                                        $mov['kra_id']
+                                                    )  ?>" class="fa fa-times text-danger"></a></button>
 
                                         <!--Main MOV Modal -->
                                         <div class="modal fade" id="updateModal<?php echo $smov['mov_id'] .   $mov['obj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -227,20 +243,28 @@ endif
                                         <!-- End tag of Update Modal -->
 
                                 <?php
-                                        endif;
-                                    endforeach;
+
+                                        endforeach;
+                                    endif;
                                     ?>
-
-
                             </td>
                             <!-- END COLUMN FOR SUPP MOV -->
                             <td>
-                                <!-- <p class="text-center"><?php //echo (displaySuppMOVstatus($conn, $mov['attach_mov_id'], $mov['kra_id'], $mov['obj_id']))  ?? "-----" 
-                                                                ?></p> -->
-                                <?php echo showAttachmentStatusMT($conn, $mov['attach_mov_id']) ?>
+                                <p class="text-center">
+                                    <?php
+                                        $res_status = displayAttachmentStatusMT($conn, $mov['attach_mov_id'], 'supp_mov', $mov['kra_id'], $mov['obj_id'], $user_id);
+                                        if ($res_status) :
+                                            foreach ($res_status as $rr) : ?>
+                                            <?php echo $rr['doc_status'] . $mov['attach_mov_id'] . ' kra=' . $mov['kra_id'] . ' obj=' . $mov['obj_id'] . 'kra=' . $mov['kra_id'] . $mov['mov_type'] ?>
+
+                                    <?php pre_r($rr);
+                                            endforeach;
+                                        endif;
+                                        ?>
+                                </p>
                             </td>
                     </tr>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>x
                 </tbody>
             </table>
         </div>

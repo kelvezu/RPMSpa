@@ -855,15 +855,35 @@
                 endif;
             }
 
-            function showAttachmentMT($conn, $objective_id, $user, $school, $sy, $mov_type)
+            function showMainAttachmentMT($conn, $objective_id, $user, $school, $sy, $kra)
             {
                 $attach_arr = [];
-                $sql_mov_b = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy' AND `status` = 'Active'";
+                $sql_mov_b = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE kra_id = $kra AND obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy' AND `status` = 'Active'";
                 $result_b = mysqli_query($conn, $sql_mov_b) or die($conn->error . $sql_mov_b);
                 if (mysqli_num_rows($result_b) > 0) :
                     foreach ($result_b as $res) :
                         $mov_id = $res['mov_id'];
-                        $sql_mov_a = " SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id =' $mov_id' AND mov_type = '$mov_type' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
+                        $sql_mov_a = " SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id =' $mov_id' AND  `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
+                        $result_a = mysqli_query($conn, $sql_mov_a) or die($conn->error . $sql_mov_a);
+                        if (mysqli_num_rows($result_a) > 0) :
+                            foreach ($result_a as $re) :
+                                array_push($attach_arr, $re);
+                            endforeach;
+                        endif;
+                    endforeach;
+                endif;
+                return $attach_arr;
+            }
+
+            function showSuppAttachmentMT($conn, $objective_id, $user, $school, $sy, $kra)
+            {
+                $attach_arr = [];
+                $sql_mov_b = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE kra_id = $kra AND obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy' AND `status` = 'Active'";
+                $result_b = mysqli_query($conn, $sql_mov_b) or die($conn->error . $sql_mov_b);
+                if (mysqli_num_rows($result_b) > 0) :
+                    foreach ($result_b as $res) :
+                        $mov_id = $res['mov_id'];
+                        $sql_mov_a = " SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id =' $mov_id' AND  `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
                         $result_a = mysqli_query($conn, $sql_mov_a) or die($conn->error . $sql_mov_a);
                         if (mysqli_num_rows($result_a) > 0) :
                             foreach ($result_a as $re) :
@@ -897,9 +917,9 @@
                 return $attach_arr;
             }
 
-            function showAttachmentIDMT($conn, $sy, $school, $mov_id, $obj_id, $mov_type)
+            function showMainMOVidMT($conn, $sy, $school, $mov_id, $obj_id, $mov_type, $kra)
             {
-                $qry = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE sy_id = $sy and school_id = $school AND mov_id = $mov_id AND obj_id = $obj_id AND mov_type = '$mov_type'";
+                $qry = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE kra_id = $kra and sy_id = $sy and school_id = $school AND mov_id = $mov_id AND obj_id = $obj_id";
                 $result = mysqli_query($conn, $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
@@ -908,10 +928,21 @@
                 }
             }
 
-
-            function showAttachmentStatusMT($conn, $attach_mov_id)
+            function showSuppMOVidMT($conn, $sy, $school, $mov_id, $obj_id, $mov_type, $kra)
             {
-                $qry = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id";
+                $qry = "SELECT * FROM `mov_supp_mt_attach_tbl` WHERE kra_id = $kra and sy_id = $sy and school_id = $school AND mov_id = $mov_id AND obj_id = $obj_id";
+                $result = mysqli_query($conn, $qry);
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['attach_mov_id'];
+                    }
+                }
+            }
+
+            // this function will show the main mov status
+            function showMainMovStatusMT($conn, $attach_mov_id)
+            {
+                $qry = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id";
                 $result = mysqli_query($conn, $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
@@ -920,16 +951,31 @@
                 }
             }
 
-            function displayAttachmentStatusMT($conn, $attach_mov_id)
+            // this function will show the supp mov status
+            function showSuppMovStatusMT($conn, $attach_mov_id)
             {
-                $qry = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id";
+                $qry = "SELECT * FROM `mov_supp_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id";
                 $result = mysqli_query($conn, $qry);
                 if (mysqli_num_rows($result) > 0) {
-                    $res_arr = [];
+                    foreach ($result as $r) {
+                        return $r['doc_status'];
+                    }
+                }
+            }
+
+            function displayAttachmentStatusMT($conn, $attach_mov_id, $mov_type, $kra, $obj, $user)
+            {
+                $res_arr = [];
+                $qry = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `user_id` = '$user' AND attach_mov_id = $attach_mov_id AND kra_id = $kra AND obj_id = $obj AND `mov_type` = '$mov_type' AND doc_status = 'For Approval'";
+                $result = mysqli_query($conn, $qry);
+                if (mysqli_num_rows($result) > 0) {
+
                     foreach ($result as $r) {
                         array_push($res_arr, $r);
                     }
                     return $res_arr;
+                } else {
+                    return false;
                 }
             }
 
@@ -1151,14 +1197,16 @@
                 }
             }
 
-            function displaySuppMOVstatus($conn, $attach_mov_id, $kra, $obj)
+            function displaySuppMOVstatus($conn, $attach_mov_id, $mov_id, $mov_type, $kra, $obj, $school, $sy)
             {
-                $qry  = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id and mov_type = 'supp_mov' AND kra_id = $kra AND obj_id = $obj";
+                $res_arr = [];
+                $qry  = "SELECT * FROM `mov_b_mt_attach_tbl` where attach_mov_id =  $attach_mov_id AND mov_id = $mov_id and mov_type = '$mov_type' AND school_id = $school and sy_id = $sy and kra_id = $kra and obj_id = $obj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
-                        return $r['doc_status'];
+                        $res_arr[] = $r;
                     }
+                    return $res_arr;
                 }
             }
 
@@ -1203,6 +1251,8 @@
             }
 
 
+
+
             // ISSUE: DISPLAY NULL
             function fetchTindicatorRate($conn, $user, $indicator, $sy, $school, $obs_period)
             {
@@ -1211,4 +1261,16 @@
                 foreach ($result as $res) {
                     return $res['rating'];
                 }
+            }
+
+            function ViewAdminCOTratingT($conn, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_indicator_ave_tbl` where sy = $sy and school = $school";
+                $qry  = 'SELECT * FROM `tindicator_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
             }

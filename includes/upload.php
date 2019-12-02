@@ -42,11 +42,18 @@ if (isset($_POST['submit'])) :
 
                 if ($mov_results) {
                     $last_id = mysqli_insert_id($conn);
-
-                    for ($count = 0; $count < count($obj_id); $count++) {
-                        $qry = "INSERT INTO `mov_b_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id')";
-                        $mov_attach_qry = mysqli_query($conn, $qry) or die($conn->error);
-                    }
+                    if ($mov_type == "main_mov") :
+                        for ($count = 0; $count < count($obj_id); $count++) :
+                            $qry = "INSERT INTO `mov_main_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id')";
+                            $mov_attach_qry = mysqli_query($conn, $qry) or die($conn->error);
+                        endfor;
+                    elseif ($mov_type == "supp_mov") :
+                        for ($count = 0; $count < count($obj_id); $count++) :
+                            $qry = "INSERT INTO `mov_supp_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id')";
+                            $mov_attach_qry = mysqli_query($conn, $qry) or die($conn->error);
+                        endfor;
+                    else : exit('error');
+                    endif;
                 }
 
                 header("Location:../attachfile.php?=success");

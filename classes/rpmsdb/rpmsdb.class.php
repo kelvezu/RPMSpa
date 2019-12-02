@@ -1749,16 +1749,15 @@ class RPMSdb
         endif;
     }
 
-    // FETCH FOR THE USER MT
-    public static function fetch_B_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id)
+    // FETCH FOR THE USER MT mov
+    public static function fetch_MAIN_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id)
     {
-        $qry = "SELECT * FROM mov_b_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active'";
-        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_B_MT_MOV_ATT');
+        $qry = "SELECT * FROM mov_main_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active' GROUP BY obj_id ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_MAIN_MT_MOV_ATT');
         if (mysqli_num_rows($result) > 0) :
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-
             endforeach;
             return $result_array;
         else :
@@ -1917,10 +1916,10 @@ class RPMSdb
     //     endif;
     // }
 
-    public static function showBmovMTrater($conn, $rater, $sy, $school, $doc_status)
+    public static function showRatees($conn, $rater, $school)
     {
         $result_arr = [];
-        $qry =  "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `rater_id` = $rater AND  `sy_id` = '$sy' AND `school_id` = '$school' AND `doc_status` = '$doc_status' AND `status` = 'Active' GROUP BY `user_id` ORDER BY `attach_mov_id` ASC";
+        $qry =  "SELECT * FROM `account_tbl` WHERE `rater` = $rater  AND `school_id` = '$school' AND  `status` = 'Active' GROUP BY `user_id` ORDER BY `user_id` desc ";
         $result = mysqli_query($conn, $qry) or die($conn->error .  $qry);
 
         if (mysqli_num_rows($result) > 0) :
