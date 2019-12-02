@@ -6,13 +6,12 @@ include_once 'sampleheader.php';
 $num = 1;
 ?>
 
-<div class="container">
+<!-- <div class="container">
     <div class="card">
         <div class="card-header">
             <p>Master Teacher with MOV's</p>
         </div>
         <div class="card-body overflow-auto">
-
             <form action="viewattachment.ratermt.php" method="post">
                 <input type="hidden" id="sy_id" name="sy_id" value="<?= $_SESSION['active_sy_id'] ?>">
                 <input type="hidden" id="school_id" name="school_id" value="<?= $_SESSION['school_id'] ?>">
@@ -25,14 +24,12 @@ $num = 1;
                 </select>
                 <button type="submit" class="btn btn-sm btn-primary">View MOV</button>
             </form>
-
         </div>
     </div>
-
-    <!-- <div id="post_here">
+</div> -->
+<!-- <div id="post_here">
 
     </div> -->
-</div>
 <script>
     // const fetchmov = document.getElementById('fetch-mov');
     // const user_id = document.getElementById('user_id').value;

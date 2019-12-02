@@ -920,6 +920,19 @@
                 }
             }
 
+            function displayAttachmentStatusMT($conn, $attach_mov_id)
+            {
+                $qry = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id";
+                $result = mysqli_query($conn, $qry);
+                if (mysqli_num_rows($result) > 0) {
+                    $res_arr = [];
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
+                    }
+                    return $res_arr;
+                }
+            }
+
             function displayFileMT($conn, $mov_id)
             {
                 $qry = "SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id = '$mov_id'";
@@ -1175,4 +1188,27 @@
                 }
             }
 
-            
+
+
+
+            function fetchTindicator($conn)
+            {
+                $qry  = 'SELECT * FROM `tindicator_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+
+            // ISSUE: DISPLAY NULL
+            function fetchTindicatorRate($conn, $user, $indicator, $sy, $school, $obs_period)
+            {
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` where  `user_id` = $user AND `indicator_id` = $indicator AND `sy` = $sy AND `school_id` = $school AND obs_period = $obs_period";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                foreach ($result as $res) {
+                    return $res['rating'];
+                }
+            }

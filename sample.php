@@ -303,13 +303,36 @@ $user =  $_SESSION['user_id'];
 
 // $res = showObsPeriod($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']);
 // $res = RPMSdb::showBmovMT($conn, $sy, $school, 'For Approval');
-$res =RPMSdb::showAllTwithCOTavg($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
+// $res =RPMSdb::showAllTwithCOTavg($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
+$res = fetchTindicator($conn); ?>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Indicator</th>
+            <th>Rating</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <?php
+        foreach ($res as $r) : ?>
+            <tr>
+                <td><?php echo $r['indicator_id'] ?></td>
+                <td><?php var_dump(fetchTindicatorRate($conn, $user, $r['indicator_id'], $sy, $school, 1)); ?></td>
+            <?php endforeach; ?>
+            </tr>
+    </tbody>
 
 
-pre_r($res);
-// foreach ($res as $r) {
-//     echo $r['indicator_id'] . BR;
-// }
+
+
+
+
+</table>
+<!-- // foreach ($res as $r) {
+// echo $r['indicator_id'] . BR;
+// } -->
 
 
 
@@ -322,7 +345,7 @@ pre_r($res);
 
 
 
-?>
+
 <!-- <select name="" id=""> -->
 <?php
 
