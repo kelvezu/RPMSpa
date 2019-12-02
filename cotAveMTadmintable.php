@@ -10,7 +10,7 @@ $sy_id = $_GET['sy'];
 $school_id = $_GET['sch'];
 
 $cot_array = [];
-$COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy = $sy_id AND school = $school_id") or die ($conn->error);
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy = $sy_id AND school = $school_id") or die ($conn->error);
 
     if(mysqli_num_rows($COTqry) == 0):
         echo '<div class="red-notif-border">Average COT is not available</div>';
@@ -21,8 +21,8 @@ $COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy =
         endforeach;
     endif;
 
-    $indicator_arr = RPMSdb::ViewAdminTindicator($conn, $sy_id, $school_id);
-    $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school_id);
+    $indicator_arr = RPMSdb::ViewAdminMTindicator($conn, $sy_id, $school_id);
+    $obs_period_arr =  showObsPeriodAveAdminMT($conn, $sy_id, $school_id);
 ?>
 
 <div class="container">
@@ -32,7 +32,7 @@ $COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy =
     </div>
 
     <div class="d-flex justify-content-center my-2">
-        <h5><strong>COT-RPMS for Teacher I-III</strong></h5>
+        <h5><strong>COT-RPMS for Master Teacher I-IV</strong></h5>
     </div>
 
     <div class="card">
@@ -71,18 +71,18 @@ $COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy =
                     <tbody>
                         <tr>
                             <td class="font-weight-bold"><?= $num++ . '.'; ?></td>
-                            <td class="font-italic"><?= displayTindicator($conn, $ind['indicator_id']); ?></td>
+                            <td class="font-italic"><?= displayMTindicator($conn, $ind['indicator_id']); ?></td>
                             <?php foreach ($obs_period_arr as $obsper) : ?>
 
                                 <td class="text-center text-success">
-                                    <?php $t_average =  viewAdminratingT($conn, $school_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id);
+                                    <?php $t_average =  viewAdminratingMT($conn, $school_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id);
                                     if($t_average):
                                          echo $t_average;
                                     else:  echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                     endif; ?>
                                 </td>
                             <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-success"><?= fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                            <td class="text-center font-weight-bold text-success"><?= fetchIndicatorAVGAdminMt($conn, $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>

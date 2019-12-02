@@ -2025,4 +2025,30 @@ class RPMSdb
             return $result_arr;
         endif;
     }
+
+    public static function ViewAdminTindicator($conn, $sy, $school)
+{
+    $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' GROUP by indicator_id";
+    $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+    if (mysqli_num_rows($result) > 0) :
+        $res_array = [];
+        foreach ($result as $r) {
+            array_push($res_array, $r);
+        }
+        return $res_array;
+    endif;
 }
+public static function ViewAdminMTindicator($conn, $sy, $school)
+{
+    $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' GROUP by indicator_id";
+    $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+    if (mysqli_num_rows($result) > 0) :
+        $res_array = [];
+        foreach ($result as $r) {
+            array_push($res_array, $r);
+        }
+        return $res_array;
+    endif;
+}
+}
+
