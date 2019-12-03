@@ -1251,6 +1251,16 @@
                 return $res_arr;
             }
 
+            function fetchMTindicator($conn)
+            {
+                $qry  = 'SELECT * FROM `mtindicator_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
 
 
 
@@ -1264,7 +1274,7 @@
                 }
             }
 
-            function ViewAdminCOTratingT($conn, $sy, $school)
+            function ViewAdminCOTAveT($conn, $sy, $school)
             {
                 $qry = "SELECT * FROM `cot_t_indicator_ave_tbl` where sy = $sy and school = $school";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1273,4 +1283,92 @@
                     array_push($res_arr, $res);
                 }
                 return $res_arr;
+            }
+
+            
+            function viewAdminratingT($conn, $school, $obs_period, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return floatval($r['T_RATING']);
+                    }
+                }
+            }
+
+            function viewAdminratingMT($conn, $school, $obs_period, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return floatval($r['MT_RATING']);
+                    }
+                }
+            }
+
+            function showObsPeriodAveAdminT($conn, $sy, $school)
+            {
+                $qry = "SELECT `obs_period` FROM cot_t_rating_a_tbl where `sy` = $sy and `school_id` = $school and `status` = 'Active' GROUP by `obs_period`";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+
+            function showObsPeriodAveAdminMT($conn, $sy, $school)
+            {
+                $qry = "SELECT `obs_period` FROM cot_mt_rating_a_tbl where `sy` = $sy and `school_id` = $school and `status` = 'Active' GROUP by `obs_period`";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+            function fetchIndicatorAVGAdmint($conn, $indicator, $sy, $school)
+            {
+                $qry = "SELECT AVG(average) AS T_AVERAGE FROM `cot_t_indicator_ave_tbl` where indicator_id = $indicator  and `sy` = $sy and `school` = $school and `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return floatval($res['T_AVERAGE']);
+                    endforeach;
+                else : return false;
+                endif;
+            }
+
+            function fetchIndicatorAVGAdminMt($conn, $indicator, $sy, $school)
+            {
+                $qry = "SELECT AVG(average) AS MT_AVERAGE FROM `cot_mt_indicator_ave_tbl` where indicator_id = $indicator  and `sy` = $sy and `school` = $school and `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return floatval($res['MT_AVERAGE']);
+                    endforeach;
+                else : return false;
+                endif;
+            }
+
+            function viewAveIndAdminT($conn, $indicator, $sy, $school)
+            {
+                $qry = "SELECT AVG(average) FROM `cot_t_indicator_ave_tbl` where indicator_id = $indicator  and `sy` = $sy and `school` = $school and `status` = 'Active'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return floatval($res['average']);
+                    endforeach;
+                else : return false;
+                endif;
             }
