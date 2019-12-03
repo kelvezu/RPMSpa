@@ -1750,9 +1750,9 @@ class RPMSdb
     }
 
     // FETCH FOR THE USER MT mov
-    public static function fetch_MAIN_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id)
+    public static function fetch_MAIN_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id, $obj, $kra)
     {
-        $qry = "SELECT * FROM mov_main_mt_attach_tbl WHERE `user_id` = $user_id AND school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active' GROUP BY obj_id ";
+        $qry = "SELECT * FROM mov_main_mt_attach_tbl WHERE `user_id` = $user_id AND kra_id = $kra  AND obj_id = $obj AND school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active' ";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_MAIN_MT_MOV_ATT');
         if (mysqli_num_rows($result) > 0) :
             $result_array = [];
@@ -1760,8 +1760,20 @@ class RPMSdb
                 array_push($result_array, $res);
             endforeach;
             return $result_array;
-        else :
-            return false;
+        endif;
+    }
+
+    public static function fetch_SUPP_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id, $obj, $kra)
+    {
+        $qry = "SELECT * FROM mov_supp_mt_attach_tbl WHERE `user_id` = $user_id  AND kra_id = $kra AND obj_id = $obj and school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active' ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_MAIN_MT_MOV_ATT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+            endforeach;
+            return $result_array;
+        // else : return "No result!";
         endif;
     }
 
@@ -1791,7 +1803,6 @@ class RPMSdb
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-
             endforeach;
             return $result_array;
         else :

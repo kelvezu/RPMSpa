@@ -89,103 +89,121 @@ endif
                                 <p><?php echo  $mov['kra_id'] ?></p>
                             </td>
                             <td>
-                                <p><?php echo  $mov['obj_id'] ?? "-----" ?></p>
+                                <p><?php echo  $mov['mtobj_id'] ?? "-----" ?></p>
                             </td>
                             <!-- COLUMN FOR MAIN MOV -->
-                            <td><?php $main_att = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $mov['mtobj_id'], $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], 'main_mov', $mov['kra_id']);
-                                    foreach ($main_att as $mmov) :
-                                        // if (isset($mmov)) : 
-                                        ?>
-                                    <button data-toggle="modal" data-target="#updateModal<?php echo $mmov['mov_id'] . $mov['obj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo $mmov['file_name'] ?> <a href="includes/processattachuser.php?attach_mov_id=<?php echo showAttachmentIDMT($conn, $mov['sy_id'], $mov['school_id'], $mov['mov_id'], $mov['obj_id'], 'main_mov', $mov['kra_id'])  ?>" class="fa fa-times text-danger"></a> </button>
-                                    <!-- ---------------------------------------------->
-                                    <!--Main MOV Modal -->
-                                    <div class="modal fade" id="updateModal<?php echo $mov['mov_id'] .   $mov['obj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Update Attachments</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="card">
-                                                        <div class="card-header bg-light">
-                                                            <p><b>Attached in KRA <?php echo $mov['kra_id'] ?>: </b>"<i><?php echo displayKRA($conn, $mov['kra_id']) ?></i>"</p>
-                                                            <b>Attached in Objective <?php echo $mov['obj_id'] ?>: </b>
-                                                            "<i><?php echo displayObjectiveMT($conn, $mov['obj_id']) ?></i>"
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="card">
-                                                                <div class="card-header bg-dark text-white">
-                                                                    <div class="d-flex justify-content-between">
-                                                                        <div class="p-2">
-                                                                            <p><b>File name:</b> <?php echo $mmov['file_name'] ?></p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card-body">
-                                                                    <form action="includes/processupdateattachment.php" method="post">
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <p><b>Attachment</b>
-                                                                                    <p><?php echo (displayFileMT($conn, $mmov['mov_id'])); ?></p>
-                                                                                </p>
+                            <td><?php $main_att = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
+                                    if (isset($main_att)) :
+                                        foreach ($main_att as $mmov) :
+                                            ?>
+                                        <button data-toggle="modal" data-target="#updateModal<?php echo $mmov['mov_id'] . $mov['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo $mmov['mov_id'] ?>
+                                            <?php echo displayMainMOVattachment($conn, $mmov['mov_id'], $mov['kra_id'], $mov['mtobj_id']) ?>
+
+                                            <a href="includes/processattachuser.php?attach_mov_id=<?php //echo showMainMOVidMT($conn, $mmov['sy_id'], $mmov['school_id'], $mmov['mov_id'], $mmov['obj_id'], 'main_mov', $mmov['kra_id'])
+                                                                                                                ?>" class="fa fa-times text-danger"></a>
+                                        </button>
+                                        <!-- ---------------------------------------------->
+                                        <!--Main MOV Modal -->
+                                        <div class="modal fade" id="updateModal<?php echo $mmov['mov_id'] .   $mov['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Update Attachments</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card">
+                                                            <div class="card-header bg-light">
+                                                                <p><b>Attached in KRA <?php echo $mmov['kra_id'] ?>: </b>"<i><?php echo displayKRA($conn, $mmov['kra_id']) ?></i>"</p>
+                                                                <b>Attached in Objective <?php echo $mov['mtobj_id'] ?>: </b>
+                                                                "<i><?php echo displayObjectiveMT($conn, $mov['mtobj_id']) ?></i>"
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <div class="card">
+                                                                    <div class="card-header bg-dark text-white">
+                                                                        <div class="d-flex justify-content-between">
+                                                                            <div class="p-2">
+                                                                                <p><b>File name:</b> <?php echo $mmov['file_name'] ?></p>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="card-footer alert alert-dark">
-                                                                            <p class="text-justify">
-                                                                                <b>Description:</b>
-                                                                                <p class="text-justify">" <i><?php echo $mmov['file_desc'] ?></i> "</p>
-                                                                            </p>
-                                                                        </div>
-                                                                    </form>
+                                                                    </div>
+                                                                    <div class="card-body">
+                                                                        <form action="includes/processupdateattachment.php" method="post">
+                                                                            <div class="row">
+                                                                                <div class="col">
+                                                                                    <p><b>Attachment</b>
+                                                                                        <p><?php echo (displayFileMT($conn, $mmov['mov_id'])); ?></p>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card-footer alert alert-dark">
+                                                                                <p class="text-justify">
+                                                                                    <b>Description:</b>
+                                                                                    <p class="text-justify">" <i><?php echo $mmov['file_desc'] ?></i> "</p>
+                                                                                </p>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <!-- End of Card -->
                                                     </div>
-                                                    <!-- End of Card -->
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <!-- End tag of Update Modal -->
-                                <?php //endif;
-                                    endforeach; ?>
+                                        <!-- End tag of Update Modal -->
+                                <?php
+                                        endforeach;
+                                    endif; ?>
                                 <!----------------------------------------------------->
                             </td>
                             <!-- END OF COLUMN FOR MAIN MOV -->
                             <td>
-                                <p class="text-center"><?php //echo displayMainMOVstatus($conn, $mov['attach_mov_id'], $mov['kra_id'], $mov['mtobj_id'])  ?? "-----" ?></p>
+                                <p class="text-center"><?php //echo displayMainMOVstatus($conn, $mmov['attach_mov_id'], $mov['kra_id'], $mov['mtobj_id'])  ?? "-----" 
+                                                            ?></p>
 
 
                             </td>
                             <td>
                                 <!-- COLUMN FOR SUPP MOV -->
                                 <?php
-                                    $supp_mov =  showAttachmentMT($conn, $mov['obj_id'], $user_id, $mov['school_id'], $mov['sy_id'], 'supp_mov', $mov['kra_id']);
+                                    $supp_mov =  rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
+                                    pre_r($supp_mov);
+                                    // echo $mov['mtobj_id'] . BR;
+                                    // echo $user_id . BR;
+                                    // echo $_SESSION['active_sy_id'] . BR;
+
+
+
                                     if ($supp_mov) :
                                         foreach ($supp_mov as $smov) :
-
+                                            // echo "SY " . $smov['sy_id'] . BR;
+                                            // echo "SCH " . $smov['school_id'] . BR;
+                                            // echo "MOV " . $smov['mov_id'] . BR;
+                                            // echo "OBJ " . $smov['obj_id'] . BR;
+                                            // echo "KRA " . $mov['kra_id'] . BR;
                                             ?>
-                                        <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] .   $mov['obj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo $smov['file_name'] ?> <a href="includes/processattachuser.php?&attach_mov_id=
+                                        <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] . $mov['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?php echo "File name= " . $smov['mov_id'] ?> <a href="includes/processattachuser.php?&attach_mov_id=
                                         <?php
-                                                    echo showAttachmentIDMT(
-                                                        $conn,
-                                                        $mov['sy_id'],
-                                                        $mov['school_id'],
-                                                        $mov['mov_id'],
-                                                        $mov['obj_id'],
-                                                        'supp_mov',
-                                                        $mov['kra_id']
-                                                    )  ?>" class="fa fa-times text-danger"></a></button>
+                                                    // echo showAttachmentIDMT(
+                                                    //     $conn,
+                                                    //     $smov['sy_id'],
+                                                    //     $smov['school_id'],
+                                                    //     $smov['mov_id'],
+                                                    //     $smov['obj_id'],
+                                                    //     $mov['kra_id']
+                                                    //)  
+                                                    ?>" class="fa fa-times text-danger"></a></button>
 
                                         <!--Main MOV Modal -->
-                                        <div class="modal fade" id="updateModal<?php echo $smov['mov_id'] .   $mov['obj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="updateModal<?php echo $smov['mov_id'] . $mov['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -198,8 +216,8 @@ endif
                                                         <div class="card">
                                                             <div class="card-header bg-light">
                                                                 <p><b>Attached in KRA <?php echo $mov['kra_id'] ?>: </b>"<i><?php echo displayKRA($conn, $mov['kra_id']) ?></i>"</p>
-                                                                <b>Attached in Objective <?php echo $mov['obj_id'] ?>: </b>
-                                                                "<i><?php echo displayObjectiveMT($conn, $mov['obj_id']) ?></i>"
+                                                                <b>Attached in Objective <?php echo $mov['mtobj_id'] ?>: </b>
+                                                                "<i><?php echo displayObjectiveMT($conn, $mov['mtobj_id']) ?></i>"
                                                             </div>
                                                             <div class="card-body">
                                                                 <div class="card">
@@ -223,7 +241,7 @@ endif
                                                                             <div class="card-footer alert alert-dark">
                                                                                 <p class="text-justify">
                                                                                     <b>Description:</b>
-                                                                                    <p class="text-justify">" <i><?php echo $smov['file_desc'] ?></i> "</p>
+                                                                                    <p class="text-justify">" <i><?php echo $smov['file_desc'] ?? "---" ?></i> "</p>
                                                                                 </p>
                                                                             </div>
                                                                         </form>
@@ -243,23 +261,26 @@ endif
                                         <!-- End tag of Update Modal -->
 
                                 <?php
-
                                         endforeach;
+                                    else : false;
                                     endif;
+
                                     ?>
                             </td>
                             <!-- END COLUMN FOR SUPP MOV -->
                             <td>
                                 <p class="text-center">
                                     <?php
-                                        $res_status = displayAttachmentStatusMT($conn, $mov['attach_mov_id'], 'supp_mov', $mov['kra_id'], $mov['obj_id'], $user_id);
-                                        if ($res_status) :
-                                            foreach ($res_status as $rr) : ?>
-                                            <?php echo $rr['doc_status'] . $mov['attach_mov_id'] . ' kra=' . $mov['kra_id'] . ' obj=' . $mov['obj_id'] . 'kra=' . $mov['kra_id'] . $mov['mov_type'] ?>
+                                        //     $res_status = displayAttachmentStatusMT($conn, $mov['attach_mov_id'], 'supp_mov', $mov['kra_id'], $mov['obj_id'], $user_id);
+                                        //     if ($res_status) :
+                                        //         foreach ($res_status as $rr) : 
+                                        ?>
+                                    <?php //echo $rr['doc_status'] . $mov['attach_mov_id'] . ' kra=' . $mov['kra_id'] . ' obj=' . $mov['obj_id'] . 'kra=' . $mov['kra_id'] . $mov['mov_type'] 
+                                        ?>
 
-                                    <?php pre_r($rr);
-                                            endforeach;
-                                        endif;
+                                    <?php //pre_r($rr);
+                                        //         endforeach;
+                                        //     endif;
                                         ?>
                                 </p>
                             </td>

@@ -928,10 +928,10 @@
                 }
             }
 
-            function showSuppMOVidMT($conn, $sy, $school, $mov_id, $obj_id, $mov_type, $kra)
+            function showSuppMOVidMT($conn, $sy, $school, $mov_id, $obj_id, $kra)
             {
                 $qry = "SELECT * FROM `mov_supp_mt_attach_tbl` WHERE kra_id = $kra and sy_id = $sy and school_id = $school AND mov_id = $mov_id AND obj_id = $obj_id";
-                $result = mysqli_query($conn, $qry);
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
                         return $r['attach_mov_id'];
@@ -966,7 +966,7 @@
             function displayAttachmentStatusMT($conn, $attach_mov_id, $mov_type, $kra, $obj, $user)
             {
                 $res_arr = [];
-                $qry = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `user_id` = '$user' AND attach_mov_id = $attach_mov_id AND kra_id = $kra AND obj_id = $obj AND `mov_type` = '$mov_type' AND doc_status = 'For Approval'";
+                $qry = "SELECT * FROM `mov_supp_mt_attach_tbl` WHERE `user_id` = '$user' AND attach_mov_id = $attach_mov_id AND kra_id = $kra AND obj_id = $obj AND `mov_type` = '$mov_type' AND doc_status = 'For Approval'";
                 $result = mysqli_query($conn, $qry);
                 if (mysqli_num_rows($result) > 0) {
 
@@ -1166,7 +1166,7 @@
 
             function displayMainMOVattachment($conn, $attach_mov_id, $kra, $obj)
             {
-                $qry  = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id AND kra_id = $kra AND obj_id = $obj and mov_type = 'main_mov'";
+                $qry  = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id AND kra_id = $kra AND obj_id = $obj ";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
@@ -1174,6 +1174,7 @@
                     }
                 }
             }
+
 
             function displayMainMOVstatus($conn, $attach_mov_id, $kra, $obj)
             {
@@ -1188,7 +1189,7 @@
 
             function displaySuppMOVattachment($conn, $attach_mov_id, $kra, $obj)
             {
-                $qry  = "SELECT * FROM `mov_b_mt_attach_tbl` WHERE `attach_mov_id` = '$attach_mov_id' and mov_type = 'supp_mov' AND `kra_id` = '$kra' AND `obj_id` = '$obj'";
+                $qry  = "SELECT * FROM `mov_supp_mt_attach_tbl` WHERE `attach_mov_id` = '$attach_mov_id' and mov_type = 'supp_mov' AND `kra_id` = '$kra' AND `obj_id` = '$obj'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
