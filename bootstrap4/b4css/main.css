@@ -95,6 +95,30 @@
     font-weight: bolder;
 }
 
+.yellow-notif-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    background-color: lightyellow;
+    color: yellow;
+    padding: 20px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.blue-notif-border {
+    margin: 10px 20px 30px 20px;
+    border-style: solid;
+    background-color: lightblue;
+    color: blue;
+    padding: 20px;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.mango-color {
+    color: yellow;
+}
+
 .black-border {
     border-style: solid;
     color: black;

@@ -52,6 +52,10 @@ table.fixed td {
     color: green;
 }
 
+.mango-color {
+    color: yellow;
+}
+
 .no-record {
     color: red;
     font-weight: bolder;
@@ -111,10 +115,10 @@ table.fixed td {
 
 .chart_div {
     overflow-x: scroll;
-    overflow-y: hidden;     
+    overflow-y: hidden;
     width: 500px;
     height: 550px;
-   }
+}
 
 
 /* .li-nostyle {

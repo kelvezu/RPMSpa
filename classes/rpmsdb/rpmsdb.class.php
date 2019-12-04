@@ -1766,7 +1766,7 @@ class RPMSdb
     public static function fetch_SUPP_MT_MOV_ATT($conn, $user_id, $school_id, $sy_id, $obj, $kra)
     {
         $qry = "SELECT * FROM mov_supp_mt_attach_tbl WHERE `user_id` = $user_id  AND kra_id = $kra AND obj_id = $obj and school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active' ";
-        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_MAIN_MT_MOV_ATT');
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_SUPP_MT_MOV_ATT');
         if (mysqli_num_rows($result) > 0) :
             $result_array = [];
             foreach ($result as $res) :
@@ -1786,7 +1786,6 @@ class RPMSdb
             $result_array = [];
             foreach ($result as $res) :
                 array_push($result_array, $res);
-
             endforeach;
             return $result_array;
         else :
@@ -2038,28 +2037,27 @@ class RPMSdb
     }
 
     public static function ViewAdminTindicator($conn, $sy, $school)
-{
-    $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' GROUP by indicator_id";
-    $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
-    if (mysqli_num_rows($result) > 0) :
-        $res_array = [];
-        foreach ($result as $r) {
-            array_push($res_array, $r);
-        }
-        return $res_array;
-    endif;
+    {
+        $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
+    public static function ViewAdminMTindicator($conn, $sy, $school)
+    {
+        $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
 }
-public static function ViewAdminMTindicator($conn, $sy, $school)
-{
-    $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' GROUP by indicator_id";
-    $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
-    if (mysqli_num_rows($result) > 0) :
-        $res_array = [];
-        foreach ($result as $r) {
-            array_push($res_array, $r);
-        }
-        return $res_array;
-    endif;
-}
-}
-

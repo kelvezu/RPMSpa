@@ -1164,6 +1164,7 @@
                 endif;
             }
 
+            // failed
             function displayMainMOVattachment($conn, $attach_mov_id, $kra, $obj)
             {
                 $qry  = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE attach_mov_id = $attach_mov_id AND kra_id = $kra AND obj_id = $obj ";
@@ -1285,7 +1286,7 @@
                 return $res_arr;
             }
 
-            
+
             function viewAdminratingT($conn, $school, $obs_period, $indicator_id, $sy)
             {
                 $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
@@ -1371,4 +1372,51 @@
                     endforeach;
                 else : return false;
                 endif;
+            }
+
+            function displayMOVfileMT($conn, $mov_id)
+            {
+                $qry = "SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id = $mov_id";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) {
+                    foreach ($result as $r) :
+                        return $r['file_name'];
+                    endforeach;
+                }
+            }
+
+            function displayMOVstatusMT($conn, $mov_id)
+            {
+                $qry = "SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id = $mov_id";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) {
+                    foreach ($result as $r) :
+                        return $r['doc_status'];
+                    endforeach;
+                }
+            }
+
+            function getNotifmov($getnotif, $mov, $conn)
+            {
+
+                switch ($getnotif) {
+                    case 'approve':
+                        echo '<p class="green-notif-border">Mov ' . displayMOVfileMT($conn, $mov) . ' Approved!</p>';
+                        break;
+
+                    case 'disapproved':
+                        echo '<p class="red-notif-border">Mov ' . displayMOVfileMT($conn, $mov) . ' Declined!</p>';
+                        break;
+
+                    case 'revision':
+                        echo '<p class="yellow-notif-border">Mov ' . displayMOVfileMT($conn, $mov) . ' set to For Revision!</p>';
+                        break;
+
+                    case 'approval':
+                        echo '<p class="red-notif-border">MOV ' . displayMOVfileMT($conn, $mov) . ' removed from Approved!</p>';
+                        break;
+                    default:
+                        return false;
+                        break;
+                }
             }
