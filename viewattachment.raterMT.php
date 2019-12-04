@@ -65,7 +65,7 @@ if (empty($user_id)) :
     exit();
 endif;
 // THIS FUNCTION WILL DISPLAY THE NOTIFICATION
-isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : false;
+isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn, $_GET['movtype']) : false;
 ?>
 
 
@@ -77,7 +77,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
             </div>
         </div>
         <div class="card-body">
-            <table class="table table-bordered table-striped table-dark table-sm table-responsive-sm">
+            <table class="table table-bordered table-striped table-sm table-responsive-sm">
                 <thead class="alert alert-primary">
                     <tr>
                         <th>#</th>
@@ -99,13 +99,13 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                         endif;
                         foreach ($mov_b as $mov) : ?>
                             <td>
-                                <p><?php echo $num++ ?></p>
+                                <p><?php echo $num++ . '.' ?></p>
                             </td>
                             <td>
-                                <p><?php echo  $mov['kra_id'] ?></p>
+                                <p class="font-weight-bold"><?php echo  displayKRA($conn, $mov['kra_id']) ?></p>
                             </td>
                             <td>
-                                <p><?php echo  $mov['mtobj_id'] ?? "-----" ?></p>
+                                <p><?php echo  displayObjectiveMT($conn, $mov['mtobj_id']) ?? "-----" ?></p>
                             </td>
                             <!-- COLUMN FOR MAIN MOV -->
                             <td><?php $main_att = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
@@ -116,24 +116,24 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                             </button>
 
                                             <?php if ($mmov['doc_status'] == "For Approval") : ?>
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
 
                                             <?php elseif ($mmov['doc_status'] == "Disapproved") : ?>
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
                                             <?php elseif ($mmov['doc_status'] == "Approved") : ?>
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=cancel&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=cancel&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
 
                                             <?php elseif ($mmov['doc_status'] == "For Revision") : ?>
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?main_attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
                                             <?php endif; ?>
                                         </p>
                                         <!-- ---------------------------------------------->
@@ -159,7 +159,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                                                     <div class="card-header bg-dark text-white">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div class="p-2">
-                                                                                <p><b>File name:</b> <?php echo $mmov['file_name'] ?></p>
+                                                                                <p><b>File name:</b> <?php echo displayMOVfileMT($conn, $mmov['mov_id']) ?></p>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -175,7 +175,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                                                             <div class="card-footer alert alert-dark">
                                                                                 <p class="text-justify">
                                                                                     <b>Description:</b>
-                                                                                    <p class="text-justify">" <i><?php echo $mmov['file_desc'] ?></i> "</p>
+                                                                                    <p class="text-justify">" <i><?php echo displayFileDescMT($conn, $mmov['mov_id']) ?></i> "</p>
                                                                                 </p>
                                                                             </div>
                                                                         </form>
@@ -196,7 +196,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                     <?php
                                             endforeach;
                                         else : ?>
-                                    <p class="text-center text-danger font-weight-bold"> ----- </p>
+                                    <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
                                 <!----------------------------------------------------->
                             </td>
@@ -229,7 +229,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                         </p>
                                     <?php endforeach;
                                         else : ?>
-                                    <p class="text-center text-danger font-weight-bold"> ----- </p>
+                                    <p class="text-center font-weight-bold"> ----- </p>
 
                                 <?php endif; ?>
                                 <!-- END COLUMN FOR MAIN MOV STATUS  -->
@@ -247,19 +247,26 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                             </button>
 
                                             <?php if ($smov['doc_status'] == "For Approval") : ?>
-                                                <a data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href='includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>' data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success">
+                                                    <i class="fa fa-check-circle"></i>
+                                                </a>
 
-                                                <a data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
-                                                <a data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+
+                                            <?php elseif ($smov['doc_status'] == "Disapproved") : ?>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
                                             <?php elseif ($smov['doc_status'] == "Approved") : ?>
-                                                <a data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=cancel&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
 
                                             <?php elseif ($smov['doc_status'] == "For Revision") : ?>
-                                                <a data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
                                             <?php endif; ?>
                                         </p>
 
@@ -285,7 +292,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                                                     <div class="card-header bg-dark text-white">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div class="p-2">
-                                                                                <p><b>File name:</b> <?php echo $smov['file_name'] ?></p>
+                                                                                <p><b>File name:</b> <?php echo displaymovfilemt($conn, $smov['mov_id']) ?></p>
                                                                             </div>
 
                                                                         </div>
@@ -302,7 +309,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                                                             <div class="card-footer alert alert-dark">
                                                                                 <p class="text-justify">
                                                                                     <b>Description:</b>
-                                                                                    <p class="text-justify">" <i><?php echo $smov['file_desc'] ?? "---" ?></i> "</p>
+                                                                                    <p class="text-justify">" <i><?php echo displayFileDescMT($conn, $smov['mov_id']) ?? "---" ?></i> "</p>
                                                                                 </p>
                                                                             </div>
                                                                         </form>
@@ -324,7 +331,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                     <?php
                                             endforeach;
                                         else : ?>
-                                    <p class="text-center text-danger font-weight-bold"> ----- </p>
+                                    <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
                             </td>
                             <!-- END COLUMN FOR SUPP MOV -->
@@ -356,7 +363,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn) : fa
                                         </p>
                                     <?php endforeach;
                                         else : ?>
-                                    <p class="text-center text-danger font-weight-bold"> ----- </p>
+                                    <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
                                 <!-- END COLUMN FOR SUPP MOV STATUS  -->
                             </td>

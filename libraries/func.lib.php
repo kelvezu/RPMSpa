@@ -996,6 +996,19 @@
                     endforeach;
                 }
             }
+
+            function displayFileDescMT($conn, $mov_id)
+            {
+                $qry = "SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id = '$mov_id'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $res) :
+                        return $res['file_desc'];
+                    endforeach;
+                }
+            }
+
+
             // this function is for average of COT only!
 
             function generateAVGforCOT($conn, $table_name, $user, $indicator, $sy, $school)
@@ -1396,24 +1409,31 @@
                 }
             }
 
-            function getNotifmov($getnotif, $mov, $conn)
+            function getNotifmov($getnotif, $mov, $conn, $mov_type)
             {
+                if ($mov_type == "main") :
+                    $mtype = "Main";
+                elseif ($mov_type == "supp") :
+                    $mtype = "Supporting";
+                else : return false;
+                endif;
+
 
                 switch ($getnotif) {
                     case 'approve':
-                        echo '<p class="green-notif-border">Mov ' . displayMOVfileMT($conn, $mov) . ' Approved!</p>';
+                        echo '<p class="green-notif-border">' . $mtype . ' Mov ' . displayMOVfileMT($conn, $mov) . ' Approved!</p>';
                         break;
 
                     case 'disapproved':
-                        echo '<p class="red-notif-border">Mov ' . displayMOVfileMT($conn, $mov) . ' Declined!</p>';
+                        echo '<p class="red-notif-border">' . $mtype . ' Mov ' . displayMOVfileMT($conn, $mov) . ' Declined!</p>';
                         break;
 
                     case 'revision':
-                        echo '<p class="yellow-notif-border">Mov ' . displayMOVfileMT($conn, $mov) . ' set to For Revision!</p>';
+                        echo '<p class="yellow-notif-border">' . $mtype . ' Mov ' . displayMOVfileMT($conn, $mov) . ' set to For Revision!</p>';
                         break;
 
                     case 'approval':
-                        echo '<p class="red-notif-border">MOV ' . displayMOVfileMT($conn, $mov) . ' removed from Approved!</p>';
+                        echo '<p class="red-notif-border">' . $mtype . ' MOV ' . displayMOVfileMT($conn, $mov) . ' removed from Approved!</p>';
                         break;
                     default:
                         return false;

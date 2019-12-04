@@ -99,7 +99,7 @@
     margin: 10px 20px 30px 20px;
     border-style: solid;
     background-color: lightyellow;
-    color: yellow;
+    color: darkgoldenrod;
     padding: 20px;
     text-align: center;
     font-weight: bolder;
@@ -116,7 +116,7 @@
 }
 
 .mango-color {
-    color: yellow;
+    color: yellowgreen;
 }
 
 .black-border {
