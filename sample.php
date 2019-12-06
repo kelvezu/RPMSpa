@@ -346,9 +346,11 @@ $res = fetchTindicator($conn); ?>
 
 
 
+
+
 <!-- <select name="" id=""> -->
 <?php
-
+echo countCOTforMT($conn, $user, $sy, $school)
 ?>
 
 <?php
