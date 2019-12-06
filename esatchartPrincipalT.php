@@ -1081,7 +1081,7 @@ function CoreBehavioralChart() {
                     hAxis: {title: 'Core Behavioral and Scale',},
                     explorer: {axis: 'horizontal', keepInBounds: true},
                     seriesType: 'bars',
-                    bar: { groupWidth: 100 },
+                    bar: { groupWidth: 50 },
                     series: {5: {type: 'line'}}        };
         
                 let chart = new google.visualization.ComboChart(document.getElementById('corebehavioral'));

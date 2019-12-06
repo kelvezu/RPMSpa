@@ -1307,7 +1307,7 @@
 
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
-                        return floatval($r['T_RATING']);
+                        return round(floatval($r['T_RATING']),3);
                     }
                 }
             }
@@ -1319,7 +1319,7 @@
 
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
-                        return floatval($r['MT_RATING']);
+                        return round(floatval($r['MT_RATING']),3);
                     }
                 }
             }
@@ -1357,7 +1357,7 @@
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) :
                     foreach ($result as $res) :
-                        return floatval($res['T_AVERAGE']);
+                        return round(floatval($res['T_AVERAGE']),3);
                     endforeach;
                 else : return false;
                 endif;
@@ -1369,7 +1369,7 @@
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) :
                     foreach ($result as $res) :
-                        return floatval($res['MT_AVERAGE']);
+                        return round(floatval($res['MT_AVERAGE']),3);
                     endforeach;
                 else : return false;
                 endif;
