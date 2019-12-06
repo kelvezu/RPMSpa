@@ -117,7 +117,7 @@
                 hAxis: {
                     title: 'Total of Master Teachers and Teachers: <?= $totalCount ?>',
                     minValue: 1,
-                    maxValue: <?= $totalCount / 2 ?>,
+                    maxValue: <?= intval($totalCount / 2) ?>,
                     textStyle: {
                         bold: false,
                         fontSize: 10,
@@ -169,7 +169,10 @@
     <script src="js/charts/jquery-ui.js"></script> -->
 
     <?php
-    rpmsdb\rpmsdb::generateCOTindicatorAVG($conn, $_SESSION['active_sy_id']);
+    include 'includes/conn.inc.php';
+    if (isset($_SESSION['active_sy_id'])) :
+        rpmsdb\rpmsdb::generateCOTindicatorAVG($conn, $_SESSION['active_sy_id']);
+    endif;
     ?>
 </footer>
 

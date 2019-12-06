@@ -1307,7 +1307,7 @@
 
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
-                        return round(floatval($r['T_RATING']),3);
+                        return round(floatval($r['T_RATING']), 3);
                     }
                 }
             }
@@ -1319,7 +1319,7 @@
 
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) {
-                        return round(floatval($r['MT_RATING']),3);
+                        return round(floatval($r['MT_RATING']), 3);
                     }
                 }
             }
@@ -1357,7 +1357,7 @@
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) :
                     foreach ($result as $res) :
-                        return round(floatval($res['T_AVERAGE']),3);
+                        return round(floatval($res['T_AVERAGE']), 3);
                     endforeach;
                 else : return false;
                 endif;
@@ -1369,7 +1369,7 @@
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) :
                     foreach ($result as $res) :
-                        return round(floatval($res['MT_AVERAGE']),3);
+                        return round(floatval($res['MT_AVERAGE']), 3);
                     endforeach;
                 else : return false;
                 endif;
@@ -1441,6 +1441,7 @@
                 }
             }
 
+            /* this function will display the kra weight */
             function AgeDemoFetch($conn)
             {
                 $qry  = 'SELECT * FROM `age_tbl`';
@@ -1462,7 +1463,7 @@
                 }
                 return $res_arr;
             }
-            
+
             function EmployDemoFetch($conn)
             {
                 $qry  = 'SELECT * FROM `employment_status`';
@@ -1548,6 +1549,12 @@
                     endforeach;
                 }
             }
+
+
+            /* 
+            this function will display the kra_id objective which divided to its objectives
+            ex. 22.5% the output will be 7.5 in decimal value
+            */
 
             function displayOBJweightMT($conn, $kra_id)
             {
