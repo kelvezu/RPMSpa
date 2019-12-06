@@ -220,13 +220,12 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="row">
-        <div class="col">
-        <div id="selfassessmentchart" style="width: 500px; height: 500px;"></div>
+        <div id="selfassessmentchart" style="width: 1200px; height: 350px;"></div>
         </div>
-        <div class="col">
-        <div id="levelofpriority" style="width: 500px; height: 500px;"></div>
+        <div class="row">
+        <div id="levelofpriority" style="width: 1200px; height: 350px;"></div>
         </div>
-        </div>
+        
     </div>
   <!-- End of SELF ASSESSMENT OF TEACHER I-III  Chart -->
 
@@ -242,7 +241,7 @@ if(isset($_POST['view'])):
     <div class="card-body">
         
     <div class="d-flex justify-content-center">
-        <div id="corebehavioral" style="width: 900px; height: 500px;"></div>
+        <div id="corebehavioral" style="width: 900px; height: 350px;"></div>
         </div>
 
         
@@ -928,7 +927,7 @@ function SelfAssessmentChart() {
             ticks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]},
             explorer: {axis: 'horizontal', keepInBounds: true},
             seriesType: 'bars',
-            bar: { groupWidth: 100 },
+            bar: { groupWidth: 50 },
             series: {5: {type: 'line'}}        };
 
         let chart = new google.visualization.ComboChart(document.getElementById('selfassessmentchart'));
@@ -980,7 +979,7 @@ function LevelofPriority() {
             ticks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]},
             explorer: {axis: 'horizontal', keepInBounds: true},
             seriesType: 'bars',
-            bar: { groupWidth: 100 },
+            bar: { groupWidth: 50 },
             series: {5: {type: 'line'}}        };
 
         let chart = new google.visualization.ComboChart(document.getElementById('levelofpriority'));
@@ -1034,7 +1033,7 @@ function CoreBehavioralChart() {
             hAxis: {title: 'Core Behavioral and Scale',},
             explorer: {axis: 'horizontal', keepInBounds: true},
             seriesType: 'bars',
-            bar: { groupWidth: 100 },
+            bar: { groupWidth: 50 },
             series: {5: {type: 'line'}}        };
 
         let chart = new google.visualization.ComboChart(document.getElementById('corebehavioral'));
