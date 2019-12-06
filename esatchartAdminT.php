@@ -22,7 +22,14 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body ">
     <div class="d-flex justify-content-center">
-        <div id="agechart" style="width: 350px; height: 350px;"></div>
+        <div class="row">
+            <div class="col">
+                <div id="agechart" style="width: 300px; height: 350px;"></div>
+            </div>
+            <div class="col">
+                <div id="age2chart" style="width: 700px; height: 350px;"></div>
+            </div>
+        </div>
     </div>
     </div>
   <!-- End of Age Chart -->
@@ -33,7 +40,14 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
     <div class="d-flex justify-content-center">
-        <div id="genderchart" style="width: 350px; height: 350px;"></div>
+    <div class="row">
+        <div class="col">
+            <div id="genderchart" style="width: 300px; height: 350px;"></div>
+        </div>
+        <div class="col">
+            <div id="gender2chart" style="width: 700px; height: 350px;"></div>
+        </div>
+        </div>
     </div>
     </div>
   <!-- End of Gender Chart -->
@@ -44,7 +58,14 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="employmentstatuschart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+        <div id="employmentstatuschart" style="width: 300px; height: 350px;"></div>
+        </div>
+            <div class="col">
+            <div id="employmentstatus2chart" style="width: 700px; height: 350px;"></div>
+            </div>
+        </div>
         </div>
        
     </div>
@@ -56,7 +77,14 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="positionchart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+        <div id="positionchart" style="width: 300px; height: 350px;"></div>
+        </div>
+                <div class="col">
+                <div id="position2chart" style="width: 700px; height: 350px;"></div>
+                </div>
+        </div>
         </div>
        
     </div>
@@ -68,7 +96,15 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="highestdegreechart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+                     <div id="highestdegreechart" style="width: 300px; height: 350px;"></div>
+                </div>
+                <div class="col">
+                    <div id="highestdegree2chart" style="width: 700px; height: 350px;"></div>
+                </div>
+            </div>
+      
         </div>
        
     </div>
@@ -81,7 +117,14 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="totalnumberofyearchart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+        <div id="totalnumberofyearchart" style="width: 300px; height: 350px;"></div>
+        </div>
+            <div class="col">
+            <div id="totalnumberofyear2chart" style="width: 700px; height: 350px;"></div>
+            </div>
+        </div>
         </div>
        
     </div>
@@ -93,7 +136,15 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="subjecttaughtchart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+        <div id="subjecttaughtchart" style="width: 300px; height: 350px;"></div>
+        </div>
+                <div class="col">
+                <div id="subjecttaught2chart" style="width: 700px; height: 350px;"></div>
+                </div>
+        </div>
+
         </div>
        
     </div>
@@ -105,7 +156,14 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="gradelvltaughtchart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+        <div id="gradelvltaughtchart" style="width: 300px; height: 350px;"></div>
+        </div>
+        <div class="col">
+        <div id="gradelvltaught2chart" style="width: 700px; height: 350px;"></div>
+        </div>
+        </div>
         </div>
        
     </div>
@@ -117,7 +175,15 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="curriclasschart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+                <div id="curriclasschart" style="width: 300px; height: 350px;"></div>
+                </div>
+                <div class="col">
+                <div id="curriclass2chart" style="width: 700px; height: 350px;"></div>
+                </div>
+            </div>
+       
         </div>
        
     </div>
@@ -129,7 +195,15 @@ if(isset($_POST['view'])):
     </div>
     <div class="card-body">
         <div class="d-flex justify-content-center">
-        <div id="regionchart" style="width: 350px; height: 350px;"></div>
+            <div class="row">
+                <div class="col">
+                <div id="regionchart" style="width: 300px; height: 350px;"></div>
+                </div>
+                <div class="col">
+                <div id="region2chart" style="width: 700px; height: 350px;"></div>
+                </div>
+            </div>
+       
         </div>
        
     </div>
@@ -137,7 +211,12 @@ if(isset($_POST['view'])):
 
     <!--SELF ASSESSMENT OF TEACHER I-III  Chart -->
     <div class="card-header bg-success">
-        <div class=" text-center h4 text-white">SELF ASSESSMENT OF TEACHER I-III</div>
+        <div class="d-flex justify-content-between">
+            <div class="p-2"></div>
+            <div class="p-2"> <h4 class="text-white">SELF-ASSESSMENT OF TEACHER I-III</h4></div>
+            <div class="p-2"><a href="esatchartself-assessmentAdminT.php"  class="btn btn-outline-dark text-white">View Historical Data</a></div>
+        </div>
+         
     </div>
     <div class="card-body">
         <div class="row">
@@ -153,12 +232,17 @@ if(isset($_POST['view'])):
 
  <!--Core Behavioral  Chart -->
  <div class="card-header bg-success">
-        <div class=" text-center h4 text-white">Core Behavioral Competencies</div>
+ <div class="d-flex justify-content-between">
+            <div class="p-2"></div>
+            <div class="p-2"> <h4 class="text-white">Core Behavioral Competencies</h4></div>
+            <div class="p-2"><a href=""  class="btn btn-outline-dark text-white">View Historical Data</a></div>
+        </div>
+
     </div>
     <div class="card-body">
         
     <div class="d-flex justify-content-center">
-        <div id="corebehavioral" style="width: 800px; height: 500px;"></div>
+        <div id="corebehavioral" style="width: 900px; height: 500px;"></div>
         </div>
 
         
@@ -194,7 +278,49 @@ function AgeChart() {
         let chart = new google.visualization.PieChart(document.getElementById('agechart'));
         chart.draw(data, options);}
 </script>
-<!-- End of Age Chart Function -->
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(age2chart);
+
+      function age2chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Age', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $age = AgeDemoFetch($conn);
+          foreach ($age as $agedemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE age = ".$agedemo['age_id']."  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($AgeQry = $qry->fetch_assoc()):
+                echo "['".$agedemo['age_name']."', 
+                ".intval($AgeQry['sy1']).",  
+                ".intval($AgeQry['sy2']).",   
+                ".intval($AgeQry['sy3'])."],";
+            endwhile;
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Age Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Age and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('age2chart'));
+        chart.draw(data, options);
+      }
+    </script>
+
+
+<!-- End of Age Chart Function --> 
 
 <!-- Gender Chart Function -->
 <script type="text/javascript">
@@ -215,6 +341,49 @@ function GenderChart() {
         let chart = new google.visualization.PieChart(document.getElementById('genderchart'));
         chart.draw(data, options);}
 </script>
+
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(gender2chart);
+
+      function gender2chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Gender', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $gender = GenderDemoFetch($conn);
+          foreach ($gender as $genderdemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE gender = ".$genderdemo['gender_id']."  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($GenderQry = $qry->fetch_assoc()):
+                echo "['".$genderdemo['gender_name']."', 
+                ".intval($GenderQry['sy1']).",  
+                ".intval($GenderQry['sy2']).",
+                ".intval($GenderQry['sy3'])."],";
+            endwhile; 
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Gender Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Gender and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('gender2chart'));
+        chart.draw(data, options);
+      }
+    </script>
+
 <!-- End of Gender Chart Function -->
 
 
@@ -237,6 +406,47 @@ function EmploymentStatusChart() {
         let chart = new google.visualization.PieChart(document.getElementById('employmentstatuschart'));
         chart.draw(data, options);}
 </script>
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(EmploymentStatus2Chart);
+
+      function EmploymentStatus2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Employment Status', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $employ = EmployDemoFetch($conn);
+          foreach ($employ as $employdemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE employment_status = '".$employdemo['emp_status']."'  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($EmployQry = $qry->fetch_assoc()):
+                echo "['".$employdemo['emp_status']."', 
+                ".intval($EmployQry['sy1']).",  
+                ".intval($EmployQry['sy2']).",
+                ".intval($EmployQry['sy3'])."],";
+            endwhile; 
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Employment Status Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Employment Status and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('employmentstatus2chart'));
+        chart.draw(data, options);
+      }
+    </script>
+
 <!-- End of Employment Status Chart Chart Function -->
 
 <!--Position Chart Function -->
@@ -258,6 +468,48 @@ function PositionChart() {
         let chart = new google.visualization.PieChart(document.getElementById('positionchart'));
         chart.draw(data, options);}
 </script>
+
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(Position2Chart);
+
+      function Position2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Position', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $position = PositionDemoFetch($conn);
+          foreach ($position as $positiondemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE position = '".$positiondemo['position_name']."'  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($PositionQry = $qry->fetch_assoc()):
+                echo "['".$positiondemo['position_name']."', 
+                ".intval($PositionQry['sy1']).",  
+                ".intval($PositionQry['sy2']).",
+                ".intval($PositionQry['sy3'])."],";
+            endwhile; 
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Position Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Position and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('position2chart'));
+        chart.draw(data, options);
+      }
+    </script>
 <!-- End of Position Chart Function -->
 
 
@@ -280,6 +532,48 @@ function HighestDegreeChart() {
         let chart = new google.visualization.PieChart(document.getElementById('highestdegreechart'));
         chart.draw(data, options);}
 </script>
+
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(HighestDegree2Chart);
+
+      function HighestDegree2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Highest Degree', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $highestdegree = HighestDegreeDemoFetch($conn);
+          foreach ($highestdegree as $highestdegreedemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE highest_degree = '".$highestdegreedemo['degree_name']."'  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($HighestQry = $qry->fetch_assoc()):
+                echo "['".$highestdegreedemo['degree_name']."', 
+                ".intval($HighestQry['sy1']).",  
+                ".intval($HighestQry['sy2']).",
+                ".intval($HighestQry['sy3'])."],";
+            endwhile; 
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Highest Degree Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Highest Degree and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('highestdegree2chart'));
+        chart.draw(data, options);
+      }
+    </script>
 <!-- End of Highest Degree Obtained Chart Function -->
 
 <!--Total Number of Years in Teaching Chart Function -->
@@ -301,6 +595,47 @@ function TotalYearChart() {
         let chart = new google.visualization.PieChart(document.getElementById('totalnumberofyearchart'));
         chart.draw(data, options);}
 </script>
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(TotalYear2Chart);
+
+      function TotalYear2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Total Number of Years Teaching', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $totalyear =TotalYearDemoFetch($conn);
+          foreach ($totalyear as $totalyeardemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE totalyear = ".$totalyeardemo['totalyear_id']."  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($TotalQry = $qry->fetch_assoc()):
+                echo "['".$totalyeardemo['totalyear_name']."', 
+                ".intval($TotalQry['sy1']).",  
+                ".intval($TotalQry['sy2']).",
+                ".intval($TotalQry['sy3'])."],";
+            endwhile; 
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Total Number of Years Teaching Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Total Number of Years Teaching and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('totalnumberofyear2chart'));
+        chart.draw(data, options);
+      }
+    </script>
 <!-- End of Total Number of Years in Teaching Chart Function -->
 
 <!--Subject Taught Chart Function -->
@@ -322,6 +657,46 @@ function SubjectTaughtChart() {
         let chart = new google.visualization.PieChart(document.getElementById('subjecttaughtchart'));
         chart.draw(data, options);}
 </script>
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(SubjectTaught2Chart);
+
+      function SubjectTaught2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Subject Taught', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+       
+            $qry = $conn->query("SELECT subject_tbl.subject_name, COUNT(esat1_demographicst_tbl.user_id)total, 
+            CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+           FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = 17 GROUP BY subject_tbl.subject_name") or die ($conn->error);
+            while($SubjectTaughtQry = $qry->fetch_assoc()):
+                echo "['".$SubjectTaughtQry['subject_name']."', 
+                ".intval($SubjectTaughtQry['sy1']).",  
+                ".intval($SubjectTaughtQry['sy2']).",
+                ".intval($SubjectTaughtQry['sy3'])."],";
+            endwhile; 
+         
+          ?>
+        ]);
+
+        var options = {
+          title : 'Subject Taught Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Subject Taught and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('subjecttaught2chart'));
+        chart.draw(data, options);
+      }
+    </script>
 <!-- End of Subject Taught Chart Function -->
 
 <!--Grade Level Taught Chart Function -->
@@ -343,6 +718,46 @@ function GradeLvlTaughtChart() {
         let chart = new google.visualization.PieChart(document.getElementById('gradelvltaughtchart'));
         chart.draw(data, options);}
 </script>
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(GradeLvlTaught2Chart);
+
+      function GradeLvlTaught2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Grade Level Taught', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+       
+            $qry = $conn->query("SELECT gradelvltaught_tbl.gradelvltaught_name, COUNT(esat1_demographicst_tbl.user_id)total,
+            CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+                FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = 17 GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die ($conn->error);
+            while($GradelvlTaughtQry = $qry->fetch_assoc()):
+                echo "['".$GradelvlTaughtQry['gradelvltaught_name']."', 
+                ".intval($GradelvlTaughtQry['sy1']).",  
+                ".intval($GradelvlTaughtQry['sy2']).",
+                ".intval($GradelvlTaughtQry['sy3'])."],";
+            endwhile; 
+         
+          ?>
+        ]);
+
+        var options = {
+          title : 'Grade Level Taught Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Grade Level Taught and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('gradelvltaught2chart'));
+        chart.draw(data, options);
+      }
+    </script>
 <!-- End of Grade Level Taught Chart Function -->
 
 
@@ -365,6 +780,47 @@ function CurriClassChart() {
         let chart = new google.visualization.PieChart(document.getElementById('curriclasschart'));
         chart.draw(data, options);}
 </script>
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(CurriClass2Chart);
+
+      function CurriClass2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Curricular class of School', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $curri = CurriclassDemoFetch($conn);
+          foreach ($curri as $curridemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE curri_class = ".$curridemo['curriclass_id']."  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($CurriQry = $qry->fetch_assoc()):
+                echo "['".$curridemo['curriclass_name']."', 
+                ".intval($CurriQry['sy1']).",  
+                ".intval($CurriQry['sy2']).",   
+                ".intval($CurriQry['sy3'])."],";
+            endwhile;
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Curricular Class of School Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Curricular Class and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('curriclass2chart'));
+        chart.draw(data, options);
+      }
+    </script>
 <!-- End of Curricular Class of School Chart Function -->
 
 
@@ -387,6 +843,47 @@ function RegionChart() {
         let chart = new google.visualization.PieChart(document.getElementById('regionchart'));
         chart.draw(data, options);}
 </script>
+
+
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(Region2Chart);
+
+      function Region2Chart() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Region', 'School Year 1','School Year 2','School Year 3'],
+          <?php
+          $region = RegionDemoFetch($conn);
+          foreach ($region as $regiondemo):
+          $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
+          FROM esat1_demographicst_tbl WHERE region = ".$regiondemo['reg_id']."  AND sy = '$sy' group by sy") or die ($conn->error);
+            while($regionQry = $qry->fetch_assoc()):
+                echo "['".$regiondemo['region_name']."', 
+                ".intval($regionQry['sy1']).",  
+                ".intval($regionQry['sy2']).",   
+                ".intval($regionQry['sy3'])."],";
+            endwhile;
+          endforeach;
+          ?>
+        ]);
+
+        var options = {
+          title : 'Curricular Class of School Count Historical Data',
+          vAxis: {title: 'No. of Teachers'},
+          hAxis: {title: 'Curricular Class and School Year'},
+            explorer: {axis: 'horizontal', keepInBounds: true},
+          seriesType: 'bars',
+          bar: { groupWidth: 50 },
+          series: {3: {type: 'line'}}        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('region2chart'));
+        chart.draw(data, options);
+      }
+    </script>
 <!-- Region Chart Function -->
 
 

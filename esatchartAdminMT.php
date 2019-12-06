@@ -156,9 +156,7 @@ if(isset($_POST['view'])):
     <div class="card-body">
         
     <div class="d-flex justify-content-center">
-        <div id=chart_div>
         <div id="corebehavioral" style="width: 800px; height: 600px;"></div>
-        </div>
         </div>
 
         
@@ -523,7 +521,12 @@ function CoreBehavioralChart() {
             foreach($CoreBehavioralqry as $resultQry):
              echo 
 
-             "['".$resultQry['cbc_name']."', ".intval($resultQry['score1']).", ".intval($resultQry['score2']).", ".intval($resultQry['score3']).", ".intval($resultQry['score4']).",".intval($resultQry['score5']).",],";
+             "[".json_encode($resultQry['cbc_name']).", 
+             ".intval($resultQry['score1']).", 
+             ".intval($resultQry['score2']).", 
+             ".intval($resultQry['score3']).", 
+             ".intval($resultQry['score4']).",
+             ".intval($resultQry['score5']).",],";
            
             endforeach;
             
@@ -709,9 +712,9 @@ else:
     <div class="card-body">
         
     <div class="d-flex justify-content-center">
-        <div id=chart_div>
-        <div id="corebehavioral" style="width: 800px; height: 600px;"></div>
-        </div>
+
+        <div id="corebehavioral" style="width: 700px; height: 600px;"></div>
+   
         </div>
 
         
