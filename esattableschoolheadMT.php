@@ -7,11 +7,11 @@ include 'sampleheader.php';
 
 <div class="container col-md-9">
    
-    <div class="bg-dark h4 text-white breadcrumb">General ESAT Teacher Result</div>
+    <div class="bg-dark h4 text-white breadcrumb">General ESAT Master Teacher Result</div>
     <div class="px-3">
        
     
-        <form action="esatchartPrincipalT.php" method="POST" class="form-inline">
+        <form action="esatchartPrincipalMT.php" method="POST" class="form-inline">
 
             <input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>"> 
             <input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>"> 
@@ -32,10 +32,10 @@ include 'sampleheader.php';
                     <!-- End of School Year Dropdown -->
                 <div class="form-group mb-2">
                     <!-- Teacher Dropdown -->
-                    <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
-                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND `status` = "Active"')or die ($conn->error);?>
+                    <label for="sy"><strong>Master Teacher:</strong></label>&nbsp;&nbsp;
+                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I") AND `status` = "Active" AND rater = "'.$_SESSION['user_id'].'"')or die ($conn->error);?>
                     <select id="teacher_id" name="teacher_id" class="form-control">
-                    <option value="" disabled selected>--Select Teacher--</option>
+                    <option value="" disabled selected>--Select Master Teacher--</option>
                         <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
                         <option value="<?php echo $teacherrow['user_id'];?>"><?php echo $teacherrow['firstname'].' '. substr($teacherrow['middlename'], 0, 1).'. '. $teacherrow['surname'];?></option>
                         <?php endwhile; ?>
@@ -43,8 +43,8 @@ include 'sampleheader.php';
                 <!-- End of Teacher Dropdown -->
                 </div>
                 <div class="form-group mb-2">
-                    <a onclick="showchart()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
-                    <button type="submit" name="view" class="btn btn-success">View Data in Charts</button>
+                    <a onclick="showchart()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
+                    <button type="submit" name="view" class="btn btn-info">View Data in Charts</button>
                 </div>
             </div>
         </form>
@@ -77,7 +77,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "esatajaxtablePrincipalGeneralT.php?sy=" + active_sy_id + "&sch=" + school_id , true);
+            xmlhttp.open("GET", "esatajaxtablePrincipalGeneralMT.php?sy=" + active_sy_id + "&sch=" + school_id , true);
             xmlhttp.send();
         } else {            
             let xmlhttp = new XMLHttpRequest();
@@ -87,7 +87,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "esatajaxtablePrincipalT.php?sy=" + sy_id + "&user=" + teacher_id + "&sch=" + school_id, true);
+            xmlhttp.open("GET", "esatajaxtablePrincipalMT.php?sy=" + sy_id + "&user=" + teacher_id + "&sch=" + school_id, true);
             xmlhttp.send();
             return;
         }

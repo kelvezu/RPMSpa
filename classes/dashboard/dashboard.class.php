@@ -395,8 +395,8 @@ class Dashboard
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chalkboard-teacher"></i> ESAT</a>
                                 <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                    <a class="dropdown-item" href="esattablePrincipalT.php">View General Teacher ESAT</a>
-                                    <a class="dropdown-item" href="esattablePrincipalMT.php">View General Master Teacher ESAT</a>
+                                    <a class="dropdown-item" href="esattableschoolheadT.php">View General Teacher ESAT</a>
+                                    <a class="dropdown-item" href="esattableschoolheadMT.php">View General Master Teacher ESAT</a>
                                 </div>
                         </li>
         
@@ -468,7 +468,7 @@ class Dashboard
                             <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chalkboard-teacher"></i> ESAT</a>
                                     <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                        <a class="dropdown-item" href="esattablePrincipalT.php">View General Teacher ESAT</a>
+                                        <a class="dropdown-item" href="esattableschoolheadT.php">View General Teacher ESAT</a>
                                         <a class="dropdown-item" href="esattableMasterTeacher.php">View My ESAT Result</a>
                                        
                                     </div>

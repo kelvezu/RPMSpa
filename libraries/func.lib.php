@@ -1442,6 +1442,103 @@
             }
 
             /* this function will display the kra weight */
+            function AgeDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `age_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+            function GenderDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `gender_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+            function EmployDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `employment_status`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+            function PositionDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `position_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+            function HighestDegreeDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `highest_degree`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+            function TotalYearDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `totalyear_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+            function SubjectDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `subject_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+
+            function CurriclassDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `curriclass_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
+            function RegionDemoFetch($conn)
+            {
+                $qry  = 'SELECT * FROM `region_tbl`';
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_arr = [];
+                foreach ($result as $res) {
+                    array_push($res_arr, $res);
+                }
+                return $res_arr;
+            }
             function displayKRAweight($conn, $kra_id)
             {
                 $qry = "SELECT * FROM `kra_weight` WHERE kra_id = $kra_id";

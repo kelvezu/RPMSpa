@@ -33,7 +33,7 @@ include 'sampleheader.php';
                 <div class="form-group mb-2">
                     <!-- Teacher Dropdown -->
                     <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
-                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND `status` = "Active"')or die ($conn->error);?>
+                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND `status` = "Active" AND rater = "'.$_SESSION['user_id'].'"')or die ($conn->error);?>
                     <select id="teacher_id" name="teacher_id" class="form-control">
                     <option value="" disabled selected>--Select Teacher--</option>
                         <?php while($teacherrow = $teacherqry->fetch_assoc()):?>
