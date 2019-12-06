@@ -219,7 +219,7 @@ class FilterUser
             echo '<p class="red-notif-border">Only the Principal can set the Obervation Period!</p><center/>';
             directLastPage();
             include 'samplefooter.php';
-            exit();
+            die();
 
         else : return false;
         endif;

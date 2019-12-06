@@ -4,6 +4,7 @@ use Dashboard\Dashboard;
 use DevPlan\DevPlan;
 use esat\ESAT;
 use FilterUser\FilterUser;
+use IPCRF\IPCRF;
 use RPMSdb\RPMSdb;
 
 include 'sampleheader.php';
@@ -350,13 +351,22 @@ $res = fetchTindicator($conn); ?>
 
 <!-- <select name="" id=""> -->
 <?php
-echo countCOTforMT($conn, $user, $sy, $school)
+$position = $_SESSION['position'];
+
+// echo countCOTforMT($conn, $user, $sy, $school)
+$sample_conn = new IPCRF($user, $sy, $school, $position, 1);
+// pre_r($sample_conn->conn());
+// pre_r($sample_conn->countCOT());
+echo $sample_conn->countObj(1, 'tobj_tbl') . ' obj_id count of kra 1';
 ?>
 
 <?php
 //endforeach;
 ?>
 </select>
+
+
+
 
 <?php //echo "</ul>";
 //endforeach; -->x

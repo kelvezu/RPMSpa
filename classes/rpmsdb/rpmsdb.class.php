@@ -1404,6 +1404,9 @@ class RPMSdb
         $count_result = mysqli_num_rows($results);
 
         // DISPLAY ALL MT AND T THAT ARE ACTIVE
+        if (!$results) :
+            return false;
+        endif;
         if ($count_result > 0) :
             $account_arr = [];
             foreach ($results as $result) :

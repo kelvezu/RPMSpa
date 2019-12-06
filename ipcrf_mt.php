@@ -21,10 +21,10 @@ $kras = displayKRAandOBJ($conn, $_SESSION['position']);
         <div class="h4"><strong> Master Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
     </div>
     <form action="includes/processtipcrf.php" method="POST">
-        <table id="rating" class="table table-striped table-bordered table-sm table-responsive-sm border bordered">
+        <table id="rating" class="table  table-sm table-responsive-sm  table-bordered">
             <thead class="bg-primary text-white">
                 <tr>
-                    <th rowspan="2" class="text-center" width="6%">
+                    <th rowspan="2" class="text-center" width="2%">
                         <p>#</p>
                     </th>
                     <th rowspan="2" class="text-center" width="8%">
@@ -44,16 +44,16 @@ $kras = displayKRAandOBJ($conn, $_SESSION['position']);
                     </th>
                 </tr>
                 <tr>
-                    <th class="text-center" width="6%">
+                    <th class="text-center" width="3%">
                         <p>Quality</p>
                     </th>
-                    <th class="text-center" width="6%">
+                    <th class="text-center" width="3%">
                         <p>Efficiency</p>
                     </th>
-                    <th class="text-center" width="6%">
+                    <th class="text-center" width="3%">
                         <p>Timeliness</p>
                     </th>
-                    <th class="text-center" width="6%">
+                    <th class="text-center" width="3%">
                         <p>Average </p>
                     </th>
                 </tr>
@@ -79,13 +79,13 @@ $kras = displayKRAandOBJ($conn, $_SESSION['position']);
                         </td>
                         <!-- END DISPLAY OBJECTIVE  -->
 
-                        <!-- DISPLAY KRA WEIGHT -->
+                        <!-- DISPLAY WEIGHT per OBJECTIVE -->
                         <td>
                             <p class="font-weight-bold text-center">
                                 <?php echo showPercent(displayOBJweightMT($conn, $kra['kra_id'])) . '%' ?>
                             </p>
                         </td>
-                        <!-- DISPLAY KRA WEIGHT -->
+                        <!-- DISPLAY WEIGHT per OBJECTIVE -->
 
                         <!-- DISPLAY QUALITY -->
                         <td>
