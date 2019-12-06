@@ -1441,7 +1441,6 @@
                 }
             }
 
-<<<<<<< HEAD
             function AgeDemoFetch($conn)
             {
                 $qry  = 'SELECT * FROM `age_tbl`';
@@ -1539,7 +1538,6 @@
                 }
                 return $res_arr;
             }
-=======
             function displayKRAweight($conn, $kra_id)
             {
                 $qry = "SELECT * FROM `kra_weight` WHERE kra_id = $kra_id";
@@ -1586,4 +1584,3 @@
                     return intval(count($count_arr));
                 endif;
             }
->>>>>>> 10417d85be6235f2f1b3dbf654c07dcd763a7026
