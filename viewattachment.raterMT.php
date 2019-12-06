@@ -65,7 +65,10 @@ if (empty($user_id)) :
     exit();
 endif;
 // THIS FUNCTION WILL DISPLAY THE NOTIFICATION
-isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn, $_GET['movtype']) : false;
+if (isset($_GET['notif']) and isset($_GET['movtype'])) :
+    getNotifmov($_GET['notif'], $_GET['mov_id'], $conn, $_GET['movtype']);
+endif;
+
 ?>
 
 
@@ -101,12 +104,19 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn, $_GE
                             <td>
                                 <p><?php echo $num++ . '.' ?></p>
                             </td>
+
+                            <!-- DISPLAY KRA -->
                             <td>
                                 <p class="font-weight-bold"><?php echo  displayKRA($conn, $mov['kra_id']) ?></p>
                             </td>
+                            <!-- --------------------- -->
+
+                            <!-- DISPLAY OBJECTIVES -->
                             <td>
                                 <p><?php echo  displayObjectiveMT($conn, $mov['mtobj_id']) ?? "-----" ?></p>
                             </td>
+                            <!-- --------------------- -->
+
                             <!-- COLUMN FOR MAIN MOV -->
                             <td><?php $main_att = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
                                     if (isset($main_att)) :
@@ -187,7 +197,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn, $_GE
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -321,7 +331,7 @@ isset($_GET['notif']) ? getNotifmov($_GET['notif'], $_GET['mov_id'], $conn, $_GE
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
+
                                                     </div>
                                                 </div>
                                             </div>

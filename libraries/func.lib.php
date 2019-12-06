@@ -855,25 +855,25 @@
                 endif;
             }
 
-            function showMainAttachmentMT($conn, $objective_id, $user, $school, $sy, $kra)
-            {
-                $attach_arr = [];
-                $sql_mov_b = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE kra_id = $kra AND obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy' AND `status` = 'Active'";
-                $result_b = mysqli_query($conn, $sql_mov_b) or die($conn->error . $sql_mov_b);
-                if (mysqli_num_rows($result_b) > 0) :
-                    foreach ($result_b as $res) :
-                        $mov_id = $res['mov_id'];
-                        $sql_mov_a = " SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id =' $mov_id' AND  `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
-                        $result_a = mysqli_query($conn, $sql_mov_a) or die($conn->error . $sql_mov_a);
-                        if (mysqli_num_rows($result_a) > 0) :
-                            foreach ($result_a as $re) :
-                                array_push($attach_arr, $re);
-                            endforeach;
-                        endif;
-                    endforeach;
-                endif;
-                return $attach_arr;
-            }
+            // function showMainAttachmentMT($conn, $objective_id, $user, $school, $sy, $kra)
+            // {
+            //     $attach_arr = [];
+            //     $sql_mov_b = "SELECT * FROM `mov_main_mt_attach_tbl` WHERE kra_id = $kra AND obj_id = '$objective_id' AND `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy' AND `status` = 'Active'";
+            //     $result_b = mysqli_query($conn, $sql_mov_b) or die($conn->error . $sql_mov_b);
+            //     if (mysqli_num_rows($result_b) > 0) :
+            //         foreach ($result_b as $res) :
+            //             $mov_id = $res['mov_id'];
+            //             $sql_mov_a = " SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id =' $mov_id' AND  `user_id` = '$user' AND school_id = '$school' AND sy_id = '$sy'";
+            //             $result_a = mysqli_query($conn, $sql_mov_a) or die($conn->error . $sql_mov_a);
+            //             if (mysqli_num_rows($result_a) > 0) :
+            //                 foreach ($result_a as $re) :
+            //                     array_push($attach_arr, $re);
+            //                 endforeach;
+            //             endif;
+            //         endforeach;
+            //     endif;
+            //     return $attach_arr;
+            // }
 
             function showSuppAttachmentMT($conn, $objective_id, $user, $school, $sy, $kra)
             {
@@ -1439,4 +1439,51 @@
                         return false;
                         break;
                 }
+            }
+
+            function displayKRAweight($conn, $kra_id)
+            {
+                $qry = "SELECT * FROM `kra_weight` WHERE kra_id = $kra_id";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) {
+                    foreach ($result as $r) :
+                        return $r['weight'];
+                    endforeach;
+                }
+            }
+
+            function displayOBJweightMT($conn, $kra_id)
+            {
+                $qry = "SELECT * FROM `kra_weight` WHERE kra_id = $kra_id";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) {
+                    foreach ($result as $r) :
+                        $qry1 = "SELECT COUNT(kra_id) as count_kra FROM `mtobj_tbl` WHERE kra_id = " . $r['kra_id'] . "";
+                        $w_obj = mysqli_query($conn, $qry1) or die($conn->error . $qry1);
+                        if ($w_obj) :
+                            foreach ($w_obj as $w) :
+                                return floatval($r['weight'] / $w['count_kra']);
+                            endforeach;
+                        endif;
+                    endforeach;
+                }
+            }
+
+            function showPercent($num)
+            {
+                return floatval($num * 100);
+            }
+
+            // this function will count the total COT of the master teacher
+            function countCOTforMT($conn, $user_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user_id AnD sy = $sy AND school_id = $school GROUP BY obs_period";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return intval(count($count_arr));
+                endif;
             }
