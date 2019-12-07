@@ -6,25 +6,29 @@ include 'sampleheader.php';
 $num = 1;
 $kra_num = 0;
 $tobj_num = 1;
-$kras = displayKRAandOBJ($conn, $_SESSION['position']);
+$position = $_SESSION['position'];
+$kras = displayKRAandOBJ($conn, $position);
 $user = $_SESSION['user_id'];
 $sy = $_SESSION['active_sy_id'];
 $school = $_SESSION['school_id'];
-$position = $_SESSION['position'];
+
 $ipcrf = new IPCRF($user, $sy, $school, $position);
 ?>
 
 
 
 <div class="container-fluid">
+    <!-- <?php echo $position ?> -->
 
     <?php
-    if (!$kras) : ?>
+    if (!$kras) :
+        ?>
         <p class="text-center red-notif-border m-5">No result!</p>
     <?php
         include 'samplefooter.php';
         exit();
-    endif; ?>
+    endif;
+    ?>
 
     <div class="d-flex justify-content-center">
         <div class="h4"><strong> Master Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
@@ -99,32 +103,36 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- DISPLAY QUALITY -->
                         <td>
                             <p class="font-weight-bold text-center">
-                                <?php echo $ipcrf->getObjQuality('cot_mt_rating_a_tbl') ?>
+                                <?php //echo $ipcrf->countCOT('cot_mt_rating_a_tbl') 
+                                    ?>
+                                <?php //echo $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') 
+                                    ?>
+                                <?php echo $ipcrf->totalofCOTandMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl', 'cot_mt_rating_a_tbl') ?>
                             </p>
                         </td>
                         <!-- END DISPLAY QUALITY -->
 
                         <!-- DISPLAY EFFICIENCY -->
                         <td>
-                            <p class="font-weight-bold text-center">2</p>
+                            <p class="font-weight-bold text-center">efficiency</p>
                         </td>
                         <!-- END DISPLAY EFFICIENCY -->
 
                         <!-- DISPLAY TIMELINESS -->
                         <td>
-                            <p class="font-weight-bold text-center">3</p>
+                            <p class="font-weight-bold text-center">TIMELINESS</p>
                         </td>
                         <!-- END DISPLAY TIMELINESS -->
 
                         <!-- DISPLAY AVERAGE -->
                         <td>
-                            <p class="font-weight-bold text-center">4</p>
+                            <p class="font-weight-bold text-center">AVERAGE</p>
                         </td>
                         <!--END  DISPLAY AVERAGE -->
 
                         <!-- DISPLAY SCORE -->
                         <td>
-                            <p class="font-weight-bold text-center">5</p>
+                            <p class="font-weight-bold text-center">SCORE</p>
                         </td>
                         <!-- END DISPLAY SCORE -->
                     </tr>

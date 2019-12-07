@@ -1594,11 +1594,22 @@
 
             function AVGofTIndicatorAVG($conn, $sy, $school, $indicator)
             {
-                $qry = " SELECT ROUND(AVG(average),3) as AVE FROM `cot_t_indicator_ave_tbl` WHERE sy = $sy and school = $school AND indicator_id = $indicator";
+                $qry = " SELECT ROUND(AVG(average),3) as AVE,sy FROM `cot_t_indicator_ave_tbl` WHERE sy = $sy and school = $school AND indicator_id = $indicator";
                 $result = mysqli_query($conn, $qry);
                 if ($result) {
                     foreach ($result as $r) {
                         return $r['AVE'];
                     }
                 }
+            }
+
+            /* THIS FUNCTION WILL CONVERT THE RPMS 5-point scale TO RAW RATE */
+            function rawRate($raw_rate, $position)
+            {
+                if ($position == "Master Teacher IV" or $position == "Master Teacher III" or $position == "Master Teacher II" or $position == "Master Teacher I") :
+                    return intval($raw_rate) + intval(3);
+                elseif ($position == "Teacher III" or $position == "Teacher II" or $position == "Teacher I") :
+                    return intval($raw_rate) + intval(3);
+                else : return false;
+                endif;
             }
