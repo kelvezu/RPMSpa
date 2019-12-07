@@ -8,6 +8,7 @@ include_once '../classes/rpmsdb/rpmsdb.class.php';
 
 
 include '../includes/conn.inc.php';
+if(!$_SESSION['active_sy_id'] == "N/A"):
 $result = RPMSdb::showAnnouncement($conn, $_SESSION['active_sy_id'], 5) or die($conn->error);
 
 if ($result) :
@@ -40,4 +41,4 @@ if ($result) :
 
 <?php
     endforeach;
-endif; ?>
+endif;endif; ?> 

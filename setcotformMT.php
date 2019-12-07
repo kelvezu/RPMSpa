@@ -2,6 +2,7 @@
 
 include 'sampleheader.php'; 
 include_once 'libraries/func.lib.php';
+syIsNotSet($_SESSION['active_sy_id']);
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);

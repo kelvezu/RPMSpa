@@ -3,7 +3,7 @@ include_once 'sampleheader.php';
 
 
 if(isset($_GET['successset'])):
-    echo '<div class="green-notif-border">You have successfully set school year!</div>';
+    echo '<div class="green-notif-border">You have successfully set school year! Please log in again to continue.</div>';
 elseif(isset($_GET['successadd'])):
     echo '<div class="green-notif-border">You have successfully added school year!</div>';
 elseif(isset($_GET['errorset'])):
@@ -140,7 +140,9 @@ endif;
     <div class="container">
     <div class="h4 breadcrumb bg-dark text-white ">School Year</div>
 
+    <?php if (!isset($_SESSION['active_sy_id'])): ?>
     <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#schoolyr-modal">Add School Year</button>
+    <?php endif ?>
 
            
 
@@ -197,7 +199,7 @@ endif;
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to set the school year?
+        Are you sure you want to set the school year? Please note that you will be forced log out by the system if you proceed.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

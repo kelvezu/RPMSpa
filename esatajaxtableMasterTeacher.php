@@ -7,6 +7,11 @@ if(empty($_GET['sy'])):
         $teacher = $_GET['user'];
         $school = $_GET['sch'];
 
+    if(($_GET['activesy']) == 'N/A'):
+        echo '<div class="red-notif-border">No record! Please select school year!</div>';
+        include 'samplefooter.php';
+        exit();
+    endif;
 ?>
 
 <div class="card text-center">

@@ -471,7 +471,7 @@
             function activeObsPeriod($conn)
             {
                 date_default_timezone_set('Asia/Manila');
-                $result_arr = [];
+              
                 $qry = 'SELECT * FROM obs_period_tbl WHERE `status` = "Active" AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' ';
                 $result = mysqli_query($conn, $qry);
                 if (!empty($result)) :
@@ -1589,5 +1589,15 @@
                         array_push($count_arr, $r);
                     endforeach;
                     return intval(count($count_arr));
+                endif;
+            }
+
+            function syIsNotSet($sy){
+                if(isset($sy)):
+                    if($sy == "N/A"):
+                       include 'samplefooter.php';
+                       exit();
+                    endif;
+                else: false;
                 endif;
             }

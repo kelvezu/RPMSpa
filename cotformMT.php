@@ -1,8 +1,6 @@
 <?php
 
-include 'includes/conn.inc.php';
-include 'includes/header.php';
-include_once 'libraries/func.lib.php';
+include 'sampleheader.php';
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
@@ -40,7 +38,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                     <div class="row">
                         <div class="col-lg-6">
                             <label>OBSERVER 1: </label>&nbsp;
-                            <?php echo $fullname; ?>
+                            <?php echo $_SESSION['fullname']; ?>
                         </div>
 
                         <div class="col-lg-6">
@@ -239,5 +237,5 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
 <?php
 
-include 'includes/footer.php';
+include 'samplefooter.php';
 ?>

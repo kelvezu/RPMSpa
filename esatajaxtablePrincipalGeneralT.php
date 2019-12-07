@@ -5,7 +5,12 @@ include_once 'libraries/func.lib.php';
 
     $sy = $_GET['sy'];
     $school = $_GET['sch'];
-    $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+    $qry = mysqli_query($conn,"SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+
+    if(mysqli_num_rows($qry) == 0):
+        echo '<div class="red-notif-border">No Records!</div>';
+        exit();
+    endif;
 ?>
 
 

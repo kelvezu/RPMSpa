@@ -5,10 +5,18 @@ include 'sampleheader.php';
 if(isset($_POST['view'])):
     if((empty($_POST['sy_id'])) &&(empty($_POST['sch_id']))):
         $sy = $_POST['active_sy'];
+
+        if($sy == 'N/A'):
+            echo '<div class="red-notif-border">Please choose school year and school!</div>';
+            exit();
+        endif;
        
-        $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy'");
+        $qry = mysqli_query($conn,"SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy'");
 
-
+        if(mysqli_num_rows($qry) == 0):
+            echo '<div class="red-notif-border">No Records for the current school year!</div>';
+            exit();
+        endif;
 
 ?>
 
@@ -672,7 +680,7 @@ function SubjectTaughtChart() {
             CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
           CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
           CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
-           FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = 17 GROUP BY subject_tbl.subject_name") or die ($conn->error);
+           FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy' GROUP BY subject_tbl.subject_name") or die ($conn->error);
             while($SubjectTaughtQry = $qry->fetch_assoc()):
                 echo "['".$SubjectTaughtQry['subject_name']."', 
                 ".intval($SubjectTaughtQry['sy1']).",  
@@ -733,7 +741,7 @@ function GradeLvlTaughtChart() {
             CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
           CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
           CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
-                FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = 17 GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die ($conn->error);
+                FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '".$_SESSION['active_sy_id']."' GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die ($conn->error);
             while($GradelvlTaughtQry = $qry->fetch_assoc()):
                 echo "['".$GradelvlTaughtQry['gradelvltaught_name']."', 
                 ".intval($GradelvlTaughtQry['sy1']).",  
@@ -1046,6 +1054,8 @@ function CoreBehavioralChart() {
 
 <?php
 
+elseif((empty($_POST['sy_id'])) || (empty($_POST['sch_id']))):
+    echo "<div class='red-notif-border'>Please choose school year and school!</div>";
 
     else:
         $sy_id = $_POST['sy_id'];
