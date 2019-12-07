@@ -94,9 +94,12 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 
                         <!-- DISPLAY WEIGHT per OBJECTIVE -->
                         <td>
+
                             <p class="font-weight-bold text-center">
                                 <?php echo showPercent(displayOBJweightMT($conn, $kra['kra_id'])) . '%' ?>
                             </p>
+
+
                         </td>
                         <!-- DISPLAY WEIGHT per OBJECTIVE -->
 
@@ -107,7 +110,13 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                                     ?>
                                 <?php //echo $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') 
                                     ?>
-                                <?php echo $ipcrf->totalofCOTandMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl', 'cot_mt_rating_a_tbl') ?>
+                                <?php //echo $ipcrf->totalofCOTandMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl', 'cot_mt_rating_a_tbl') 
+                                    ?>
+                                <?php if ($kra['mtobj_id'] == 1) : ?>
+                                    <?php echo $ipcrf->getIndicatorAVGmt($kra['mtobj_id']) ?>
+                                <?php else : ?>
+                                    <p>-----</p>
+                                <?php endif; ?>
                             </p>
                         </td>
                         <!-- END DISPLAY QUALITY -->

@@ -108,4 +108,17 @@ class IPCRF
             return intval(1);
         endif;
     }
+
+    public function getIndicatorAVGmt($indicator_id)
+    {
+        $qry  = "SELECT * FROM `cot_mt_indicator_ave_tbl` WHERE indicator_id = $indicator_id AND `user_id` = " . $this->user . " AND sy = " . $this->sy . " AND school = " . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['average'];
+            endforeach;
+        else : return 0;
+        endif;
+    }
 }

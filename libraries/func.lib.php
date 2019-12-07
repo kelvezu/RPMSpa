@@ -212,15 +212,15 @@
                     $_SESSION['end_month'] = substr($enddate, 5, 2) . BR;
                     $_SESSION['end_day'] = substr($enddate, 8, 2) . BR;
                 else :
-                    $_SESSION['active_sy_id'] = 'none';
-                    $_SESSION['start_date'] =  'none';
-                    $_SESSION['end_date'] =  'none';
-                    $_SESSION['active_sy'] = 'none';
-                    $_SESSION['sy_status'] =  'none';
-                    $startdate = 'none';
-                    $_SESSION['start_year'] = 'none';
-                    $_SESSION['start_month'] = 'none';
-                    $_SESSION['start_day'] = 'none';
+                    $_SESSION['active_sy_id'] = 'N/A';
+                    $_SESSION['start_date'] =  'N/A';
+                    $_SESSION['end_date'] =  'N/A';
+                    $_SESSION['active_sy'] = 'N/A';
+                    $_SESSION['sy_status'] =  'N/A';
+                    $startdate = 'N/A';
+                    $_SESSION['start_year'] = 'N/A';
+                    $_SESSION['start_month'] = 'N/A';
+                    $_SESSION['start_day'] = 'N/A';
                 endif;
             }
 
@@ -255,7 +255,7 @@
                             mysqli_query($conn, $qry_kra);
 
                             exit();
-                        else : return false;
+                        // else : return false;
 
                         endif;
                     else :
