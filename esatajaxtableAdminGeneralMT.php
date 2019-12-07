@@ -4,9 +4,18 @@ include_once 'libraries/func.lib.php';
  
 
     $sy = $_GET['activesy'];
-   
-    $qry = $conn->query("SELECT * FROM `esat1_demographicsmt_tbl` WHERE sy = '$sy'");
 
+    if($sy == 'N/A'):
+        echo '<div class="red-notif-border">Please choose school year and school!</div>';
+        exit();
+    endif;
+   
+    $qry = mysqli_query($conn,"SELECT * FROM `esat1_demographicsmt_tbl` WHERE sy = '$sy'");
+
+    if(mysqli_num_rows($qry) == 0):
+        echo '<div class="red-notif-border">No Records for the current school year!</div>';
+        exit();
+    endif;
 
 ?>
 

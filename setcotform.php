@@ -2,6 +2,7 @@
  
 include 'sampleheader.php';
 include_once 'libraries/func.lib.php';
+syIsNotSet($_SESSION['active_sy_id']);
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
@@ -11,7 +12,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
 <div class="container text-center">
     <div class="breadcome-list shadow-reset">
-        <form action="includes/processtioafform.php" method="POST">
+        <form action="includes/processcotformT.php" method="POST">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
             <h5>COT-RPMS</h5> 
 

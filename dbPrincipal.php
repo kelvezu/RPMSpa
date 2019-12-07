@@ -58,6 +58,7 @@ include_once 'sampleheader.php'; ?>
             </div>
             <div class="card-body box">
                 <?php
+                if(!$_SESSION['active_sy_id'] == "N/A"):
                 $result = RPMSdb::showAnnouncement($conn, $_SESSION['active_sy_id'], 5) or die($conn->error);
                 if ($result) :
                     foreach ($result as $res) : ?>
@@ -80,7 +81,7 @@ include_once 'sampleheader.php'; ?>
                         </div><br />
                 <?php
                     endforeach;
-                endif; ?>
+                endif; endif;?>
 
             </div>
         </div>

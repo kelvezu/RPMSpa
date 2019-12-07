@@ -27,13 +27,19 @@
     activeSY($conn);
     if (!empty($_SESSION['active_sy_id'])) :
       endSchoolYear($conn, $_SESSION['active_sy_id']);
-    else : false;
+    else : $_SESSION['active_sy_id'] = "N/A";
     endif;
 
     if (isset($_SESSION['position'])) :
       redirectToDashboard($_SESSION['position']);
     else :
       false;
+    endif;
+
+    if(isset($_GET['notif'])):
+      if($_GET['notif'] == 'loggedout'):
+        echo '<div class="green-notif-border">You have successfully set school year! Please log in again to continue.</div>';
+      endif;
     endif;
     ?>
 

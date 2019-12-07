@@ -12,10 +12,9 @@ include 'sampleheader.php';
 
     <div class="card-body">
         <div class="row">
-        <div class="col">
         <div id="selfassessmentchart" style="width: 500px; height: 500px;"></div>
         </div>
-        <div class="col">
+        <div class="row">
         <div id="levelofpriority" style="width: 500px; height: 500px;"></div>
         </div>
         </div>
@@ -28,20 +27,11 @@ include 'sampleheader.php';
 
 function SelfAssessmentChart() {
     let data = google.visualization.arrayToDataTable([
-       ['Objective','Low','Moderate','High','Very High'],
+       ['Objective','School Year 1','School Year 2','School Year 3'],
 
         <?php
         
-        $qry = mysqli_query($conn,"SELECT tobj_id AS Objective, 
-        CASE WHEN lvlcap = 1 THEN COUNT(user_id) END  AS caplow,
-        CASE WHEN lvlcap = 2 THEN COUNT(user_id) END  AS capmoderate,
-        CASE WHEN lvlcap = 3 THEN COUNT(user_id) END  AS caphigh,
-        CASE WHEN lvlcap = 4 THEN COUNT(user_id) END  AS capveryhigh,
-        CASE WHEN priodev = 1 THEN COUNT(user_id) END  AS priolow,
-        CASE WHEN priodev = 2 THEN COUNT(user_id) END  AS priomoderate,
-        CASE WHEN priodev = 3 THEN COUNT(user_id) END  AS priohigh,
-        CASE WHEN priodev = 4 THEN COUNT(user_id) END  AS prioveryhigh
-        FROM esat2_objectivest_tbl WHERE sy = '$sy' GROUP BY tobj_id") or die ($conn->error.$qry);
+        $qry = mysqli_query($conn,"SELECT  ") or die ($conn->error.$qry);
     
             foreach($qry as $result):
              echo "

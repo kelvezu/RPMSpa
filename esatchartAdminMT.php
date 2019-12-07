@@ -3,11 +3,20 @@
 include 'sampleheader.php';
 
 if(isset($_POST['view'])):
-    if((empty($_POST['sy_id'])) &&(empty($_POST['sch_id']))):
+    if((empty($_POST['sy_id'])) && (empty($_POST['sch_id']))):
         $sy = $_POST['active_sy'];
-       
-        $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy'");
 
+        if($sy == 'N/A'):
+            echo '<div class="red-notif-border">Please choose school year and school!</div>';
+            exit();
+        endif;
+       
+        $qry = mysqli_query($conn, "SELECT * FROM `esat1_demographicsmt_tbl` WHERE sy = '$sy'");
+
+        if(mysqli_num_rows($qry) == 0):
+            echo '<div class="red-notif-border">No Records for the current school year!</div>';
+            exit();
+        endif;
 ?>
 
 <div class="container center">
@@ -557,6 +566,8 @@ let options = {
 
 <?php
 
+elseif((empty($_POST['sy_id'])) || (empty($_POST['sch_id']))):
+    echo "<div class='red-notif-border'>Please choose school year and school!</div>";
 
 else:
     $sy_id = $_POST['sy_id'];

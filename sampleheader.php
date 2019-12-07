@@ -78,3 +78,17 @@ activeobsperiod($conn);
             <div class="ml-2"><a class="text-decoration-none"> <i data-target="#LogoutModal" data-toggle="modal" class="fas fa-power-off text-danger"></i></a></div>
         </div>
     </nav>
+
+<?php if($_SESSION['active_sy_id'] == "N/A"):
+ if($_SESSION['position'] == "Admin"): ?>
+ <p class="red-notif-border m-5">
+   School year is not set. Click <a href="sy.php">here</a> to set the School Year.
+ </p>
+ <?php else: ?>
+
+    <p class="red-notif-border">
+   School year is not set. 
+ </p>
+
+
+ <?php endif; endif; ?>

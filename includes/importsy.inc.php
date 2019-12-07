@@ -11,7 +11,7 @@ include '../libraries/func.lib.php';
         $query = "UPDATE sy_tbl SET `status` = 'Active' WHERE sy_id = '$sy_id'";
         if(mysqli_query($conn,$query2)or die($conn->error)) :
             mysqli_query($conn,$query) or die($conn->error);
-            header("Location:../sy.php?successset");
+            header("Location:../logout.inc.php?successset");
         else: 
             header("Location:../sy.php?errorset");
         endif;
@@ -34,7 +34,10 @@ include '../libraries/func.lib.php';
 
 
     if (mysqli_query($conn, $query)) {
-        header("location:../dbAdmin.php");
+        session_start();
+        session_unset();
+        session_destroy();
+        header("Location:../loginpage.php?notif=loggedout");
     } else {
         echo "Error: " . mysqli_error($conn);
     }

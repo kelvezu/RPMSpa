@@ -7,8 +7,19 @@ if(isset($_POST['view'])):
     if((empty($_POST['sy_id'])) &&(empty($_POST['teacher_id']))):
        $sy = $_POST['active_sy'];
        $school = $_POST['school_id'];
-       $qry = $conn->query("SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
 
+       if($sy == 'N/A'):
+        echo '<div class="red-notif-border">Please choose school year and teacher!</div>';
+        include 'samplefooter.php';
+        exit();
+    endif;
+
+        $qry = mysqli_query($conn,"SELECT * FROM `esat1_demographicsmt_tbl` WHERE sy = '$sy'");
+
+        if(mysqli_num_rows($qry) == 0):
+            echo '<div class="red-notif-border">No Records for the current school year!</div>';
+            exit();
+        endif;
 ?>
 
 
@@ -552,6 +563,8 @@ function CoreBehavioralChart() {
 
 <?php
 
+elseif((empty($_POST['sy_id'])) || (empty($_POST['teacher_id']))):
+    echo "<div class='red-notif-border'>Please choose school year and teacher!</div>";
 
     else:
         $sy_id = $_POST['sy_id'];

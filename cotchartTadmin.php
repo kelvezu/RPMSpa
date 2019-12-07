@@ -57,21 +57,22 @@ endif;
         var data = google.visualization.arrayToDataTable([
             ['Indicator No.', 'School Year 1','School Year 2','School Year 3','Average'],
           <?php
-           $tIndi = fetchTindicator($conn);
-           foreach($tIndi as $indi):
-        $qry = $conn->query("SELECT AVG(average) AS T_AVERAGE, 
-        CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  average  END AS sy1,
-        CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN average END AS sy2, 
-        CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN average END AS sy3
-        FROM cot_t_indicator_ave_tbl WHERE indicator_id = ".$indi['indicator_id']."  AND school = '$school_id' group by sy") or die ($conn->error);
+          
+        $qry = $conn->query("SELECT a.indicator_id, AVG(a.T_average) AS T_average,AVG(a.sy) AS sy,AVG(a.sy2) as sy2, AVG(a.sy3) as sy3 FROM
+        (SELECT indicator_id,AVG(average) AS T_average,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN AVG(average) END AS sy3,
+          CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN AVG(average) END AS sy2,
+          CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN AVG(average) END AS sy
+          FROM cot_t_indicator_ave_tbl  GROUP BY indicator_id,average,sy) a
+          GROUP BY a.indicator_id") or die ($conn->error);
             while ($cotQry = $qry->fetch_assoc()):
-                echo "['".$indi['indicator_id']."', 
-                ".intval($cotQry['sy1']).",  
+                echo "['".$cotQry['indicator_id']."', 
+                ".intval($cotQry['sy3']).",  
                 ".intval($cotQry['sy2']).",   
-                ".intval($cotQry['sy3']).", 
-                ".intval($cotQry['T_AVERAGE'])."],";
+                ".intval($cotQry['sy']).", 
+                ".intval($cotQry['T_average'])."],";
             endwhile;
-        endforeach;?>
+     ?>
         ]);
 
         var options = {
