@@ -23,8 +23,8 @@
         $_SESSION['user_id'] = "";
         $_SESSION['fullname'] = "";
         $_SESSION['position'] = "";
-        $_SESSION['sy'] = "";
-        $_SESSION['sy_id'] = "";
+        // $_SESSION['sy'] = "";
+        // $_SESSION['sy_id'] = "";
         $_SESSION['school_id'] = "";
         $_SESSION['rater'] = "";
         $_SESSION['approving_authority'] = "";

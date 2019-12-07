@@ -255,7 +255,7 @@
                             mysqli_query($conn, $qry_kra);
 
                             exit();
-                        // else : return false;
+                        else : return false;
 
                         endif;
                     else :
@@ -265,10 +265,9 @@
 
                     endif;
                 else :
-                    session_unset();
-                    session_destroy();
-
-
+                    // session_unset();
+                    // session_destroy();
+                    console_log("no school year!");
                 endif;
             }
 
