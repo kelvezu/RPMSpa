@@ -140,7 +140,7 @@ endif;
     <div class="container">
     <div class="h4 breadcrumb bg-dark text-white ">School Year</div>
 
-    <?php if (!isset($_SESSION['active_sy_id'])): ?>
+    <?php if (isset($_SESSION['active_sy_id']) == 'N/A'): ?>
     <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#schoolyr-modal">Add School Year</button>
     <?php endif ?>
 
