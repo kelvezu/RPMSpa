@@ -1,8 +1,17 @@
-<?php include 'sampleheader.php';
+<?php
+
+use IPCRF\IPCRF;
+
+include 'sampleheader.php';
 $num = 1;
 $kra_num = 0;
 $tobj_num = 1;
 $kras = displayKRAandOBJ($conn, $_SESSION['position']);
+$user = $_SESSION['user_id'];
+$sy = $_SESSION['active_sy_id'];
+$school = $_SESSION['school_id'];
+$position = $_SESSION['position'];
+$ipcrf = new IPCRF($user, $sy, $school, $position);
 ?>
 
 
@@ -89,7 +98,9 @@ $kras = displayKRAandOBJ($conn, $_SESSION['position']);
 
                         <!-- DISPLAY QUALITY -->
                         <td>
-                            <p class="font-weight-bold text-center">1</p>
+                            <p class="font-weight-bold text-center">
+                                <?php echo $ipcrf->getObjQuality('cot_mt_rating_a_tbl') ?>
+                            </p>
                         </td>
                         <!-- END DISPLAY QUALITY -->
 

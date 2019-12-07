@@ -1478,7 +1478,7 @@
             function PositionDemoFetch($conn)
             {
                 $qry  = 'SELECT * FROM `position_tbl`';
-                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_arr = [];
                 foreach ($result as $res) {
                     array_push($res_arr, $res);
@@ -1590,4 +1590,15 @@
                     endforeach;
                     return intval(count($count_arr));
                 endif;
+            }
+
+            function AVGofTIndicatorAVG($conn, $sy, $school, $indicator)
+            {
+                $qry = " SELECT ROUND(AVG(average),3) as AVE FROM `cot_t_indicator_ave_tbl` WHERE sy = $sy and school = $school AND indicator_id = $indicator";
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+                    foreach ($result as $r) {
+                        return $r['AVE'];
+                    }
+                }
             }

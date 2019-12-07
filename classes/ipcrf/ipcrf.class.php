@@ -32,9 +32,9 @@ class IPCRF
     }
 
 
-    public function countCOTmt($cot_rating_a_tbl)
+    public function countCOT($rating_tbl)
     {
-        $qry = "SELECT * FROM `$cot_rating_a_tbl` WHERE `user_id` = " . $this->user . " AND sy = " . $this->sy . "  AND school_id = " . $this->school . " GROUP BY obs_period";
+        $qry = "SELECT * FROM `$rating_tbl` WHERE `user_id` = " . $this->user . " AND sy = " . $this->sy . "  AND school_id = " . $this->school . " GROUP BY obs_period";
         $result =  mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
         $res_arr = [];
         foreach ($result as $r) :
@@ -54,6 +54,19 @@ class IPCRF
         return intval(count($res_arr));
     }
 
-    public function getObjQuality($obj_id, $obj_table)
-    { }
+    public function getObjQuality($obj_table)
+    {
+        $cot_count = $this->countCOT($obj_table);
+        if ($cot_count == 4) :
+            return intval(5);
+        elseif ($cot_count == 3) :
+            return intval(4);
+        elseif ($cot_count == 2) :
+            return intval(3);
+        elseif ($cot_count == 1) :
+            return intval(2);
+        else :
+            return intval(1);
+        endif;
+    }
 }

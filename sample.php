@@ -356,8 +356,8 @@ $position = $_SESSION['position'];
 // echo countCOTforMT($conn, $user, $sy, $school)
 $sample_conn = new IPCRF($user, $sy, $school, $position, 1);
 // pre_r($sample_conn->conn());
-// pre_r($sample_conn->countCOT());
-echo $sample_conn->countObj(1, 'tobj_tbl') . ' obj_id count of kra 1';
+echo ($sample_conn->countCOT('cot_mt_rating_a_tbl')) . ' cot count' . BR;
+// echo $sample_conn->countObj(1, 'tobj_tbl') . ' obj_id count of kra 1';
 ?>
 
 <?php
