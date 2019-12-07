@@ -194,7 +194,7 @@
                 $syQry = 'SELECT * FROM sy_tbl WHERE `status` = "Active" ';
                 $syResult = mysqli_query($dbcon, $syQry);
 
-                if ($syResult) :
+                if (mysqli_num_rows($syResult) > 0) :
                     foreach ($syResult as $sy_item) :
                         $_SESSION['active_sy_id'] = $sy_item['sy_id'];
                         $_SESSION['start_date'] = $sy_item['startDate'] . '<br>';
@@ -211,8 +211,6 @@
                     $_SESSION['end_year'] = substr($enddate, 0, 4) . BR;
                     $_SESSION['end_month'] = substr($enddate, 5, 2) . BR;
                     $_SESSION['end_day'] = substr($enddate, 8, 2) . BR;
-
-
                 else :
                     $_SESSION['active_sy_id'] = 'none';
                     $_SESSION['start_date'] =  'none';
@@ -266,9 +264,9 @@
                         return false;
 
                     endif;
-                else :
-                    session_unset();
-                    session_destroy();
+                // else :
+                //     session_unset();
+                //     session_destroy();
 
 
                 endif;
@@ -471,7 +469,7 @@
             function activeObsPeriod($conn)
             {
                 date_default_timezone_set('Asia/Manila');
-              
+
                 $qry = 'SELECT * FROM obs_period_tbl WHERE `status` = "Active" AND sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' ';
                 $result = mysqli_query($conn, $qry);
                 if (!empty($result)) :
@@ -1614,12 +1612,13 @@
                 endif;
             }
 
-            function syIsNotSet($sy){
-                if(isset($sy)):
-                    if($sy == "N/A"):
-                       include 'samplefooter.php';
-                       exit();
+            function syIsNotSet($sy)
+            {
+                if (isset($sy)) :
+                    if ($sy == "N/A") :
+                        include 'samplefooter.php';
+                        exit();
                     endif;
-                else: false;
+                else : false;
                 endif;
             }
