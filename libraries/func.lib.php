@@ -1611,6 +1611,9 @@
                 elseif ($position == "Teacher III" or $position == "Teacher II" or $position == "Teacher I") :
                     return intval($raw_rate) + intval(3);
                 else : return false;
+                endif;
+            }
+
             function syIsNotSet($sy){
                 if(isset($sy)):
                     if($sy == "N/A"):
