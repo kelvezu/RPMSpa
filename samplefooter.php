@@ -118,7 +118,7 @@
                 hAxis: {
                     title: 'Total of Master Teachers and Teachers: <?= $totalCount ?>',
                     minValue: 1,
-                    maxValue: <?= intval($totalCount / 2) ?>,
+                    maxValue: <?php echo intval($totalCount / 2) ?>,
                     textStyle: {
                         bold: false,
                         fontSize: 10,

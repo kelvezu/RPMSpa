@@ -1478,7 +1478,7 @@
             function PositionDemoFetch($conn)
             {
                 $qry  = 'SELECT * FROM `position_tbl`';
-                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_arr = [];
                 foreach ($result as $res) {
                     array_push($res_arr, $res);
@@ -1589,6 +1589,28 @@
                         array_push($count_arr, $r);
                     endforeach;
                     return intval(count($count_arr));
+                endif;
+            }
+
+            function AVGofTIndicatorAVG($conn, $sy, $school, $indicator)
+            {
+                $qry = " SELECT ROUND(AVG(average),3) as AVE,sy FROM `cot_t_indicator_ave_tbl` WHERE sy = $sy and school = $school AND indicator_id = $indicator";
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+                    foreach ($result as $r) {
+                        return $r['AVE'];
+                    }
+                }
+            }
+
+            /* THIS FUNCTION WILL CONVERT THE RPMS 5-point scale TO RAW RATE */
+            function rawRate($raw_rate, $position)
+            {
+                if ($position == "Master Teacher IV" or $position == "Master Teacher III" or $position == "Master Teacher II" or $position == "Master Teacher I") :
+                    return intval($raw_rate) + intval(3);
+                elseif ($position == "Teacher III" or $position == "Teacher II" or $position == "Teacher I") :
+                    return intval($raw_rate) + intval(3);
+                else : return false;
                 endif;
             }
 
