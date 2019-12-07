@@ -26,7 +26,7 @@
 
     activeSY($conn);
     if (!empty($_SESSION['active_sy_id'])) :
-      endSchoolYear($conn, $_SESSION['active_sy_id']);
+    endSchoolYear($conn, $_SESSION['active_sy_id']);
     else : $_SESSION['active_sy_id'] = "N/A";
     endif;
 

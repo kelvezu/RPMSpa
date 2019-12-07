@@ -264,9 +264,9 @@
                         return false;
 
                     endif;
-                // else :
-                //     session_unset();
-                //     session_destroy();
+                else :
+                    session_unset();
+                    session_destroy();
 
 
                 endif;
