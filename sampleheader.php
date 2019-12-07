@@ -28,9 +28,9 @@ activeobsperiod($conn);
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
 
-<!-- Script for Dynamic Dropdown -->
-<script src="bootstrap4/scripts/jquery-3.4.1.min.js"></script>
-<!-- Script for Dynamic Dropdown -->
+    <!-- Script for Dynamic Dropdown -->
+    <script src="bootstrap4/scripts/jquery-3.4.1.min.js"></script>
+    <!-- Script for Dynamic Dropdown -->
 
     <!-- Script for Charts  -->
     <script src="bootstrap4/scripts/googlechart.js"></script>
@@ -79,16 +79,17 @@ activeobsperiod($conn);
         </div>
     </nav>
 
-<?php if($_SESSION['active_sy_id'] == "N/A"):
- if($_SESSION['position'] == "Admin"): ?>
- <p class="red-notif-border m-5">
-   School year is not set. Click <a href="sy.php">here</a> to set the School Year.
- </p>
- <?php else: ?>
+    <?php if (empty($_SESSION['active_sy_id'])) :
+        if ($_SESSION['position'] == "Admin") : ?>
+            <p class="red-notif-border m-5">
+                School year is not set. Click <a href="sy.php">here</a> to set the School Year.
+            </p>
+        <?php else : ?>
 
-    <p class="red-notif-border">
-   School year is not set. 
- </p>
+            <p class="red-notif-border">
+                School year is not set.
+            </p>
 
 
- <?php endif; endif; ?>
+    <?php endif;
+    endif; ?>

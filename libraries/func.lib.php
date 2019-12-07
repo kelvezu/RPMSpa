@@ -192,7 +192,7 @@
             {
                 date_default_timezone_set('Asia/Manila');
                 $syQry = 'SELECT * FROM sy_tbl WHERE `status` = "Active" ';
-                $syResult = mysqli_query($dbcon, $syQry);
+                $syResult = mysqli_query($dbcon, $syQry) or die($dbcon->error . $syQry);
 
                 if (mysqli_num_rows($syResult) > 0) :
                     foreach ($syResult as $sy_item) :
@@ -212,15 +212,16 @@
                     $_SESSION['end_month'] = substr($enddate, 5, 2) . BR;
                     $_SESSION['end_day'] = substr($enddate, 8, 2) . BR;
                 else :
-                    $_SESSION['active_sy_id'] = 'N/A';
-                    $_SESSION['start_date'] =  'N/A';
-                    $_SESSION['end_date'] =  'N/A';
-                    $_SESSION['active_sy'] = 'N/A';
-                    $_SESSION['sy_status'] =  'N/A';
-                    $startdate = 'N/A';
-                    $_SESSION['start_year'] = 'N/A';
-                    $_SESSION['start_month'] = 'N/A';
-                    $_SESSION['start_day'] = 'N/A';
+                    $_SESSION['active_sy_id'] = false;
+                    $_SESSION['start_date'] =  false;
+                    $_SESSION['end_date'] =  false;
+                    $_SESSION['active_sy'] = false;
+                    $_SESSION['sy_status'] =  false;
+                    $startdate = false;
+                    $_SESSION['start_year'] = false;
+                    $_SESSION['start_month'] = false;
+                    $_SESSION['start_day'] = false;
+                    console_log('no active sy');
                 endif;
             }
 
@@ -228,6 +229,7 @@
             {
                 //SET THE DATABASE TO INACTIVE IF THE END DATE IS EQUAL TO END_DATE
                 if (!empty($sy_id)) :
+                    echo $_SESSION['end_date'];
                     if (!empty($_SESSION['end_date'])) :
                         $today_date = strtotime(intval(date('Y-m-d')));
                         $enddate = strtotime(intval($_SESSION['end_date']));
@@ -240,29 +242,27 @@
                             // mysqli_query($conn, $qry_account);
 
                             $qry_subject = 'UPDATE subject_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
-                            mysqli_query($conn, $qry_subject);
+                            mysqli_query($conn, $qry_subject) or die($conn->error);
 
                             $qry_age = 'UPDATE age_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
-                            mysqli_query($conn, $qry_age);
+                            mysqli_query($conn, $qry_age) or die($conn->error);
 
                             $qry_totalyr = 'UPDATE totalyear_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
-                            mysqli_query($conn, $qry_totalyr);
+                            mysqli_query($conn, $qry_totalyr) or die($conn->error);
 
                             $qry_glt = 'UPDATE gradelvltaught_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
-                            mysqli_query($conn, $qry_glt);
+                            mysqli_query($conn, $qry_glt) or die($conn->error);
 
                             $qry_kra = 'UPDATE kra_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
-                            mysqli_query($conn, $qry_kra);
-
+                            mysqli_query($conn, $qry_kra) or die($conn->error);
                             exit();
-                        else : return false;
-
+                        else : return console_log('wala kang nakaset ng sy');
                         endif;
                     else :
                         $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
-                        mysqli_query($conn, $qry);
+                        mysqli_query($conn, $qry)  or die($conn->error . $qry);
                         return false;
-
+                        console_log('inaupdate ko to hihi');
                     endif;
                 else :
                     // session_unset();
@@ -1613,11 +1613,9 @@
 
             function syIsNotSet($sy)
             {
-                if (isset($sy)) :
-                    if ($sy == "N/A") :
-                        include 'samplefooter.php';
-                        exit();
-                    endif;
+                if (!empty($sy)) :
+                    include 'samplefooter.php';
+                    exit();
                 else : false;
                 endif;
             }

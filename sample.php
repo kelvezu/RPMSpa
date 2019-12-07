@@ -305,32 +305,11 @@ $user =  $_SESSION['user_id'];
 // $res = showObsPeriod($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']);
 // $res = RPMSdb::showBmovMT($conn, $sy, $school, 'For Approval');
 // $res =RPMSdb::showAllTwithCOTavg($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
-$res = fetchTindicator($conn); ?>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Indicator</th>
-            <th>Rating</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-        <?php
-        foreach ($res as $r) : ?>
-            <tr>
-                <td><?php echo $r['indicator_id'] ?></td>
-                <td><?php var_dump(fetchTindicatorRate($conn, $user, $r['indicator_id'], $sy, $school, 1)); ?></td>
-            <?php endforeach; ?>
-            </tr>
-    </tbody>
+var_dump($_SESSION['active_sy_id']) . 'tae';
 
 
 
-
-
-
-</table>
+?>
 <!-- // foreach ($res as $r) {
 // echo $r['indicator_id'] . BR;
 // } -->
@@ -351,13 +330,15 @@ $res = fetchTindicator($conn); ?>
 
 <!-- <select name="" id=""> -->
 <?php
+
 $position = $_SESSION['position'];
 
 // echo countCOTforMT($conn, $user, $sy, $school)
-$sample_conn = new IPCRF($user, $sy, $school, $position, 1);
+//$sample_conn = new IPCRF($user, $sy, $school, $position, 1);
 // pre_r($sample_conn->conn());
-echo ($sample_conn->countCOT('cot_mt_rating_a_tbl')) . ' cot count' . BR;
+//echo ($sample_conn->countCOT('cot_mt_rating_a_tbl')) . ' cot count' . BR;
 // echo $sample_conn->countObj(1, 'tobj_tbl') . ' obj_id count of kra 1';
+
 ?>
 
 <?php
