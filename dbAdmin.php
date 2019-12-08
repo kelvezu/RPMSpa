@@ -271,12 +271,63 @@ include_once 'sampleheader.php'; ?>
         <!-- End Table for Principal List  -->
         <!-- End of First Row -->
     </div>
-
+    <br>                                
     <!-- Second Row -->
     <div class="row">
         <!-- 1st column of 2nd row -->
-        <div class="col-4 text-primary black-border">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro tenetur ducimus, corrupti sunt vel corporis voluptates provident obcaecati soluta? Rerum, id similique veniam dignissimos sit eveniet facilis modi sint voluptates error nisi nesciunt nostrum commodi aut optio, accusamus laboriosam necessitatibus reprehenderit exercitationem recusandae rem repellendus natus alias? Perspiciatis, expedita excepturi!
+        <div class="col">
+            <div class="card">
+                        <div class="card-header">
+                            <div class="d-flex">
+                                <div class="w-100">
+                                    <h6><i class="fa fa-users"></i> Total Teacher With ESAT</h6>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    <!-- Card Body -->
+                    <div class="card-body box">
+                        <div id="teacher_count_table">
+                            <table class=" table table-sm table-responsive-sm table-hover ">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>School Name</th>
+                                        <th>No. of Teacher</th>
+                                        <th>With ESAT</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="box">
+                                    <?php
+                                    //  and $sch_t['T'] || $sch_t['MT']
+                                    $num = 1;
+                                    $esat_total = RPMSdb::rptwithesat($conn);
+                                    foreach ($esat_total as $etotal) :
+                                        if (!empty($etotal['school_id'])) : ?>
+                                            <td><?= $num++ ?></td>
+                                            <td><?= $etotal['school_name'] ?></td>
+                                            <td><?= $etotal['Total_Teacher'] ?></td>
+                                            <td><?= $etotal['With_ESAT'] ?></td>
+                                            <td><?= percent($etotal['x']) ?></td>
+                                            
+                                        <?php endif ?>
+                                </tbody>
+
+                            <?php endforeach; ?>
+                            </table>
+                        </div>
+
+
+                        <!-- Total Chart for Teacher -->
+                        <div id="teacher_count_chart">
+                            <div style="width:max-width; height:300px;" id="teacher_chart"></div>
+                        </div>
+                        <!-- End of Total Chart for Teacher -->
+
+                    </div>
+                    <!-- end of card-body -->
+                </div>
         </div>
         <!-- End of 1st column of 2nd row  -->
 

@@ -11,6 +11,25 @@ use mysqli;
 
 class RPMSdb
 {
+    public static function rptwithesat($conn)
+    {
+        $result_arr = [];
+        $totalqry = 'SELECT *,(With_ESAT/Total_Teacher) as x FROM tbl_rptwithesat 
+        where sy_id ="'. $_SESSION['active_sy_id'] . '"';
+        $result = mysqli_query($conn, $totalqry);
+
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            //pre_r($result_arr);
+            endforeach;
+            return  $result_arr;
+        else :
+            return false;
+        endif;
+        mysqli_close($conn);
+    }
+
     public static function mtlvlcap2($conn)
     {
         $result_arr = [];
