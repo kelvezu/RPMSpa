@@ -115,7 +115,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
         //   xmlhttp.send();
 
 
-        }
+        //  }
       </script>
       <div class="card-footer text-muted ">
         <button type="submit" class="btn btn-success btn-block my-2" name="submitESAT2t">Submit</button>

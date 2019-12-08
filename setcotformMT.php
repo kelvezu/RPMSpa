@@ -1,8 +1,8 @@
 <?php
 
-include 'sampleheader.php'; 
+include 'sampleheader.php';
 include_once 'libraries/func.lib.php';
-syIsNotSet($_SESSION['active_sy_id']);
+
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
@@ -14,7 +14,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
     <div class="breadcome-list shadow-reset">
         <form action="includes/processcotformMT.php" method="POST">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
-            <h5>COT-RPMS</h5> 
+            <h5>COT-RPMS</h5>
 
             <div class="h3 bg-info text-white">Master Teacher I-IV</div>
             <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
@@ -214,7 +214,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                             endif;
                             ?>
 
-                            <input type="text" name="obs" value="<?php echo $period; ?>" disabled />
+                            <input type="text" name="obs" value="<?php echo $period; ?>" readonly />
                         </div>
 
                         <br>

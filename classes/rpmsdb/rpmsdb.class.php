@@ -1454,10 +1454,11 @@ class RPMSdb
                         // GENERATE THE AVERAGE OF INDICATORS
 
                         $hasCOTindicatorAVG = self::haveCOTaverageMT($conn, $acc_id, $sy, $fetch_ind['indicator_id'], $school);
+                        $t_ave = generateAVGforCOT($conn, 'cot_mt_rating_a_tbl', $acc_id, $fetch_ind['indicator_id'], $sy, $school);
+                        $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
                         // IF THERE IS RECORD IN COT_MT_INDICATOR_AVE_TBL 
                         if ($hasCOTindicatorAVG) :
-                            $t_ave = generateAVGforCOT($conn, 'cot_mt_rating_a_tbl', $acc_id, $fetch_ind['indicator_id'], $sy, $school);
-                            $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
+                           
                             // console_log('T_AVE= ' . floatval($t_ave) . ' ' . 'T_CURRENT= ' . floatval($t_ave_current));
 
 
@@ -1929,10 +1930,25 @@ class RPMSdb
     //     endif;
     // }
 
-    public static function showRatees($conn, $rater, $school)
+    public static function showRateesMT($conn, $rater, $school)
     {
         $result_arr = [];
-        $qry =  "SELECT * FROM `account_tbl` WHERE `rater` = $rater  AND `school_id` = '$school' AND  `status` = 'Active' GROUP BY `user_id` AND position IN ('Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') ORDER BY `user_id` desc ";
+        $qry =  'SELECT * FROM `account_tbl` WHERE `rater` = ' . $rater . ' AND `school_id` = ' . $school . ' AND `status` = "Active" AND position IN ("Master Teacher IV","Master Teacher III","Master Teacher II","Master Teacher I") GROUP BY `user_id` ORDER BY `user_id` desc';
+        $result = mysqli_query($conn, $qry) or die($conn->error .  $qry);
+
+        if (mysqli_num_rows($result) > 0) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+    public static function showRateesT($conn, $rater, $school)
+    {
+        $result_arr = [];
+        $qry =  'SELECT * FROM `account_tbl` WHERE `rater` = ' . $rater . ' AND `school_id` = ' . $school . ' AND `status` = "Active" AND position IN ("Teacher III","Teacher II","Teacher I") GROUP BY `user_id` ORDER BY `user_id` desc';
         $result = mysqli_query($conn, $qry) or die($conn->error .  $qry);
 
         if (mysqli_num_rows($result) > 0) :

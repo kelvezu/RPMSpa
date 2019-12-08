@@ -1693,3 +1693,7 @@
                     return $count_arr;
                 endif;
             }
+            function dateNow()
+            {
+                return date("Y-m-d H:i:s");
+            }
