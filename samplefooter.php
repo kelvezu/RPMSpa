@@ -86,6 +86,15 @@
         </div>
         <div class="p-1">
 
+        <div class="row">
+            <div class="col">
+           <b>1st</b> <span><?php echo displayDate($_SESSION['first_period']) ?? 0 ?></span>  
+           <b>2nd</b> <span><?php echo displayDate($_SESSION['second_period']) ?? 0 ?></span>
+           <b>3rd</b> <span><?php echo displayDate($_SESSION['third_period']) ?? 0 ?></span>
+           <b>4th</b> <span><?php echo displayDate($_SESSION['final_period']) ?? 0 ?></span>
+        </div>
+        </div>
+
         </div>
         <div class="p-1">
             <small>Copyright &#169; <?= date('Y') ?> All rights reserved. Team Guerra.</small>
