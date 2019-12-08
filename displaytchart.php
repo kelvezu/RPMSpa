@@ -4,76 +4,69 @@ include 'sampleheader.php';
 
 ?>
 
-<div class="card text-center">
+
+<div class="container col-md-9">
+
+	<div class="bg-dark h4 text-white breadcrumb">My ESAT Result</div>
+	<div class="px-3">
 
 
-	<div class="card-header bg-success">
-		<div class=" text-center h4 text-white">Core Behavioral Competencies Rating</div>
-	</div>
-	<div class="card-body">
-		<div class="row">
-			<div class="col">
-				<table class="table table-bordered hover table-sm">
-					<thead>
-						<tr>
-							<th>CBC Name</th>
-							<th>CBC Score</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						$qry = $conn->query("SELECT a.cbc_name,sum(b.cbc_score) AS cbc_score FROM core_behavioral_tbl a 
-                            INNER JOIN esat3_core_behavioralt_tbl b  on a.cbc_id = b.cbc_id WHERE b.user_id = '$teacher' AND sy = '$sy' group by a.cbc_name order by a.cbc_id");
-						while ($esatresult = $qry->fetch_assoc()) : ?>
-							<tr>
-								<td><?php echo $esatresult['cbc_name']; ?></td>
-								<td><?php echo $esatresult['cbc_score']; ?></td>
-							<?php endwhile; ?>
-							</tr>
+		<form action="esatchartTeacher.php" method="POST" class="form-inline">
+			<input type="hidden" id="school_id" name="school_id" value="<?php echo $_SESSION['school_id'] ?>">
+			<input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>">
+			<input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>">
+			<input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['user_id'] ?>">
 
-					</tbody>
-				</table>
+			<div class="form-row">
+				<div class="form-group mb-2">
+					<!-- School Year Dropdown -->
+					<label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
+					<?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die($conn->error); ?>
+					<select id="sy_id" name="sy_id" class="form-control">
+						<option value="" disabled selected>--Select School Year--</option>
+						<?php while ($syrow = $schoolyr->fetch_assoc()) : ?>
+							<option value="<?php echo $syrow['sy_id']; ?>"><?php echo $syrow['sy_desc']; ?></option>
+						<?php endwhile; ?>
+					</select>&nbsp;&nbsp;
+				</div>
+				<!-- End of School Year Dropdown -->
+				<div class="form-group mb-2">
+					<a onclick="showchart()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
+					<button type="submit" name="view" class="btn btn-success">View Data in Charts</button>
+				</div>
 			</div>
+		</form>
+		<br>
+		<div id="show">
+
 		</div>
+
+
 	</div>
 
-	<!-- End of Age Table -->
-
-	<!-- Gender Table -->
-	<div class="card-header bg-success">
-		<div class=" text-center h4 text-white">Assessment of Capabilities and Priorities</div>
-	</div>
-	<div class="card-body">
-		<div class="row">
-			<div class="col">
-
-				<table class="table table-bordered hover table-sm">
-					<thead>
-						<tr>
-							<th>Objectives</th>
-							<th>Level of Capabilities</th>
-							<th>Level of Priority</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						$qry = $conn->query("SELECT CONCAT(a.kra_id,'.',a.tobj_id) 
-                                  AS OBJECTIVES, lvlcap, priodev FROM esat2_objectivest_tbl a INNER JOIN tobj_tbl b on a.tobj_id = b.tobj_id WHERE a.user_id = '$teacher' AND sy = '$sy' group by a.tobj_id,b.tobj_name");
-						while ($esatresult = $qry->fetch_assoc()) : ?>
-							<tr>
-								<td><?php echo $esatresult['OBJECTIVES']; ?></td>
-								<td><?php echo $esatresult['lvlcap']; ?></td>
-								<td><?php echo $esatresult['priodev']; ?></td>
-							<?php endwhile; ?>
-							</tr>
-
-					</tbody>
-
-				</table>
-			</div>
-		</div>
-	</div>
+	<!-- End tag of container -->
 </div>
+</div>
+<script>
+	showchart()
+
+	function showchart() {
+		let user = document.getElementById('user_id').value;
+		let sy_id = document.getElementById('sy_id').value;
+		let active_sy_id = document.getElementById('active_sy').value;
+		let school_id = document.getElementById('school_id').value;
+
+		let xmlhttp = new XMLHttpRequest();
+		xmlhttp.onload = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				document.getElementById("show").innerHTML = xmlhttp.responseText;
+				console.log(this.responseText);
+			}
+		}
+		xmlhttp.open("GET", "esatajaxtableTeacher.php?activesy=" + active_sy_id + "&sch=" + school_id + "&sy=" + sy_id + "&user=" + user, true);
+		xmlhttp.send();
+	}
+</script>
 
 
 <?php
