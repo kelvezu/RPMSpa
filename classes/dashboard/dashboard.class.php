@@ -162,6 +162,14 @@ class Dashboard
                                 <a class="dropdown-item" href="cotAveMTadmin.php">View Master Teacher Average COT</a>
                             </div>
                         </li>
+
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-folder-open"></i> Means of Verification</a>
+                            <div class="dropdown-menu " aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="">View Teacher MOV</a>
+                                <a class="dropdown-item" href="">View Master Teacher MOV</a>
+                            </div>
+                    </li>
     
 
                 <li class="nav-item dropdown active">
@@ -184,6 +192,8 @@ class Dashboard
                                 <a href="usercsv.php" class="dropdown-item">Mass Upload</a>
                                 <a href="signup.php" class="dropdown-item">Add User</a>
                                 <a href="promote.php" class="dropdown-item">Promote User</a>
+                                <a href="selectteacher.php" class="dropdown-item">Assign Teacher</a>
+                                <a href="SELECTTRATEE.php" class="dropdown-item">Assign Rater</a>
                     </div>
                 </li>
 
@@ -242,13 +252,6 @@ class Dashboard
                                 <a class="dropdown-item" href="esattablePrincipalMT.php">View General Master Teacher ESAT</a>
                             </div>
                     </li>
-
-                    <li class="nav-item dropdown active">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> Master Teacher Progress</a>
-                        <div class="dropdown-menu " aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">Master Teacher Progress</a>
-                        </div>
-                </li>
     
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
@@ -266,6 +269,13 @@ class Dashboard
                             <a class="dropdown-item" href="cotAveMTprincipal.php">View Master Teacher Average COT</a>
                         </div>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-folder-open"></i> Means of Verification</a>
+                        <div class="dropdown-menu " aria-labelledby="dropdown03">
+                            <a class="dropdown-item" href="">View Master Teacher MOV</a>
+                        </div>
+                </li>
 
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
@@ -341,6 +351,14 @@ class Dashboard
                                 <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
+
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-folder-open"></i> Means of Verification</a>
+                            <div class="dropdown-menu " aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="">View Teacher MOV</a>
+                                <a class="dropdown-item" href="">View Master Teacher MOV</a>
+                            </div>
+                    </li>
     
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
@@ -379,7 +397,7 @@ class Dashboard
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs"></i> Settings</a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                             <a href="setobsperiod.php" class="dropdown-item">Set COT Period</a>
-
+                            <a href="selecttratee.php" class="dropdown-item">Select Teacher to Rate</a>
                             </div>
                         </li>
         
@@ -423,6 +441,13 @@ class Dashboard
                                 <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
+
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-folder-open"></i> Means of Verification</a>
+                            <div class="dropdown-menu " aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="viewattachment.userMT.php">View MOV</a>
+                            </div>
+                    </li>
             
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
@@ -456,6 +481,16 @@ class Dashboard
                                 <a href="#" class="dropdown-item">Seminar List</a>
                             </div>
                         </li>
+
+                        <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i>Ratee</a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a href="selecttratee.php" class="dropdown-item">Select Teacher to Rate</a>
+                            </div>
+                        </li>
+
+
+
                     ';
             $nav .= '</ul>';
         elseif ($_SESSION['position'] == "Master Teacher I" or $_SESSION['position'] == "Master Teacher II" or $_SESSION['position'] == "Master Teacher III" or $_SESSION['position'] == "Master Teacher IV") :
@@ -474,13 +509,6 @@ class Dashboard
                                     </div>
                             </li>
         
-                            <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-chart-line"></i> My Progress</a>
-                                <div class="dropdown-menu " aria-labelledby="dropdown03">
-                                    <a class="dropdown-item" href="#">My RPMS Progress</a>
-                                </div>
-                        </li>
-
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown"  aria-expanded="false"><i class="fa fa-folder-open"></i> Means of Verification</a>
                             <div class="dropdown-menu " aria-labelledby="dropdown03">
@@ -488,8 +516,6 @@ class Dashboard
                                 <a class="dropdown-item" href="viewattachment.userMT.php">View MOV</a>
                             </div>
                     </li>
-
-
 
             
                             <li class="nav-item dropdown active">
@@ -534,6 +560,13 @@ s
                                     <a href="#" class="dropdown-item">Teacher IPCRF Summary Rating</a>
                                     <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
                                     <a href="#" class="dropdown-item">Seminar List</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i>Ratee</a>
+                                <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                    <a href="selecttratee.php" class="dropdown-item">Select Teacher to Rate</a>
                                 </div>
                             </li>
             

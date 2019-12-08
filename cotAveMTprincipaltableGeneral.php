@@ -6,20 +6,16 @@ include 'classes/rpmsdb/rpmsdb.class.php';
 include 'libraries/func.lib.php';
 include 'includes/conn.inc.php';
 
-
-
-$teacher_id = $_GET['user'];
-$school_id = $_GET['sch'];
-$rater = $_GET['rater'];
 $sy_id = $_GET['sy'];
-$obs = $_GET['obs'];
-$position = "Master Teacher I";
+$school = $_GET['sch'];
+
 
 $cot_array = [];
-$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_rating_a_tbl WHERE sy = $sy_id AND `user_id` = $teacher_id AND obs_period = $obs") or die($conn->error);
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy = '$sy_id' AND school = '$school'") or die($conn->error);
+
 
 if (mysqli_num_rows($COTqry) == 0) :
-    echo '<div class="red-notif-border">No Classroom Observation Record Available</div>';
+    echo '<div class="red-notif-border">Average COT is not available</div>';
     exit();
 else :
     foreach ($COTqry as $cot) :
@@ -27,10 +23,9 @@ else :
     endforeach;
 endif;
 
-$indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $teacher_id);
+$indicator_arr = RPMSdb::ViewAdminMTindicator($conn, $sy_id, $school);
+$obs_period_arr =  showObsPeriodAveAdminMT($conn, $sy_id, $school);
 ?>
-
-
 
 <div class="container">
 
@@ -47,14 +42,6 @@ $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $t
             <div class="row">
                 <div class="col">
                     <p>
-                        <b>Master Teacher Observed:</b> <?php displayname($conn, $teacher_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?><br />
-                        <b>School :</b> <?= displaySchool($conn, $school_id) ?><br />
-                        <b>Observation Period :</b> <?= $obs; ?>
-                    </p>
-                </div>
-                <div class="col">
-                    <p>
-                        <b> Rater:</b> <?= displayName($conn, $rater)  ?><br />
                         <b> School Year:</b> <?= displaySY($conn, $sy_id) ?><br />
                     </p>
                 </div>
@@ -67,7 +54,11 @@ $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $t
                     <tr>
                         <th>Indicator No</th>
                         <th>Indicator Name</th>
-                        <th>COT Rating</th>
+                        <th>1st COT</th>
+                        <th>2nd COT</th>
+                        <th>3rd COT</th>
+                        <th>4th COT</th>
+                        <th>Average</th>
                     </tr>
                 </thead>
                 <?php
@@ -78,19 +69,27 @@ $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $t
                         <tr>
                             <td class="font-weight-bold"><?= $num++ . '.'; ?></td>
                             <td class="font-italic"><?= displayMTindicator($conn, $ind['indicator_id']); ?></td>
-                            <td class="text-center text-success">
-                                <?php if (empty(fetchCOTratingMT($conn, $teacher_id, $obs, $ind['indicator_id'], $sy_id, $school_id))) :
-                                        echo "<p class='font-weight-bold text-danger'>N/A</p>";
-                                    else :
-                                        echo rawRate(fetchCOTratingMT($conn, $teacher_id, $obs, $ind['indicator_id'], $sy_id, $school_id), $position);
-                                    endif;   ?>
-                            </td>
+                            <?php foreach ($obs_period_arr as $obsper) : ?>
+
+                                <td class="text-center text-success">
+
+                                    <?php
+                                            $position = "Master Teacher I";
+                                            $t_average =  rawRate(viewAdminratingMT($conn, $school, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                            <?php endforeach; ?>
+                            <td class="text-center font-weight-bold text-success"><?php echo rawRate(fetchIndicatorAVGAdminMt($conn, $ind['indicator_id'], $sy_id, $school), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>
             </table>
         </div>
     </div>
+
 
 
 </div>

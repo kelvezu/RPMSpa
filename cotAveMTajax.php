@@ -14,16 +14,16 @@ $sy_id = $_GET['sy'];
 
 
 $cot_array = [];
-$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_rating_a_tbl WHERE sy = $sy_id AND `user_id` = $teacher_id AND school_id = $school_id ") or die ($conn->error);
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_rating_a_tbl WHERE sy = $sy_id AND `user_id` = $teacher_id AND school_id = $school_id ") or die($conn->error);
 
-    if(mysqli_num_rows($COTqry) == 0):
-        echo '<div class="red-notif-border">No Classroom Observation Record Available</div>';
-        exit();
-    else:
-        foreach ($COTqry as $cot):
-            array_push($cot_array,$cot);
-        endforeach;
-    endif;
+if (mysqli_num_rows($COTqry) == 0) :
+    echo '<div class="red-notif-border">No Classroom Observation Record Available</div>';
+    exit();
+else :
+    foreach ($COTqry as $cot) :
+        array_push($cot_array, $cot);
+    endforeach;
+endif;
 
 
 $obs_period_arr =  showObsPeriodMT($conn, $teacher_id, $sy_id, $school_id);
@@ -87,11 +87,13 @@ $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $t
                             <?php foreach ($obs_period_arr as $obsper) : ?>
 
                                 <td class="text-center text-primary">
-                                    <?= fetchCOTratingMT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?>
+
+                                    <?php $position = 'Master Teacher I';
+                                            echo rawRate(fetchCOTratingMT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?>
                                 </td>
 
                             <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-primary"><?= fetchIndicatorAVGmt($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                            <td class="text-center font-weight-bold text-primary"><?php echo rawRate(fetchIndicatorAVGmt($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
 
                         </tr>
                     </tbody>
