@@ -7,10 +7,10 @@ include 'libraries/func.lib.php';
 include 'includes/conn.inc.php';
 
 $sy_id = $_GET['sy'];
-$school_id = $_GET['sch'];
+
 
 $cot_array = [];
-$COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy = $sy_id AND school = $school_id") or die($conn->error . $COTqry);
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy = $sy_id") or die($conn->error . 'cot_qry');
 
 if (mysqli_num_rows($COTqry) == 0) :
     echo '<div class="red-notif-border">Average COT is not available</div>';
@@ -21,8 +21,9 @@ else :
     endforeach;
 endif;
 
-$indicator_arr = RPMSdb::ViewAdminTindicator($conn, $sy_id, $school_id);
-$obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school_id);
+$indicator_arr = RPMSdb::ViewAdminGeneralMTindicator($conn, $sy_id);
+$obs_period_arr =  showObsPeriodAveAdminMTGeneral($conn, $sy_id);
+
 ?>
 
 <div class="container">
@@ -32,17 +33,12 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school_id);
     </div>
 
     <div class="d-flex justify-content-center my-2">
-        <h5><strong>COT-RPMS for Teacher I-III</strong></h5>
+        <h5><strong>COT-RPMS for Master Teacher I-IV</strong></h5>
     </div>
 
     <div class="card">
         <div class="card-header bg-dark text-white">
             <div class="row">
-                <div class="col">
-                    <p>
-                        <b>School :</b> <?= displaySchool($conn, $school_id) ?>
-                    </p>
-                </div>
                 <div class="col">
                     <p>
                         <b> School Year:</b> <?= displaySY($conn, $sy_id) ?><br />
@@ -53,7 +49,7 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school_id);
 
         <div class="card-body">
             <table class="table table-bordered table-responsive-sm table-sm">
-                <thead class="alert alert-success">
+                <thead class="alert alert-info">
                     <tr>
                         <th>Indicator No</th>
                         <th>Indicator Name</th>
@@ -71,20 +67,21 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school_id);
                     <tbody>
                         <tr>
                             <td class="font-weight-bold"><?= $num++ . '.'; ?></td>
-                            <td class="font-italic"><?= displayTindicator($conn, $ind['indicator_id']); ?></td>
+                            <td class="font-italic"><?= displayMTindicator($conn, $ind['indicator_id']); ?></td>
                             <?php foreach ($obs_period_arr as $obsper) : ?>
 
                                 <td class="text-center text-success">
+
                                     <?php
-                                            $position = "Teacher I";
-                                            $t_average =  rawRate(viewAdminratingT($conn, $school_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
+                                            $position = "Master Teacher I";
+                                            $t_average =  rawRate(viewAdminratingMTGeneral($conn, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
                                             if ($t_average) :
                                                 echo $t_average;
                                             else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                             endif; ?>
                                 </td>
                             <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-success"><?= rawRate(fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                            <td class="text-center font-weight-bold text-success"><?php echo rawRate(fetchIndicatorAVGAdminMtGeneral($conn, $ind['indicator_id'], $sy_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>

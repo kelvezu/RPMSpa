@@ -269,12 +269,12 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                         <td>
                                             <select name="rating[]" required="required">
                                                 <option value="" disabled selected>--Select--</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="3">NO*</option>
+                                                <option value="1">3</option>
+                                                <option value="2">4</option>
+                                                <option value="3">5</option>
+                                                <option value="4">6</option>
+                                                <option value="5">7</option>
+                                                <option value="1">NO*</option>
                                             </select>
 
                                         </td>

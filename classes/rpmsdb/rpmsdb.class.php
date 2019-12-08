@@ -1458,7 +1458,7 @@ class RPMSdb
                         $t_ave_current = self::currentCOTavgMT($conn, $acc_id, $fetch_ind['indicator_id'], $sy, $school);
                         // IF THERE IS RECORD IN COT_MT_INDICATOR_AVE_TBL 
                         if ($hasCOTindicatorAVG) :
-                           
+
                             // console_log('T_AVE= ' . floatval($t_ave) . ' ' . 'T_CURRENT= ' . floatval($t_ave_current));
 
 
@@ -2070,6 +2070,33 @@ class RPMSdb
     public static function ViewAdminMTindicator($conn, $sy, $school)
     {
         $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
+
+
+    public static function ViewAdminGeneralTindicator($conn, $sy)
+    {
+        $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
+
+    public static function ViewAdminGeneralMTindicator($conn, $sy)
+    {
+        $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' GROUP by indicator_id";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
         if (mysqli_num_rows($result) > 0) :
             $res_array = [];

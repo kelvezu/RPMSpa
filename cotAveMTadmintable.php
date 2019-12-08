@@ -10,24 +10,24 @@ $sy_id = $_GET['sy'];
 $school_id = $_GET['sch'];
 
 $cot_array = [];
-$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy = $sy_id AND school = $school_id") or die ($conn->error);
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy = $sy_id AND school = $school_id") or die($conn->error);
 
-    if(mysqli_num_rows($COTqry) == 0):
-        echo '<div class="red-notif-border">Average COT is not available</div>';
-        exit();
-    else:
-        foreach ($COTqry as $cot):
-            array_push($cot_array,$cot);
-        endforeach;
-    endif;
+if (mysqli_num_rows($COTqry) == 0) :
+    echo '<div class="red-notif-border">Average COT is not available</div>';
+    exit();
+else :
+    foreach ($COTqry as $cot) :
+        array_push($cot_array, $cot);
+    endforeach;
+endif;
 
-    $indicator_arr = RPMSdb::ViewAdminMTindicator($conn, $sy_id, $school_id);
-    $obs_period_arr =  showObsPeriodAveAdminMT($conn, $sy_id, $school_id);
+$indicator_arr = RPMSdb::ViewAdminMTindicator($conn, $sy_id, $school_id);
+$obs_period_arr =  showObsPeriodAveAdminMT($conn, $sy_id, $school_id);
 ?>
 
 <div class="container">
 
-<div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
         <img src="img\deped.png" width="100" height="100" class="rounded-circle">
     </div>
 
@@ -50,10 +50,10 @@ $COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy 
                 </div>
             </div>
         </div>
-  
+
         <div class="card-body">
             <table class="table table-bordered table-responsive-sm table-sm">
-                <thead class="alert alert-success">
+                <thead class="alert alert-info">
                     <tr>
                         <th>Indicator No</th>
                         <th>Indicator Name</th>
@@ -75,14 +75,16 @@ $COTqry = mysqli_query($conn, "SELECT * FROM cot_mt_indicator_ave_tbl  WHERE sy 
                             <?php foreach ($obs_period_arr as $obsper) : ?>
 
                                 <td class="text-center text-success">
-                                    <?php $t_average =  viewAdminratingMT($conn, $school_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id);
-                                    if($t_average):
-                                         echo $t_average;
-                                    else:  echo "<p class='font-weight-bold text-danger'>N/A</p>";
-                                    endif; ?>
+                                    <?php
+                                            $position = "Master Teacher I";
+                                            $t_average =  rawRate(viewAdminratingMT($conn, $school_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
                                 </td>
                             <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-success"><?= fetchIndicatorAVGAdminMt($conn, $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                            <td class="text-center font-weight-bold text-success"><?= rawRate(fetchIndicatorAVGAdminMt($conn, $ind['indicator_id'], $sy_id, $school_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>
