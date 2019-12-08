@@ -5,6 +5,10 @@
             //GET THE START
 
             use Dashboard\Dashboard;
+            
+            function percent($number){
+                return $number * 100 . '%';
+            }
 
             function getStartYear()
             {
