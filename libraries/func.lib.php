@@ -275,8 +275,10 @@
             {
                 if (isset($position)) :
                     if (strpos($position, 'rincipal')) :
-                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND status = "Active"';
-                    elseif (strpos($position, 'aster')) :
+                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","Teacher I", "Teacher II", "Teacher III") AND status = "Active"';
+                    elseif (strpos($position, 'Head')) :
+                        return   'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '" AND position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","Teacher I", "Teacher II", "Teacher III") AND status = "Active"';
+                        elseif (strpos($position, 'aster')) :
                         return  'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '"  AND position IN ("Teacher I", "Teacher II", "Teacher III") AND status = "Active" ';
                     else :
                         return false;
@@ -291,7 +293,9 @@
             {
                 if (isset($position)) :
                     if (strpos($position, 'rincipal')) :
-                        return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' " AND status = "Active"';
+                        return   'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV", "Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . ' " AND status = "Active"';
+                    elseif (strpos($position, 'Head')) :
+                        return 'SELECT * FROM account_tbl WHERE position IN ("Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV", "Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . '" AND status = "Active"';
                     elseif (strpos($position, 'aster')) :
                         return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . '" AND status = "Active"';
                     else :
@@ -1637,6 +1641,58 @@
                 return count($array) !== count(array_unique($array));
             }
 
+            function KRA_tobjList($conn, $kra_id)
+            {
+                $qry = "SELECT * FROM `tobj_tbl` where kra_id =  $kra_id";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return $count_arr;
+                endif;
+            }
+
+            function kra_tbl($conn)
+            {
+                $qry = "SELECT * FROM `kra_tbl`";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return $count_arr;
+                endif;
+            }
+
+            function displayCBC($conn)
+            {
+                $qry = "SELECT * FROM core_behavioral_tbl";
+                $result = mysqli_query($conn,$qry);
+                if($result):
+                    $count_arr = [];
+                    foreach ($result as $r):
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return $count_arr;
+                endif;
+
+            }
+
+            function showCBCindicators($conn, $cbc_id)
+            {
+                $qry = "SELECT * FROM `cbc_indicators_tbl` where cbc_id =  $cbc_id";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return $count_arr;
+                endif;
+            }
             function dateNow()
             {
                 return date("Y-m-d H:i:s");

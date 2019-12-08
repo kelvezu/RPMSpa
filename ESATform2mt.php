@@ -10,14 +10,18 @@
   $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
   ?>
   <div class="container">
-    <div class="breadcome-list shadow-reset">
-      <form action="includes/processESATsurvey.php" method="POST">
+    
+  <div class="card">
+    <div class="card-header text-white text-center bg-dark h4">
+    Self Assessment Tool Form / Part II / Master Teacher / Objectives
+    </div>
+    <div class="card-body">
+
+    <form action="includes/processESATsurvey.php" method="POST">
         <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?>>
         <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?>>
         <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>">
-        <strong>
-          <h3> Self Assessment Tool Form / Part II / Master Teacher / Objectives </h3>
-        </strong>
+      
         <div class="table">
           <table class="table table-borderless table-hover table-responsive-sm table-sm ">
             <!-- Start loop for  KRA -->
@@ -30,9 +34,9 @@
               ?>
               <thead class="thead-dark text-nowrap">
                 <!-- ASSIGN THE VALUE FROM THE DB  -->
-                <th class="bg-info"><?php echo "KRA " . $kra_num . ": " . $row['kra_name'] ?></th>
-                <th class="bg-info">Level of Capability</th>
-                <th class="bg-info">Priority for Development</th>
+                <th class="bg-dark"><?php echo "KRA " . $kra_num . ": " . $row['kra_name'] ?></th>
+                <th class="bg-dark">Level of Capability</th>
+                <th class="bg-dark">Priority for Development</th>
                 </tr>
               </thead>
               <tbody class="text-dark">
@@ -54,7 +58,7 @@
                       <input type="hidden" name="mtobj_id[]" value="<?php echo $rows['mtobj_id'] ?>">
                     </td>
                     <td>
-                      <select name="lvlcap[]" id="" class="form-control bg-primary text-white font-weight-bold">
+                      <select name="lvlcap[]" id="" class="form-control font-weight-bold">
                         <option value="" disabled selected>--Select--</option>
                         <option value="4">Very High</option>
                         <option value="3">High</option>
@@ -63,7 +67,7 @@
                       </select>
                     </td>
                     <td>
-                      <select name="priodev[]" id="" class="form-control bg-danger text-white font-weight-bold">
+                      <select name="priodev[]" id="" class="form-control font-weight-bold">
                         <option value="" disabled selected>--Select--</option>
                         <option value="4">Very High</option>
                         <option value="3">High</option>
@@ -90,7 +94,14 @@
         </div>
       </form>
     </div>
+
+    </div>
   </div>
+
+
+
+
+  
 
   <br>
   <?php

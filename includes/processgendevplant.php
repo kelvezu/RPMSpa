@@ -79,3 +79,14 @@ if (isset($_POST['edit'])) :
     header('location:../editdevplan.php');
 
 endif;
+
+if(isset($_POST['btn_editstr'])):
+    $user_id = $_POST['user_id'];
+    $rater_id = $_POST['rater'];
+    $sy = $_POST['sy'];
+    $school_id = $_POST['school_id'];
+    $position = $_POST['position'];
+
+    $a_lvlcapkra_id = $_POST['lvlcapkra_id'];
+    $a_lvlcapmtobj_id = $_POST['lvlcapmtobj_id'];
+endif;

@@ -1,231 +1,83 @@
 <?php
 
-include_once 'sampleheader.php';
-
-$user_id = $_SESSION['user_id'];
-
+include 'sampleheader.php';
+ 
 ?>
+
+
+<div class="container col-md-9">
+   
+    <div class="bg-dark h4 text-white breadcrumb">My ESAT Result</div>
+    <div class="px-3">
+       
+    
+        <form action="esatchartMasterTeacher.php" method="POST" class="form-inline">
+            <input type="hidden" id="school_id" name="school_id" value="<?php echo $_SESSION['school_id'] ?>">
+            <input type="hidden" id="position" name="position" value="<?php echo $_SESSION['position']; ?>"> 
+            <input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>"> 
+            <input type="hidden" id="user_id" name="user_id" value="<?php echo $_SESSION['user_id'] ?>"> 
+
+            <div class="form-row">
+                <div class="form-group mb-2">   
+                    <!-- School Year Dropdown -->            
+                    <label for="sy"><strong>School Year:</strong></label>&nbsp;&nbsp;
+                    <?php $schoolyr = $conn->query("SELECT * FROM sy_tbl") or die ($conn->error); ?>
+                    <select id="sy_id" name="sy_id" class="form-control" >
+                    <option value="" disabled selected>--Select School Year--</option>
+                        <?php while($syrow = $schoolyr->fetch_assoc()): ?>
+                        <option value="<?php echo $syrow['sy_id'];?>"><?php echo $syrow['sy_desc'];?></option>
+                        <?php endwhile; ?>
+                    </select>&nbsp;&nbsp;
+                </div>
+                    <!-- End of School Year Dropdown -->
+                <div class="form-group mb-2">
+                    <a onclick="showchart()" class="btn btn-info text-white">View</a>&nbsp;&nbsp;
+                    <button type="submit" name="view" class="btn btn-info">View Data in Charts</button>
+                </div>
+            </div>
+        </form>
+<br>
+                <div id="show">
+
+                </div>
+
+
+</div>
+      
+<!-- End tag of container -->
+  </div>
+  </div>
+<script>
+   
+   showchart()
+  
+    function showchart() {
+        let user = document.getElementById('user_id').value;
+        let sy_id = document.getElementById('sy_id').value; 
+        let active_sy_id = document.getElementById('active_sy').value;
+        let school_id = document.getElementById('school_id').value;
+        
+      
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    document.getElementById("show").innerHTML = xmlhttp.responseText;
+                    console.log(this.responseText);
+                }
+            }
+            xmlhttp.open("GET", "esatajaxtableMasterTeacher.php?activesy=" + active_sy_id + "&sch=" + school_id + "&sy=" + sy_id + "&user=" + user, true);
+            xmlhttp.send();
+        
+        }
+
+
+  
+
+</script>
 
 
 <?php
-$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-$query = "SELECT a.CBC_NAME,sum(b.cbc_score) 
-			AS cbc_score FROM core_behavioral_tbl a 
-			INNER JOIN 
-			esat3_core_behavioralmt_tbl b  on a.cbc_id = b.cbc_id 
-			WHERE b.user_id = $user_id 
-			group by a.cbc_name order by a.cbc_id;";
-$statement = $connect->prepare($query);
-$statement->execute();
-$result = $statement->fetchAll();
+
+include 'samplefooter.php';
+
 ?>
-
-<script src="js/charts/jquery.min.js"></script>
-<link rel="stylesheet" href="js/charts/bootstrap.min.css" />
-<link rel="stylesheet" href="js/charts/jquery-ui.css">
-<script src="js/charts/bootstrap.min.js"></script>
-<script src="js/charts/jquery.highchartTable.js"></script>
-<script src="js/charts/highcharts.js"></script>
-<script src="js/charts/jquery-ui.js"></script>
-
-
-
-<body>
-	<!-- Core Behavioral Competencies -->
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>Core Behavioral Competencies Rating</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart1">
-					<thead>
-						<tr>
-							<th width="20%">CBC Name</th>
-							<th width="20%">CBC Score</th>
-
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-								<tr>
-
-									<td>' . $row['CBC_NAME'] . '</td>
-									<td>' . $row['cbc_score'] . '</td>
-								</tr>
-								';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area1" title="The Rating of Core Behavioral Competencies">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart1" id="view_chart1" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-
-			<br />
-			<br />
-
-		</div>
-	</div>
-
-
-	<!-- End of Core Behavioral Competencies -->
-
-	<!-- Start of Assessment of Capabilities and Prioties -->
-
-
-	<?php
-	$connect = new PDO('mysql:host=localhost;dbname=rpms', 'root', '');
-	$query = "SELECT CONCAT(a.kra_id,'.',a.mtobj_id) as OBJECTIVES, lvlcap, priodev 
-			FROM esat2_objectivesmt_tbl a INNER JOIN mtobj_tbl b on a.mtobj_id = b.mtobj_id
-			WHERE a.user_id = $user_id 
-			group by a.mtobj_id,b.mtobj_name;";
-
-	$statement = $connect->prepare($query);
-	$statement->execute();
-	$result = $statement->fetchAll();
-	?>
-	<br />
-	<!-- The Assessment of Capabilities and Prioties -->
-	<div class="container">
-		<div class="breadcome-list shadow-reset">
-			<h3 align="center"><strong>Assessment of Capabilities and Priorities</strong></h3>
-			<br />
-
-			<div class="table-responsive">
-				<table class="table table-bordered table-striped table-hover" id="for_chart2">
-					<thead>
-						<tr>
-							<th width="20%">Objectives</th>
-							<th width="20%">Level of Capabilities</th>
-							<th width="20%">Level of Priority</th>
-
-						</tr>
-					</thead>
-					<?php
-
-					foreach ($result as $row) {
-
-						echo '
-									<tr>
-
-										<td>' . $row['OBJECTIVES'] . '</td>
-										<td>' . $row['lvlcap'] . '</td>
-										<td>' . $row['priodev'] . '</td>
-									</tr>
-									';
-					}
-
-					?>
-				</table>
-			</div>
-			<br />
-			<div id="chart_area2" title="The Assessment of Capabilities and Priorities">
-
-			</div>
-			<br />
-			<div align="center">
-				<button type="button" name="view_chart2" id="view_chart2" class="btn btn-info btn-lg">View Data in Chart</button>
-			</div>
-
-			<br />
-			<br />
-
-		</div>
-	</div>
-
-
-
-
-	<script>
-		$(document).ready(function() {
-
-			$('#view_chart1').click(function() {
-				$('#for_chart1').data('graph-container', '#chart_area1');
-				$('#for_chart1').data('graph-type', 'column');
-				$("#chart_area1").dialog('open');
-				$('#for_chart1').highchartTable();
-
-				$('#remove_chart').attr('disabled', false);
-			});
-
-			$('#remove_chart').click(function() {
-				$('#chart_area1').html('');
-			});
-
-			$("#chart_area1").dialog({
-				autoOpen: false,
-				width: 900,
-				height: 600
-			});
-		});
-
-
-		$(document).ready(function() {
-
-			$('#view_chart2').click(function() {
-				$('#for_chart2').data('graph-container', '#chart_area2');
-				$('#for_chart2').data('graph-type', 'column');
-				$("#chart_area2").dialog('open');
-				$('#for_chart2').highchartTable();
-
-				$('#remove_chart').attr('disabled', false);
-			});
-
-			$('#remove_chart').click(function() {
-				$('#chart_area2').html('');
-			});
-
-			$("#chart_area2").dialog({
-				autoOpen: false,
-				width: 1000,
-				height: 600
-			});
-
-			Highcharts.setOptions({
-				chart: {
-					backgroundColor: {
-						linearGradient: [0, 0, 500, 500],
-						stops: [
-							[0, 'rgb(255, 255, 255)'],
-							[1, 'rgb(240, 240, 255)']
-						]
-					},
-					borderWidth: 2,
-					plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-					plotShadow: false,
-					plotBorderWidth: 2,
-
-
-				},
-
-				plotOptions: {
-					series: {
-						pointWidth: 30,
-						dataLabels: {
-							enabled: true
-						}
-
-
-					}
-
-				},
-
-			});
-
-
-
-		});
-	</script>
-
-	<!-- Start of Assessment of Capabilities and Prioties -->
-
