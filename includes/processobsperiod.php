@@ -24,5 +24,5 @@ if (isset($_POST['submit_obs'])) :
         header('location:../setobsperiod.php?notif=success');
         exit();
     endif;
-else : echo 'error';
+else : header('location:../setobsperiod.php?notif=error');
 endif;

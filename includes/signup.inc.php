@@ -162,10 +162,14 @@ if (isset($_POST['signup-submit'])) {
                                     $resultInsert = mysqli_stmt_execute($stmt) or die($conn->error);
 
                                     $lastId = mysqli_insert_id($conn);
+                                    $pwd = 'Welcome' . date('Y');
 
                                     $url = 'http://' . $_SERVER['SERVER_NAME'] . '/rpms/verify.php?id=' . $lastId . '&activation_code=' . $activation_code;
 
-                                    $output = '<div>Thanks for registering with localhost. Please click this link to complete this registation <br>' . $url . '</div>';
+                                    $output = '<div>Thanks for registering with localhost. <br>
+                                    Your Username is ' . $username . '. <br>
+                                    Your Password is ' . $pwd . '. <br>
+                                    Please click this link to complete this registation <br>' . $url . '</div>';
 
                                     if ($resultInsert == true) {
                                         $mail = new PHPMailer();

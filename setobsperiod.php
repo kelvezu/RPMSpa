@@ -6,6 +6,15 @@ include 'sampleheader.php';
 
 FilterUser::filterObsPeriod($_SESSION['position']);
 echo '</b>';
+
+if (isset($_GET['notif'])) :
+    if ($_GET['notif'] == "success") :
+        echo '<div class="green-notif-border">You have successfully set the observation period!</div>';
+    elseif ($_GET['notif'] == "error") :
+        echo '<div class="red-notif-border">There is an error setting the observation period!</div>';
+    endif;
+endif;
+
 ?>
 
 <div class="container">
@@ -44,6 +53,48 @@ echo '</b>';
 
         </div>
 
+    </div>
+    <br>
+
+    <div class="card">
+        <div class="card-header bg-dark text-white text-center h4">
+            Observation Period
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered hover table-sm text-center">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <td>Start of 1st Period</td>
+                        <td>Start of 2nd Period</td>
+                        <td>Start of 3rd Period</td>
+                        <td>Start of 4th Period</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $qry = $conn->query("SELECT * FROM obs_period_tbl WHERE school = '" . $_SESSION['school_id'] . "'");
+                    while ($row = $qry->fetch_assoc()) :
+                        $first_period = $row['first_period'];
+                        $second_period = $row['second_period'];
+                        $third_period = $row['third_period'];
+                        $fourth_period = $row['fourth_period'];
+                        $status = $row['status'];
+                        ?>
+                        <tr>
+                            <td><?php echo $first_period; ?></td>
+                            <td><?php echo $second_period; ?></td>
+                            <td><?php echo $third_period; ?></td>
+                            <td><?php echo $fourth_period; ?></td>
+                            <td><?php echo $status; ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+
+
+            </table>
+
+        </div>
     </div>
 
 
