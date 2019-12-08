@@ -658,7 +658,7 @@
 
             function displayObjectiveMT($conn, $mtobj_id)
             {
-                $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
+                $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = '$mtobj_id'";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 

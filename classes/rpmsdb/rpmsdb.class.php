@@ -1473,7 +1473,7 @@ class RPMSdb
                             endif;
 
 
-                        elseif (!$hasCOTindicatorAVG) :
+                        elseif (!$hasCOTindicatorAVG or !$t_ave_current) :
                             $qry_insert = "INSERT INTO `cot_mt_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES ('$acc_id'," . $fetch_ind['indicator_id'] . ",'$t_ave','$sy','$school','$rater','Active')";
 
                             $ins_result = mysqli_query($conn, $qry_insert);
@@ -1511,7 +1511,7 @@ class RPMSdb
                                 endif;
                             endif;
 
-                        elseif (!$hasCOTindicatorAVG) :
+                        elseif (!$hasCOTindicatorAVG or !$t_ave_current) :
                             $qry_insert = "INSERT INTO `cot_t_indicator_ave_tbl`(`user_id`, `indicator_id`, `average`, `sy`, `school`, `rater`, `status`) VALUES ('$acc_id'," . $fetch_ind['indicator_id'] . ",'$t_ave','$sy','$school','$rater','Active')";
 
                             $ins_result = mysqli_query($conn, $qry_insert) or die($qry_insert);
@@ -1932,7 +1932,7 @@ class RPMSdb
     public static function showRatees($conn, $rater, $school)
     {
         $result_arr = [];
-        $qry =  "SELECT * FROM `account_tbl` WHERE `rater` = $rater  AND `school_id` = '$school' AND  `status` = 'Active' GROUP BY `user_id` ORDER BY `user_id` desc ";
+        $qry =  "SELECT * FROM `account_tbl` WHERE `rater` = $rater  AND `school_id` = '$school' AND  `status` = 'Active' GROUP BY `user_id` AND position IN ('Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I') ORDER BY `user_id` desc ";
         $result = mysqli_query($conn, $qry) or die($conn->error .  $qry);
 
         if (mysqli_num_rows($result) > 0) :

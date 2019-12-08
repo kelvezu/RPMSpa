@@ -43,7 +43,11 @@ class IPCRF
         return intval(count($res_arr));
     }
 
-    /* THIS METHOD WILL COUNT THE OBJECTIVE IN KRA  */
+    /* 
+    THIS METHOD WILL COUNT THE OBJECTIVE IN KRA
+    TABLE MT = mtobj_tbl
+    TABLE MT = tobj_tbl
+    */
     public function countObj($kra, $obj_table)
     {
         $qry = "SELECT * FROM `$obj_table` WHERE kra_id = $kra";
@@ -79,6 +83,8 @@ class IPCRF
 
     /*
         THIS METHOD WILL COUNT THE MOV IN EACH OBJECTIVES
+        TABLE MT = mov_main_mt_attach_tbl
+        TABLE T = mov_main_t_attach_tbl
     */
     public function countMOV($kra, $obj, $table_name)
     {
@@ -109,19 +115,17 @@ class IPCRF
         endif;
     }
 
-
-
     /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR  */
     public function getIndicatorAVGmt($indicator_id)
     {
         $qry  = "SELECT * FROM `cot_mt_indicator_ave_tbl` WHERE indicator_id = $indicator_id AND `user_id` = " . $this->user . " AND sy = " . $this->sy . " AND school = " . $this->school . "";
-        $result = mysqli_query($this->conn(), $qry);
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
 
         if ($result) :
             foreach ($result as $r) :
                 return $r['average'];
             endforeach;
-        else : return false;
+        else : die($this->conn()->error . $qry);
         endif;
     }
 }

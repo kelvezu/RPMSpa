@@ -32,7 +32,6 @@
                                             <th>Teacher's Name</th>
                                             <th>Position </th>
                                             <th>View COT</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>

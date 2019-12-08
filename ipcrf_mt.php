@@ -108,12 +108,15 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                             <p class="font-weight-bold text-center">
                                 <!-- THIS WILL SHOW THE INDICATOR AVG OF OBJECTIVE 1  -->
                                 <?php if ($kra['mtobj_id'] == 1) : ?>
-                                    <?php echo $ipcrf->getIndicatorAVGmt($kra['mtobj_id']) ?>
-                                <?php else : ?>
-                                    <p>-----</p>
+                                    <?php echo ($ipcrf->getIndicatorAVGmt($kra['mtobj_id'])) ?? 0 ?>
                                 <?php endif; ?>
                                 <!-- ------------------------------------------------- -->
 
+                                <!-- THIS WILL SHOW THE COUNT OF MOV PER KRA  OBJECTIVE 2  -->
+                                <?php if ($kra['mtobj_id'] == 2) : ?>
+                                    <?= $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') ?>
+                                <?php endif; ?>
+                                <!-- ------------------------------------------------- -->
 
                             </p>
                         </td>
