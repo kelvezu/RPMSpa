@@ -338,9 +338,9 @@ function GenderChart() {
     let data = google.visualization.arrayToDataTable([
         ['Gender', 'No. of Teacher'],
         <?php
-        $qry = $conn->query("SELECT gender_tbl.gender_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN gender_tbl on esat1_demographicst_tbl.gender = gender_tbl.gender_id WHERE sy = '$sy'  GROUP BY gender_tbl.gender_name") or die ($conn->error);
+        $qry = $conn->query("SELECT esat1_demographicst_tbl.gender, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' GROUP BY esat1_demographicst_tbl.gender") or die ($conn->error);
             while ($GenderChart = $qry->fetch_assoc()):
-                echo "['".$GenderChart['gender_name']."', ".$GenderChart['total']."],";
+                echo "['".$GenderChart['gender']."', ".intval($GenderChart['total'])."],";
             endwhile;?>
 ]); 
     let options = {
@@ -366,7 +366,7 @@ function GenderChart() {
           CASE WHEN sy = '".$_SESSION['active_sy_id']."' THEN  COUNT(`user_id`)  END AS sy1,
           CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-1 THEN COUNT(`user_id`) END AS sy2, 
           CASE WHEN sy = ('".$_SESSION['active_sy_id']."')-2 THEN COUNT(`user_id`) END AS sy3  
-          FROM esat1_demographicst_tbl WHERE gender = ".$genderdemo['gender_id']."  AND sy = '$sy' group by sy") or die ($conn->error);
+          FROM esat1_demographicst_tbl WHERE gender = '".$genderdemo['gender_name']."'  AND sy = '$sy' group by sy") or die ($conn->error);
             while($GenderQry = $qry->fetch_assoc()):
                 echo "['".$genderdemo['gender_name']."', 
                 ".intval($GenderQry['sy1']).",  
