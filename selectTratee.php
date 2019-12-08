@@ -1,4 +1,5 @@
-    <?php
+
+<?php
     include_once 'sampleheader.php';
     $school_id = $_SESSION['school_id'];
     $user_id = $_SESSION['user_id'];
