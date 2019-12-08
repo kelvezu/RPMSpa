@@ -2,7 +2,7 @@
  
 include 'sampleheader.php';
 include_once 'libraries/func.lib.php';
-syIsNotSet($_SESSION['active_sy_id']);
+
 
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
@@ -17,7 +17,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
             <h5>COT-RPMS</h5> 
 
             <div class="h3 bg-success text-white">Teacher I-III</div>
-            <input type="hidden" name="rater_id" value="<?php echo $_SESSION['  user_id']; ?>" />
+            <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
             <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
@@ -202,19 +202,19 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             $fourth_period_int = intval(strtotime($_SESSION['final_period']));
 
                             if ($intdate >= $fourth_period_int) :
-                                $period = "4th";
+                                $period = 4;
                             elseif ($intdate >= $third_period_int) :
-                                $period = "3rd";
+                                $period = 3;
                             elseif ($intdate >= $second_period_int) :
-                                $period = "2nd";
+                                $period = 2;
                             elseif ($intdate >= $first_period_int) :
-                                $period = "1st";
+                                $period = 1;
                             else :
                                 $period = "Invalid Period";
                             endif;
                             ?>
 
-                            <input type="text" name="obs" value="<?php echo $period; ?>" disabled />
+                            <input type="text" name="obs" value="<?php echo $period; ?>" />
                         </div>
 
                         <br>
@@ -296,7 +296,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
 
             <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
-            <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
+            <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
 
     </div>

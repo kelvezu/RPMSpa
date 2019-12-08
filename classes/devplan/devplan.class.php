@@ -187,17 +187,16 @@ class DevPlan
         endif;
     }
 
-    public static function showAllAppAuthforT($conn)
+    public static function showAllAppAuthforT($conn,$school)
     {
         $result_arr = [];
-        $qry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent","Principal","School Head","Principal Assistant" ) ';
+        $qry = 'SELECT * FROM account_tbl WHERE school_id = ' .$school . ' AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent","Principal","School Head","Principal Assistant" ) ';
 
         $result = mysqli_query($conn, $qry);
         if (!empty($result)) :
             foreach ($result as $res) :
-                array_push($result_arr, $res);
+                return $res['approving_authority'];
             endforeach;
-            return $result_arr;
         else : return false;
         endif;
     }

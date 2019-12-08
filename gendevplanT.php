@@ -49,12 +49,13 @@
 
                                             <select name="app_auth" id="" class="form-control required">
                                                 <?php
-                                                        $app_auth = DevPlan::showAllAppAuthforT($conn);
+                                                        $app_auth = DevPlan::showAllAppAuthforT($conn,$_SESSION['school_id']);
                                                         foreach ($app_auth as $sup) :
                                                             ?>
                                                     <option value="<?= $sup['user_id'] ?>"><?= fullnameFormat($sup['firstname'], $sup['middlename'], $sup['surname']) . ' - ' . $sup['position'] ?></option>
                                                 <?php endforeach; ?>
                                             </select>
+                                            <?php pre_r($app_auth); ?>
                                         </div>
                                         <div class="col-sm-6"></div>
                                     </div>

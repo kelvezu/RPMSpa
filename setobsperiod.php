@@ -20,7 +20,7 @@ echo '</b>';
                 <input type="hidden" name="school" value="<?= $_SESSION['school_id'] ?>">
 
                 <fieldset>
-                    <legend>Enter the Class Period</legend>Z
+                    <legend>Enter the Class Period</legend>
                     <div class="form-group">
                         <div class="form-control">
                             <label class="font-weight-bold" for="first_period">First Period </label>

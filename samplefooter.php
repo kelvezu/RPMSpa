@@ -73,13 +73,13 @@
             <div class="d-flex flex-row bd-highlight">
                 <div class="p-2 bd-highlight"> <small><b>SY:</b> <?php echo isset($_SESSION['active_sy']) ? $_SESSION['active_sy'] : "N/A" ?></small></div>
                 <div class="p-2 bd-highlight"><small><b>Start of Class:</b> <?php 
-                 if(!$_SESSION['start_date'] == "N/A"):
-                    displayDate($_SESSION['start_date']);
+                 if(!empty($_SESSION['start_date'])):
+                    echo displayDate($_SESSION['start_date']);
                  else: echo "N/A";
                  endif; ?></small></div>
                 <div class="p-2 bd-highlight"><small><b>End of Class:</b> <?php
-                if(!$_SESSION['end_date'] == "N/A"):
-                    displayDate($_SESSION['start_date']);
+                if(!empty($_SESSION['end_date'])):
+                    echo displayDate($_SESSION['end_date']);
                 else: echo "N/A";
             endif; ?></small></div>
             </div>

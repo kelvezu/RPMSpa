@@ -12,7 +12,10 @@ if (isset($_POST['submit'])) :
     $sy = $_POST['sy'];
     $school_id = $_POST['school_id'];
     $position = $_POST['position'];
-    $approving_authority = $_POST['app_auth'];
+    if(isset($_POST['app_auth'])):
+        $approving_authority = $_POST['app_auth'];
+    else: $approving_authority = "NULL";
+endif;
 
     $a_lvlcapkra_id = $_POST['lvlcapkra_id'];
     $a_lvlcapmtobj_id = $_POST['lvlcapmtobj_id'];

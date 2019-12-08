@@ -5,7 +5,7 @@ use RPMSdb\RPMSdb;
 
 include 'conn.inc.php';
 include '../libraries/func.lib.php';
-include 'classes/rpmsdb/rpmsdb.class.php';
+include '../classes/rpmsdb/rpmsdb.class.php';
 
 
 
@@ -31,7 +31,7 @@ if (isset($_POST['save'])) {
     $user_id = $_POST['tobserved'];
     $subject = $_POST['tsubject'];
     $gradelvltaught = $_POST['tgradelvltaught'];
-    $obs_period = $_POST['obs'];
+    $obs_period = intval($_POST['obs']);
     $indicator_id = $_POST['indicator_id'];
     $tcotrating = $_POST['rating'];
     $comment = $_POST['ioaf_comment'];
@@ -39,7 +39,9 @@ if (isset($_POST['save'])) {
     $school_id = $_POST['school_id'];
     $status = "Active";
 
-    $checkCOTqry = "SELECT * FROM cot_t_rating_a_tbl WHERE sy = $sy_id AND obs_period = $obs_period AND school_id=$school_id AND `user_id` = $user_id";
+    pre_r($_POST);
+
+    $checkCOTqry = "SELECT * FROM cot_t_rating_a_tbl WHERE sy = $sy_id AND obs_period = '$obs_period' AND school_id= $school_id AND `user_id` = '$user_id'";
     $cotquery = mysqli_query($conn, $checkCOTqry) or die($conn->error);
     $resultcount = mysqli_num_rows($cotquery);
 
