@@ -1,7 +1,7 @@
 <?php
 /* Queries for Development Plan */
 //$dbcon = connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
-include '../includes/conn.inc.php';
+include './includes/conn.inc.php';
 
 
 
