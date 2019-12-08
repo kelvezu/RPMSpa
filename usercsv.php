@@ -1,6 +1,14 @@
 <?php
 
 include 'sampleheader.php';
+
+
+if(isset($_SESSION['dup_email'])):
+    foreach( $_SESSION['dup_email'] as $dup){
+echo 'dup email :'.$dup;
+    }
+
+endif;
 ?>
 
 <!DOCTYPE html>
@@ -10,17 +18,17 @@ include 'sampleheader.php';
 
     <div class="container">
         <?php
-        if (isset($_GET['notif'])) :
+        if (isset($_GET['notif']) OR isset($_GET['email']) OR isset($_GET['prc']) ) :
             if (($_GET['notif']) == "success") :
                 echo '<div class="green-notif-border">Users has been added successfully!</div>';
             elseif (($_GET['notif']) == "error") :
                 echo '<div class="red-notif-border">There was an error adding the users!</div>';
             elseif(($_GET['notif'] == "emailerror")):
-                echo '<div class="red-notif-border">Duplicate Email Detected!</div>';
+                echo '<div class="red-notif-border">Duplicate Email Detected for '. $_GET['email'] .'!</div>';
                 elseif(($_GET['notif'] == "mailerror")):
                     echo '<div class="red-notif-border">Error Sending Verification Email!</div>';
-            else :
-                echo 'Error!';
+                    elseif(($_GET['notif'] == "prctaken")):
+                        echo '<div class="red-notif-border">PRC '. $_GET['prc'] .' is already taken!</div>';
             endif;
         endif;
 
@@ -143,22 +151,36 @@ include 'sampleheader.php';
                         // newrow = "<tr><td>"+ columns[0] + "</td><td>" + columns[1] + "</td><td>"+ columns[2] + "</td><td>"+ columns[3] + "</td><td>"+ columns[4] + "</td><td>"+ columns[5] + "</td><td>" + columns[6] + "</td><td>"+ columns[7] + "</td><td>"+ columns[8] + "</td>";
 
 
+                        function getUnique(array){
+                        var uniqueArray = [];
+                            
+                            // Loop through array values
+                            for(var value of array){
+                                if(uniqueArray.indexOf(value) === -1){
+                                    uniqueArray.push(value);
+                                }
+                            }
+                            return uniqueArray;
+                        }
+
 
                         if (columns.length == 9) {
-
+console.log(columns);
                             /*------------------Validation for PRC ID---------------------------*/
                             if (columns[0]) {
+                                columns[0].trim();
                                 // THIS FUNCTION WILL DETECT IF THERE ARE LETTERS IN PRC ID
                                 if (!columns[0].match(/^[0-9]+$/)) {
                                     columns[0] = "<p class='text-danger'>PRC id must be numbers</p>";
                                     isError = true;
                                 }
                                 //     THIS FUNCTION WILL DETECT IF THERE ARE DUPLICATES IN PRC
-                                if (columns[0].isDuplicate) {
+                                if (find(columns[0])) {
                                     console.log('there is duplicate ' + columns[0]);
-                                    columns[0] = '<p class="text-danger">Duplicate PRC detected!</p>';
+                                    columns[0] = "<p class='text-danger'>Duplicate PRC detected!</p>";
                                     isError = true;
                                 }
+                               
                             } else {
                                 columns[0] = "<p class='text-danger'>PRC id is required</p>";
                                 isError = true;

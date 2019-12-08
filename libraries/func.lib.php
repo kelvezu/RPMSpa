@@ -1631,3 +1631,8 @@
                     }
                 }
             }
+            // this function will check if there is an duplicate in an array 
+            function array_has_dupes($array)
+            {
+                return count($array) !== count(array_unique($array));
+            }
