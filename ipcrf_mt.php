@@ -80,7 +80,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- KRA  -->
                         <td rowspan="4">
                             <p class="font-weight-bold">
-                                <?php echo trim(displayKRA($conn, $kra['kra_id'])); ?>
+                                <?php echo $kra['kra_id'] . '---' . trim(displayKRA($conn, $kra['kra_id'])); ?>
                             </p>
                         </td>
                         <!-- END OF KRA -->
@@ -88,7 +88,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 
                         <!-- DISPLAY OBJECTIVE -->
                         <td>
-                            <p><?php echo  displayObjectiveMT($conn, $kra['mtobj_id']); ?></p>
+                            <p><?php echo $kra['mtobj_id'] . ' - ' . displayObjectiveMT($conn, $kra['mtobj_id']); ?></p>
                         </td>
                         <!-- END DISPLAY OBJECTIVE  -->
 
@@ -107,24 +107,24 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <td>
                             <p class="font-weight-bold text-center">
                                 <!-- THIS WILL SHOW THE INDICATOR AVG OF OBJECTIVE 1  -->
-                                <?php if ($kra['mtobj_id'] == 1) : ?>
-                                    <?php echo ($ipcrf->getIndicatorAVGmt($kra['mtobj_id'])) ?? 0 ?>
-                                <?php endif; ?>
+                                <?php
+                                    if ($kra['mtobj_id'] == 1) : echo ($ipcrf->getIndicatorAVGmt(1)) ?? 0;
+                                    elseif ($kra['mtobj_id'] == 3) : echo ($ipcrf->getIndicatorAVGmt(2)) ?? 0;
+                                    elseif ($kra['mtobj_id'] == 4) : echo ($ipcrf->getIndicatorAVGmt(3)) ?? 0;
+                                    elseif ($kra['mtobj_id'] == 5) : echo ($ipcrf->getIndicatorAVGmt(4)) ?? 0;
+                                    elseif ($kra['mtobj_id'] == 7) : echo ($ipcrf->getIndicatorAVGmt(5)) ?? 0;
+                                    else :   echo $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') ?? 0;
+                                    endif; ?>
                                 <!-- ------------------------------------------------- -->
-
-                                <!-- THIS WILL SHOW THE COUNT OF MOV PER KRA  OBJECTIVE 2  -->
-                                <?php if ($kra['mtobj_id'] == 2) : ?>
-                                    <?= $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') ?>
-                                <?php endif; ?>
-                                <!-- ------------------------------------------------- -->
-
                             </p>
                         </td>
                         <!-- END DISPLAY QUALITY -->
 
                         <!-- DISPLAY EFFICIENCY -->
                         <td>
-                            <p class="font-weight-bold text-center">efficiency</p>
+                            <p class="font-weight-bold text-center">
+                                <?php echo  $ipcrf->getEfficiency($kra['kra_id'], $kra['mtobj_id'], 'mov_supp_mt_attach_tbl')  ?? 0 ?>
+                            </p>
                         </td>
                         <!-- END DISPLAY EFFICIENCY -->
 

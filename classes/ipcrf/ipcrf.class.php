@@ -63,6 +63,8 @@ class IPCRF
     /* 
     THIS METHOD WILL DISPLAY THE OBJECTIVE QUALITY THEN IT WILL CONVERT IT TO QUALITY RATING
     NOTE: use this method if the COT is the base of the QUALITY
+
+    deprecated: issue quality is not based on the count of cot
     */
     public function getObjQuality($obj_table)
     {
@@ -81,10 +83,12 @@ class IPCRF
     }
 
 
+
+
     /*
         THIS METHOD WILL COUNT THE MOV IN EACH OBJECTIVES
-        TABLE MT = mov_main_mt_attach_tbl
-        TABLE T = mov_main_t_attach_tbl
+        TABLE MT = mov_main_mt_attach_tbl  , mov_supp_mt_attach_tbl
+        TABLE T = mov_main_t_attach_tbl , mov_supp_t_attach_tbl
     */
     public function countMOV($kra, $obj, $table_name)
     {
@@ -96,6 +100,21 @@ class IPCRF
         endforeach;
         return intval(count($res_arr));
     }
+
+    public function getEfficiency($kra_id, $obj_id, $table_name)
+    {
+        $eff_count = $this->countMOV($kra_id, $obj_id, $table_name);
+
+        if ($eff_count >= 5) : return 5;
+        elseif ($eff_count == 4) : return 4;
+        elseif ($eff_count == 3) : return 3;
+        elseif ($eff_count == 2) : return 2;
+        elseif ($eff_count == 1) : return 1;
+        else : return 1;
+        endif;
+    }
+
+
 
     public function totalofCOTandMOV($kra, $obj, $table_name, $rating_tbl)
     {
@@ -115,7 +134,7 @@ class IPCRF
         endif;
     }
 
-    /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR  */
+    /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR RESULT OF COT  */
     public function getIndicatorAVGmt($indicator_id)
     {
         $qry  = "SELECT * FROM `cot_mt_indicator_ave_tbl` WHERE indicator_id = $indicator_id AND `user_id` = " . $this->user . " AND sy = " . $this->sy . " AND school = " . $this->school . "";
@@ -123,7 +142,7 @@ class IPCRF
 
         if ($result) :
             foreach ($result as $r) :
-                return $r['average'];
+                return floatval($r['average']);
             endforeach;
         else : die($this->conn()->error . $qry);
         endif;

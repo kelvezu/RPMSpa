@@ -341,458 +341,529 @@ include 'sampleheader.php';
 
 
 <div class="container">
-    <div class="breadcome-list shadow-reset">
-        <div class="h4 card-header text-center">Self Assessment Tool Components</div>
+    <div class="card">
+        <div class="card-header bg-dark text-white h4">
+            <div class="d-flex justify-content-between">
+                <div class="p-2"></div>
+                <div class="p-2">
+                    SELF ASSESSMENT TOOL COMPONENTS
+                </div>
+                <div class="p-2"><a href="includes/processESAT.php?allstatus" class="btn btn-outline-info text-white">Set All Subject to Active</a></div>
+            </div>
+        </div>
+        <div class="card-body">
 
-
-
-
-        <!-- Start of Row 2-->
-        <div class="col-sm my-4">
-            <h5> Subject Option</h5>
-            <?php
-            $subjqry = 'SELECT * FROM subject_tbl ORDER BY `status`';
-            $qry_run = mysqli_query($conn, $subjqry);
-            ?>
-            <table class=" table table-sm table-hover">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+            <!-- Start of Row 2-->
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Subject Option</h4>
+                    </div>
+                    <div class="p-2"><a href="includes/processESAT.php?subjectstatus" class="btn btn-outline-dark">Set All Subject to Active</a></div>
+                </div>
                 <?php
-                if ((mysqli_num_rows($qry_run)) > 0) {
-                    foreach ($qry_run as $row) :
-                        ?>
-                        <tbody class=" text-dark">
-                            <tr> <?php if ($row['status'] == "Active") : ?>
-                                    <td><b><?= $row['subject_name'];  ?></b></td>
-                                    <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                                    <td>
-                                        <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success  text-decoration-none ">Update</a> &nbsp
-                                        <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id']; ?>" class="btn  btn-danger text-decoration-none ">Set to Inactive</a>
-                                    </td>
-                                <?php elseif ($row['status'] == "Inactive") : ?>
-                                    <td><b><strike><?= $row['subject_name'] ?></strike></b></td>
-                                    <td class="tomato-color"><?= $row['status'] ?></td>
-                                    <td>
-                                        <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="includes/processESAT.php?unremovesub=<?php echo $row['subject_id']; ?>" class="btn btn-info text-decoration-none ">Set to active</a>
-                                    </td>
-                                <?php else : echo 'Error' ?>
-                                <?php endif; ?>
-                            </tr>
-                        </tbody>
-                <?php
-                    endforeach;
-                } else {
-                    echo '<td class="tomato-color">No Record Found!</td>';
-                }
+                $subjqry = 'SELECT * FROM subject_tbl ORDER BY `status`';
+                $qry_run = mysqli_query($conn, $subjqry);
                 ?>
-            </table>
-            <input id="add-subject-btn" <?php //$_SESSION['subj-af'] 
-                                        ?> class="btn btn-sm btn-success" data-toggle="modal" data-target="#subject-modal" value="Add Subject Option" />
-        </div><!-- End of col-sm my-4-->
-
-
-
-
-        <div class="col-sm my-4">
-            <h5> Age Option</h5>
-            <?php
-            $agejqry = "SELECT * FROM age_tbl ORDER BY `status`";
-            $qry_run = mysqli_query($conn, $agejqry);
-            ?>
-            <table class=" table table-sm  table-hover">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <?php
-                if (!empty($qry_run)) {
-                    foreach ($qry_run as $row) {
-                        ?><?php if ($row['status'] == "Active") : ?>
-                <tbody>
-                    <tr>
-                        <td><?php echo $row['age_name'] ?></td>
-                        <td class="apple-color"><b><?= $row['status'] ?></b></td>
-                        <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                            <a href="delete/deleteage.php?delete=<?php echo $row['age_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
-
-                    <?php elseif ($row['status'] == "Inactive") : ?>
-
-                        <td><strike><?php echo $row['age_name'] ?></strike></td>
-                        <td class="tomato-color"><?= $row['status'] ?></td>
-                        <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
-                            <a href="includes/processESAT.php?unremoveage=<?php echo $row['age_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
-                        </td>
+                <table class=" table table-sm table-hover">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
                     <?php
-                            else : echo '<td>Error in age</td>';
-                            endif; ?>
-
-                    </tr>
-                </tbody>
-        <?php
-            }
-        } else {
-            echo "<td class='tomato-color'>No Record Found!</td>";
-        }
-        ?>
-
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#age-modal">Add Age Option</button>
-        </div><!-- End of col-md-6 -->
-
-        <div class="col-sm my-4">
-            <h5> Gender Option</h5>
-            <?php
-            $genderjqry = "SELECT * FROM gender_tbl ORDER BY `status`";
-            $qry_run = mysqli_query($conn, $genderjqry);
-            ?>
-            <table class=" table table-sm  table-hover ">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <?php
-                if ($qry_run) {
-                    foreach ($qry_run as $row) {
-                        ?>
-                        <tbody><?php if ($row['status'] == "Active") : ?>
-                                <tr>
-                                    <td><?php echo $row['gender_name'] ?></td>
-                                    <td class="apple-color"><b><?= $row['status'] ?></b></td>
-                                    <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="delete/deletegender.php?delete=<?php echo $row['gender_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
-
-                                <?php elseif ($row['status'] == "Inactive") : ?>
-
-                                    <td><strike><?php echo $row['gender_name'] ?></strike></td>
-                                    <td class="tomato-color"><?= $row['status'] ?></td>
-                                    <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="includes/processESAT.php?unremovegen=<?php echo $row['gender_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
-
-
+                    if ((mysqli_num_rows($qry_run)) > 0) {
+                        foreach ($qry_run as $row) :
+                            ?>
+                            <tbody class=" text-dark">
+                                <tr> <?php if ($row['status'] == "Active") : ?>
+                                        <td><b><?= $row['subject_name'];  ?></b></td>
+                                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
+                                        <td>
+                                            <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success  text-decoration-none ">Update</a> &nbsp
+                                            <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id']; ?>" class="btn  btn-danger text-decoration-none ">Set to Inactive</a>
+                                        </td>
+                                    <?php elseif ($row['status'] == "Inactive") : ?>
+                                        <td><b><strike><?= $row['subject_name'] ?></strike></b></td>
+                                        <td class="tomato-color"><?= $row['status'] ?></td>
+                                        <td>
+                                            <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="includes/processESAT.php?unremovesub=<?php echo $row['subject_id']; ?>" class="btn btn-info text-decoration-none ">Set to active</a>
+                                        </td>
+                                    <?php else : echo 'Error' ?>
                                     <?php endif; ?>
                                 </tr>
-                        </tbody>
-                <?php
+                            </tbody>
+                    <?php
+                        endforeach;
+                    } else {
+                        echo '<td class="tomato-color">No Record Found!</td>';
                     }
-                } else {
-                    echo "<td><p class='tomato-color'>SQL Error!</p></td>";
-                }
+                    ?>
+                </table>
+                <input id="add-subject-btn" <?php //$_SESSION['subj-af'] 
+                                            ?> class="btn btn-sm btn-success" data-toggle="modal" data-target="#subject-modal" value="Add Subject Option" />
+            </div><!-- End of col-sm my-4-->
+
+
+
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Age Option</h4>
+                    </div>
+                    <div class="p-2"><a href="includes/processESAT.php?agestatus" class="btn btn-outline-dark">Set All Subject to Active</a></div>
+                </div>
+                <?php
+                $agejqry = "SELECT * FROM age_tbl ORDER BY `status`";
+                $qry_run = mysqli_query($conn, $agejqry);
                 ?>
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#gender-modal">Add Gender Option</button>
-        </div><!-- End of col-md-6 -->
+                <table class=" table table-sm  table-hover">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if (!empty($qry_run)) {
+                        foreach ($qry_run as $row) {
+                            ?><?php if ($row['status'] == "Active") : ?>
+                    <tbody>
+                        <tr>
+                            <td><?php echo $row['age_name'] ?></td>
+                            <td class="apple-color"><b><?= $row['status'] ?></b></td>
+                            <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                <a href="delete/deleteage.php?delete=<?php echo $row['age_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
 
+                        <?php elseif ($row['status'] == "Inactive") : ?>
 
+                            <td><strike><?php echo $row['age_name'] ?></strike></td>
+                            <td class="tomato-color"><?= $row['status'] ?></td>
+                            <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
+                                <a href="includes/processESAT.php?unremoveage=<?php echo $row['age_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                            </td>
+                        <?php
+                                else : echo '<td>Error in age</td>';
+                                endif; ?>
 
-        <div class="col-sm my-4">
-            <h5> Position Option</h5>
+                        </tr>
+                    </tbody>
             <?php
-            $posiqry = "SELECT * FROM position_tbl WHERE position_id IN (3,4,5,6,7,8,9) AND `status` ='Active' ";
-            $qry_run = mysqli_query($conn, $posiqry);
+                }
+            } else {
+                echo "<td class='tomato-color'>No Record Found!</td>";
+            }
             ?>
-            <table class=" table table-sm table-hover">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Actions</th>
-                    </tr>
+
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#age-modal">Add Age Option</button>
+            </div><!-- End of col-md-6 -->
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Gender Option</h4>
+                    </div>
+                    <div class="p-2"></div>
+                </div>
+                <?php
+                $genderjqry = "SELECT * FROM gender_tbl ORDER BY `status`";
+                $qry_run = mysqli_query($conn, $genderjqry);
+                ?>
+                <table class=" table table-sm  table-hover ">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
                     <?php
                     if ($qry_run) {
                         foreach ($qry_run as $row) {
                             ?>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?php echo $row['position_name'] ?></td>
-                        <td><a href="update/updateposition.php?edit=<?php echo $row['position_id'] ?>" class="btn btn-success ">Update</a> &nbsp
-                            <a href="delete/deleteposition.php?delete=<?php echo $row['position_id']; ?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
-                    </tr>
-                </tbody>
-        <?php
-            }
-        } else {
-            echo "<td><p class='tomato-color'>SQL Error!</p></td>";
-        }
-        ?>
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#position-modal">Add Position Option</button>
-        </div><!-- End of col-md-6 -->
+                            <tbody><?php if ($row['status'] == "Active") : ?>
+                                    <tr>
+                                        <td><?php echo $row['gender_name'] ?></td>
+                                        <td class="apple-color"><b><?= $row['status'] ?></b></td>
+                                        <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="delete/deletegender.php?delete=<?php echo $row['gender_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
+
+                                    <?php elseif ($row['status'] == "Inactive") : ?>
+
+                                        <td><strike><?php echo $row['gender_name'] ?></strike></td>
+                                        <td class="tomato-color"><?= $row['status'] ?></td>
+                                        <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="includes/processESAT.php?unremovegen=<?php echo $row['gender_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
 
 
-
-
-        <div class="col-sm my-4">
-            <h5> Total Number of Years Option</h5>
-            <?php
-            $totyrqry = "SELECT * FROM totalyear_tbl ORDER BY `status`";
-            $qry_run = mysqli_query($conn, $totyrqry);
-            ?>
-            <table class=" table table-sm table-hover">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <?php
-                if ($qry_run) {
-                    foreach ($qry_run as $row) {
-                        ?>
-                        </th>
-                        <tbody>
-                            <tr><?php if ($row['status'] == "Active") : ?>
-
-                                    <td><?php echo $row['totalyear_name'] ?></td>
-                                    <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                                    <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="delete/deletetotalyear.php?delete=<?php echo $row['totalyear_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
-
-                                <?php elseif ($row['status'] == "Inactive") : ?>
-                                    <td><strike><?php echo $row['totalyear_name'] ?></strike></td>
-                                    <td class="tomato-color"><?= $row['status'] ?></td>
-                                    <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="includes/processESAT.php?unremovetot=<?php echo $row['totalyear_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
-                                    <?php
-                                            else : echo 'Error';
-                                            endif;
-                                            ?>
-
-                            </tr>
-                        </tbody>
-                <?php
-                    }
-                } else {
-                    echo "<td><p class='tomato-color'>SQL Error!</p></td>";
-                }
-                ?>
-            </table>
-            <button class=" btn btn-sm btn-success" data-toggle="modal" data-target="#totalyears-modal">Add Years Option</button>
-        </div><!-- End of col-md-6 -->
-
-
-        <div class="col-sm my-4">
-            <h5> Grade Level Taught Option</h5>
-            <?php
-            $gltqry = "SELECT * FROM gradelvltaught_tbl ORDER BY `status`";
-            $qry_run = mysqli_query($conn, $gltqry);
-            ?>
-            <table class=" table table-sm table-hover ">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <?php
-                if ($qry_run) {
-                    foreach ($qry_run as $row) :
-
-                        ?>
-                        <tbody>
-                            <tr><?php if ($row['status'] == "Active") : ?>
-                                    <td><?php echo $row['gradelvltaught_name'] ?></td>
-                                    <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                                    <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="delete/deletegradelvltaught.php?delete=<?php echo $row['gradelvltaught_id']; ?>" class="btn btn-danger text-decoration-none">Set to Inactive</a></td>
-
-                                <?php elseif ($row['status'] == "Inactive") : ?>
-                                    <td><strike><?php echo $row['gradelvltaught_name'] ?></strike></td>
-                                    <td class="tomato-color"><?= $row['status'] ?></td>
-                                    <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="includes/processESAT.php?unremoveglt=<?php echo $row['gradelvltaught_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
-                                    <?php
-                                            else : echo '<td><p class="tomato-color">SQL Error!</p></td>';
-                                            endif;
-                                            ?>
-                            </tr>
-                        <?php endforeach; ?>
-                        </tbody>
+                                        <?php endif; ?>
+                                    </tr>
+                            </tbody>
                     <?php
-
-
+                        }
                     } else {
                         echo "<td><p class='tomato-color'>SQL Error!</p></td>";
                     }
                     ?>
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#glt-modal">Add Grade Level Option</button>
-        </div><!-- End of col-md-6 -->
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#gender-modal">Add Gender Option</button>
+            </div><!-- End of col-md-6 -->
 
 
-        <!-- Start of Row 4-->
 
-        <div class="col-sm my-4">
-            <h5>Curricular Classification of the School Option</h5>
-            <?php
-            $curriqry = "SELECT * FROM curriclass_tbl ORDER BY `status`";
-            $qry_run = mysqli_query($conn, $curriqry);
-            ?>
-            <table class=" table table-sm table-hover">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Position Option</h4>
+                    </div>
+                    <div class="p-2"></div>
+                </div>
                 <?php
-                if ($qry_run) {
-                    foreach ($qry_run as $row) {
-                        ?>
-                        <tbody>
-                            <tr><?php if ($row['status'] == "Active") : ?>
-                                    <td><?php echo $row['curriclass_name'] ?></td>
-                                    <td><b class="apple-color"><?= $row['status'] ?></b></td>
-                                    <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="delete/deletecurri.php?delete=<?php echo $row['curriclass_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
-
-                                <?php elseif ($row['status'] == "Inactive") : ?>
-                                    <td><strike><?php echo $row['curriclass_name'] ?></strike></td>
-                                    <td class="tomato-color"><?= $row['status'] ?></td>
-                                    <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
-                                        <a href="includes/processESAT.php?unremovecurr=<?php echo $row['curriclass_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
-                                    <?php
-                                            else : echo '<td><p class="tomato-color">SQL Error!</p></td>';
-                                            endif; ?>
-
-                            </tr>
-                        </tbody>
-                <?php
-                    }
-                } else {
-                    echo "<td><p class='tomato-color'>SQL Error!</p></td>";
-                }
+                $posiqry = "SELECT * FROM position_tbl WHERE position_id IN (3,4,5,6,7,8,9) AND `status` ='Active' ";
+                $qry_run = mysqli_query($conn, $posiqry);
                 ?>
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#curriclass-modal">Add Curricular Classification Option</button>
-        </div><!-- End of col-md-6 -->
-
-
-
-
-        <!-- Start of Row 5-->
-
-        <div class="col-sm my-4">
-            <h5>Region</h5>
+                <table class=" table table-sm table-hover">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Actions</th>
+                        </tr>
+                        <?php
+                        if ($qry_run) {
+                            foreach ($qry_run as $row) {
+                                ?>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><?php echo $row['position_name'] ?></td>
+                            <td><a href="update/updateposition.php?edit=<?php echo $row['position_id'] ?>" class="btn btn-success ">Update</a> &nbsp
+                                <a href="delete/deleteposition.php?delete=<?php echo $row['position_id']; ?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
+                        </tr>
+                    </tbody>
             <?php
-            $regqry = "SELECT * FROM region_tbl";
-            $qry_run = mysqli_query($conn, $regqry);
-            ?>
-            <table class=" table table-sm table-hover">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <?php
-                if ($qry_run) {
-                    foreach ($qry_run as $row) {
-                        ?>
-                        <tbody>
-                            <tr>
-                                <td><?php echo $row['region_name'] ?></td>
-                                <td><a href="update/updateregion.php?edit=<?php echo $row['reg_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                                    <a href="delete/deleteregion.php?delete=<?php echo $row['reg_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
-                            </tr>
-                        </tbody>
-                <?php
-                    }
-                } else {
-                    echo "No Record Found!";
                 }
-                ?>
-
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#region-modal">Add Region Option</button>
-        </div><!-- End of col-md-4 -->
-
-        <div class="col-sm my-4">
-            <h5> Division </h5>
-            <?php
-            $divqry = "SELECT * FROM division_tbl";
-            $qry_run = mysqli_query($conn, $divqry);
+            } else {
+                echo "<td><p class='tomato-color'>SQL Error!</p></td>";
+            }
             ?>
-            <table class=" table table-sm table-hover ">
-                <thead class="bg-info">
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#position-modal">Add Position Option</button>
+            </div><!-- End of col-md-6 -->
 
-                    <tr>
-                        <th>Options</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <?php
-                if ($qry_run) {
-                    foreach ($qry_run as $row) {
-                        ?>
-                        <tbody>
 
-                            <tr>
-                                <td><?php echo $row['divi_name'] ?></td>
-                                <td><a href="update/updatedivision.php?edit=<?php echo $row['div_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                                    <a href="delete/deletedivision.php?delete=<?php echo $row['div_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
-                            </tr>
-                        </tbody>
+
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Total Number of Years Option</h4>
+                    </div>
+                    <div class="p-2"><a href="includes/processESAT.php?totalyear" class="btn btn-outline-dark">Set All Subject to Active</a></div>
+                </div>
                 <?php
-                    }
-                } else {
-                    echo "No Record Found!";
-                }
+                $totyrqry = "SELECT * FROM totalyear_tbl ORDER BY `status`";
+                $qry_run = mysqli_query($conn, $totyrqry);
                 ?>
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#division-modal">Add Division Option</button>
-        </div><!-- End of col-md-4 -->
+                <table class=" table table-sm table-hover">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($qry_run) {
+                        foreach ($qry_run as $row) {
+                            ?>
+                            </th>
+                            <tbody>
+                                <tr><?php if ($row['status'] == "Active") : ?>
 
-        <div class="col-sm my-4">
-            <h5> Municipality </h5>
-            <?php
-            $muniqry = "SELECT * FROM municipality_tbl";
-            $qry_run = mysqli_query($conn, $muniqry);
-            ?>
-            <table class=" table table-sm table-hover ">
-                <thead class="bg-info">
-                    <tr>
-                        <th>Options</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <?php
-                if ($qry_run) {
-                    foreach ($qry_run as $row) {
-                        ?>
-                        <tbody>
-                            <tr>
-                                <td><?php echo $row['muni_name'] ?></td>
-                                <td><a href="update/updatemunicipality.php?edit=<?php echo $row['muni_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
-                                    <a href="delete/deletemunicipality.php?delete=<?php echo $row['muni_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
-                            </tr>
-                        </tbody>
-                <?php
+                                        <td><?php echo $row['totalyear_name'] ?></td>
+                                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
+                                        <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="delete/deletetotalyear.php?delete=<?php echo $row['totalyear_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
+
+                                    <?php elseif ($row['status'] == "Inactive") : ?>
+                                        <td><strike><?php echo $row['totalyear_name'] ?></strike></td>
+                                        <td class="tomato-color"><?= $row['status'] ?></td>
+                                        <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="includes/processESAT.php?unremovetot=<?php echo $row['totalyear_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                        <?php
+                                                else : echo 'Error';
+                                                endif;
+                                                ?>
+
+                                </tr>
+                            </tbody>
+                    <?php
+                        }
+                    } else {
+                        echo "<td><p class='tomato-color'>SQL Error!</p></td>";
                     }
-                } else {
-                    echo "No Record Found!";
-                }
-                ?>
-            </table>
-            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#muni-modal">Add Municipality Option</button>
-        </div><!-- End of col-md-4 -->
+                    ?>
+                </table>
+                <button class=" btn btn-sm btn-success" data-toggle="modal" data-target="#totalyears-modal">Add Years Option</button>
+            </div><!-- End of col-md-6 -->
 
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Grade Level Taught Option</h4>
+                    </div>
+                    <div class="p-2"><a href="includes/processESAT.php?gradelvl" class="btn btn-outline-dark">Set All Subject to Active</a></div>
+                </div>
+                <?php
+                $gltqry = "SELECT * FROM gradelvltaught_tbl ORDER BY `status`";
+                $qry_run = mysqli_query($conn, $gltqry);
+                ?>
+                <table class=" table table-sm table-hover ">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($qry_run) {
+                        foreach ($qry_run as $row) :
+
+                            ?>
+                            <tbody>
+                                <tr><?php if ($row['status'] == "Active") : ?>
+                                        <td><?php echo $row['gradelvltaught_name'] ?></td>
+                                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
+                                        <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="delete/deletegradelvltaught.php?delete=<?php echo $row['gradelvltaught_id']; ?>" class="btn btn-danger text-decoration-none">Set to Inactive</a></td>
+
+                                    <?php elseif ($row['status'] == "Inactive") : ?>
+                                        <td><strike><?php echo $row['gradelvltaught_name'] ?></strike></td>
+                                        <td class="tomato-color"><?= $row['status'] ?></td>
+                                        <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="includes/processESAT.php?unremoveglt=<?php echo $row['gradelvltaught_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                        <?php
+                                                else : echo '<td><p class="tomato-color">SQL Error!</p></td>';
+                                                endif;
+                                                ?>
+                                </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        <?php
+
+
+                        } else {
+                            echo "<td><p class='tomato-color'>SQL Error!</p></td>";
+                        }
+                        ?>
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#glt-modal">Add Grade Level Option</button>
+            </div><!-- End of col-md-6 -->
+
+
+            <!-- Start of Row 4-->
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Curricular Classification of the School Option</h4>
+                    </div>
+                    <div class="p-2"><a href="includes/processESAT.php?curriclass" class="btn btn-outline-dark">Set All Subject to Active</a></div>
+                </div>
+                <?php
+                $curriqry = "SELECT * FROM curriclass_tbl ORDER BY `status`";
+                $qry_run = mysqli_query($conn, $curriqry);
+                ?>
+                <table class=" table table-sm table-hover">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($qry_run) {
+                        foreach ($qry_run as $row) {
+                            ?>
+                            <tbody>
+                                <tr><?php if ($row['status'] == "Active") : ?>
+                                        <td><?php echo $row['curriclass_name'] ?></td>
+                                        <td><b class="apple-color"><?= $row['status'] ?></b></td>
+                                        <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="delete/deletecurri.php?delete=<?php echo $row['curriclass_id']; ?>" class="btn btn-danger text-decoration-none ">Set to Inactive</a></td>
+
+                                    <?php elseif ($row['status'] == "Inactive") : ?>
+                                        <td><strike><?php echo $row['curriclass_name'] ?></strike></td>
+                                        <td class="tomato-color"><?= $row['status'] ?></td>
+                                        <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
+                                            <a href="includes/processESAT.php?unremovecurr=<?php echo $row['curriclass_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                        <?php
+                                                else : echo '<td><p class="tomato-color">SQL Error!</p></td>';
+                                                endif; ?>
+
+                                </tr>
+                            </tbody>
+                    <?php
+                        }
+                    } else {
+                        echo "<td><p class='tomato-color'>SQL Error!</p></td>";
+                    }
+                    ?>
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#curriclass-modal">Add Curricular Classification Option</button>
+            </div><!-- End of col-md-6 -->
+
+
+
+
+            <!-- Start of Row 5-->
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Region Option</h4>
+                    </div>
+                    <div class="p-2"></div>
+                </div>
+                <?php
+                $regqry = "SELECT * FROM region_tbl";
+                $qry_run = mysqli_query($conn, $regqry);
+                ?>
+                <table class=" table table-sm table-hover">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($qry_run) {
+                        foreach ($qry_run as $row) {
+                            ?>
+                            <tbody>
+                                <tr>
+                                    <td><?php echo $row['region_name'] ?></td>
+                                    <td><a href="update/updateregion.php?edit=<?php echo $row['reg_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                        <a href="delete/deleteregion.php?delete=<?php echo $row['reg_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
+                                </tr>
+                            </tbody>
+                    <?php
+                        }
+                    } else {
+                        echo "No Record Found!";
+                    }
+                    ?>
+
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#region-modal">Add Region Option</button>
+            </div><!-- End of col-md-4 -->
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Division Option</h4>
+                    </div>
+                    <div class="p-2"></div>
+                </div>
+                <?php
+                $divqry = "SELECT * FROM division_tbl";
+                $qry_run = mysqli_query($conn, $divqry);
+                ?>
+                <table class=" table table-sm table-hover ">
+                    <thead class="bg-info">
+
+                        <tr>
+                            <th>Options</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($qry_run) {
+                        foreach ($qry_run as $row) {
+                            ?>
+                            <tbody>
+
+                                <tr>
+                                    <td><?php echo $row['divi_name'] ?></td>
+                                    <td><a href="update/updatedivision.php?edit=<?php echo $row['div_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                        <a href="delete/deletedivision.php?delete=<?php echo $row['div_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
+                                </tr>
+                            </tbody>
+                    <?php
+                        }
+                    } else {
+                        echo "No Record Found!";
+                    }
+                    ?>
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#division-modal">Add Division Option</button>
+            </div><!-- End of col-md-4 -->
+
+            <div class="col-sm my-4">
+                <div class="d-flex justify-content-between">
+                    <div class="p-2"></div>
+                    <div class="p-2">
+                        <h4 class="text-dark">Municipality Option</h4>
+                    </div>
+                    <div class="p-2"></div>
+                </div>
+                <?php
+                $muniqry = "SELECT * FROM municipality_tbl";
+                $qry_run = mysqli_query($conn, $muniqry);
+                ?>
+                <table class=" table table-sm table-hover ">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Options</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    if ($qry_run) {
+                        foreach ($qry_run as $row) {
+                            ?>
+                            <tbody>
+                                <tr>
+                                    <td><?php echo $row['muni_name'] ?></td>
+                                    <td><a href="update/updatemunicipality.php?edit=<?php echo $row['muni_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
+                                        <a href="delete/deletemunicipality.php?delete=<?php echo $row['muni_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a></td>
+                                </tr>
+                            </tbody>
+                    <?php
+                        }
+                    } else {
+                        echo "No Record Found!";
+                    }
+                    ?>
+                </table>
+                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#muni-modal">Add Municipality Option</button>
+            </div><!-- End of col-md-4 -->
+        </div>
     </div>
+
+
+
+
 </div>
+
 <br>
 
 

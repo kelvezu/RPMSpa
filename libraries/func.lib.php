@@ -1636,3 +1636,8 @@
             {
                 return count($array) !== count(array_unique($array));
             }
+
+            function dateNow()
+            {
+                return date("Y-m-d H:i:s");
+            }

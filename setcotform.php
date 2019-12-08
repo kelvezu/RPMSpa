@@ -1,5 +1,5 @@
 <?php
- 
+
 include 'sampleheader.php';
 include_once 'libraries/func.lib.php';
 
@@ -14,7 +14,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
     <div class="breadcome-list shadow-reset">
         <form action="includes/processcotformT.php" method="POST">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
-            <h5>COT-RPMS</h5> 
+            <h5>COT-RPMS</h5>
 
             <div class="h3 bg-success text-white">Teacher I-III</div>
             <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
@@ -214,7 +214,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                             endif;
                             ?>
 
-                            <input type="text" name="obs" value="<?php echo $period; ?>" />
+                            <input type="text" name="obs" value="<?php echo $period; ?>" readonly />
                         </div>
 
                         <br>

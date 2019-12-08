@@ -47,7 +47,7 @@ $supp_mov_file = 'supp_mov';
                         <select id="user_id" name="user_id" class="form-control-sm">
                             <option value="">--Select Master Teacher--</option>
                             <?php
-                            foreach (rpmsdb::showRatees($conn, $_SESSION['user_id'],  $_SESSION['school_id'], 'For Approval') as $ratees) : ?>
+                            foreach (rpmsdb::showRateesMT($conn, $_SESSION['user_id'],  $_SESSION['school_id']) as $ratees) : ?>
                                 <option value=" <?php echo intval($ratees['user_id']) ?>"><?php echo displayName($conn, $ratees['user_id']) ?> </option>
                             <?php endforeach; ?>
                         </select>

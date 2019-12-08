@@ -53,6 +53,14 @@ if (isset($_GET['unremovesub'])) {
     header("location:../ESAT.php");
 }
 
+if (isset($_GET['subjectstatus'])) :
+    $conn->query("UPDATE subject_tbl SET `status` = 'Active'") or die($conn->error);
+    $_SESSION['message'] = 'Subjects successfully unremoved!!';
+    $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+
+endif;
+
 
 //SAVE DATA FOR AGE 
 if (isset($_POST['agesave'])) {
@@ -99,6 +107,15 @@ if (isset($_GET['unremoveage'])) {
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
+
+if (isset($_GET['agestatus'])) :
+    $conn->query("UPDATE age_tbl SET `status` = 'Active'") or die($conn->error);
+    $_SESSION['message'] = 'Age successfully unremoved!!';
+    $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+
+endif;
+
 
 //SAVE DATA FOR GENDER 
 if (isset($_POST['gendersave'])) {
@@ -229,6 +246,14 @@ if (isset($_GET['unremovetot'])) {
     header("location:../ESAT.php");
 }
 
+if (isset($_GET['totalyear'])) :
+    $conn->query("UPDATE totalyear_tbl SET `status` = 'Active'") or die($conn->error);
+    $_SESSION['message'] = 'Total Year Options successfully unremoved!!';
+    $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+
+endif;
+
 //SAVE THE DATA FOR GRADE LEVEL TAUGHT   
 if (isset($_POST['gltsave'])) {
     $glt = $_POST['glt'];
@@ -274,6 +299,14 @@ if (isset($_GET['unremoveglt'])) {
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
+
+if (isset($_GET['gradelvl'])) :
+    $conn->query("UPDATE gradelvltaught_tbl SET `status` = 'Active'") or die($conn->error);
+    $_SESSION['message'] = 'Grade Level Taught Options successfully unremoved!!';
+    $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+
+endif;
 
 //SAVE DATA FOR CURRICULAR CLASS
 
@@ -321,6 +354,14 @@ if (isset($_GET['unremovecurr'])) {
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
+
+if (isset($_GET['curriclass'])) :
+    $conn->query("UPDATE curriclass_tbl SET `status` = 'Active'") or die($conn->error);
+    $_SESSION['message'] = 'Curricular Classification Options successfully unremoved!!';
+    $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+
+endif;
 
 //SAVE DATA FOR REGION
 
@@ -438,3 +479,18 @@ if (isset($_GET['deleteMUNI'])) {
     $_SESSION['msg_type'] = 'danger';
     header("location:../ESAT.php");
 }
+
+if (isset($_GET['allstatus'])) :
+    $conn->query("UPDATE subject_tbl SET `status` = 'Active'") or die($conn->error);
+    $conn->query("UPDATE age_tbl SET `status` = 'Active'") or die($conn->error);
+    $conn->query("UPDATE totalyear_tbl SET `status` = 'Active'") or die($conn->error);
+    $conn->query("UPDATE gradelvltaught_tbl SET `status` = 'Active'") or die($conn->error);
+    $conn->query("UPDATE curriclass_tbl SET `status` = 'Active'") or die($conn->error);
+    $conn->query("UPDATE region_tbl SET `status` = 'Active'") or die($conn->error);
+    $conn->query("UPDATE division_tbl SET `status` = 'Active'") or die($conn->error);
+    $conn->query("UPDATE municipality_tbl SET `status` = 'Active'") or die($conn->error);
+    $_SESSION['message'] = 'All status has been set to Active!';
+    $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+
+endif;
