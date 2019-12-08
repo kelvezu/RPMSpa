@@ -175,7 +175,7 @@ class DevPlan
     public static function showAllAppAuthforMT($conn)
     {
         $result_arr = [];
-        $qry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent" ) ';
+        $qry = 'SELECT * FROM account_tbl WHERE school_id = "' . $_SESSION['school_id'] . '" AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent","Principal") ';
 
         $result = mysqli_query($conn, $qry);
         if (!empty($result)) :
@@ -235,7 +235,7 @@ class DevPlan
 
         if ($count_res1 > 0 && $count_res2 > 0 && $count_res3 > 0 && $count_res4 > 0  && $count_res5 > 0  && $count_res6 > 0  && $count_res7 > 0) :
             echo '<p class="green-notif-border" >General Development Plan for Teacher\'s I-III is already submitted for  ' . $_SESSION['active_sy'] . '</p>';
-            include 'includes/footer.php';
+            include 'samplefooter.php';
             exit();
         else : return false;
         endif;

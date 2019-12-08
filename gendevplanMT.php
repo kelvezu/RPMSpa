@@ -1,61 +1,69 @@
-    <?php
+<?php
 
-    use DevPlan\DevPlan;
-    use FilterUser\FilterUser;
+use DevPlan\DevPlan;
+use FilterUser\FilterUser;
 
 
-    include_once 'sampleheader.php';
-    devplan::checkDevPlanMT($conn);
-    FilterUser::filterDevplanTUsers($_SESSION['position']);
-    // A.CHECK IF USER DID NOT TAKEN ESAT
-    $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
-    //A.1 DISPLAY ERRORS IF THE USER DID NOT TAKE ESAT 
-    if ($userESATstats) :
-        echo  '<ul class="red-notif-border">';
-        foreach ($userESATstats as $esatStatNotif) :
-            echo  $esatStatNotif;
-        endforeach;
-        echo '</ul>';
+include_once 'sampleheader.php';
+devplan::checkDevPlanMT($conn);
+$lvlcap_str =  displayLVLcapObjmT($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
+$priodev_devneeds = displayPrioDevObjmT($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
+$cbc_str =  displayCBCstrMT($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
+$cbc_devneeds =  displayCBCdevneedmt($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
+FilterUser::filterDevplanMTUsers($_SESSION['position']);
 
-    //A.2 DISPLAY THE DEVPLAN IF USER HAS TAKEN ESAT
-    else :
-        /* THIS CONDITION WILL HIDE THE DEVELOPMENT PLAN IF USER ALREADY SUBMITTED  */
-        $notifsss = (isSubmit($conn));
-        if (!$notifsss) :
-            ?>
-            <main>
-                <div class="container ">
-                    <div class="breadcome-list shadow-reset">
-                        <h2 class="text-center"><strong>PART IV: General Master Teacher Development Plan</strong></h2>
-                        <div>
-                            <div class="bg-black"><label for="a_strength" class="form-control-label">Select Rater and the Approving Authority: </label>
-                            </div>
+// A.CHECK IF USER DID NOT TAKEN ESAT
+$userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
+//A.1 DISPLAY ERRORS IF THE USER DID NOT TAKE ESAT 
+if ($userESATstats) :
+    echo  '<ul class="red-notif-border">';
+    foreach ($userESATstats as $esatStatNotif) :
+        echo  $esatStatNotif;
+    endforeach;
+    echo '</ul>';
+
+//A.2 DISPLAY THE DEVPLAN IF USER HAS TAKEN ESAT
+else :
+    /* THIS CONDITION WILL HIDE THE DEVELOPMENT PLAN IF USER ALREADY SUBMITTED  */
+    $notifsss = (isSubmit($conn));
+    if (!$notifsss) :
+        ?>
+        <main>
+            <div class="container ">
+                <div class="breadcome-list shadow-reset">
+                    <h2 class="text-center"><strong>PART IV: General Teacher Development Plan</strong></h2>
+                    <div>
+                        <div class="bg-black"><label for="a_strength" class="form-control-label">Select Rater and the Approving Authority: </label>
+                        </div>
+                        <form action="includes/processgendevplanmt.php" method="post" class="form-group">
                             <div>
                                 <div class="row black-border">
-                                    <form action="includes/processgendevplanmt.php" method="post" class="form-group">
-                                        <div class="col-sm-6">
-                                            <label for="select-rater" class="form-control-label">Select Rater: </label>
-                                            <select name="rater" id="" class="form-control" required>
-                                                <?php
-                                                        $raterformt = DevPlan::showAllAvailRaterforMT($conn);
-                                                        foreach ($raterformt as $res) : ?>
-                                                    <option value="<?= $res['user_id'] ?>"><?= fullnameFormat($res['firstname'], $res['middlename'], $res['surname']) . ' - ' . $res['position'] ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="select-app-auth" class="form-control-label">Select Approving Authority: </label>
+                                    <div class="col-sm-6">
+                                        <label for="select-rater" class="form-control-label">Select Rater: </label>
+                                        <select name="rater" id="" class="form-control " required>
+                                            <?php
+                                                    $raterformt = DevPlan::showAllAvailRaterformT($conn);
+                                                    foreach ($raterformt as $res) :
+                                                        ?>
+                                                <option value="<?= $res['user_id'] ?>"><?= fullnameFormat($res['firstname'], $res['middlename'], $res['surname']) . ' - ' . $res['position'] ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="select-app-auth" class="form-control-label">Select Approving Authority: </label>
 
-                                            <select name="app_auth" id="" class="form-control required">
-                                                <?php
-                                                        $app_auth = DevPlan::showAllAppAuthforMT($conn);
-                                                        foreach ($app_auth as $sup) :
-                                                            ?>
-                                                    <option value="<?= $sup['user_id'] ?>"><?= fullnameFormat($sup['firstname'], $sup['middlename'], $sup['surname']) . ' - ' . $sup['position'] ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-6"></div>
+                                        <select name="app_auth" id="" class="form-control" required>
+                                        <?php
+                                           
+                                           $app_auth = $conn->query('SELECT * FROM account_tbl WHERE school_id = '.$_SESSION['school_id'].' AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent","Principal","School Head","Principal Assistant" )') or die ($conn->error);
+                                               while ($sup = $app_auth->fetch_assoc()): ?>
+                                                <option value="<?php echo $sup['user_id'] ?>"><?php echo displayName($conn,$sup['user_id']) . ' - ' . $sup['position'] ?></option>
+                                           
+                                       
+                                        <?php endwhile; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6"></div>
                                 </div>
                             </div>
                             <hr>
@@ -75,85 +83,80 @@
 
                                     <!--A. Strengths -->
                                     <div class="black-border">
-                                        <div class="bg-black"><label for="a_strength" class="form-control-label">Strengths</label>
-
+                                        <div class="bg-black">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="p-2"></div>
+                                                <div class="p-2">
+                                                    <label for="a_strength" class="form-control-label">Strengths</label>
+                                                </div>
+                                                <div class="p-2"></div>
+                                             </div>
                                         </div>
-                                        <ul class="ul">
-                                            <?php
+                                        <?php if($lvlcap_str):
+                                                foreach($lvlcap_str as $str):?>
+                                        <p>
+                                            <p class="tomato-color">
+                                                <?php echo displayKRA($conn,$str['kra_id']) ?>
+                                            </p>
 
-                                                    $esatForm2_LvlCap_results = DevPlan::showStrDevplanMT($conn);
-                                                    /* TURN THIS INTO FUNCTION */
-                                                    if (!empty($esatForm2_LvlCap_results)) :
-                                                        foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
-                                                            ?>
-                                                    <li><b class="tomato-color">Key Result Area: </b><u>
-                                                            <?php
-                                                                            $LvlCap_result['kra_id'];
-                                                                            echo $LvlCap_result['kra_name'];
-                                                                            ?></u> </li>
-                                                    <ul class="ul-square">
-                                                        <?php
+                                            <p>
+                                            <input type="hidden" name="lvlcapkra_id[]" value="<?php echo $str['kra_id'] ?>">
+                                            <input type="checkbox" name="lvlcapobj_id[]" value="<?php echo $str['mtobj_id'] ?>">
+                                                <?php echo displayObjectiveMT($conn,$str['mtobj_id']) ?>
+                                            </p>
+                                        </p>
+                                     <?php endforeach;
+                                     else: ?> 
+                                     <p class="red-notif-border">
+                                         No ESAT record yet!
+                                     </p>
 
-                                                                        $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivesmt_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $LvlCap_result['school'] . '" AND esat2_objectivesmt_tbl.status = "Active" AND esat2_objectivesmt_tbl.lvlcap >= 3  LIMIT 2';
-                                                                        $mtobjLvlcapResults = mysqli_query($conn, $queryMTobjlvlcap);
-                                                                        if ($mtobjLvlcapResults) :
-                                                                            foreach ($mtobjLvlcapResults as $mtobjLvlcap) :
-                                                                                ?>
-                                                                <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjLvlcap['mtobj_name'] ?></i></li><br />
-                                                                <input type="hidden" name="lvlcapmtobj_id[]" value="<?php echo $mtobjLvlcap['mtobj_id'] ?>" />
-                                                                <input type="hidden" name="lvlcapkra_id[]" value="<?php echo  $mtobjLvlcap['kra_id'] ?>" />
-                                                        <?php endforeach;
-                                                                        else : echo '<p class="tomato-color">No record!</p>';
-                                                                        endif; ?>
-                                                    </ul><br>
-
-                                                <?php
-                                                            endforeach;
-                                                            ?>
-                                        </ul>
-                                    <?php
-                                            endif;
-                                            ?>
+                                     <?php endif; ?>
+                                 
+                                            
                                     </div>
 
                                     <!-- A. Development Needs -->
                                     <div class="black-border">
-                                        <div class="bg-black"><label for="a_devneeds" class="form-control-label">Development Needs</label></div>
-                                        <ul class="ul">
-                                            <?php
-                                                    $esatForm2_priodev_results = DevPlan::showPrioDevplanMT($conn);
-                                                    if (!empty($esatForm2_priodev_results)) :
-                                                        foreach ($esatForm2_priodev_results as $PrioDev_result) :
-                                                            ?>
-                                                    <li><b class="tomato-color">Key Result Area: </b><u><?php echo $PrioDev_result['kra_name'] ?></u> </li>
+                                        <div class="bg-black">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="p-2"></div>
+                                                <div class="p-2"><label for="a_strength" class="form-control-label">Development Needs</label></div>
+                                                <div class="p-2"><a href="gendevplanT.php?btn=editdev" class="btn btn-primary text-white">Edit</a></div>
+                                                </div>
+                                        </div>
+                                       
+                                            <!-- ------------------------------- -->
+                                            <?php if($priodev_devneeds):
+                                                foreach($priodev_devneeds as $dev_needs):?>
+                                        <p>
+                                            <p class="tomato-color">
+                                                <?php echo displayKRA($conn,$dev_needs['kra_id']) ?>
+                                            </p>
 
-                                                    <ul class="ul-square">
-                                                        <?php
-                                                                        $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '"  AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $PrioDev_result['school'] . '" AND esat2_objectivesmt_tbl.priodev >= 3  LIMIT 2';
-                                                                        $mtobjPrioDevResults = mysqli_query($conn, $queryMTobjpriodev) or die($conn->error);
-                                                                        if (isset($mtobjPrioDevResults)) :
-                                                                            foreach ($mtobjPrioDevResults as $mtobjPriodev) :
-                                                                                ?>
-                                                                <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjPriodev['mtobj_name']  ?></i></li><br />
-                                                                <input type="hidden" name="priodevmtobj_id[]" value="<?php echo $mtobjPriodev['mtobj_id'] ?>">
-                                                                <input type="hidden" name="priodevkra_id[]" value="<?php echo  $mtobjPriodev['kra_id'] ?>">
-                                                        <?php endforeach;
-                                                                        else : echo '<p class="tomato-color">No record!</p>';
-                                                                        endif;
-                                                                        ?>
-                                                    </ul><br>
-                                                <?php
-                                                            endforeach;
-                                                            ?>
-                                        </ul>
-                                    <?php
-                                            endif;
-                                            ?>
+                                            <p>
+                                            <input type="hidden" name="priodevkra_id[]" value="<?php echo $dev_needs['kra_id'] ?>">
+                                            <input type="checkbox" name="priodevmmtobj_id[]" value="<?php echo $dev_needs['mtobj_id'] ?>">
+                                                <?php echo displayObjectiveMT($conn,$dev_needs['mtobj_id']) ?>
+                                            </p>
+                                        </p>
+                                     <?php endforeach; else:?>
+                                        <p class="red-notif-border">
+                                         No ESAT record yet!
+                                     </p>
+                                    
+                                  <?php  endif; ?>
+                                            <!-- ----------------------------------- -->
                                     </div>
                                     <!-- Action Plan -->
                                     <div class="black-border">
-                                        <div class="form-control-label bg-black">
-                                            <label for="learn-objectives" class="form-control-label">Action Plan</label>
+                                        <div class="bg-black">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="p-2"></div>
+                                                <div class="p-2"><label for="a_strength" class="form-control-label">Action Plan</label></div>
+                                                <div class="p-2"></div>
+                                                </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -169,8 +172,13 @@
                                     </div>
                                     <!-- Timeline and Resources needed -->
                                     <div class="black-border">
-                                        <div class="form-control-label bg-black">
-                                            <label for="learn-objectives" class="form-control-label">Timelines and Resources needed</label>
+                                        <div class="bg-black">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="p-2"></div>
+                                                <div class="p-2"><label for="a_strength" class="form-control-label">Timelines and Resources Needed</label></div>
+                                                <div class="p-2"></div>
+                                                </div>
+
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -192,69 +200,73 @@
                                     <div class="black-border">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="bg-black"><label for="b_strength" class="form-control-label ">Strengths</label></div>
-                                                <ul class="ul">
-                                                    <?php
-                                                            $esatForm3_strength_results = DevPlan::showStrIndicatorMT($conn);
-                                                            if (!empty($esatForm3_strength_results)) :
-                                                                foreach ($esatForm3_strength_results as $cbc_strength) :
-                                                                    ?>
-                                                            <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
-                                                            <ul class="ul-square">
-                                                                <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralmt_tbl.* FROM esat3_core_behavioralmt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralmt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralmt_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioralmt_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioralmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralmt_tbl.school = "' . $_SESSION['school_id'] . '" AND esat3_core_behavioralmt_tbl.status = "Active" AND cbc_score = 1  LIMIT 3';
-                                                                                $indicatorStrengthResults = mysqli_query($conn, $queryIndicatorStrength) or die($conn->error);
-                                                                                if ($indicatorStrengthResults) :
-                                                                                    foreach ($indicatorStrengthResults as $indicatorStrength) :
-                                                                                        ?>
-                                                                        <li><?php echo $indicatorStrength['indicator']  ?></li>
-                                                                        <input type="hidden" name="strength_cbc_id[]" value="<?php echo $indicatorStrength['cbc_id'] ?>" />
-                                                                        <input type="hidden" name="strength_cbc_ind_id[]" value="<?php echo $indicatorStrength['cbc_ind_id'] ?>" />
-                                                                <?php endforeach;
-                                                                                else : echo '<p class="tomato-color">No record!</p>';
-                                                                                endif; ?>
-                                                            </ul><br>
-                                                        <?php
-                                                                    endforeach;
-                                                                    ?>
-                                                </ul>
-                                            <?php
+                                                <div class="bg-black">
+                                                <div class="d-flex justify-content-between">
+                                                <div class="p-2"></div>
+                                                <div class="p-2"><label for="b_strength" class="form-control-label ">Strengths</label></div>
+                                                <div class="p-2"><a href="gendevplanT.php?btn=editstrcbc" class="btn btn-primary text-white">Edit</a></div>
+                                                </div>
+                                                </div>
+                                            <!-- ----------------------------- -->
+                                            <?php if($cbc_str):
+                                                foreach($cbc_str as $str_cbc):
+                                                // pre_r($cbc_str);
+                                                ?>
+                                                
+                                        <p>
+                                            <p class="tomato-color">
+                                                <?php echo displayCBCname($conn,$str_cbc['cbc_id']) ?>
+                                            </p>
 
-                                                    endif;
-                                                    ?>
+                                            <p>
+                                            <input type="hidden" name="strength_cbc_id[]" value="<?php echo $str_cbc['cbc_id'] ?>">
+                                            <input type="checkbox" name="strength_cbc_ind_id[]" value="<?php echo $str_cbc['cbc_ind_id'] ?>">
+                                                <?php echo displayCBCind($conn,$str_cbc['cbc_ind_id']) ?>
+                                            </p>
+                                        </p>
+                                     <?php endforeach; else: ?>
+                                        <p class="red-notif-border">
+                                         No ESAT record yet!
+                                     </p>
+
+                                     <?php endif; ?>
                                             </div>
+                    
+                                            <!-- -------------------------------- -->
                                             <div class="col-md-6">
-                                                <div class="bg-black"><label for="a_strength" class="form-control-label ">Development Needs</label></div>
-                                                <ul class="ul">
-                                                    <?php $esatForm3_devneeds_results = DevPlan::showDevNeedsIndicatorMT($conn);
-                                                            if (!empty($esatForm3_devneeds_results)) :
-                                                                foreach ($esatForm3_devneeds_results as $cbc_devneeds) :
-                                                                    ?>
-                                                            <input type="hidden" name="cbc_id[]" value="<?php echo  $cbc_devneeds['cbc_id'] ?>" />
-                                                            <li><b><?php echo $cbc_devneeds['cbc_name'] ?></b></li>
-                                                            <ul class="ul-square">
-                                                                <?php
-                                                                                $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralmt_tbl.* FROM esat3_core_behavioralmt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralmt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralmt_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioralmt_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioralmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralmt_tbl.school = "' . $cbc_devneeds['school'] . '" AND esat3_core_behavioralmt_tbl.status = "Active" AND cbc_score = 0  LIMIT 2';
-                                                                                $IndicatorDevNeedsResults = fetchAll($conn, $queryIndicatorDevneeds);
-                                                                                if ($IndicatorDevNeedsResults) :
-                                                                                    foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
-                                                                                        ?>
-                                                                        <li><?php echo $indicatorDevneeds['indicator'] ?></li>
-                                                                        <input type="hidden" name="devneed_cbc_id[]" value="<?php echo $indicatorDevneeds['cbc_id'] ?>" />
-                                                                        <input type="hidden" name="devneed_cbc_ind_id[]" value="<?php echo $indicatorDevneeds['cbc_ind_id'] ?>" />
-                                                                <?php endforeach;
-                                                                                else :
-                                                                                    echo '<p class="tomato-color">No record!</p>';
-                                                                                endif;
-                                                                                ?>
-                                                            </ul><br>
-                                                        <?php
-                                                                    endforeach;
-                                                                    ?>
-                                                </ul>
-                                            <?php
-                                                    else : echo '<p class ="red-notif-border">No data record!</p>';
-                                                    endif;
-                                                    ?>
+                                                <div class="bg-black"><div class="d-flex justify-content-between">
+                                                <div class="p-2"></div>
+                                                <div class="p-2"><label for="b_strength" class="form-control-label ">Development Needs</label></div>
+                                                <div class="p-2"><a href="gendevplanT.php?btn=editdevcbc" class="btn btn-primary text-white">Edit</a></div>
+                                                </div>
+                                                </div>
+<!-- ------------------------------------------------------------------------ -->
+<?php if($cbc_devneeds):
+                                                foreach($cbc_devneeds as $devneed_cbc):
+                                                // pre_r($cbc_str);
+                                                ?>
+                                                
+                                        <p>
+                                            <p class="tomato-color">
+                                                <?php echo displayCBCname($conn,$devneed_cbc['cbc_id']) ?>
+                                            </p>
+
+                                            <p>
+                                            <input type="hidden" name="devneed_cbc_id[]" value="<?php echo $devneed_cbc['cbc_id'] ?>">
+                                            <input type="checkbox" name="devneed_cbc_ind_id[]" value="<?php echo $devneed_cbc['cbc_ind_id'] ?>">
+                                                <?php echo displayCBCind($conn,$devneed_cbc['cbc_ind_id']) ?>
+                                            </p>
+                                        </p>
+                                     <?php endforeach; else: ?>
+
+                                        <p class="red-notif-border">
+                                         No ESAT record yet!
+                                     </p>
+                                    
+                                    <?php endif; ?>
+                                            </div>
+                    
+                                                    <!-- ------------------------------------------ -->
                                             </div>
                                         </div>
                                     </div>
@@ -311,26 +323,26 @@
                                         </div>
                                     </center>
 
-                                    </form>
-                            </div>
-                            <!--end breadcome -->
-                        </div><!-- end of container -->
+                        </form>
+                    </div>
+                    <!--end breadcome -->
+                </div><!-- end of container -->
 
-                        <br>
-                        <main>
-                        <?php
-                            /* ELSE FOR NOTIFICATION */
-                            else :
-                                echo  '<ul class="red-notif-border">';
-                                foreach ($notifsss as $notifs) :
-                                    echo  $notifs;
-                                endforeach;
-                                echo '</ul>';
-                                ?>
-                    <?php
-                        /* END IF */
-                        endif;
-                    /*--------------------------------------*/
-                    endif;
-                    include 'samplefooter.php';
-                    ?>
+                <br>
+                <main>
+                <?php
+                    /* ELSE FOR NOTIFICATION */
+                    else :
+                        echo  '<ul class="red-notif-border">';
+                        foreach ($notifsss as $notifs) :
+                            echo  $notifs;
+                        endforeach;
+                        echo '</ul>';
+                        ?>
+            <?php
+                /* END IF */
+                endif;
+            /*--------------------------------------*/
+            endif;
+            include 'samplefooter.php';
+            ?>

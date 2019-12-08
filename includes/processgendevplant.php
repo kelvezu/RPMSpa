@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) :
 endif;
 
     $a_lvlcapkra_id = $_POST['lvlcapkra_id'];
-    $a_lvlcapmtobj_id = $_POST['lvlcapmtobj_id'];
+    $a_lvlcapmtobj_id = $_POST['lvlcapobj_id'];
     $a_priodevkra_id = $_POST['priodevkra_id'];
     $a_priodevmtobj_id = $_POST['priodevmtobj_id'];
     $a_learning_objectives = $_POST['a_learning_objectives'];
@@ -37,6 +37,9 @@ endif;
     $b_resources_needed = $_POST['b_resources_needed'];
     $status = "Submit";
     $feedback = $_POST['feedback'];
+
+    // pre_r($_POST);
+    // exit();
 
 
     for ($count = 0; $count < count($a_lvlcapmtobj_id); $count++) {
@@ -60,14 +63,14 @@ endif;
 
     $conn->query('INSERT INTO `devplant_b3_actionplan_tbl`( `user_id`,`rater_id`,`sy`, `school`, `position`, `b_learning_objectives`, `b_intervention`, `b_timeline`, `b_resources_needed`,`status`,`approving_authority`) VALUES (' . $user_id . ',' . $rater_id . ',"' . $sy . '","' . $school_id . '","' . $position . '","' . $b_learning_objectives . '","' . $b_intervention . '","' . $b_timeline . '","' . $b_resources_needed . '","' . $status . '","' . $approving_authority . '")') or die($conn->error . 'ERROR IN devplant_b3_actionplan_tbl');
 
-    $conn->query('INSERT INTO `devplant_c_tbl`( `feedback`,`user_id`,`position`,`rater_id`, `sy`, `school_id`, `status`,`approving_authority`) 
+    $conn->query('INSERT INTO `devplant_c_tbl`( `feedback`,`user_id`,`position`,`rater_id`, `sy`, `school`, `status`,`approving_authority`) 
     VALUES ("' . $feedback . '",' . $user_id . ',"' . $position . '","' . $rater_id . '","' . $sy . '","' . $school_id . '","' . $status . '","' . $approving_authority . '")') or die($conn->error . "error in devplant_c_tbl");
 
-    header('location:../gendevplanmt.php');
+    header('location:../gendevplant.php?success');
 endif;
 
 
-// IF USER PRESSED save BUTTON 
+// IF USER PRESSED save BUTTON  
 if (isset($_POST['save'])) :
     echo 'na save hihi';
 endif;

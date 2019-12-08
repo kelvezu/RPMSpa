@@ -61,6 +61,7 @@
             $lvlcap = $_POST['lvlcap'];
             $priodev = $_POST['priodev'];
             $position = $_POST['position'];
+            pre_r($_POST);
 
             for ($count = 0; $count < count($tobj_id); $count++) {
                 $result = mysqli_query($conn, 'INSERT INTO `esat2_objectivest_tbl`(`user_id`, `kra_id`, `tobj_id`, `lvlcap`, `priodev`, `sy`, `school`,`position`,`status`) VALUES (' . $user_id[$count] . ',' . $kra_id[$count] . ',' . $tobj_id[$count] . ',' . $lvlcap[$count] . ',' . $priodev[$count] . ',' . $sy . ',' . $school . ',"' . $position . '","' . $status . '")') or die($conn->error);
@@ -74,7 +75,7 @@
         endif;
 
         //-------ESAT FORM 2 master teacher objectives------//
-        $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+  
 
         if (isset($_POST['submitESAT2mt'])) :
             $user_id = $_POST['user_id'];
@@ -103,10 +104,10 @@
             $cbc_score = $_POST['cbc_score'];
             $position = $_POST['position'];
 
-            if (stripos($position, aster)) :
+            if (stripos($position, 'aster')) :
                 for ($count = 0; $count < count($user_id); $count++) {
                     $conn->query('INSERT INTO esat3_core_behavioralmt_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
-                } elseif (stripos($position, eacher)) :
+                } elseif (stripos($position, 'eacher')) :
                 for ($count = 0; $count < count($user_id); $count++) {
                     $conn->query('INSERT INTO esat3_core_behavioralt_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
                 } else : die($conn->error);

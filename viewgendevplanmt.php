@@ -4,10 +4,13 @@
     use FilterUser\FilterUser;
 
 
+
     include_once 'sampleheader.php';
-    // devplan::checkDevPlanMT($conn);
-    // FilterUser::filterDevplanMTUsers($_SESSION['position']);
-    // A.CHECK IF USER DID NOT TAKEN ESAT
+    $sy = $_SESSION['active_sy_id'];
+$school = $_SESSION['school_id'];
+
+$show_str = displayDPstr($conn,$sy,$school);
+    
     $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
     //A.1 DISPLAY ERRORS IF THE USER DID NOT TAKE ESAT 
     if ($userESATstats) :
@@ -56,10 +59,10 @@
                                 </div>
                                 <hr>
 
-                                <input type="hidden" name="sy" value=<?php echo $_SESSION['active_sy_id']; ?> />
-                                <input type="hidden" name="school_id" value=<?php echo $_SESSION['school_id']; ?> />
-                                <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>" />
-                                <input type="hidden" name="user_id" value=<?php echo $_SESSION['user_id'] ?> />
+                                <!-- <input type="hidden" name="sy" value=<?php // echo $_SESSION['active_sy_id']; ?> />
+                                <input type="hidden" name="school_id" value=<?php // echo $_SESSION['school_id']; ?> />
+                                <input type="hidden" name="position" value="<?php // echo $_SESSION['position'] ?>" />
+                                <input type="hidden" name="user_id" value=<?php // echo $_SESSION['user_id'] ?> /> -->
                                 <!-- <input type="hidden" name="rater" value="<?php //echo $_SESSION['rater'] 
                                                                                         ?>" /> -->
                                 <input type="hidden" name="approving_authority" value="<?php echo $_SESSION['approving_authority'] ?>" />
@@ -74,42 +77,31 @@
                                             <div class="bg-black"><label for="a_strength" class="form-control-label">Strengths</label>
 
                                             </div>
-                                            <ul class="ul">
-                                                <?php
+                                            <!-- ----------------------------------------- -->
+                                            <?php if($show_str):
+                                                foreach($show_str as $s_str):?>
+                                                <p>
+                                                    <p>
+                                                        <?php echo displaykra($conn,$s_str['a_strengths']) ?>
 
-                                                        $esatForm2_LvlCap_results = DevPlan::showStrDevplanMT($conn);
-                                                        /* TURN THIS INTO FUNCTION */
-                                                        if (!empty($esatForm2_LvlCap_results)) :
-                                                            foreach ($esatForm2_LvlCap_results as $LvlCap_result) :
-                                                                ?>
-                                                        <li><b class="tomato-color">Key Result Area: </b><u>
-                                                                <?php
-                                                                                $LvlCap_result['kra_id'];
-                                                                                echo $LvlCap_result['kra_name'];
-                                                                                ?></u> </li>
-                                                        <ul class="ul-square">
-                                                            <?php
+                                                    </p>
+                                                    <p>
+                                                    <?php echo displayObjectiveMT($conn,$s_str['strengths_mtobj']) ?>
 
-                                                                            $queryMTobjlvlcap = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $LvlCap_result['kra_id'] . '" AND esat2_objectivesmt_tbl.user_id = "' . $LvlCap_result['user_id'] . '" AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $LvlCap_result['school'] . '" AND esat2_objectivesmt_tbl.status = "Active" AND esat2_objectivesmt_tbl.lvlcap >= 3  LIMIT 2';
-                                                                            $mtobjLvlcapResults = mysqli_query($dbcon, $queryMTobjlvlcap);
-                                                                            if ($mtobjLvlcapResults) :
-                                                                                foreach ($mtobjLvlcapResults as $mtobjLvlcap) :
-                                                                                    ?>
-                                                                    <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjLvlcap['mtobj_name'] ?></i></li><br />
-                                                                    <input type="hidden" name="lvlcapmtobj_id[]" value="<?php echo $mtobjLvlcap['mtobj_id'] ?>" />
-                                                                    <input type="hidden" name="lvlcapkra_id[]" value="<?php echo  $mtobjLvlcap['kra_id'] ?>" />
-                                                            <?php endforeach;
-                                                                            else : echo '<p class="tomato-color">No record!</p>';
-                                                                            endif; ?>
-                                                        </ul><br>
+                                                    </p>
+                                                </p>
+                                                   
+                                             <?php endforeach;?>
+                                                
 
-                                                    <?php
-                                                                endforeach;
-                                                                ?>
-                                            </ul>
-                                        <?php
-                                                endif;
-                                                ?>
+                                            <?php else: ?>
+                                                <p class="red-notif-border">
+                                                    No result!
+                                                </p>
+
+                                                <?php endif ?>
+                                            
+                                                <!-- ------------------------------------------------------------------ -->
                                         </div>
 
                                         <!-- A. Development Needs -->
@@ -240,7 +232,7 @@
                                                                 <ul class="ul-square">
                                                                     <?php
                                                                                     $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralmt_tbl.* FROM esat3_core_behavioralmt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralmt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralmt_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioralmt_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioralmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralmt_tbl.school = "' . $cbc_devneeds['school'] . '" AND esat3_core_behavioralmt_tbl.status = "Active" AND cbc_score = 0  LIMIT 2';
-                                                                                    $IndicatorDevNeedsResults = fetchAll($dbcon, $queryIndicatorDevneeds);
+                                                                                    $IndicatorDevNeedsResults = mysqli($dbcon, $queryIndicatorDevneeds);
                                                                                     if ($IndicatorDevNeedsResults) :
                                                                                         foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
                                                                                             ?>
