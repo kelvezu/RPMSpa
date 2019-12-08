@@ -269,12 +269,12 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                         <td>
                                             <select name="rating[]" required="required">
                                                 <option value="" disabled selected>--Select--</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="3">NO*</option>
+                                                <option value="1">4</option>
+                                                <option value="2">5</option>
+                                                <option value="3">6</option>
+                                                <option value="4">7</option>
+                                                <option value="5">8</option>
+                                                <option value="1">NO*</option>
                                             </select>
 
                                         </td>

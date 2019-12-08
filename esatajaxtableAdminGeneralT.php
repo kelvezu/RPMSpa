@@ -68,10 +68,10 @@ endif;
                     </thead>
                     <tbody>
                         <?php
-                        $qry = $conn->query("SELECT gender_tbl.gender_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN gender_tbl on esat1_demographicst_tbl.gender = gender_tbl.gender_id WHERE sy = '$sy' GROUP BY gender_tbl.gender_name");
+                        $qry = $conn->query("SELECT esat1_demographicst_tbl.gender, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' GROUP BY gender");
                         while ($esatresult = $qry->fetch_assoc()) : ?>
                             <tr>
-                                <td><?php echo $esatresult['gender_name']; ?></td>
+                                <td><?php echo $esatresult['gender']; ?></td>
                                 <td><?php echo $esatresult['total']; ?></td>
                             </tr>
                         <?php endwhile; ?>
@@ -380,7 +380,16 @@ endif;
                     </thead>
                     <tbody>
                         <?php
-                        $qry = $conn->query("SELECT a.tobj_id, b.low as L_LOW, c.low as L_MODERATE, d.low as L_HIGH, e.low as L_VERY_HIGH, f.low as P_LOW, g.low as P_MODERATE, h.low as P_HIGH, i.low as P_VERY_HIGH from tobj_tbl a LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id GROUP BY a.tobj_id, b.low, c.low, d.low, e.low") or die($conn->error . $qry);
+                        $qry = $conn->query("SELECT a.tobj_id, b.low as L_LOW, c.low as L_MODERATE, d.low as L_HIGH, e.low as L_VERY_HIGH, f.low as P_LOW, g.low as P_MODERATE, h.low as P_HIGH, i.low as P_VERY_HIGH from tobj_tbl a 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id 
+                        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 AND sy = '$sy' GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id 
+                        GROUP BY a.tobj_id, b.low, c.low, d.low, e.low") or die($conn->error . $qry);
                         foreach ($qry as $result) :
                             ?>
                             <tr>
@@ -424,23 +433,18 @@ endif;
                     </thead>
                     <tbody>
                         <?php
-                        $qry = $conn->query("SELECT *,core_behavioral_tbl.cbc_name, 
-                                CASE WHEN(a.score)=1 THEN COUNT(a.user_id) end as score1,
-                                CASE WHEN(a.score)=2 THEN COUNT(a.user_id) end as score2,
-                                CASE WHEN(a.score)=3 THEN COUNT(a.user_id) end as score3,
-                                CASE WHEN(a.score)=4 THEN COUNT(a.user_id) end as score4,
-                                CASE WHEN(a.score)=5 THEN COUNT(a.user_id) end as score5
-                                FROM
-                                (
-                                select sy,school,cbc_id, user_id,sum(cbc_score)score FROM esat3_core_behavioralt_tbl GROUP BY cbc_id
-                                ) a
-                                INNER JOIN core_behavioral_tbl on a.cbc_id = core_behavioral_tbl.cbc_id
-                                WHERE sy = '$sy'
-                                GROUP BY core_behavioral_tbl.cbc_name") or die($conn->error . $qry);
+                        $qry = $conn->query("SELECT a.cbc_id, count(a.sc1)score1,COUNT(a.sc2)score2,COUNT(a.sc3)score3,COUNT(a.sc4)score4,count(a.sc5)score5 FROM (select sy,cbc_id, user_id,
+                        CASE WHEN sum(cbc_score)=1 THEN count(user_id) end as sc1, 
+                        CASE WHEN sum(cbc_score)=2 THEN count(user_id) end as sc2, 
+                        CASE WHEN sum(cbc_score)=3 THEN count(user_id) end as sc3, 
+                        CASE WHEN sum(cbc_score)=4 THEN count(user_id) end as sc4, 
+                        CASE WHEN sum(cbc_score)=5 THEN count(user_id) end as sc5 
+                        FROM esat3_core_behavioralt_tbl  GROUP BY cbc_id,user_id)a WHERE sy = '$sy'
+                        GROUP BY a.cbc_id") or die($conn->error . $qry);
                         foreach ($qry as $result) :
                             ?>
                             <tr>
-                                <td><?php echo $result['cbc_name']; ?></td>
+                                <td><?php echo displayCBCdescription($conn, $result['cbc_id']); ?></td>
                                 <td><?php echo $result['score1']; ?></td>
                                 <td><?php echo $result['score2']; ?></td>
                                 <td><?php echo $result['score3']; ?></td>
