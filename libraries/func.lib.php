@@ -1619,3 +1619,15 @@
                 else : false;
                 endif;
             }
+
+
+            function FetchSchoolRegion($conn, $school)
+            {
+                $qry = "SELECT * FROM school_tbl WHERE school_id = $school ";
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+                    foreach ($result as $r) {
+                        return $r['reg_id'];
+                    }
+                }
+            }

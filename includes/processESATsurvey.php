@@ -23,6 +23,9 @@
             $curriclass = $_POST['curriclass'];
             $region = $_POST['region'];
 
+            pre_r($_POST);
+            // exit();
+
             if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
                 $query = "INSERT INTO esat1_demographicsmt_tbl(`user_id`, age, gender, employment_status, position, highest_degree, course_taken, totalyear, area_specialization, subject_taught, grade_lvl_taught, curri_class, region,sy,school,`status`) VALUES ('$user_id','$age','$gender','$empstatus','" . $position . "','$highest_degree','$course','$totalyear','$areaspec','$subject','$gradelvltaught','$curriclass','$region','$sy','$school','$status')";
                 if ($query_run = mysqli_query($conn, $query)) :
@@ -38,7 +41,8 @@
                     header('location:../esatform2t.php');
                     exit();
                 else :
-                    echo "You are not required to take ESAT!";
+                    // echo "You are not required to take ESAT!";
+                    die($conn->error . $query_run);
                 endif;
             else :
                 echo 'Mysql Error!' . mysqli_error($conn);
