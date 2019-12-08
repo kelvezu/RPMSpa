@@ -31,6 +31,15 @@ if (isset($_POST["upload"])) :
 
     for ($count = 0; $count < count($prc_id); $count++) :
 
+      
+        $check_prc_qry = "SELECT * FROM account_tbl WHERE prc_id = $prc_id[$count]";
+        $prc_query = $conn->query($check_prc_qry) or die($db->error);
+        if(mysqli_num_rows($prc_query) > 0):
+            header("Location:../usercsv.php?notif=prctaken&prc=$prc_id[$count]");
+            exit();
+        endif;
+
+
         $activation_code = uniqid(rand('1000', '9999'));
         // Check whether member already exists in the database with the same email
 
@@ -104,8 +113,7 @@ if (isset($_POST["upload"])) :
             //echo "$email[$count] is already registered!<br>";
             $dup_email_arr = array();
             array_push($dup_email_arr, $email[$count]);
-            $_SESSION['dup_email'] = $dup_email_arr;
-            header("Location:../usercsv.php?notif=emailerror");
+            header("Location:../usercsv.php?notif=emailerror&email=".$email[$count]."");
         endif;
     endfor;
 endif;
