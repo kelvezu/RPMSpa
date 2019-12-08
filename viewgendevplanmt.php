@@ -6,10 +6,15 @@
 
 
     include_once 'sampleheader.php';
-    $sy = $_SESSION['active_sy_id'];
-$school = $_SESSION['school_id'];
+     $sy = $_SESSION['active_sy_id'];
+ $school = $_SESSION['school_id'];
 
-$show_str = displayDPstr($conn,$sy,$school);
+// $show_str = displayDPstr($conn,$sy,$school);
+$show_str = mt_fetch_DEV_STR($conn,$sy,$school);
+$show_dn =  mt_fetch_DEV_NEEDS($conn,$sy,$school); 
+$show_str_kra_cbc =  mt_fetch_STR_KRA($conn,$sy,$school);
+$show_devneed_kra_cbc = mt_fetch_DEVNEED_KRA($conn,$sy,$school);
+
     
     $userESATstats =  isTakenEsat($conn, $_SESSION['position'], $_SESSION['user_id']);
     //A.1 DISPLAY ERRORS IF THE USER DID NOT TAKE ESAT 
@@ -31,40 +36,11 @@ $show_str = displayDPstr($conn,$sy,$school);
                     <div class="breadcome-list shadow-reset">
                         <h2 class="text-center"><strong>PART IV: General Master Teacher Development Plan</strong></h2>
                         <div>
-                            <div class="bg-black"><label for="a_strength" class="form-control-label">Select Rater and the Approving Authority: </label>
-                            </div>
+                         
                             <form action="" method="post" class="form-group">
-                                <div>
-                                    <div class="row black-border">
-                                        <div class="col-sm-6">
-                                            <label for="select-rater" class="form-control-label"> Rater: </label>
-                                            <?php
-                                                    $a1_str = DevPlan::showA1strengthMT($conn);
-                                                    foreach ($a1_str as $str) :
-                                                        $rater = $str['rater_id'];
-                                                        $position = $str['position'];
-                                                        $app_auth = $str['approving_authority'];
-                                                    endforeach;
-                                                    ?>
-                                            <input type="text" name="name" id="" value="<?= displayname($conn, $rater) ?>" disabled />
+                              
+                            
 
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="select-app-auth" class="form-control-label"> Approving Authority: </label>
-                                            <input type="text" name="name" id="" value="<?= displayname($conn, $app_auth) ?>" disabled />
-
-                                        </div>
-                                        <div class="col-sm-6"></div>
-                                    </div>
-                                </div>
-                                <hr>
-
-                                <!-- <input type="hidden" name="sy" value=<?php // echo $_SESSION['active_sy_id']; ?> />
-                                <input type="hidden" name="school_id" value=<?php // echo $_SESSION['school_id']; ?> />
-                                <input type="hidden" name="position" value="<?php // echo $_SESSION['position'] ?>" />
-                                <input type="hidden" name="user_id" value=<?php // echo $_SESSION['user_id'] ?> /> -->
-                                <!-- <input type="hidden" name="rater" value="<?php //echo $_SESSION['rater'] 
-                                                                                        ?>" /> -->
                                 <input type="hidden" name="approving_authority" value="<?php echo $_SESSION['approving_authority'] ?>" />
                                 <div id="A">
                                     <fieldset>
@@ -78,22 +54,21 @@ $show_str = displayDPstr($conn,$sy,$school);
 
                                             </div>
                                             <!-- ----------------------------------------- -->
-                                            <?php if($show_str):
-                                                foreach($show_str as $s_str):?>
-                                                <p>
-                                                    <p>
-                                                        <?php echo displaykra($conn,$s_str['a_strengths']) ?>
-
-                                                    </p>
-                                                    <p>
-                                                    <?php echo displayObjectiveMT($conn,$s_str['strengths_mtobj']) ?>
-
-                                                    </p>
+                                            <?php 
+                                     
+                                            if($show_str):
+                                                foreach($show_str as $s_str): ?>
+                                                <p class="tomato-color">
+                                                    <?php echo displayKRA($conn,$s_str['a_strengths']) ?>
                                                 </p>
-                                                   
-                                             <?php endforeach;?>
-                                                
 
+                                                   <?php $str_obj =  mt_fetch_STR_OBJ($conn,$sy,$school,$s_str['a_strengths']); 
+                                                //    pre_r($str_obj);
+                                                    foreach($str_obj as $s_obj): ?>
+                                                    <li>
+                                                      <?php echo displayObjectiveMT($conn,$s_obj['strengths_mtobj']) ?>
+                                                    </li>
+                                                    <?php endforeach; endforeach;?>
                                             <?php else: ?>
                                                 <p class="red-notif-border">
                                                     No result!
@@ -107,36 +82,27 @@ $show_str = displayDPstr($conn,$sy,$school);
                                         <!-- A. Development Needs -->
                                         <div class="black-border">
                                             <div class="bg-black"><label for="a_devneeds" class="form-control-label">Development Needs</label></div>
-                                            <ul class="ul">
-                                                <?php
-                                                        $esatForm2_priodev_results = DevPlan::showPrioDevplanMT($conn);
-                                                        if (!empty($esatForm2_priodev_results)) :
-                                                            foreach ($esatForm2_priodev_results as $PrioDev_result) :
-                                                                ?>
-                                                        <li><b class="tomato-color">Key Result Area: </b><u><?php echo $PrioDev_result['kra_name'] ?></u> </li>
+                                      <?php 
+                                     
+                                            if($show_dn):
+                                                foreach($show_dn as $s_dn): ?>
+                                                <p class="tomato-color">
+                                                    <?php echo displayKRA($conn,$s_dn['a_devneeds']) ?>
+                                                </p>
 
-                                                        <ul class="ul-square">
-                                                            <?php
-                                                                            $queryMTobjpriodev = 'SELECT kra_tbl.kra_name, mtobj_tbl.mtobj_name, esat2_objectivesmt_tbl.* FROM ( esat2_objectivesmt_tbl INNER JOIN kra_tbl ON esat2_objectivesmt_tbl.kra_id = kra_tbl.kra_id ) INNER JOIN mtobj_tbl ON esat2_objectivesmt_tbl.mtobj_id = mtobj_tbl.mtobj_id WHERE kra_tbl.kra_id = "' . $PrioDev_result['kra_id'] . '"  AND esat2_objectivesmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat2_objectivesmt_tbl.school = "' . $PrioDev_result['school'] . '" AND esat2_objectivesmt_tbl.priodev >= 3  LIMIT 2';
-                                                                            $mtobjPrioDevResults = mysqli_query($dbcon, $queryMTobjpriodev);
-                                                                            if (!empty($mtobjPrioDevResults)) :
-                                                                                foreach ($mtobjPrioDevResults as $mtobjPriodev) :
-                                                                                    ?>
-                                                                    <li><b class="darkred-color">Objective: </b><i><?php echo $mtobjPriodev['mtobj_name']  ?></i></li><br />
-                                                                    <input type="hidden" name="priodevmtobj_id[]" value="<?php echo $mtobjPriodev['mtobj_id'] ?>">
-                                                                    <input type="hidden" name="priodevkra_id[]" value="<?php echo  $mtobjPriodev['kra_id'] ?>">
-                                                            <?php endforeach;
-                                                                            else : echo '<p class="tomato-color">No record!</p>';
-                                                                            endif;
-                                                                            ?>
-                                                        </ul><br>
-                                                    <?php
-                                                                endforeach;
-                                                                ?>
-                                            </ul>
-                                        <?php
-                                                endif;
-                                                ?>
+                                                   <?php $dn_obj =  mt_fetch_DEVNEEDS_OBJ($conn,$sy,$school,$s_dn['a_devneeds']); 
+                                                //    pre_r($str_obj);
+                                                    foreach($str_obj as $s_obj): ?>
+                                                    <li>
+                                                      <?php echo displayObjectiveMT($conn,$s_dn['devneeds_mtobj']) ?>
+                                                    </li>
+                                                    <?php endforeach; endforeach;?>
+                                            <?php else: ?>
+                                                <p class="red-notif-border">
+                                                    No result!
+                                                </p>
+
+                                                <?php endif ?>
                                         </div>
                                         <!-- Action Plan -->
                                         <div class="black-border">
@@ -191,68 +157,33 @@ $show_str = displayDPstr($conn,$sy,$school);
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="bg-black"><label for="b_strength" class="form-control-label ">Strengths</label></div>
-                                                    <ul class="ul">
-                                                        <?php
-                                                                $esatForm3_strength_results = DevPlan::showStrIndicatorMT($conn);
-                                                                if (!empty($esatForm3_strength_results)) :
-                                                                    foreach ($esatForm3_strength_results as $cbc_strength) :
-                                                                        ?>
-                                                                <li><b><?php echo $cbc_strength['cbc_name'] ?></b></li>
-                                                                <ul class="ul-square">
-                                                                    <?php $queryIndicatorStrength = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralmt_tbl.* FROM esat3_core_behavioralmt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralmt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralmt_tbl.cbc_id =  "' . $cbc_strength['cbc_id'] . '" AND esat3_core_behavioralmt_tbl.user_id = "' . $cbc_strength['user_id'] . '" AND esat3_core_behavioralmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralmt_tbl.school = "' . $_SESSION['school_id'] . '" AND esat3_core_behavioralmt_tbl.status = "Active" AND cbc_score = 1  LIMIT 3';
-                                                                                    $indicatorStrengthResults = mysqli_query($dbcon, $queryIndicatorStrength);
-                                                                                    if ($indicatorStrengthResults) :
-                                                                                        foreach ($indicatorStrengthResults as $indicatorStrength) :
-                                                                                            ?>
-                                                                            <li><?php echo $indicatorStrength['indicator']  ?></li>
-                                                                            <input type="hidden" name="strength_cbc_id[]" value="<?php echo $indicatorStrength['cbc_id'] ?>" />
-                                                                            <input type="hidden" name="strength_cbc_ind_id[]" value="<?php echo $indicatorStrength['cbc_ind_id'] ?>" />
-                                                                    <?php endforeach;
-                                                                                    else : echo '<p class="tomato-color">No record!</p>';
-                                                                                    endif; ?>
-                                                                </ul><br>
-                                                            <?php
-                                                                        endforeach;
-                                                                        ?>
-                                                    </ul>
-                                                <?php
-
-                                                        endif;
-                                                        ?>
+                                                    <?php if($show_str_kra_cbc):
+                                                        foreach($show_str_kra_cbc as $kra_cbc): ?>
+                                                        <p class="tomato-color">
+                                                        <?php echo displayCBCname($conn,$kra_cbc['strength_cbc_id']) ?>
+                                                        </p>
+                                                         <?php foreach(mt_fetch_STR_IND_CBC($conn,$sy,$school,$kra_cbc['strength_cbc_id']) as $cbc_indi ):?>
+                                                        <li>
+                                                            <?= displayCBCind($conn,$cbc_indi['strength_cbc_ind_id'])  ?>
+                                                        </li>
+                                                         <?php endforeach; endforeach; endif; ?>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="bg-black"><label for="a_strength" class="form-control-label ">Development Needs</label></div>
-                                                    <ul class="ul">
-                                                        <?php $esatForm3_devneeds_results = DevPlan::showDevNeedsIndicatorMT($conn);
-                                                                if (!empty($esatForm3_devneeds_results)) :
-                                                                    foreach ($esatForm3_devneeds_results as $cbc_devneeds) :
-                                                                        ?>
-                                                                <input type="hidden" name="cbc_id[]" value="<?php echo  $cbc_devneeds['cbc_id'] ?>" />
-                                                                <li><b><?php echo $cbc_devneeds['cbc_name'] ?></b></li>
-                                                                <ul class="ul-square">
-                                                                    <?php
-                                                                                    $queryIndicatorDevneeds = 'SELECT cbc_indicators_tbl.*,esat3_core_behavioralmt_tbl.* FROM esat3_core_behavioralmt_tbl INNER JOIN cbc_indicators_tbl ON esat3_core_behavioralmt_tbl.cbc_ind_id = cbc_indicators_tbl.cbc_ind_id WHERE esat3_core_behavioralmt_tbl.cbc_id =  "' . $cbc_devneeds['cbc_id'] . '" AND esat3_core_behavioralmt_tbl.user_id = "' . $cbc_devneeds['user_id'] . '" AND esat3_core_behavioralmt_tbl.sy = "' . $_SESSION['active_sy_id'] . '" AND esat3_core_behavioralmt_tbl.school = "' . $cbc_devneeds['school'] . '" AND esat3_core_behavioralmt_tbl.status = "Active" AND cbc_score = 0  LIMIT 2';
-                                                                                    $IndicatorDevNeedsResults = mysqli($dbcon, $queryIndicatorDevneeds);
-                                                                                    if ($IndicatorDevNeedsResults) :
-                                                                                        foreach ($IndicatorDevNeedsResults as $indicatorDevneeds) :
-                                                                                            ?>
-                                                                            <li><?php echo $indicatorDevneeds['indicator'] ?></li>
-                                                                            <input type="hidden" name="devneed_cbc_id[]" value="<?php echo $indicatorDevneeds['cbc_id'] ?>" />
-                                                                            <input type="hidden" name="devneed_cbc_ind_id[]" value="<?php echo $indicatorDevneeds['cbc_ind_id'] ?>" />
-                                                                    <?php endforeach;
-                                                                                    else :
-                                                                                        echo '<p class="tomato-color">No record!</p>';
-                                                                                    endif;
-                                                                                    ?>
-                                                                </ul><br>
-                                                            <?php
-                                                                        endforeach;
-                                                                        ?>
-                                                    </ul>
-                                                <?php
-                                                        else : echo '<p class ="red-notif-border">No data record!</p>';
-                                                        endif;
-                                                        ?>
+                                           
+
+                                                    <?php if($show_devneed_kra_cbc):
+                                                        foreach($show_devneed_kra_cbc as $kra_cbc): ?>
+                                                        <p class="tomato-color">
+                                                        <?php echo displayCBCname($conn,$kra_cbc['devneed_cbc_id']) ?>
+                                                        </p>
+                                                         <?php foreach(mt_fetch_DEVNEED_IND_CBC($conn,$sy,$school,$kra_cbc['devneed_cbc_id']) as $cbc_indi ):?>
+                                                        <li>
+                                                            <?= displayCBCind($conn,$cbc_indi['devneed_cbc_ind_id'])  ?>
+                                                        </li>
+                                                         <?php endforeach; endforeach; endif; ?>
+
+                                               
                                                 </div>
                                             </div>
                                         </div>
@@ -260,7 +191,7 @@ $show_str = displayDPstr($conn,$sy,$school);
                                             <div class="form-control-label bg-black">
                                                 <label for="learn-objectives" class="form-control-label">Action Plan</label>
                                                 <?php
-                                                        $action = devplan::showB3ActionMT($conn);
+                                                        $action = devplan::showB3Action($conn);
                                                         foreach ($action as $act) :
                                                             $interb = $act['b_intervention'];
                                                             $learnb = $act['b_learning_objectives'];
@@ -302,7 +233,7 @@ $show_str = displayDPstr($conn,$sy,$school);
 
                                             <div>
                                                 <?php
-                                                        $action3 = devplan::showDevCMT($conn);
+                                                        $action3 = devplan::showDevC($conn);
                                                         foreach ($action3 as $act3) :
                                                             $act3 = $act3['feedback'];
                                                         endforeach;
