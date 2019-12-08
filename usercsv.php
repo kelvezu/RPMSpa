@@ -86,6 +86,13 @@ include 'sampleheader.php';
     <script>
         document.getElementById('upload_btn').style.display = "none";
 
+        /* function for duplicate array  */
+        const isDuplicate = (arr) =>{
+         if(!arr.filter(i=>arr.filter(inner => inner === i).length > 1)){
+             return false;
+         };
+        }
+
 
         // --------------------------------------------
         $(document).ready(function() {
@@ -132,8 +139,8 @@ include 'sampleheader.php';
 
 
 
-                        //if(columns[0] && columns[1] && columns[2] && columns[3] && columns[4] && columns[5] && columns[6] && columns[7] && columns[8])                   
-                        //newrow = "<tr><td>"+ columns[0] + "</td><td>" + columns[1] + "</td><td>"+ columns[2] + "</td><td>"+ columns[3] + "</td><td>"+ columns[4] + "</td><td>"+ columns[5] + "</td><td>" + columns[6] + "</td><td>"+ columns[7] + "</td><td>"+ columns[8] + "</td>";
+                        // if(columns[0] && columns[1] && columns[2] && columns[3] && columns[4] && columns[5] && columns[6] && columns[7] && columns[8])                   
+                        // newrow = "<tr><td>"+ columns[0] + "</td><td>" + columns[1] + "</td><td>"+ columns[2] + "</td><td>"+ columns[3] + "</td><td>"+ columns[4] + "</td><td>"+ columns[5] + "</td><td>" + columns[6] + "</td><td>"+ columns[7] + "</td><td>"+ columns[8] + "</td>";
 
 
 
@@ -147,7 +154,7 @@ include 'sampleheader.php';
                                     isError = true;
                                 }
                                 //     THIS FUNCTION WILL DETECT IF THERE ARE DUPLICATES IN PRC
-                                if (find(columns[0])) {
+                                if (columns[0].isDuplicate) {
                                     console.log('there is duplicate ' + columns[0]);
                                     columns[0] = '<p class="text-danger">Duplicate PRC detected!</p>';
                                     isError = true;
@@ -161,16 +168,18 @@ include 'sampleheader.php';
 
                             /*------------------Validation for Surname---------------------------*/
                             if (columns[1]) {
-                                // THIS CONDITION WILL DETECT IF THERE ARE SPECIAL CHARS IN SURNAME
-                                if (!columns[1].match(/^[A-Za-z ]+$/)) {
-                                    columns[1] = "<p class='text-danger'>Surname must consist of Letters</p>";
-                                    isError = true;
-                                }
-                                // THIS WILL DETECT IF SURNAME IS LESS THAN 2 
-                                if (columns[1].length < 2) {
+                                toString(columns[1]);
+                                 // THIS WILL DETECT IF SURNAME IS LESS THAN 2 
+                                 if (columns[1].length < 2) {
                                     columns[1] = "<p class='text-danger'>Surname must be 2 or more letters</p>";
                                     isError = true;
                                 }
+                                // THIS CONDITION WILL DETECT IF THERE ARE SPECIAL CHARS IN SURNAME
+                                else if (!columns[1].match(/^[A-Za-z]+$/)) {
+                                    columns[1] = "<p class='text-danger'>Surname must consist of Letters</p>";
+                                    isError = true;
+                                }
+                               
 
                             } else {
                                 columns[1] = "<p class='text-danger'>Surname is required</p>";
