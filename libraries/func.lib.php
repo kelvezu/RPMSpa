@@ -229,6 +229,7 @@
             {
                 //SET THE DATABASE TO INACTIVE IF THE END DATE IS EQUAL TO END_DATE
                 if (!empty($sy_id)) :
+                    // echo $_SESSION['end_date'];
                     if (!empty($_SESSION['end_date'])) :
                         $today_date = strtotime(intval(date('Y-m-d')));
                         $enddate = strtotime(intval($_SESSION['end_date']));
@@ -657,7 +658,7 @@
 
             function displayObjectiveMT($conn, $mtobj_id)
             {
-                $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = $mtobj_id";
+                $qry = "SELECT * FROM mtobj_tbl WHERE mtobj_id = '$mtobj_id'";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
                 $count_res = mysqli_num_rows($results);
 
