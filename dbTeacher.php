@@ -200,7 +200,7 @@ $position = "Teacher I";
           CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN AVG(average) END AS sy3,
           CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN AVG(average) END AS sy2,
           CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN AVG(average) END AS sy
-          FROM cot_t_indicator_ave_tbl WHERE school = ".$_SESSION['school_id']." and user_id = '" . $_SESSION['user_id'] . "' GROUP BY indicator_id,average,sy) a
+          FROM cot_t_indicator_ave_tbl WHERE school = '".$_SESSION['school_id']."' and user_id = '" . $_SESSION['user_id'] . "' GROUP BY indicator_id,average,sy) a
           GROUP BY a.indicator_id") or die($conn->error);
               while ($cotQry = $qry->fetch_assoc()) :
                 echo "['" . $cotQry['indicator_id'] . "', 
