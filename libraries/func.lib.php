@@ -1699,13 +1699,13 @@
             function rawRate($raw_rate, $position)
             {
                 if ($position == "Master Teacher IV" or $position == "Master Teacher III" or $position == "Master Teacher II" or $position == "Master Teacher I") :
-                    if ($raw_rate == 0) :
+                    if ($raw_rate == false) :
                         return $raw_rate = 0;
                     else :
                         return floatval($raw_rate) + floatval(3);
                     endif;
                 elseif ($position == "Teacher III" or $position == "Teacher II" or $position == "Teacher I") :
-                    if ($raw_rate == 0) :
+                    if ($raw_rate == false) :
                         return $raw_rate = 0;
                     else :
                         return floatval($raw_rate) + floatval(2);
