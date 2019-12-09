@@ -99,7 +99,8 @@ $user_id = $_SESSION['user_id'];
                                                                     <div class="card-header bg-dark text-white">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div class="p-2">
-                                                                                <p><b>File name:</b> <?= $mmov['file_name'] ?></p>
+                                                                                <p><b>File name:</b>
+                                                                                    <?php echo displayMOVfileMT($conn, $mmov['mov_id']) ?></p>
                                                                             </div>
                                                                             <form action="includes/processAttachUser.php" method="POST">
                                                                                 <input type="hidden" value="<?= $mmov['user_id'] ?>" name="user_id">
@@ -124,7 +125,7 @@ $user_id = $_SESSION['user_id'];
                                                                             <div class="card-footer alert alert-dark">
                                                                                 <p class="text-justify">
                                                                                     <b>Description:</b>
-                                                                                    <p class="text-justify">" <i><?= $mmov['file_desc'] ?></i> "</p>
+                                                                                    <p class="text-justify">" <i><?php echo displayFileDescMT($conn, $mmov['mov_id'])  ?></i> "</p>
                                                                                 </p>
                                                                             </div>
                                                                         </form>
