@@ -7,6 +7,14 @@ include_once 'libraries/func.lib.php';
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
 
+if (isset($_GET['notif'])) :
+    if ($_GET['notif'] == "success") :
+        echo '<div class="green-notif-border">Classroom Observation has been submitted!</div>';
+    elseif ($_GET['notif'] == "recordexist") :
+        echo '<div class="red-notif-border">Classroom Observation already exists!</div>';
+    endif;
+endif;
+
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -66,7 +74,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
                         <div class="col-lg-6">
                             <label>MASTER TEACHER OBSERVED: </label>
-                            <select name="tobserved" required="required">
+                            <select name="mtobserved" required="required">
                                 <option value="" disabled selected>--Select Teacher--</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -122,7 +130,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                             <label>
                                 SUBJECT:
                             </label>
-                            <select name="tsubject" required="required">
+                            <select name="mtsubject" required="required">
                                 <option value="" disabled selected>--Select Subject--</option>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
@@ -141,7 +149,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                             <label for="gradeleveltaught">
                                 GRADE LEVEL TAUGHT:
                             </label>
-                            <select name="tgradelvltaught" required="required">
+                            <select name="mtgradelvltaught" required="required">
                                 <option value="" disabled selected>--Select Grade Level Taught--</option>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
@@ -202,19 +210,19 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                             $fourth_period_int = intval(strtotime($_SESSION['final_period']));
 
                             if ($intdate >= $fourth_period_int) :
-                                $period = "4th";
+                                $period = 4;
                             elseif ($intdate >= $third_period_int) :
-                                $period = "3rd";
+                                $period = 3;
                             elseif ($intdate >= $second_period_int) :
-                                $period = "2nd";
+                                $period = 2;
                             elseif ($intdate >= $first_period_int) :
-                                $period = "1st";
+                                $period = 1;
                             else :
                                 $period = "Invalid Period";
                             endif;
                             ?>
 
-                            <input type="text" name="obs" value="<?php echo $period; ?>" readonly />
+                            <input type="text" name="mtobs" value="<?php echo $period; ?>" readonly />
                         </div>
 
                         <br>
@@ -259,7 +267,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                 ?>
 
 
-                                <input type="hidden" name="indicator_id[]" value="<?php echo $row['mtindicator_id']; ?>" />
+                                <input type="hidden" name="mtindicator_id[]" value="<?php echo $row['mtindicator_id']; ?>" />
                                 <input type="hidden" name="indicator_name[]" value="<?php echo $row['mtindicator_name']; ?>" />
 
                                 <tbody>
@@ -267,7 +275,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                         <td><?php echo $row['mtindicator_id']; ?></td>
                                         <td><?php echo $row['mtindicator_name']; ?></td>
                                         <td>
-                                            <select name="rating[]" required="required">
+                                            <select name="mtrating[]" required="required">
                                                 <option value="" disabled selected>--Select--</option>
                                                 <option value="1">4</option>
                                                 <option value="2">5</option>
@@ -295,7 +303,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
 
 
-            <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
+            <textarea class="form-control" name="mtioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
 

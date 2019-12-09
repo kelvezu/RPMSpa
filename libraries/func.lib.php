@@ -5,8 +5,9 @@
             //GET THE START
 
             use Dashboard\Dashboard;
-            
-            function percent($number){
+
+            function percent($number)
+            {
                 return $number * 100 . '%';
             }
 
@@ -1738,124 +1739,133 @@
                 return date("Y-m-d H:i:s");
             }
 
-            function displayLVLcapObjT($conn,$sy,$school){
+            function displayLVLcapObjT($conn, $sy, $school)
+            {
                 $qry = "SELECT  SUM(lvlcap),SUM(priodev) ,kra_id,tobj_id FROM `esat2_objectivest_tbl` WHERE `status` = 'Active' and sy = $sy and school = $school group by tobj_id ORDER by SUM(lvlcap) desc,SUM(priodev) desc";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            function displayLVLcapObjMT($conn,$sy,$school){
+            function displayLVLcapObjMT($conn, $sy, $school)
+            {
                 $qry = "SELECT  SUM(lvlcap),SUM(priodev) ,kra_id,mtobj_id FROM `esat2_objectivesMt_tbl` WHERE `status` = 'Active' and sy = $sy and school = $school group by mtobj_id ORDER by SUM(lvlcap) desc,SUM(priodev) desc";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
-                    return $res_arr ;
+                    return $res_arr;
                 }
             }
 
-            function displayPrioDevObjT($conn,$sy,$school){
+            function displayPrioDevObjT($conn, $sy, $school)
+            {
                 $qry = "SELECT  SUM(lvlcap),SUM(priodev), kra_id,tobj_id FROM `esat2_objectivest_tbl` WHERE `status` = 'Active' and sy = $sy and school = $school group by tobj_id ORDER by SUM(lvlcap) ,SUM(priodev) desc";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            function displayPrioDevObjMT($conn,$sy,$school){
+            function displayPrioDevObjMT($conn, $sy, $school)
+            {
                 $qry = "SELECT  SUM(lvlcap),SUM(priodev), kra_id,mtobj_id FROM `esat2_objectivesMt_tbl` WHERE `status` = 'Active' and sy = $sy and school = $school group by mtobj_id ORDER by SUM(lvlcap) ,SUM(priodev) desc";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            function displayCBCstrT($conn,$sy,$school){
+            function displayCBCstrT($conn, $sy, $school)
+            {
                 $qry = " SELECT SUM(cbc_score),cbc_ind_id,cbc_id FROM `esat3_core_behavioralt_tbl` where cbc_score = 1 and sy = $sy and school = $school and status = 'active' GROUP by cbc_ind_id";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            function displayCBCstrMT($conn,$sy,$school){
+            function displayCBCstrMT($conn, $sy, $school)
+            {
                 $qry = " SELECT SUM(cbc_score),cbc_ind_id,cbc_id FROM `esat3_core_behavioralmt_tbl` where cbc_score = 1 and sy = $sy and school = $school and status = 'active' GROUP by cbc_ind_id";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            function displayCBCdevneedT($conn,$sy,$school){
+            function displayCBCdevneedT($conn, $sy, $school)
+            {
                 $qry = " SELECT SUM(cbc_score),cbc_ind_id,cbc_id FROM `esat3_core_behavioralt_tbl` where cbc_score = 0 and sy = $sy and school = $school and status = 'active' GROUP by cbc_ind_id";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            function displayCBCdevneedMT($conn,$sy,$school){
+            function displayCBCdevneedMT($conn, $sy, $school)
+            {
                 $qry = " SELECT SUM(cbc_score),cbc_ind_id,cbc_id FROM `esat3_core_behavioralmt_tbl` where cbc_score = 0 and sy = $sy and school = $school and status = 'active' GROUP by cbc_ind_id";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            function displayDPstr($conn,$sy,$school){
+            function displayDPstr($conn, $sy, $school)
+            {
                 $qry = " SELECT * FROM `devplanmt_a1_strength_tbl` WHERE sy = $sy and school = $school AND status = 'Submit' ORDER BY a_strengths";
-                $result = mysqli_query($conn,$qry) or die($conn->error);
+                $result = mysqli_query($conn, $qry) or die($conn->error);
 
-                if($result){
+                if ($result) {
                     $res_arr = [];
-                    foreach($result as $r){
-                        array_push($res_arr,$r);
+                    foreach ($result as $r) {
+                        array_push($res_arr, $r);
                     }
                     return $res_arr;
                 }
             }
 
-            
+
 
 
             function displayCBCdescription($conn, $cbc_id)
@@ -1873,218 +1883,218 @@
             /*
             FETCH THE DEV A_STRENTHS
             */
-           
-            function mt_fetch_DEV_STR($conn,$sy,$school)
+
+            function mt_fetch_DEV_STR($conn, $sy, $school)
             {
                 $qry = " SELECT * FROM `devplanmt_a1_strength_tbl` WHERE `status` = 'Submit' AND sy = '$sy' AND school = '$school' group by a_strengths";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-            function t_fetch_DEV_STR($conn,$sy,$school)
+            function t_fetch_DEV_STR($conn, $sy, $school)
             {
                 $qry = " SELECT * FROM `devplant_a1_strength_tbl` WHERE `status` = 'Submit' AND sy = '$sy' AND school = '$school' group by a_strengths";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-            function mt_fetch_STR_OBJ($conn,$sy,$school,$a_str)
+            function mt_fetch_STR_OBJ($conn, $sy, $school, $a_str)
             {
                 $qry = " SELECT * FROM `devplanmt_a1_strength_tbl` WHERE `status` = 'Submit' AND a_strengths = $a_str AND sy = '$sy' AND school = '$school' group by strengths_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-              function t_fetch_STR_OBJ($conn,$sy,$school,$a_str)
+            function t_fetch_STR_OBJ($conn, $sy, $school, $a_str)
             {
                 $qry = " SELECT * FROM `devplant_a1_strength_tbl` WHERE `status` = 'Submit' AND a_strengths = $a_str AND sy = '$sy' AND school = '$school' group by strengths_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function mt_fetch_DEV_NEEDS($conn,$sy,$school)
+            function mt_fetch_DEV_NEEDS($conn, $sy, $school)
             {
                 $qry = " SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `status` = 'Submit' AND sy = '$sy' AND school = '$school' group by a_devneeds";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function t_fetch_DEV_NEEDS($conn,$sy,$school)
+            function t_fetch_DEV_NEEDS($conn, $sy, $school)
             {
                 $qry = " SELECT * FROM `devplant_a2_devneeds_tbl` WHERE `status` = 'Submit' AND sy = '$sy' AND school = '$school' group by a_devneeds";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-            function mt_fetch_DEVNEEDS_OBJ($conn,$sy,$school,$a_str)
+            function mt_fetch_DEVNEEDS_OBJ($conn, $sy, $school, $a_str)
             {
                 $qry = " SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `status` = 'Submit' AND a_devneeds = $a_str AND sy = '$sy' AND school = '$school' group by devneeds_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-            function t_fetch_DEVNEEDS_OBJ($conn,$sy,$school,$a_str)
+            function t_fetch_DEVNEEDS_OBJ($conn, $sy, $school, $a_str)
             {
                 $qry = " SELECT * FROM `devplant_a2_devneeds_tbl` WHERE `status` = 'Submit' AND a_devneeds = $a_str AND sy = '$sy' AND school = '$school' group by devneeds_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function mt_fetch_STR_KRA($conn,$sy,$school)
+            function mt_fetch_STR_KRA($conn, $sy, $school)
             {
                 $qry = "SELECT * FROM `devplanmt_b1_strength_tbl` WHERE sy = $sy and school = $school group by strength_cbc_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-            function t_fetch_STR_KRA($conn,$sy,$school)
+            function t_fetch_STR_KRA($conn, $sy, $school)
             {
                 $qry = "SELECT * FROM `devplant_b1_strength_tbl` WHERE sy = $sy and school = $school group by strength_cbc_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function mt_fetch_STR_IND_CBC($conn,$sy,$school,$cbc_id)
+            function mt_fetch_STR_IND_CBC($conn, $sy, $school, $cbc_id)
             {
                 $qry = " SELECT * FROM `devplanmt_b1_strength_tbl` WHERE `status` = 'Submit' AND strength_cbc_id = $cbc_id AND sy = '$sy' AND school = '$school' group by strength_cbc_ind_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function t_fetch_STR_IND_CBC($conn,$sy,$school,$cbc_id)
+            function t_fetch_STR_IND_CBC($conn, $sy, $school, $cbc_id)
             {
                 $qry = " SELECT * FROM `devplant_b1_strength_tbl` WHERE `status` = 'Submit' AND strength_cbc_id = $cbc_id AND sy = '$sy' AND school = '$school' group by strength_cbc_ind_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function mt_fetch_DEVNEED_KRA($conn,$sy,$school)
+            function mt_fetch_DEVNEED_KRA($conn, $sy, $school)
             {
                 $qry = "SELECT * FROM `devplanmt_b2_devneeds_tbl` WHERE sy = $sy and school = $school group by devneed_cbc_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-               function t_fetch_DEVNEED_KRA($conn,$sy,$school)
+            function t_fetch_DEVNEED_KRA($conn, $sy, $school)
             {
                 $qry = "SELECT * FROM `devplant_b2_devneeds_tbl` WHERE sy = $sy and school = $school group by devneed_cbc_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function mt_fetch_DEVNEED_IND_CBC($conn,$sy,$school,$cbc_id)
+            function mt_fetch_DEVNEED_IND_CBC($conn, $sy, $school, $cbc_id)
             {
                 $qry = " SELECT * FROM `devplanmt_b2_devneeds_tbl` WHERE `status` = 'Submit' AND devneed_cbc_id = $cbc_id AND sy = '$sy' AND school = '$school' group by devneed_cbc_ind_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-             function t_fetch_DEVNEED_IND_CBC($conn,$sy,$school,$cbc_id)
+            function t_fetch_DEVNEED_IND_CBC($conn, $sy, $school, $cbc_id)
             {
                 $qry = " SELECT * FROM `devplant_b2_devneeds_tbl` WHERE `status` = 'Submit' AND devneed_cbc_id = $cbc_id AND sy = '$sy' AND school = '$school' group by devneed_cbc_ind_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $r) :
-                      array_push($res_array, $r);
+                        array_push($res_array, $r);
                     endforeach;
                     return $res_array;
                 }
             }
 
-            
 
-            
+
+
 
             function showObsPeriodAveAdminTGeneral($conn, $sy)
             {
@@ -2160,4 +2170,14 @@
                 }
             }
 
-            
+            function generateAVG($num1, $num2, $num3)
+            {
+                intval($num1);
+                intval($num2);
+                intval($num3);
+                if ($num1 && $num2 && $num3) :
+                    return  floatval(($num1 + $num2 + $num3) / 3);
+                elseif ($num1 || $num2 || $num3) :
+                    return  floatval(($num1 + $num2 + $num3) / 2);
+                endif;
+            }

@@ -19,3 +19,5 @@ $conn = mysqli_connect($servername, $dbUsername, $dbPassword, $dbName);
 if (!$conn) {
     die("Connection Failed: " . mysqli_connect_error());
 }
+
+date_default_timezone_set('Asia/Manila');

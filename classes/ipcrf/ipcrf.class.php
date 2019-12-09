@@ -110,7 +110,7 @@ class IPCRF
         elseif ($eff_count == 3) : return 3;
         elseif ($eff_count == 2) : return 2;
         elseif ($eff_count == 1) : return 1;
-        else : return 1;
+        else : return 0;
         endif;
     }
 
@@ -145,6 +145,19 @@ class IPCRF
                 return floatval($r['average']);
             endforeach;
         else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function getSuppFileDate($mov_id, $kra_id, $obj)
+    {
+        $qry = "SELECT * FROM `mov_supp_mt_attach_tbl` where mov_id = $mov_id and kra_id = $kra_id and obj_id = $obj and user_id = 33 and school_id = 14 and sy_id = 17 and doc_status = 'approved' and status = 'Active'";
+        $result = mysqli_query($this->conn(), $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
         endif;
     }
 }
