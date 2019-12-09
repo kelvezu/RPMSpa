@@ -37,7 +37,7 @@ if (isset($_POST['save'])) {
     $resultcount = mysqli_num_rows($cotquery);
 
     if ($resultcount > 0) {
-        header('location:../setcotformMT.php?notif=recordexist');
+        header('location:../cotformMT.php?notif=recordexist');
         exit();
     }
 
@@ -52,6 +52,6 @@ if (isset($_POST['save'])) {
 
 
 
-    header('location:../setcotformMT.php?notif=success');
+    header('location:../cotformMT.php?notif=success');
     exit();
 }

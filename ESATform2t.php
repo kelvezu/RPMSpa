@@ -72,7 +72,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                 </td>
                 <td>
 
-                  <select name="lvlcap[]" id="lvlcapp" onChange="change_cap()" class="form-control font-weight-bold">
+                  <select name="lvlcap[]" id="lvlcapp" onChange="change_cap()" class="form-control font-weight-bold" required>
                     <option value="">--Select--</option>
                     <option value=4>Very High</option>
                     <option value=3>High</option>
@@ -82,7 +82,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                 </td>
                 <td>
                   <div id="priodev">
-                    <select name="priodev[]" class="form-control font-weight-bold">
+                    <select name="priodev[]" class="form-control font-weight-bold" required>
                       <option value="">--Select--</option>
                       <option value=4>Very High</option>
                       <option value=3>High</option>

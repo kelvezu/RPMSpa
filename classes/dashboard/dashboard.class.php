@@ -184,8 +184,8 @@ class Dashboard
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                     <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                    <a href="setcotform.php" class="dropdown-item">Teacher COT Rating Sheet</a>
-                    <a href="setcotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="cotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
                     <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
                     <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
                     <a href="pmcf.php" class="dropdown-item">PMCF</a>
@@ -296,7 +296,7 @@ class Dashboard
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                        <a href="setcotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                        <a href="cotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
                         <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
                         <a href="devplan.php" class="dropdown-item">Development Plan</a>
                         <a href="pmcf.php" class="dropdown-item">PMCF</a>
@@ -363,8 +363,8 @@ class Dashboard
                                 <a class="dropdown-item" href="cotAveTprincipal.php">View Teacher Average COT</a>
                                 <a class="dropdown-item" href="cotrateviewMTprincipal.php">View Master Teacher COT</a>
                                 <a class="dropdown-item" href="cotAveMTprincipal.php">View Master Teacher Average COT</a>
-                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
-                                <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
+                                <a class="dropdown-item" href="cotformT.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="cotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
 
@@ -461,8 +461,8 @@ class Dashboard
                                 <a class="dropdown-item" href="cotAveTschoolhead.php">View Teacher Average COT</a>
                                 <a class="dropdown-item" href="cotrateviewMTschoolhead.php">View Master Teacher COT</a>
                                 <a class="dropdown-item" href="cotAveMTschoolhead.php">View Master Teacher Average COT</a>
-                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
-                                <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
+                                <a class="dropdown-item" href="cotformT.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="cotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
 
@@ -574,7 +574,7 @@ s
                                 <a class="dropdown-item" href="cotAveTschoolhead.php">View Teacher Average COT</a>
                                 <a class="dropdown-item" href="cotrateviewMT.php">View My COT Rating</a>
                                 <a class="dropdown-item" href="cotAveMT.php">View My Average COT</a>
-                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="cotformT.php">Rate Teacher COT</a>
                             </div>
                         </li>
         
@@ -582,7 +582,7 @@ s
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                 <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
-                                <a href="setcotform.php" class="dropdown-item">Teacher COT Rating Sheet</a>                  <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a> 
+                                <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>                  <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a> 
                                 <a href="viewgendevplanmt.php" class="dropdown-item">Development Plan</a>
                                 <a href="pmcf.php" class="dropdown-item">PMCF</a>
                                 <a href="mrf.php" class="dropdown-item">MRF</a>

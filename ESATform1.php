@@ -26,7 +26,7 @@
 
           <label><strong>1. Age Option</strong></label>
           <br>
-          <select name="age" id="" class="form-control">
+          <select name="age" id="" class="form-control" required>
             <option>--Select Age--</option>
             <?php
             $ageresult = $conn->query('SELECT * FROM age_tbl')  or die($conn->error);
@@ -53,7 +53,7 @@
           <br>
           <label><strong>3. Employment Status</strong></label>
           <br>
-          <select name="status" id="" class="form-control">
+          <select name="status" id="" class="form-control" required>
             <option value="">--Select Employment Status</option>
             <option value="Regular Permanent">Regular Permanent</option>
             <option value="Substitute">Substitute</option>
@@ -81,7 +81,7 @@
           <br>
           <label><strong>6. Total Number of Years in Teaching</strong></label>
           <br>
-          <select name="totalyear" id="" class="form-control">
+          <select name="totalyear" id="" class="form-control" required>
             <option>--Select Total Years in Teaching--</option>
             <?php
             $totalyrresult = $conn->query('SELECT * FROM totalyear_tbl')  or die($conn->error);
@@ -160,7 +160,7 @@
           <label><strong>10. Curricular Classification of the School</strong></label>
           <br>
           <div class="card-body text-dark">
-            <select name="curriclass" id="" class="form-control">
+            <select name="curriclass" id="" class="form-control" required>
               <option value="">--Select Curricular Classification</option>
               <?php
               $curriresult = $conn->query('SELECT * FROM curriclass_tbl')  or die($conn->error);
