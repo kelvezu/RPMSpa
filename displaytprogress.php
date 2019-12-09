@@ -5,16 +5,16 @@ use RPMSdb\RPMSdb;
 include 'sampleheader.php';
 
 ?>
-<div class="dashone-adminprowrap shadow-reset mg-b-30">
-    <div class="dash-adminpro-project-title">
-        <h4 align="center"><b>Teacher Progress View</b></h4>
-
-        <div class="sparkline9-graph">
-            <div class="static-table-list">
 
 
-                <table class="table sparkle-table ">
+<div class="container">
 
+<div class="card text-center">
+    <div class="card-header h4 bg-success text-white text-center">
+Teacher Progress View
+    </div>
+    <div class="card-body">
+                <table class="table table-bordered hover table-sm">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -30,58 +30,24 @@ include 'sampleheader.php';
                     if (isset($teacherMasterlist_results)) :
                         foreach ($teacherMasterlist_results as $teacher) :
 
-                            $teachername = $teacher['user_id'] . ' ' . $teacher['firstname'] . ' ' . substr($teacher['middlename'], 0, 1) . '. ' . $teacher['surname'];
+                            $teachername = $teacher['firstname'] . ' ' . substr($teacher['middlename'], 0, 1) . '. ' . $teacher['surname'];
                             ?>
                             <tbody>
                                 <tr>
-
                                     <td width="20%"><?php echo $teachername; ?></td>
                                     <td width="20%"><?php echo $teacher['position']; ?></td>
-                                    <td width="20%"><?php
-                                                            if ((RPMSdb::isEsatCompleteBool($conn, $teacher['position'], $teacher['user_id']))) :
-
-                                                                if (stripos($teacher['position'], 'aster')) :
-
-                                                                    echo '<a href="redisplaymtchart.php"><img src="https://img.icons8.com/flat_round/20/000000/checkmark.png">';
-
-
-                                                                elseif (stripos($teacher['position'], 'eacher')) :
-                                                                    echo '<a href="redisplaytchart.php"><img src="https://img.icons8.com/flat_round/20/000000/checkmark.png">';
-
-
-                                                                else :
-                                                                    return false;
-
-                                                                endif;
-
-                                                            elseif ((RPMSdb::isEsatCompleteBool($conn, $teacher['position'], $teacher['user_id']) == false)) :
-
-                                                                echo '<img src="https://img.icons8.com/cotton/24/000000/cancel--v1.png">';
-
-
-                                                            else :
-                                                                return false;
-                                                                exit();
-                                                            endif; ?>
-                                    </td>
-
-                                    <td>
-                                        <?php //if ((RPMSdb::teacherHasCOT1($conn, $teacher['user_id']))) :
-                                                echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">';
-
-                                                // else :
-                                                //     echo 'ekis';
-                                                // endif
-                                                ?>
-                                    </td>
-                                    <td> <?php echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">' ?>
-                                    </td>
-                                    <td>
-                                        <?php echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">' ?>
-                                    </td>
-                                    <td>
-                                        <?php echo '<img src="https://img.icons8.com/color/25/000000/checked-checkbox.png">' ?>
-                                    </td>
+                                    <td width="20%"><?= ((RPMSdb::isEsatCompleteBool($conn, $teacher['position'], $teacher['user_id']))) ?
+                                        '<a href="redisplaytchart.php?user_id='.$teacher["user_id"].'"><i class="fa fa-check-circle text-success"></i></a>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs1($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                        '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=1"><i class="fa fa-check-circle text-success"></i></a>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs2($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                        '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=2"><i class="fa fa-check-circle text-success"></i></a>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs3($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                        '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=3"><i class="fa fa-check-circle text-success"></i></a>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= RPMSdb::TcheckResult_Obs4($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                        '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=4"><i class="fa fa-check-circle text-success"></i></a>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                            <td><?= '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
 
 
                                 </tr>
@@ -95,10 +61,12 @@ include 'sampleheader.php';
 
                             </tbody>
                 </table>
-            </div>
-        </div>
     </div>
-
 </div>
+</div>
+
+
+       
+
 
 <?php include 'samplefooter.php'; ?>
