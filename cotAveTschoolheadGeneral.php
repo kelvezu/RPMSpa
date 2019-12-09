@@ -8,10 +8,10 @@ include 'includes/conn.inc.php';
 
 $sy_id = $_GET['sy'];
 $school = $_GET['sch'];
-
+$user_id = $_GET['user'];
 
 $cot_array = [];
-$COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy = $sy_id AND school = '$school'") or die($conn->error);
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy = $sy_id AND school = '$school' AND `user_id` = '$user_id'") or die($conn->error);
 
 if (mysqli_num_rows($COTqry) == 0) :
     echo '<div class="red-notif-border">Average COT is not available</div>';
