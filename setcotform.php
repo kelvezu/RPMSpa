@@ -7,6 +7,14 @@ include_once 'libraries/func.lib.php';
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
 
+if (isset($_GET['notif'])) :
+    if ($_GET['notif'] == "success") :
+        echo '<div class="green-notif-border">Classroom Observation has been submitted!</div>';
+    elseif ($_GET['notif'] == "recordexist") :
+        echo '<div class="red-notif-border">Classroom Observation already exists!</div>';
+    endif;
+endif;
+
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 

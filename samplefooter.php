@@ -72,33 +72,69 @@
         <div class="p-1">
             <div class="d-flex flex-row bd-highlight">
                 <div class="p-2 bd-highlight"> <small><b>SY:</b> <?php echo isset($_SESSION['active_sy']) ? $_SESSION['active_sy'] : "N/A" ?></small></div>
-                <div class="p-2 bd-highlight"><small><b>Start of Class:</b> <?php 
-                 if(!empty($_SESSION['start_date'])):
-                    echo displayDate($_SESSION['start_date']);
-                 else: echo "N/A";
-                 endif; ?></small></div>
+                <div class="p-2 bd-highlight"><small><b>Start of Class:</b> <?php
+                                                                            if (!empty($_SESSION['start_date'])) :
+                                                                                echo displayDate($_SESSION['start_date']);
+                                                                            else : echo "N/A";
+                                                                            endif; ?></small></div>
                 <div class="p-2 bd-highlight"><small><b>End of Class:</b> <?php
-                if(!empty($_SESSION['end_date'])):
-                    echo displayDate($_SESSION['end_date']);
-                else: echo "N/A";
-            endif; ?></small></div>
+                                                                            if (!empty($_SESSION['end_date'])) :
+                                                                                echo displayDate($_SESSION['end_date']);
+                                                                            else : echo "N/A";
+                                                                            endif; ?></small></div>
             </div>
         </div>
         <div class="p-1">
-
-        <div class="row">
-            <div class="col">
-           <b>1st</b> <span><?php echo displayDate($_SESSION['first_period']) ?? 0 ?></span>  
-           <b>2nd</b> <span><?php echo displayDate($_SESSION['second_period']) ?? 0 ?></span>
-           <b>3rd</b> <span><?php echo displayDate($_SESSION['third_period']) ?? 0 ?></span>
-           <b>4th</b> <span><?php echo displayDate($_SESSION['final_period']) ?? 0 ?></span>
-        </div>
-        </div>
-
+            <!-- <small>Copyright &#169; <?php //echo date('Y') 
+                                            ?> All rights reserved. Team Guerra.</small> -->
         </div>
         <div class="p-1">
-            <small>Copyright &#169; <?= date('Y') ?> All rights reserved. Team Guerra.</small>
+
+            <div class="row">
+                <div class="col">
+                    <small><b>1st Period</b>
+                        <span>
+                            <?php
+                            if (isset($_SESSION['first_period'])) :
+                                displayDate($_SESSION['first_period']);
+                            endif;
+                            ?>
+                        </span>
+                    </small>
+
+                    <small>
+                        <b>2nd Period</b>
+                        <span>
+                            <?php
+                            if (isset($_SESSION['first_period'])) :
+                                echo displayDate($_SESSION['second_period']);
+                            endif; ?>
+                        </span>
+                    </small>
+
+                    <small>
+                        <b>3rd Period</b>
+                        <span>
+                            <?php
+                            if (isset($_SESSION['first_period'])) :
+                                echo displayDate($_SESSION['third_period']);
+                            endif; ?>
+                        </span>
+                    </small>
+                    <small>
+
+                        <b>4th Period</b>
+                        <span>
+                            <?php if (isset($_SESSION['first_period'])) :
+                                echo displayDate($_SESSION['final_period']);
+                            endif; ?>
+                        </span>
+                    </small>
+                </div>
+            </div>
+
         </div>
+
     </div>
 
     <!-- JavaScript Syntax -->
