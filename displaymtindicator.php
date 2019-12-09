@@ -73,7 +73,7 @@ include 'sampleheader.php';
 
             
                         <?php
-                        $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+                        
                         $result = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
                         ?>
 
@@ -137,7 +137,7 @@ include 'sampleheader.php';
             </div>
             <div class="modal-body text-center">
                 <?php
-                $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+                
                 $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
                 ?>
 

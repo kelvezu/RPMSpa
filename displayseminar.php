@@ -2,9 +2,6 @@
 
 include 'sampleheader.php';
 
-
-$connection = mysqli_connect("localhost", "root", "");
-mysqli_select_db($connection, "rpms");
 ?>
 
 <div class="modal fade" id="seminar-modal" tabindex="-1" role="dialog" aria-labelledby="seminarModal" aria-hidden="true">
@@ -68,7 +65,7 @@ mysqli_select_db($connection, "rpms");
            
                         <?php
 
-                        $query2 = mysqli_query($connection, "SELECT * FROM seminar_tbl") or die($connection->error);
+                        $query2 = mysqli_query($conn, "SELECT * FROM seminar_tbl") or die($conn->error);
 
                         ?>
 

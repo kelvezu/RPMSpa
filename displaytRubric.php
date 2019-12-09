@@ -62,7 +62,7 @@ include 'sampleheader.php';
 
           
                     <?php
-                    $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+                   
                     $result = $conn->query('SELECT * FROM trubric_tbl')  or die($conn->error);
                     ?>
 

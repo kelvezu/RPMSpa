@@ -1647,6 +1647,23 @@
                 }
             }
 
+            function displayOBJweightT($conn, $kra_id)
+            {
+                $qry = "SELECT * FROM `kra_weight` WHERE kra_id = $kra_id";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) {
+                    foreach ($result as $r) :
+                        $qry1 = "SELECT COUNT(kra_id) as count_kra FROM `tobj_tbl` WHERE kra_id = " . $r['kra_id'] . "";
+                        $w_obj = mysqli_query($conn, $qry1) or die($conn->error . $qry1);
+                        if ($w_obj) :
+                            foreach ($w_obj as $w) :
+                                return floatval($r['weight'] / $w['count_kra']);
+                            endforeach;
+                        endif;
+                    endforeach;
+                }
+            }
+
             function showPercent($num)
             {
                 return floatval($num * 100);

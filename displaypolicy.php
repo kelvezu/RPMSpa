@@ -58,8 +58,9 @@ include 'sampleheader.php';
                         <div class="h4 text-center text-white bg-Success text-center">Policies</div>
                         <div class=" form-group">
                             <?php
-                            $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+                           
                             $result = $conn->query('SELECT * FROM policy_tbl') or die($conn->error);
+                            
                             ?>
                             <table class="table table-borderless table-sm">
                                 <?php while ($row = $result->fetch_assoc()) : ?>

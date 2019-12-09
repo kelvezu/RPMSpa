@@ -147,4 +147,17 @@ class IPCRF
         else : die($this->conn()->error . $qry);
         endif;
     }
+
+    public function getIndicatorAVGt($indicator_id)
+    {
+        $qry  = "SELECT * FROM `cot_t_indicator_ave_tbl` WHERE indicator_id = $indicator_id AND `user_id` = " . $this->user . " AND sy = " . $this->sy . " AND school = " . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return floatval($r['average']);
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
 }

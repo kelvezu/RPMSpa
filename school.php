@@ -2,8 +2,6 @@
 
 include 'sampleheader.php';
 
-$connection = mysqli_connect("localhost", "root", "");
-mysqli_select_db($connection, "rpms");
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -157,7 +155,7 @@ mysqli_select_db($connection, "rpms");
                 <div class="h4 breadcrumb bg-dark text-white ">School Information </div>
                 <?php
 
-                $query2 = mysqli_query($connection, "SELECT region_tbl.region_name,division_tbl.divi_name,municipality_tbl.muni_name,school_tbl.* FROM (((school_tbl INNER JOIN region_tbl ON school_tbl.reg_id = region_tbl.reg_id) INNER JOIN division_tbl ON school_tbl.div_id = division_tbl.div_id) INNER JOIN municipality_tbl ON school_tbl.muni_id = municipality_tbl.muni_id) ORDER BY school_id") or die($connection->error);
+                $query2 = mysqli_query($conn, "SELECT region_tbl.region_name,division_tbl.divi_name,municipality_tbl.muni_name,school_tbl.* FROM (((school_tbl INNER JOIN region_tbl ON school_tbl.reg_id = region_tbl.reg_id) INNER JOIN division_tbl ON school_tbl.div_id = division_tbl.div_id) INNER JOIN municipality_tbl ON school_tbl.muni_id = municipality_tbl.muni_id) ORDER BY school_id") or die($conn->error);
 
                 ?>
 
