@@ -73,7 +73,7 @@ $user_id = $_SESSION['user_id'];
                                         <p>
                                             <button data-toggle="modal" data-target="#updateModal<?= $mmov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm">
                                                 <?= displayMOVfileMT($conn, $mmov['mov_id']) ?>
-                                                <a href="includes/processattachuser.php?&attach_mov_id=<?= $mmov['mov_id'] ?>" class="fa fa-times text-danger"></a>
+                                                <a href="includes/processattachuser.php?type=main&attach_mov_id=<?= $mmov['mov_id'] ?>" class="fa fa-times text-danger"></a>
                                             </button>
                                         </p>
 
@@ -200,10 +200,13 @@ $user_id = $_SESSION['user_id'];
                                         foreach ($supp_mov as $smov) :
                                             ?>
                                         <p class="text-justify text-nowrap">
-                                            <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm"><?php echo  displayMOVfileMT($conn, $smov['mov_id']) ?>
+
+                                            <button data-toggle="modal" data-target="#updateModal<?= $smov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm">
+                                                <?= displayMOVfileMT($conn, $smov['mov_id']) ?>
+                                                <a href="includes/processattachuser.php?&type=supp&attach_mov_id=<?= $smov['mov_id'] ?>" class="fa fa-times text-danger"></a>
                                             </button>
 
-                                            <?php if ($smov['doc_status'] == "For Approval") : ?>
+                                            <?php /* if ($smov['doc_status'] == "For Approval") : ?>
                                                 <a href='includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>' data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success">
                                                     <i class="fa fa-check-circle"></i>
                                                 </a>
@@ -224,7 +227,7 @@ $user_id = $_SESSION['user_id'];
                                                 <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
 
                                                 <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
-                                            <?php endif; ?>
+                                            <?php endif; */ ?>
                                         </p>
 
                                         <!--Main SUPP Modal -->
@@ -331,15 +334,7 @@ $user_id = $_SESSION['user_id'];
                                     <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
                                 <!-- END COLUMN FOR SUPP MOV STATUS  -->
-
                             </td>
-
-                            <!-- <td><a href="obj_id=<?php //$kra['mtobj_id']  
-                                                            ?>"  class="btn btn-sm btn-outline-warning  my-4">Update Attachment</a></td> -->
-
-
-
-
 
                         <?php endforeach; ?>
                         </tr>
