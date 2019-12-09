@@ -170,6 +170,14 @@ class Dashboard
                                 <a class="dropdown-item" href="">View Master Teacher MOV</a>
                             </div>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                            </div>
+                        </li>
     
 
                 <li class="nav-item dropdown active">
@@ -277,6 +285,14 @@ class Dashboard
                         </div>
                 </li>
 
+                  <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                            </div>
+                        </li>
+
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
@@ -359,6 +375,14 @@ class Dashboard
                                 <a class="dropdown-item" href="">View Master Teacher MOV</a>
                             </div>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                            </div>
+                        </li>
     
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
@@ -448,6 +472,14 @@ class Dashboard
                                 <a class="dropdown-item" href="viewattachment.userMT.php">View MOV</a>
                             </div>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                            </div>
+                        </li>
             
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
@@ -516,6 +548,14 @@ class Dashboard
                                 <a class="dropdown-item" href="viewattachment.userMT.php">View MOV</a>
                             </div>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="ipcrf_t.php">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrf_mt.php">View Master Teacher IPCRF Rating</a>
+                            </div>
+                        </li>
 
             
                             <li class="nav-item dropdown active">
@@ -603,6 +643,14 @@ s
                                 <a class="dropdown-item" href="viewattachment.userT.php">View MOV</a>
                             </div>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
+                            <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                            </div>
+                        </li>
                 
                                 <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>

@@ -110,7 +110,7 @@ include 'sampleheader.php';
 
          
                         <?php
-                        $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+                        
                         $result = $conn->query('SELECT kra_tbl.kra_name,tobj_tbl.tobj_name,perftindicator_tbl.* FROM (perftindicator_tbl INNER JOIN kra_tbl ON perftindicator_tbl.kra_id = kra_tbl.kra_id) 
                     INNER JOIN tobj_tbl ON perftindicator_tbl.tobj_id = tobj_tbl.tobj_id')  or die($conn->error);
                         ?>

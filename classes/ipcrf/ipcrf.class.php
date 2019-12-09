@@ -148,6 +148,7 @@ class IPCRF
         endif;
     }
 
+<<<<<<< HEAD
     public function getSuppFileDate($mov_id, $kra_id, $obj)
     {
         $qry = "SELECT * FROM `mov_supp_mt_attach_tbl` where mov_id = $mov_id and kra_id = $kra_id and obj_id = $obj and user_id = 33 and school_id = 14 and sy_id = 17 and doc_status = 'approved' and status = 'Active'";
@@ -158,6 +159,18 @@ class IPCRF
                 array_push($result_arr, $r);
             endforeach;
             return $result_arr;
+=======
+    public function getIndicatorAVGt($indicator_id)
+    {
+        $qry  = "SELECT * FROM `cot_t_indicator_ave_tbl` WHERE indicator_id = $indicator_id AND `user_id` = " . $this->user . " AND sy = " . $this->sy . " AND school = " . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return floatval($r['average']);
+            endforeach;
+        else : die($this->conn()->error . $qry);
+>>>>>>> 6d5baccdc2c9f370bd844f112e523d4c78ff3a09
         endif;
     }
 }

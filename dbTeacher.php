@@ -125,46 +125,260 @@ include_once 'sampleheader.php'; ?>
 
             <!-- First column -->
 
-
-
-            <div class="col text-warning black-border">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus hic incidunt molestias obcaecati nulla debitis fuga ipsam est modi quam mollitia recusandae veniam eos eveniet cupiditate, similique temporibus reprehenderit ratione asperiores officia sequi vitae rerum? Beatae, eum velit, laborum saepe cumque eaque architecto pariatur voluptas ratione accusamus accusantium facere modi at, quae dolorem incidunt voluptatem quibusdam repellat? Eius enim ipsa architecto ut, in sequi doloremque cum aperiam. Deserunt nihil maiores cumque dolorum. Itaque deleniti laboriosam sed voluptas eveniet corporis sint voluptate et eligendi! Ratione optio alias atque possimus veritatis aliquid commodi, quod deserunt cumque autem magnam consectetur quidem nobis. Tenetur voluptatum laboriosam dolor libero ratione minima id repudiandae est provident cum a, nesciunt soluta ipsam deleniti quo enim quasi tempora velit iste magnam distinctio veritatis. Veniam pariatur ad nihil reiciendis maiores? Modi officia molestias, dicta perferendis ut eligendi incidunt accusantium corrupti iste blanditiis nemo distinctio quasi odit libero porro, illo ipsam pariatur! Veritatis culpa dicta, nisi explicabo voluptas expedita necessitatibus eius officiis modi! Impedit, debitis cum. Praesentium aspernatur voluptate minima alias in minus pariatur incidunt ratione odit, enim harum ipsum quisquam assumenda maiores sint. A iure repellat dignissimos molestias recusandae eaque similique temporibus velit, alias sint qui sapiente expedita suscipit.
+            <div class="row">
+            <!-- 1st column of First row -->
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <h6><i class="fa fa-users"></i> Teacher COT Average Summary</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body box">
+                        <div id="cotchart" style="width:max-width; height:300px;"></div>
+                    </div>
+                </div>
             </div>
+        <!-- End of 1st column of First row  -->
 
+            
+            <!-- 1st column of Third row -->
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <h6><i class="fa fa-users"></i> Teacher ESAT Level Capability Result</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body box">
+                        <div id="selfassessmentchart" style="width:max-width; height:300px;"></div>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
 
+        <div class="row">
+        <!-- 1st column of Third row -->
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <h6><i class="fa fa-users"></i> Teacher ESAT Level of Priority Result</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body box">
+                     <div id="levelofpriority" style="width:max-width; height:300px;"></div>
+                </div>
+            </div>
         </div>
 
 
-        <div class="col text-info black-border">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, facere quia cumque animi tempora optio! Ducimus illo nisi dolorum necessitatibus in tenetur atque, sit reiciendis porro sint a nulla praesentium fuga, fugiat voluptatum aut! Laboriosam similique voluptas doloremque odit optio, ducimus nam ipsa ipsum distinctio. Quod culpa rerum distinctio optio natus! Illum accusamus repellat architecto beatae error odio sapiente, animi minima eveniet fugiat dicta aliquam voluptatibus laboriosam praesentium consequuntur accusantium asperiores eum maxime minus explicabo vitae eaque similique! Nostrum placeat similique officia velit laborum accusantium delectus minus aliquam repellendus? Velit neque soluta accusantium sapiente culpa deleniti officiis, hic maiores quis?
-        </div>
+        <script type="text/javascript">
+      google.charts.load('current', {
+        'packages': ['corechart']
+      });
+      google.charts.setOnLoadCallback(chartCoT);
 
-        <!-- End of First Row -->
-    </div>
-
-    <!-- Second Row -->
-    <div class="row">
-        <!-- 1st column of 2nd row -->
-        <div class="col-4 text-primary black-border">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro tenetur ducimus, corrupti sunt vel corporis voluptates provident obcaecati soluta? Rerum, id similique veniam dignissimos sit eveniet facilis modi sint voluptates error nisi nesciunt nostrum commodi aut optio, accusamus laboriosam necessitatibus reprehenderit exercitationem recusandae rem repellendus natus alias? Perspiciatis, expedita excepturi!
-        </div>
-        <!-- End of 1st column of 2nd row  -->
-
-        <!--  2nd column of 2nd row -->
-        <div class="col text-secondary black-border">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam dicta, atque aperiam distinctio vel voluptas aliquid neque. Maxime tenetur iure labore placeat sunt sequi quis provident iusto nesciunt obcaecati sint sed eum magnam fugiat est minus dolore animi, esse eaque voluptatum ullam id vel aliquid necessitatibus? Tenetur cum dicta animi sapiente explicabo doloremque, sint vel ut aut laboriosam voluptatum nihil tempora cumque aspernatur praesentium distinctio expedita repudiandae exercitationem beatae. Voluptates non aspernatur quasi repellat facilis consequuntur unde debitis iste repudiandae similique esse cupiditate, nulla dolores vitae voluptatem veritatis vel, molestiae reiciendis error officiis dolorem soluta? Ipsa nesciunt accusamus alias eum.
-        </div>
-        <!-- End of 2nd column of 2nd row   -->
-    </div>
-    <!-- End of Second Row -->
-
-    <div class="row">
-        <div class="col text-success black-border">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque praesentium incidunt nostrum accusamus, reiciendis eveniet libero eius iste possimus, sit dolorem voluptatum fugiat delectus quo! Numquam reiciendis a totam, molestiae quas reprehenderit facilis tempora odit ipsa fuga et in ab excepturi vitae qui explicabo amet quis rem. Repudiandae, pariatur eligendi sunt esse impedit unde aliquam id nam sint placeat mollitia natus. Et eius totam sequi veritatis alias quos error, sapiente reiciendis saepe minima quidem magni natus eligendi nobis. At similique perferendis, iure quasi et nobis minima. Molestias nobis amet aperiam, nostrum, inventore quasi ab alias iusto ipsa maxime cum dolores?
-        </div>
-    </div>
+      function chartCoT() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+          ['Indicator No.', 'School Year 1', 'School Year 2', 'School Year 3', 'Average'],
+          <?php
+$position = "Teacher I";
+              $qry = $conn->query("SELECT a.indicator_id, AVG(a.T_average) AS T_average,AVG(a.sy) AS sy,AVG(a.sy2) as sy2, AVG(a.sy3) as sy3 FROM
+        (SELECT indicator_id,AVG(average) AS T_average,
+          CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN AVG(average) END AS sy3,
+          CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN AVG(average) END AS sy2,
+          CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN AVG(average) END AS sy
+          FROM cot_t_indicator_ave_tbl WHERE school = '".$_SESSION['school_id']."' and user_id = '" . $_SESSION['user_id'] . "' GROUP BY indicator_id,average,sy) a
+          GROUP BY a.indicator_id") or die($conn->error);
+              while ($cotQry = $qry->fetch_assoc()) :
+                echo "['" . $cotQry['indicator_id'] . "', 
+                " . rawRate(($cotQry['sy3']), $position) . ",  
+                " . rawRate(($cotQry['sy2']), $position) . ",   
+                " . rawRate(($cotQry['sy']), $position) . ", 
+                " . rawRate(($cotQry['T_average']), $position) . "],";
+              endwhile;
+              ?>
+        ]);
 
 
+        var options = {
+          title: 'Classroom Observation',
+          vAxis: {
+            title: 'Rating'
+          },
+          hAxis: {
+            title: 'Indicator and Period No.'
+          },
+          explorer: {
+            axis: 'horizontal',
+            keepInBounds: true
+          },
+          seriesType: 'bars',
+          bar: {
+            groupWidth: 50
+          },
+          series: {
+            3: {
+              type: 'line'
+            }
+          }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('cotchart'));
+        chart.draw(data, options);
+      }
+    </script>
+
+<script type="text/javascript">
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(SelfAssessmentChart);
+
+    function SelfAssessmentChart() {
+        let data = google.visualization.arrayToDataTable([
+            ['Objective', 'Low', 'Moderate', 'High', 'Very High'],
+
+            <?php
+
+            $qry = mysqli_query($conn, "SELECT a.tobj_id, b.low as L_LOW, c.low as L_MODERATE, d.low as L_HIGH, e.low as L_VERY_HIGH, f.low as P_LOW, g.low as P_MODERATE, h.low as P_HIGH, i.low as P_VERY_HIGH from tobj_tbl a 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id 
+        GROUP BY a.tobj_id, b.low, c.low, d.low, e.low") or die($conn->error . $qry);
+
+            foreach ($qry as $result) :
+                echo "
+                [" . $result['tobj_id'] . ", 
+                " . intval($result['L_LOW']) . " ,
+                " . intval($result['L_MODERATE']) . ",
+                " . intval($result['L_HIGH'])  . ",
+                " . intval($result['L_VERY_HIGH'])  . ",],
+                ";
+            endforeach;
+
+            ?>
+        ]);
+        let options = {
+            title: 'Level of Capability',
+            vAxis: {
+                title: 'No. of Teachers',
+                maxValue: 10
+            },
+            hAxis: {
+                title: 'Objective and Level of Capability',
+                maxValue: 13,
+                minValue: 1,
+                ticks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            },
+            explorer: {
+                axis: 'horizontal',
+                keepInBounds: true
+            },
+            seriesType: 'bars',
+            bar: {
+                groupWidth: 50
+            },
+            series: {
+                5: {
+                    type: 'line'
+                }
+            }
+        };
+
+        let chart = new google.visualization.ComboChart(document.getElementById('selfassessmentchart'));
+        chart.draw(data, options)
+
+
+    };
+</script>
+
+
+<script type="text/javascript">
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(LevelofPriority);
+
+    function LevelofPriority() {
+        let data = google.visualization.arrayToDataTable([
+            ['Objective', 'Low', 'Moderate', 'High', 'Very High'],
+
+            <?php
+
+            $qry = mysqli_query($conn, "SELECT a.tobj_id, b.low as L_LOW, c.low as L_MODERATE, d.low as L_HIGH, e.low as L_VERY_HIGH, f.low as P_LOW, g.low as P_MODERATE, h.low as P_HIGH, i.low as P_VERY_HIGH from tobj_tbl a 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id 
+        LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 AND sy = '" . $_SESSION['active_sy_id'] . "' AND school = '".$_SESSION['school_id']."' and user_id = '".$_SESSION['user_id']."' GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id 
+        GROUP BY a.tobj_id, b.low, c.low, d.low, e.low") or die($conn->error . $qry);
+
+            foreach ($qry as $result) :
+                echo "
+                [" . $result['tobj_id'] . ", 
+                " . intval($result['P_LOW']) . " ,
+                " . intval($result['P_MODERATE']) . ",
+                " . intval($result['P_HIGH'])  . ",
+                " . intval($result['P_VERY_HIGH'])  . ",],
+                ";
+            endforeach;
+
+            ?>
+        ]);
+        let options = {
+            title: 'Level of Priority',
+            vAxis: {
+                title: 'No. of Teachers',
+                maxValue: 10
+            },
+            hAxis: {
+                title: 'Objective and Level of Priority',
+                maxValue: 13,
+                minValue: 1,
+                ticks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            },
+            explorer: {
+                axis: 'horizontal',
+                keepInBounds: true
+            },
+            seriesType: 'bars',
+            bar: {
+                groupWidth: 50
+            },
+            series: {
+                5: {
+                    type: 'line'
+                }
+            }
+        };
+
+        let chart = new google.visualization.ComboChart(document.getElementById('levelofpriority'));
+        chart.draw(data, options)
+
+
+    };
+</script>
 
 
 

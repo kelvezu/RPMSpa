@@ -2,8 +2,6 @@
 
 include 'sampleheader.php';
 
-$connection = mysqli_connect("localhost", "root", "");
-mysqli_select_db($connection, "rpms");
 ?>
 
 
@@ -25,7 +23,7 @@ mysqli_select_db($connection, "rpms");
                             <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control">
                                 <option>Select KRA</option>
                                 <?php
-                                $query = mysqli_query($connection, "SELECT * from kra_tbl");
+                                $query = mysqli_query($conn, "SELECT * from kra_tbl");
                                 while ($row = mysqli_fetch_array($query)) {
                                     $kra_id = $row['kra_id'];
                                     $kra_name = $row['kra_name'];
@@ -98,9 +96,9 @@ mysqli_select_db($connection, "rpms");
           
                         <?php
 
-                        $query2 = mysqli_query($connection, "SELECT kra_tbl.kra_name,mtobj_tbl.mtobj_name,mtmov_tbl.* FROM (mtmov_tbl INNER JOIN kra_tbl ON mtmov_tbl.kra_id = kra_tbl.kra_id) 
+                        $query2 = mysqli_query($conn, "SELECT kra_tbl.kra_name,mtobj_tbl.mtobj_name,mtmov_tbl.* FROM (mtmov_tbl INNER JOIN kra_tbl ON mtmov_tbl.kra_id = kra_tbl.kra_id) 
                     INNER JOIN mtobj_tbl ON mtmov_tbl.mtobj_id = mtobj_tbl.mtobj_id")
-                            or die($connection->error);
+                            or die($conn->error);
 
                         ?>
 
