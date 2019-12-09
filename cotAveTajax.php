@@ -82,6 +82,9 @@ $indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $sy_id, $school_id,  $te
                                 <td class="text-center text-success">
                                     <?= fetchCOTratingT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?>
                                 </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             <?php endforeach; ?>
                             <td class="text-center font-weight-bold text-success"><?= fetchIndicatorAVGt($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
