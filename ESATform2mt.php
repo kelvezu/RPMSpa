@@ -58,7 +58,7 @@
                       <input type="hidden" name="mtobj_id[]" value="<?php echo $rows['mtobj_id'] ?>">
                     </td>
                     <td>
-                      <select name="lvlcap[]" id="" class="form-control font-weight-bold">
+                      <select name="lvlcap[]" id="" class="form-control font-weight-bold" required>
                         <option value="" disabled selected>--Select--</option>
                         <option value="4">Very High</option>
                         <option value="3">High</option>
@@ -67,7 +67,7 @@
                       </select>
                     </td>
                     <td>
-                      <select name="priodev[]" id="" class="form-control font-weight-bold">
+                      <select name="priodev[]" id="" class="form-control font-weight-bold" required>
                         <option value="" disabled selected>--Select--</option>
                         <option value="4">Very High</option>
                         <option value="3">High</option>
