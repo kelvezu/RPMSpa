@@ -122,33 +122,33 @@ endif;
                                     if (isset($main_att)) :
                                         foreach ($main_att as $mmov) : ?>
                                         <p class="text-justify text-nowrap">
-                                            <button data-toggle="modal" data-target="#updateModal<?php echo $mmov['mov_id'] . $mov['mtobj_id'] ?>" class="btn btn-outline-success btn-sm"><?php echo displayMOVfileT($conn, $mmov['mov_id']);  ?>
+                                            <button data-toggle="modal" data-target="#updateModal<?php echo $mmov['mov_id'] . $mov['tobj_id'] ?>" class="btn btn-outline-success btn-sm"><?php echo displayMOVfileT($conn, $mmov['mov_id']);  ?>
                                             </button>
 
                                             <?php if ($mmov['doc_status'] == "For Approval") : ?>
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
 
                                             <?php elseif ($mmov['doc_status'] == "Disapproved") : ?>
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=revision&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
                                             <?php elseif ($mmov['doc_status'] == "Approved") : ?>
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=cancel&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=cancel&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
 
                                             <?php elseif ($mmov['doc_status'] == "For Revision") : ?>
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=approve&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=main&attach_id=<?= $mmov['attach_mov_id'] ?>&method=disapprove&uid=<?= $mmov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $mmov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
                                             <?php endif; ?>
                                         </p>
                                         <!-- ---------------------------------------------->
                                         <!--Main MOV Modal -->
-                                        <div class="modal fade" id="updateModal<?php echo $mmov['mov_id'] .   $mov['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal fade" id="updateModal<?php echo $mmov['mov_id'] .   $mov['tobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -253,30 +253,30 @@ endif;
                                         foreach ($supp_mov as $smov) :
                                             ?>
                                         <p class="text-justify text-nowrap">
-                                            <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] . $mov['mtobj_id'] ?>" class="btn btn-outline-success btn-sm"><?php echo  displayMOVfileT($conn, $smov['mov_id']) ?>
+                                            <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] . $mov['tobj_id'] ?>" class="btn btn-outline-success btn-sm"><?php echo  displayMOVfileT($conn, $smov['mov_id']) ?>
                                             </button>
 
                                             <?php if ($smov['doc_status'] == "For Approval") : ?>
-                                                <a href='includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>' data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success">
+                                                <a href='includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>' data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success">
                                                     <i class="fa fa-check-circle"></i>
                                                 </a>
 
-                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
-                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
 
                                             <?php elseif ($smov['doc_status'] == "Disapproved") : ?>
-                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
 
                                             <?php elseif ($smov['doc_status'] == "Approved") : ?>
-                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=cancel&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=cancel&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
 
                                             <?php elseif ($smov['doc_status'] == "For Revision") : ?>
-                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
+                                                <a href="includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
 
-                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                                <a href="includes/processmovt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
                                             <?php endif; ?>
                                         </p>
 
@@ -294,7 +294,7 @@ endif;
                                                         <div class="card">
                                                             <div class="card-header bg-light">
                                                                 <p><b>Attached in KRA <?php echo $mov['kra_id'] ?>: </b>"<i><?php echo displayKRA($conn, $mov['kra_id']) ?></i>"</p>
-                                                                <b>Attached in Objective <?php echo $mov['mtobj_id'] ?>: </b>
+                                                                <b>Attached in Objective <?php echo $mov['tobj_id'] ?>: </b>
                                                                 "<i><?php echo displayObjectiveT($conn, $mov['tobj_id']) ?></i>"
                                                             </div>
                                                             <div class="card-body">
