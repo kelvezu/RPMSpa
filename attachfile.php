@@ -6,7 +6,7 @@ include 'sampleheader.php';
 if(isset($_GET['notif'])):
     if($_GET['notif'] == 'success'):
        echo '<div class="green-notif-border">You have successfully attached files!</div>';
-       elseif:
+    else:
         echo '<div class="red-notif-border">There was an error uploading your files!</div>';
     endif;
 
