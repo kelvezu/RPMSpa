@@ -4,9 +4,9 @@ namespace IPCRF;
 
 class IPCRF
 {
-    public $servername = "148.72.232.171";
-    public $dbUsername = "rpmsadmin";
-    public $dbPassword = "040430";
+    public $servername = "localhost";
+    public $dbUsername = "root";
+    public $dbPassword = "";
     public $dbName = "rpms";
 
 

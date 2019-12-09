@@ -44,10 +44,10 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                 <th rowspan="2" class="text-center">
                     <p>KRA</p>
                 </th>
-                <th rowspan="2" class="text-center" ">
-                        <p>Objective</p>
-                    </th>
-                    <th rowspan=" 2" class="text-center">
+                <th rowspan="2" class="text-center">
+                    <p>Objective</p>
+                </th>
+                <th rowspan=" 2" class="text-center">
                     <p>Weight per Objective</p>
                 </th>
                 <th colspan="3" class="text-center">
@@ -73,12 +73,12 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
             </tr>
         </thead>
         <form action="includes/processIPCRFmt.php" method="post">
-            <input type="text" name="user" value="<?php echo $user ?>">
-            <input type="text" name="position" value="<?php echo $position ?>">
-            <input type="text" name="sy" value="<?php echo $sy ?>">
-            <input type="text" name="school" value="<?php echo $school ?>">
-            <input type="text" name="app_auth" value="<?php echo $app_auth ?>">
-            <input type="text" name="rater" id="" value="<?php echo $rater ?>">
+            <input type="hidden" name="user" value="<?php echo $user ?>">
+            <input type="hidden" name="position" value="<?php echo $position ?>">
+            <input type="hidden" name="sy" value="<?php echo $sy ?>">
+            <input type="hidden" name="school" value="<?php echo $school ?>">
+            <input type="hidden" name="app_auth" value="<?php echo $app_auth ?>">
+            <input type="hidden" name="rater" id="" value="<?php echo $rater ?>">
             <tbody>
                 <?php foreach ($kras as $kra) : ?>
                     <tr>
@@ -117,33 +117,33 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                                 <!-- THIS WILL SHOW THE INDICATOR AVG OF OBJECTIVE 1  -->
                                 <?php
                                     if ($kra['mtobj_id'] == 1) : ?>
-                                    <input type="text" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
-                                    <input type="text" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
+                                    <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
+                                    <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
                                     <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(1) ?? 0 ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 3) : ?>
-                                    <input type="text" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
-                                    <input type="text" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
+                                    <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
+                                    <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
                                     <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(2) ?? 0; ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 4) : ?>
-                                    <input type="text" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
-                                    <input type="text" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
+                                    <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
+                                    <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
                                     <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(3) ?? 0; ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 5) : ?>
-                                    <input type="text" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
-                                    <input type="text" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
+                                    <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
+                                    <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
                                     <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(4) ?? 0; ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 7) : ?>
-                                    <input type="text" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
-                                    <input type="text" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
+                                    <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
+                                    <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
                                     <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(5) ?? 0; ?>">
 
                                 <?php else : ?>
-                                    <input type="text" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
-                                    <input type="text" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
+                                    <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
+                                    <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
                                     <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') ?? 0; ?>">
 
                                 <?php endif; ?>
@@ -155,7 +155,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- DISPLAY EFFICIENCY -->
                         <td>
                             <p class="font-weight-bold text-center">
-                                <input class="form-control-sm text-center" type="text" name="efficiency[]" id="" value=" <?php echo  $ipcrf->getEfficiency($kra['kra_id'], $kra['mtobj_id'], 'mov_supp_mt_attach_tbl')  ?? 0 ?>">
+                                <input class="form-control-sm text-center" type="text" name="efficiency[]" value=" <?php echo  $ipcrf->getEfficiency($kra['kra_id'], $kra['mtobj_id'], 'mov_supp_mt_attach_tbl')  ?? 0 ?>">
                             </p>
                         </td>
                         <!-- END DISPLAY EFFICIENCY -->
@@ -200,9 +200,20 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         </td> -->
                         <!-- END DISPLAY SCORE -->
                     </tr>
+
+
             </tbody>
         <?php endforeach; ?>
-        <button type="submit" name="submit_mt">submit</button>
+        <tfoot>
+            <tr>
+                <td colspan="10">
+
+                    <button class="btn btn-success" type="submit" name="submit_mt">submit</button>
+
+                </td>
+            </tr>
+        </tfoot>
+
         </form>
 
         <!-- <tfoot>
