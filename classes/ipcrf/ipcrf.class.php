@@ -4,10 +4,11 @@ namespace IPCRF;
 
 class IPCRF
 {
-    public $servername = "localhost";
-    public $dbUsername = "root";
-    public $dbPassword = "";
+    public $servername = "148.72.232.171";
+    public $dbUsername = "rpmsadmin";
+    public $dbPassword = "040430";
     public $dbName = "rpms";
+
 
     public function __construct($user, $sy, $school, $position)
     {
