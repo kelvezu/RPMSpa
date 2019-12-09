@@ -71,7 +71,7 @@ $user_id = $_SESSION['user_id'];
                                     if (isset($main_mov)) :
                                         foreach ($main_mov as $mmov) : ?>
                                         <p>
-                                            <button data-toggle="modal" data-target="#updateModal<?= $mmov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1">
+                                            <button data-toggle="modal" data-target="#updateModal<?= $mmov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm">
                                                 <?= displayMOVfileMT($conn, $mmov['mov_id']) ?>
                                                 <a href="includes/processattachuser.php?&attach_mov_id=<?= $mmov['mov_id'] ?>" class="fa fa-times text-danger"></a>
                                             </button>
@@ -156,18 +156,79 @@ $user_id = $_SESSION['user_id'];
                             <!-- -------------------------------- -->
 
 
-                            <td>Status</td>
-
-                            <!-- DISPLAY MAIN ATTACHMENT STATUS  -->
-                            <td class=" text-justify">
+                            <td>
+                                <!-- COLUMN FOR MAIN MOV STATUS -->
                                 <?php
-                                    $supp_mov =  showSuppAttachmentMT($conn, $kra['mtobj_id'], $_SESSION['user_id'], $_SESSION['school_id'], $_SESSION['active_sy_id'],  $kra['kra_id']);
-                                    foreach ($supp_mov as $smov) :
-                                        if ($smov) : ?>
-                                        <button data-toggle="modal" data-target="#updateModal<?= $smov['mov_id'] .   $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm m-1"><?= $smov['file_name'] ?> <a href="includes/processattachuser.php?&attach_mov_id=<?= $smov['mov_id']  ?>" class="fa fa-times text-danger"></a></button>
+                                    $fetch_main_status = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+                                    if ($fetch_main_status) :
+                                        foreach ($fetch_main_status as $m_stats) :
+                                            $m_status = $m_stats['doc_status']; ?>
+                                        <p>
+                                            <?php if ($m_status == "For Approval") : ?>
+                                                <button class="btn btn-info btn-sm btn-block  text-white">
+                                                    <?php echo trim($m_status); ?>
+                                                </button>
+                                            <?php elseif ($m_status == "Approved") : ?>
+                                                <button class="btn btn-success btn-sm btn-block text-white">
+                                                    <?php echo trim($m_status); ?>
+                                                </button>
+                                            <?php elseif ($m_status == "Disapproved") : ?>
+                                                <button class="btn btn-danger btn-sm btn-block text-white">
+                                                    <?php echo trim($m_status); ?>
+                                                </button>
+                                            <?php elseif ($m_status == "For Revision") : ?>
+                                                <button class="btn btn-warning btn-sm btn-block text-white">
+                                                    <?php echo trim($m_status); ?>
+                                                </button>
+                                            <?php endif; ?>
+                                        </p>
+                                    <?php endforeach;
+                                        else : ?>
+                                    <p class="text-center font-weight-bold"> ----- </p>
 
-                                        <!--Main MOV Modal -->
-                                        <div class="modal fade" id="updateModal<?= $smov['mov_id'] .   $kra['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <?php endif; ?>
+                                <!-- END COLUMN FOR MAIN MOV STATUS  -->
+                            </td>
+
+                            <!-- DISPLAY SUPP MOV  -->
+                            <td class=" text-justify">
+                                <!-- COLUMN FOR SUPP MOV -->
+                                <?php
+                                    $supp_mov =  rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+
+                                    if ($supp_mov) :
+                                        foreach ($supp_mov as $smov) :
+                                            ?>
+                                        <p class="text-justify text-nowrap">
+                                            <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm"><?php echo  displayMOVfileMT($conn, $smov['mov_id']) ?>
+                                            </button>
+
+                                            <?php if ($smov['doc_status'] == "For Approval") : ?>
+                                                <a href='includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>' data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success">
+                                                    <i class="fa fa-check-circle"></i>
+                                                </a>
+
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Disapprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+
+                                            <?php elseif ($smov['doc_status'] == "Disapproved") : ?>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-light btn-sm text-success"><i class="fa fa-check-circle"></i></a>
+
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=revision&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="For Revision" class="btn btn-sm btn-light text-warning"><i class="fa fa-edit "></i></a>
+
+                                            <?php elseif ($smov['doc_status'] == "Approved") : ?>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=cancel&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Cancel Approve" class="btn btn-sm btn-light text-danger"><i class="fa fa-times "></i></a>
+
+                                            <?php elseif ($smov['doc_status'] == "For Revision") : ?>
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=approve&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Approve" class="btn btn-sm btn-light text-success"><i class="fa fa-check-circle"></i></a>
+
+                                                <a href="includes/processmovmt.php?mov_type=supp&attach_id=<?= $smov['attach_mov_id'] ?>&method=disapprove&uid=<?= $smov['user_id'] ?>&approver=<?= $_SESSION['user_id'] ?>&movfile=<?= $smov['mov_id'] ?>" data-toggle="tooltip" data-placement="top" title="Dispprove" class="btn btn-sm btn-light text-danger"><i class="fa fa-times-circle "></i></a>
+                                            <?php endif; ?>
+                                        </p>
+
+                                        <!--Main SUPP Modal -->
+                                        <div class="modal fade" id="updateModal<?php echo $smov['mov_id'] . $kra['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-lg" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -179,16 +240,16 @@ $user_id = $_SESSION['user_id'];
                                                     <div class="modal-body">
                                                         <div class="card">
                                                             <div class="card-header bg-light">
-                                                                <p><b>Attached in KRA <?= $kra['kra_id'] ?>: </b>"<i><?= displayKRA($conn, $kra['kra_id']) ?></i>"</p>
-                                                                <b>Attached in Objective <?= $kra['mtobj_id'] ?>: </b>
-                                                                "<i><?= displayObjectiveMT($conn, $kra['mtobj_id']) ?></i>"
+                                                                <p><b>Attached in KRA <?php echo $kra['kra_id'] ?>: </b>"<i><?php echo displayKRA($conn, $kra['kra_id']) ?></i>"</p>
+                                                                <b>Attached in Objective <?php echo $kra['mtobj_id'] ?>: </b>
+                                                                "<i><?php echo displayObjectiveMT($conn, $kra['mtobj_id']) ?></i>"
                                                             </div>
                                                             <div class="card-body">
                                                                 <div class="card">
                                                                     <div class="card-header bg-dark text-white">
                                                                         <div class="d-flex justify-content-between">
                                                                             <div class="p-2">
-                                                                                <p><b>File name:</b> <?= $smov['file_name'] ?></p>
+                                                                                <p><b>File name:</b> <?php echo displaymovfilemt($conn, $smov['mov_id']) ?></p>
                                                                             </div>
 
                                                                         </div>
@@ -198,14 +259,14 @@ $user_id = $_SESSION['user_id'];
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <p><b>Attachment</b>
-                                                                                        <p><?= (displayFileMT($conn, $smov['mov_id'])); ?></p>
+                                                                                        <p><?php echo (displayFileMT($conn, $smov['mov_id'])); ?></p>
                                                                                     </p>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="card-footer alert alert-dark">
                                                                                 <p class="text-justify">
                                                                                     <b>Description:</b>
-                                                                                    <p class="text-justify">" <i><?= $smov['file_desc'] ?></i> "</p>
+                                                                                    <p class="text-justify">" <i><?php echo displayFileDescMT($conn, $smov['mov_id']) ?? "---" ?></i> "</p>
                                                                                 </p>
                                                                             </div>
                                                                         </form>
@@ -218,25 +279,60 @@ $user_id = $_SESSION['user_id'];
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                                                        <!-- <a class="btn btn-outline-primary btn-sm" href="downloadmt.php?file=<?php //$smov['attachment'] 
-                                                                                                                                                ?>">View File</a> -->
-
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- End tag of Update Modal -->
-                                <?php endif;
-                                    endforeach;
-                                    ?>
+
+                                    <?php
+                                            endforeach;
+                                        else : ?>
+                                    <p class="text-center font-weight-bold"> ----- </p>
+                                <?php endif; ?>
+
+
+
+
                             </td>
 
 
 
 
                             <!-- --------------------------------------------------------------- -->
-                            <td class="text-center"><?= '<p class="">' . showMainMovStatusMT($conn, $kra['mtobj_id'], $_SESSION['user_id'], $_SESSION['school_id'], $_SESSION['active_sy_id']) . '</p>' ?></td>
+                            <td class="text-center">
+                                <!-- COLUMN FOR SUPP MOV STATUS -->
+                                <?php
+                                    $fetch_supp_status = rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+                                    if ($fetch_supp_status) :
+                                        foreach ($fetch_supp_status as $s_stats) :
+                                            $s_status = $s_stats['doc_status']; ?>
+                                        <p>
+                                            <?php if ($s_status == "For Approval") : ?>
+                                                <button class="btn btn-info btn-sm btn-block  text-white">
+                                                    <?php echo trim($s_status); ?>
+                                                </button>
+                                            <?php elseif ($s_status == "Approved") : ?>
+                                                <button class="btn btn-success btn-sm btn-block text-white">
+                                                    <?php echo trim($s_status); ?>
+                                                </button>
+                                            <?php elseif ($s_status == "Disapproved") : ?>
+                                                <button class="btn btn-danger btn-sm btn-block text-white">
+                                                    <?php echo trim($s_status); ?>
+                                                </button>
+                                            <?php elseif ($s_status == "For Revision") : ?>
+                                                <button class="btn btn-warning btn-sm btn-block text-white">
+                                                    <?php echo trim($s_status); ?>
+                                                </button>
+                                            <?php endif; ?>
+                                        </p>
+                                    <?php endforeach;
+                                        else : ?>
+                                    <p class="text-center font-weight-bold"> ----- </p>
+                                <?php endif; ?>
+                                <!-- END COLUMN FOR SUPP MOV STATUS  -->
+
+                            </td>
 
                             <!-- <td><a href="obj_id=<?php //$kra['mtobj_id']  
                                                             ?>"  class="btn btn-sm btn-outline-warning  my-4">Update Attachment</a></td> -->

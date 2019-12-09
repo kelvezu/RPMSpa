@@ -106,8 +106,6 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                             <p class="font-weight-bold text-center">
                                 <?php echo showPercent(displayOBJweightT($conn, $kra['kra_id'])) . '%' ?>
                             </p>
-
-
                         </td>
                         <!-- DISPLAY WEIGHT per OBJECTIVE -->
 
