@@ -66,7 +66,7 @@ endif;
                     </thead>
                     <tbody>
                         <?php
-                        $qry = $conn->query("SELECT esat1_demographicst_tbl.gender, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' GROUP BY gender");
+                        $qry = $conn->query("SELECT esat1_demographicst_tbl.gender, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy' AND school = '$school' GROUP BY gender");
                         while ($esatresult = $qry->fetch_assoc()) : ?>
                             <tr>
                                 <td><?php echo $esatresult['gender']; ?></td>
