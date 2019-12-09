@@ -1,16 +1,16 @@
 <?php
 
-// $servername = "localhost";
-// $dbUsername = "root";
-// $dbPassword = "";
-// $dbName = "rpms";
-
-
-
-$servername = "148.72.232.171";
-$dbUsername = "rpmsadmin";
-$dbPassword = "040430";
+$servername = "localhost";
+$dbUsername = "root";
+$dbPassword = "";
 $dbName = "rpms";
+
+
+
+// $servername = "148.72.232.171";
+// $dbUsername = "rpmsadmin";
+// $dbPassword = "040430";
+// $dbName = "rpms";
 
 
 $conn = mysqli_connect($servername, $dbUsername, $dbPassword, $dbName);

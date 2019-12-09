@@ -92,10 +92,44 @@
 
             <div class="row">
                 <div class="col">
-                    <small><b>1st Period</b> <span><?php echo displayDate($_SESSION['first_period']) ?? 0 ?></span></small>
-                    <small><b>2nd Period</b> <span><?php echo displayDate($_SESSION['second_period']) ?? 0 ?></span></small>
-                    <small><b>3rd Period</b> <span><?php echo displayDate($_SESSION['third_period']) ?? 0 ?></span></small>
-                    <small><b>4th Period</b> <span><?php echo displayDate($_SESSION['final_period']) ?? 0 ?></span></small>
+                    <small><b>1st Period</b>
+                        <span>
+                            <?php
+                            if (isset($_SESSION['first_period'])) :
+                                displayDate($_SESSION['first_period']);
+                            endif;
+                            ?>
+                        </span>
+                    </small>
+
+                    <small>
+                        <b>2nd Period</b>
+                        <span>
+                            <?php
+                            if (isset($_SESSION['first_period'])) :
+                                echo displayDate($_SESSION['second_period']);
+                            endif; ?>
+                        </span>
+                    </small>
+
+                    <small>
+                        <b>3rd Period</b>
+                        <span>
+                            <?php
+                            if (isset($_SESSION['first_period'])) :
+                                echo displayDate($_SESSION['third_period']);
+                            endif; ?>
+                        </span>
+                    </small>
+                    <small>
+
+                        <b>4th Period</b>
+                        <span>
+                            <?php if (isset($_SESSION['first_period'])) :
+                                echo displayDate($_SESSION['final_period']);
+                            endif; ?>
+                        </span>
+                    </small>
                 </div>
             </div>
 
