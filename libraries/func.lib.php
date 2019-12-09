@@ -1031,9 +1031,38 @@
                 }
             }
 
+            function displayFileT($conn, $mov_id)
+            {
+                $qry = "SELECT * FROM `mov_a_t_attach_tbl` WHERE mov_id = '$mov_id'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $res) :
+                        $type = $res['file_type'];
+                        if ($type == "jpg" || $type == "png") :
+                            return "<img src='attachments/Teacher/" . $res['attachment'] . "' class='rounded'  width='400' height='400' alt='" . $res['file_name'] . "' />";
+                        elseif ($type == "pdf") :
+                            return "<embed src='attachments/Teacher/" . $res['attachment'] . "' width='700px' height='400px' />";
+                        else :
+                            return "<a href='downloadt.php?file=" . $res['attachment'] . "'><b class='text-danger'>Click to download File:</b> " . $res['file_name'] . "</a>";
+                        endif;
+                    endforeach;
+                }
+            }
+
             function displayFileDescMT($conn, $mov_id)
             {
                 $qry = "SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id = '$mov_id'";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $res) :
+                        return $res['file_desc'];
+                    endforeach;
+                }
+            }
+
+             function displayFileDescT($conn, $mov_id)
+            {
+                $qry = "SELECT * FROM `mov_a_t_attach_tbl` WHERE mov_id = '$mov_id'";
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if (mysqli_num_rows($result) > 0) {
                     foreach ($result as $res) :
@@ -1424,6 +1453,17 @@
             function displayMOVfileMT($conn, $mov_id)
             {
                 $qry = "SELECT * FROM `mov_a_mt_attach_tbl` WHERE mov_id = $mov_id";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) {
+                    foreach ($result as $r) :
+                        return $r['file_name'];
+                    endforeach;
+                }
+            }
+
+             function displayMOVfileT($conn, $mov_id)
+            {
+                $qry = "SELECT * FROM `mov_a_t_attach_tbl` WHERE mov_id = $mov_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) {
                     foreach ($result as $r) :
