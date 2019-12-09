@@ -230,7 +230,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
 
             <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
-            <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
+            <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
 
     </div>

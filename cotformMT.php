@@ -227,7 +227,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
 
             <textarea class="form-control" name="mtioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
-            <a href="dbAdmin.php" role="button" class="btn btn-danger">Disregard</a>
+            <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
 
     </div>
