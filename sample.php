@@ -305,7 +305,7 @@ $user =  $_SESSION['user_id'];
 // $res = showObsPeriod($conn, $_SESSION['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']);
 // $res = RPMSdb::showBmovMT($conn, $sy, $school, 'For Approval');
 // $res =RPMSdb::showAllTwithCOTavg($conn,$_SESSION['active_sy_id'],$_SESSION['school_id']);
-var_dump($_SESSION['active_sy_id']) . 'tae';
+// var_dump($_SESSION['active_sy_id']) . 'tae';
 
 
 
@@ -339,6 +339,14 @@ $position = $_SESSION['position'];
 //echo ($sample_conn->countCOT('cot_mt_rating_a_tbl')) . ' cot count' . BR;
 // echo $sample_conn->countObj(1, 'tobj_tbl') . ' obj_id count of kra 1';
 
+$ipcrf = new IPCRF($user, $sy, $school, $position);
+
+$cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
+pre_r($cot_count);
+
+foreach ($cot_count as $c_count) :
+    echo $c_count['obs_period'] . '<br>';
+endforeach;
 ?>
 
 <?php

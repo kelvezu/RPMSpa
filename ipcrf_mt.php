@@ -21,15 +21,12 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 
 <div class="container-fluid">
     <!-- <?php echo $position ?> -->
-    <?php
-    if (!$kras) :
-        ?>
+    <?php if (!$kras) : ?>
         <p class="text-center red-notif-border m-5">No result!</p>
     <?php
         include 'samplefooter.php';
         exit();
-    endif;
-    ?>
+    endif; ?>
 
     <div class="d-flex justify-content-center">
         <div class="h4"><strong> Master Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
@@ -44,13 +41,13 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                 <th rowspan="2" class="text-center">
                     <p>KRA</p>
                 </th>
-                <th rowspan="2" class="text-center">
+                <th rowspan="2" class="text-center" width="20%">
                     <p>Objective</p>
                 </th>
                 <th rowspan=" 2" class="text-center">
                     <p>Weight per Objective</p>
                 </th>
-                <th colspan="3" class="text-center">
+                <th colspan="4" class="text-center">
                     <p>Numerical Ratings</p>
                 </th>
                 <!-- <th rowspan="2" class="text-center">
@@ -67,9 +64,9 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                 <th class="text-center">
                     <p>Timeliness</p>
                 </th>
-                <!-- <th class="text-center" width="3%">
-                        <p>Average </p>
-                    </th> -->
+                <th class="text-center" width="3%">
+                    <p>Average </p>
+                </th>
             </tr>
         </thead>
         <form action="includes/processIPCRFmt.php" method="post">
@@ -88,7 +85,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- KRA  -->
                         <td rowspan="4">
                             <p class="font-weight-bold">
-                                <?php echo $kra['kra_id'] . '---' . trim(displayKRA($conn, $kra['kra_id'])); ?>
+                                <?php echo $kra['kra_id'] . ' --- ' . trim(displayKRA($conn, $kra['kra_id'])); ?>
                             </p>
                         </td>
                         <!-- END OF KRA -->
@@ -102,12 +99,9 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 
                         <!-- DISPLAY WEIGHT per OBJECTIVE -->
                         <td>
-
                             <p class="font-weight-bold text-center">
                                 <?php echo showPercent(displayOBJweightMT($conn, $kra['kra_id'])) . '%' ?>
                             </p>
-
-
                         </td>
                         <!-- DISPLAY WEIGHT per OBJECTIVE -->
 
@@ -119,32 +113,32 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                                     if ($kra['mtobj_id'] == 1) : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
-                                    <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(1) ?? 0 ?>">
+                                    <input class="form-control-sm text-center" type="number" step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGmt(1) ?? 0 ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 3) : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
-                                    <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(2) ?? 0; ?>">
+                                    <input class="form-control-sm text-center" type="number" step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGmt(2) ?? 0; ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 4) : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
-                                    <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(3) ?? 0; ?>">
+                                    <input class="form-control-sm text-center" type="number" step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGmt(3) ?? 0; ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 5) : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
-                                    <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(4) ?? 0; ?>">
+                                    <input class="form-control-sm text-center" type="number" step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGmt(4) ?? 0; ?>">
 
                                 <?php elseif ($kra['mtobj_id'] == 7) : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
-                                    <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->getIndicatorAVGmt(5) ?? 0; ?>">
+                                    <input class="form-control-sm text-center" type="number" step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGmt(5) ?? 0; ?>">
 
                                 <?php else : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
-                                    <input class="form-control-sm text-center" type="text" name="quality[]" id="" value="<?php echo $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') ?? 0; ?>">
+                                    <input class="form-control-sm text-center" type="number" step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->countMOV($kra['kra_id'], $kra['mtobj_id'], 'mov_main_mt_attach_tbl') ?? 0; ?>">
 
                                 <?php endif; ?>
                                 <!-- ------------------------------------------------- -->
@@ -155,7 +149,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- DISPLAY EFFICIENCY -->
                         <td>
                             <p class="font-weight-bold text-center">
-                                <input class="form-control-sm text-center" type="text" name="efficiency[]" value=" <?php echo  $ipcrf->getEfficiency($kra['kra_id'], $kra['mtobj_id'], 'mov_supp_mt_attach_tbl')  ?? 0 ?>">
+                                <input class="form-control-sm text-center" type="number" step="any" name="efficiency[]" value="<?php echo $efficiency_rate = $ipcrf->getEfficiency($kra['kra_id'], $kra['mtobj_id'], 'mov_supp_mt_attach_tbl')  ?? $efficiency_rate = 0 ?>">
                             </p>
                         </td>
                         <!-- END DISPLAY EFFICIENCY -->
@@ -189,9 +183,9 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- END DISPLAY TIMELINESS -->
 
                         <!-- DISPLAY AVERAGE -->
-                        <!-- <td>
+                        <td>
                             <p class="font-weight-bold text-center">AVERAGE</p>
-                        </td> -->
+                        </td>
                         <!--END  DISPLAY AVERAGE -->
 
                         <!-- DISPLAY SCORE -->

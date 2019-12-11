@@ -44,6 +44,23 @@ class IPCRF
         return intval(count($res_arr));
     }
 
+    /*
+     THIS METHOD WILL FETCH THE COT OBS PERIOD
+    working
+    */
+    public function fetchObsPeriodinCOT($rating_tbl)
+    {
+        $qry = "SELECT * FROM `$rating_tbl` WHERE `user_id` = " . $this->user . " AND sy = " . $this->sy . "  AND school_id = " . $this->school . " GROUP BY obs_period";
+        $result =  mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        $res_arr = [];
+        foreach ($result as $r) :
+            array_push($res_arr, $r['obs_period']);
+        endforeach;
+        return $result;
+    }
+
+
+
     /* 
     THIS METHOD WILL COUNT THE OBJECTIVE IN KRA
     TABLE MT = mtobj_tbl
@@ -105,14 +122,15 @@ class IPCRF
     public function getEfficiency($kra_id, $obj_id, $table_name)
     {
         $eff_count = $this->countMOV($kra_id, $obj_id, $table_name);
-
-        if ($eff_count >= 5) : return 5;
-        elseif ($eff_count == 4) : return 4;
-        elseif ($eff_count == 3) : return 3;
-        elseif ($eff_count == 2) : return 2;
-        elseif ($eff_count == 1) : return 1;
-        else : return 0;
+        $eff = 0;
+        if ($eff_count >= 5) : $eff = 5;
+        elseif ($eff_count == 4) : $eff = 4;
+        elseif ($eff_count == 3) : $eff = 3;
+        elseif ($eff_count == 2) : $eff = 2;
+        elseif ($eff_count == 1) : $eff = 1;
+        else : $eff = 0;
         endif;
+        return floatval($eff);
     }
 
 
@@ -171,6 +189,24 @@ class IPCRF
                 return floatval($r['average']);
             endforeach;
         else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    /*
+        THIS METHOD WILL FETCH ALL THE DATA IN COT 
+        TABLE: cot_mt_rating_a_tbl, cot_t_rating_a_tbl
+    */
+
+    public function fetchCOTdetails($obs_period, $table_name)
+    {
+        $qry = "SELECT * FROM `$table_name` WHERE obs_period = $obs_period AND sy = " . $this->sy . " AND school_id = " . $this->school . " AND `user_id` = " . $this->user . "";
+        $result = mysqli_query($this->conn(), $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
         endif;
     }
 }
