@@ -40,9 +40,10 @@ endif;
 
 
 
-    <div class="breadcome-list shadow-reset">
+    
         <div class="container">
             <div class="d-flex justify-content-center">
+                
                 <div class="d-inline-flex p-2 bd-highlight">
                     <a href="?usertype=a" class="btn btn-sm btn-success">View All Users</a>&nbsp
                     <a href="?usertype=as" class=" btn btn-sm btn-success">View All Asst. Superintendent</a>&nbsp
@@ -53,10 +54,16 @@ endif;
 
                 </div>
             </div>
-            <div class="h4 breadcrumb bg-dark text-white ">Account Informations</div>
+            <div class="d-flex justify-content-between bg-dark">
+                <div class="p-2"></div>
+                <div class="p-2 h4 text-white"> Account Informations</div>
+                <div class="p-2"><a href="signup2.php" class="btn btn-primary">Add User</a></div>
+               
+            </div>
+            
 
-
-            <table class="table table-hover table-responsive-sm table-sm ">
+        <small>
+            <table class="table table-bordered hover table-sm">
 
                 <thead class="thead-dark text-center">
                     <tr>
@@ -64,11 +71,14 @@ endif;
                         <th>Position</th>
                         <th>Email Address</th>
                         <th>Contact Number</th>
+                        <th>School</th>
                         <th>Username</th>
                         <th colspan="3">Actions</th>
                     </tr>
                 </thead>
-                <?php while ($row = $result->fetch_assoc()) :
+                <?php 
+                $result = $conn->query("SELECT * FROM account_tbl");
+                while ($row = $result->fetch_assoc()) :
                     $surname = $row['surname'];
                     $firstname = $row['firstname'];
                     $middlename = $row['middlename'];
@@ -82,23 +92,20 @@ endif;
                             <td><?php echo $row['position'] ?></td>
                             <td><?php echo $row['email']; ?></td>
                             <td><?php echo $row['contact']; ?></td>
+                            <td><?php echo displaySchool($conn,$row['school_id']); ?></td>
                             <td><?php echo $row['username']; ?></td>
                             <td><a href="update/updateusers.php?edit=<?php echo $row['user_id']; ?>" class="btn-sm btn-outline-primary btn-block text-center text-decoration-none">Update</a></td>
                             <td><a href="delete/deleteusers.php?delete=<?php echo $row['user_id']; ?>" class="btn-sm btn-outline-danger btn-block text-center text-decoration-none">Delete</a></td>
                         </tr>
                     <?php endwhile; ?>
+                
         </div>
         </tbody>
 
         </table>
 
+</small>
 
-
-
-
-
-
-</main>
 
 <br>
 <?php
