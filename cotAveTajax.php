@@ -77,13 +77,16 @@ $indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $sy_id, $school_id,  $te
                         <tr>
                             <td class="font-weight-bold"><?= $num++ . '.'; ?></td>
                             <td class="font-italic"><?= displayTindicator($conn, $ind['indicator_id']); ?></td>
-                            <?php foreach ($obs_period_arr as $obsper) : ?>
+                            <?php 
+                            $position = "Teacher I";
+                            foreach ($obs_period_arr as $obsper) : ?>
 
                                 <td class="text-center text-success">
-                                    <?= fetchCOTratingT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?>
+                                    <?= rawRate(fetchCOTratingT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id),$position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?>
                                 </td>
+                             
                             <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-success"><?= fetchIndicatorAVGt($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                            <td class="text-center font-weight-bold text-success"><?= rawRate(fetchIndicatorAVGt($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id),$position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>

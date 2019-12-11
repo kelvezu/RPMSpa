@@ -86,7 +86,8 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
                                             endif; ?>
                                 </td>
                             <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-success"><?php echo rawRate(fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                            <td class="text-center font-weight-bold text-success">
+                                <?php echo rawRate(fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>

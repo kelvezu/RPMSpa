@@ -83,6 +83,7 @@ $obs_period_arr =  showObsPeriodAveAdminMT($conn, $sy_id, $school_id);
                                             else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                             endif; ?>
                                 </td>
+                                
                             <?php endforeach; ?>
                             <td class="text-center font-weight-bold text-success"><?= rawRate(fetchIndicatorAVGAdminMt($conn, $ind['indicator_id'], $sy_id, $school_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>

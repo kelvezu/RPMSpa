@@ -78,7 +78,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "cotAveTprincipaltableGeneral.php?sy=" + active_sy_id + "&sch=" + school_id, true);
+            xmlhttp.open("GET", "cotAveTschoolheadGeneral.php?sy=" + active_sy_id + "&sch=" + school_id + "&user=" + teacher_id, true);
             xmlhttp.send();
             return;
         } else {

@@ -91,6 +91,9 @@ $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $t
                                     <?php $position = 'Master Teacher I';
                                             echo rawRate(fetchCOTratingMT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?>
                                 </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
 
                             <?php endforeach; ?>
                             <td class="text-center font-weight-bold text-primary"><?php echo rawRate(fetchIndicatorAVGmt($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>

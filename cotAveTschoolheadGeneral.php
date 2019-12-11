@@ -7,10 +7,11 @@ include 'libraries/func.lib.php';
 include 'includes/conn.inc.php';
 
 $sy_id = $_GET['sy'];
-
+$school = $_GET['sch'];
+$user_id = $_GET['user'];
 
 $cot_array = [];
-$COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy = $sy_id") or die($conn->error);
+$COTqry = mysqli_query($conn, "SELECT * FROM cot_t_indicator_ave_tbl  WHERE sy = $sy_id AND school = '$school' AND `user_id` = '$user_id'") or die($conn->error);
 
 if (mysqli_num_rows($COTqry) == 0) :
     echo '<div class="red-notif-border">Average COT is not available</div>';
@@ -21,8 +22,8 @@ else :
     endforeach;
 endif;
 
-$indicator_arr = RPMSdb::ViewAdminGeneralTindicator($conn, $sy_id);
-$obs_period_arr =  showObsPeriodAveAdminTGeneral($conn, $sy_id);
+$indicator_arr = RPMSdb::ViewAdminTindicator($conn, $sy_id, $school);
+$obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
 ?>
 
 <div class="container">
@@ -38,6 +39,11 @@ $obs_period_arr =  showObsPeriodAveAdminTGeneral($conn, $sy_id);
     <div class="card">
         <div class="card-header bg-dark text-white">
             <div class="row">
+                <div class="col">
+                    <p>
+                        <b> School:</b> <?= displaySchool($conn, $school) ?><br />
+                    </p>
+                </div>
                 <div class="col">
                     <p>
                         <b> School Year:</b> <?= displaySY($conn, $sy_id) ?><br />
@@ -73,15 +79,15 @@ $obs_period_arr =  showObsPeriodAveAdminTGeneral($conn, $sy_id);
 
                                     <?php
                                             $position = "Teacher I";
-                                            $t_average =  rawRate(viewAdminratingTGeneral($conn, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
+                                            $t_average =  rawRate(viewAdminratingT($conn, $school, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
                                             if ($t_average) :
                                                 echo $t_average;
                                             else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                             endif; ?>
                                 </td>
-                             
                             <?php endforeach; ?>
-                            <td class="text-center font-weight-bold text-success"><?php echo rawRate(fetchIndicatorAVGAdmintGeneral($conn, $ind['indicator_id'], $sy_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                            <td class="text-center font-weight-bold text-success">
+                                <?php echo rawRate(fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                         </tr>
                     </tbody>
                 <?php endforeach; ?>
