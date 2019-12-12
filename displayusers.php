@@ -21,7 +21,7 @@ else :
     $userqry = 'SELECT * FROM account_tbl';
 endif;
 ?>
-
+<script src="includes/scripts.js"></script>
 
 <main>
 
@@ -77,7 +77,7 @@ endif;
                     </tr>
                 </thead>
                 <?php 
-                $result = $conn->query("SELECT * FROM account_tbl");
+                $result = mysqli_query($conn,$userqry);
                 while ($row = $result->fetch_assoc()) :
                     $surname = $row['surname'];
                     $firstname = $row['firstname'];
@@ -112,4 +112,3 @@ endif;
 
 include 'samplefooter.php';
 ?>
-<script src="includes/scripts.js"></script>
