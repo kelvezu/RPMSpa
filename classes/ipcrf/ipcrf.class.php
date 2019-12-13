@@ -209,4 +209,45 @@ class IPCRF
             return $result_arr;
         endif;
     }
+
+    /*
+        THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF 
+
+        TABLES: 
+        ipcrf_mt, 
+        ipcrf_t, 
+        ipcrf_final_mt, 
+        ipcrf_final_t 
+    */
+
+    public function hasIPCRF($table_name)
+    {
+        $qry = "SELECT * FROM `$table_name` WHERE `user_id` = " . $this->user . " AND `sy_id` = " . $this->sy . " AND `school_id` = " . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        $count_result = mysqli_num_rows($result);
+        if ($count_result > 0) : return true;
+        else : return false;
+        endif;
+    }
+
+    /*
+        THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF 
+        TABLES: 
+        ipcrf_mt, 
+        ipcrf_t, 
+        ipcrf_final_mt, 
+        ipcrf_final_t 
+    */
+    public function fetchIPCRF($table_name)
+    {
+        $qry = "SELECT * FROM `$table_name` WHERE `user_id` = " . $this->user . " AND `sy_id` = " . $this->sy . " AND `school_id` = " . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
 }

@@ -66,7 +66,7 @@ $show_devneed_kra_cbc = t_fetch_DEVNEED_KRA($conn,$sy,$school);
                                                 //    pre_r($str_obj);
                                                     foreach($str_obj as $s_obj): ?>
                                                     <li>
-                                                      <?php echo displayObjectiveMT($conn,$s_obj['strengths_mtobj']) ?>
+                                                      <?php echo displayObjectiveT($conn,$s_obj['strengths_tobj']) ?>
                                                     </li>
                                                     <?php endforeach; endforeach;?>
                                             <?php else: ?>
@@ -107,7 +107,7 @@ $show_devneed_kra_cbc = t_fetch_DEVNEED_KRA($conn,$sy,$school);
                                         <!-- Action Plan -->
                                         <div class="black-border">
                                             <?php
-                                                    $action = devplan::showA3ActionMT($conn);
+                                                    $action = devplan::showA3Action($conn);
                                                     foreach ($action as $act) :
                                                         $inter = $act['a_intervention'];
                                                         $learn = $act['a_learning_objectives'];
@@ -191,7 +191,7 @@ $show_devneed_kra_cbc = t_fetch_DEVNEED_KRA($conn,$sy,$school);
                                             <div class="form-control-label bg-black">
                                                 <label for="learn-objectives" class="form-control-label">Action Plan</label>
                                                 <?php
-                                                        $action = devplan::showB3ActionMT($conn);
+                                                        $action = devplan::showB3Action($conn);
                                                         foreach ($action as $act) :
                                                             $interb = $act['b_intervention'];
                                                             $learnb = $act['b_learning_objectives'];
@@ -233,7 +233,7 @@ $show_devneed_kra_cbc = t_fetch_DEVNEED_KRA($conn,$sy,$school);
 
                                             <div>
                                                 <?php
-                                                        $action3 = devplan::showDevCMT($conn);
+                                                        $action3 = devplan::showDevC($conn);
                                                         foreach ($action3 as $act3) :
                                                             $act3 = $act3['feedback'];
                                                         endforeach;

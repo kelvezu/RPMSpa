@@ -19,7 +19,7 @@
             $totalyear  = $_POST['totalyear'];
             $areaspec = implode(",", $_POST['areaspec']);
             $subject = implode(",", $_POST['subject']);
-            $gradelvltaught = implode(",", $_POST['glt']);
+            $gradelvltaught = $_POST['glt'];
             $curriclass = $_POST['curriclass'];
             $region = $_POST['region'];
 
