@@ -1061,7 +1061,7 @@
                 }
             }
 
-             function displayFileDescT($conn, $mov_id)
+            function displayFileDescT($conn, $mov_id)
             {
                 $qry = "SELECT * FROM `mov_a_t_attach_tbl` WHERE mov_id = '$mov_id'";
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1462,7 +1462,7 @@
                 }
             }
 
-             function displayMOVfileT($conn, $mov_id)
+            function displayMOVfileT($conn, $mov_id)
             {
                 $qry = "SELECT * FROM `mov_a_t_attach_tbl` WHERE mov_id = $mov_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2229,12 +2229,62 @@
 
             function generateAVG($num1, $num2, $num3)
             {
+                $divisor = 0;
+                if (($num1) != 0) {
+                    $divisor++;
+                }
+                if (($num2) != 0) {
+                    $divisor++;
+                }
+                if (($num3) != 0) {
+                    $divisor++;
+                }
+
                 intval($num1);
                 intval($num2);
                 intval($num3);
-                if ($num1 && $num2 && $num3) :
-                    return  floatval(($num1 + $num2 + $num3) / 3);
-                elseif ($num1 || $num2 || $num3) :
-                    return  floatval(($num1 + $num2 + $num3) / 2);
-                endif;
+
+                if (!$num1 && !$num2 && !$num3) {
+                    return  $avg = 0;
+                } else {
+                    $avg =   floatval(($num1 + $num2 + $num3) / $divisor);
+                }
+                console_log($num1 . " + " . $num2 . " + " . $num3 . " + " . " AVG is " . floatval($avg));
+                return round($avg, 3);
             }
+
+            function generateScore($avg, $percentage)
+            {
+                floatval($avg);
+                floatval($percentage);
+                $score =  floatval($avg * $percentage);
+                console_log($score);
+                return round($score, 3);
+            }
+
+            function adjectivalRating(float $final_score)
+            {
+                floatval($final_score);
+                round($final_score, 3);
+                if (($final_score >= 4.500) or ($final_score == 5.000)) : return "Outstanding";
+                elseif (($final_score >= 3.500) or ($final_score == 4.499)) : return "Very Satisfactory";
+                elseif (($final_score >= 2.500) or ($final_score  == 3.499)) : return "Satisfactory";
+                elseif (($final_score >= 1.500) or ($final_score == 2.499)) : return "Unsatisfactory";
+                elseif (($final_score <= 1.499)) : return "Poor";
+                else : return 'etiits';
+                endif;
+            } 
+
+               /* THIS METHOD WILL PUSH ALL THE SCORE IN AN ARRAY  
+        array_push($score_array, generateScore(generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]), $obj_weight[$count]));
+    }
+
+    // THIS WILL GENERATE THE SUM 
+    $final_score = (array_sum($score_array));
+    echo gettype($final_score);
+
+    $final_mt_ipcrf = "INSERT INTO `ipcrf_final_mt`(`user_id`, `position`, `sy_id`, `school_id`, `final_rating`, `adjectival_rating`, `rater_id`, `date_created`) VALUES ('$user', '$position','$sy','$school','$final_score','" . adjectivalRating(($final_score)) . "','$rater', '" . dateNow() . "')";
+    $final_ipcrf = mysqli_query($conn, $final_mt_ipcrf) or die($conn->error . $final_mt_ipcrf);
+    if ($final_ipcrf) :
+        console_log('Success!');
+    endif; */

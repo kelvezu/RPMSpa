@@ -428,31 +428,38 @@ foreach ($cot_count as $c_count) : ?>
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Key Result Area</th>
-                                <th>Objective</th>
+                                <th>Indicator</th>
                                 <th>Rate</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                                 $cot_details = $ipcrf->fetchCOTdetails($c_count['obs_period'], 'cot_mt_rating_a_tbl');
-                                $cot_num = 0;
-                                if ($cot_details) : ?>
-                                <tr>
-                                    <td>
-                                        <p>
-                                            <?php echo  $cot_num++ ?>
-                                        </p>
-                                    </td>
-                                    <td>
-                                        <p>
+                                $cot_num = 1;
+                                if ($cot_details) :
+                                    foreach ($cot_details as $cot) :
+                                        ?>
+                                    <tr>
+                                        <td>
+                                            <p class="font-weight-bold">
+                                                <?php echo  $cot_num++ ?>
+                                            </p>
+                                        </td>
+                                        <td>
+                                            <p class="font-italic">
+                                                <?= displayMTindicator($conn, $cot['indicator_id']); ?>
+                                            </p>
+                                        </td>
 
-                                        </p>
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            <?php else : ?>
+                                        <td>
+                                            <p class="font-weight-bold">
+                                                <?= $cot['rating'] ?>
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                <?php endforeach;
+                                    else : ?>
                                 <p class="red-notif-border">
                                     No record!
                                 </p>
@@ -467,7 +474,9 @@ foreach ($cot_count as $c_count) : ?>
             </div>
         </div>
     </div>
-<?php endforeach; ?>
+
+<?php $cot_num = 0;
+endforeach; ?>
 
 <!-- END OF COT MODAL -->
 <?php include 'samplefooter.php' ?>

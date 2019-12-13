@@ -64,9 +64,9 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                 <th class="text-center">
                     <p>Timeliness</p>
                 </th>
-                <th class="text-center" width="3%">
+                <!-- <th class="text-center" width="3%">
                     <p>Average </p>
-                </th>
+                </th> -->
             </tr>
         </thead>
         <form action="includes/processIPCRFmt.php" method="post">
@@ -100,7 +100,11 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- DISPLAY WEIGHT per OBJECTIVE -->
                         <td>
                             <p class="font-weight-bold text-center">
-                                <?php echo showPercent(displayOBJweightMT($conn, $kra['kra_id'])) . '%' ?>
+                                <?php
+                                    echo showPercent(displayOBJweightMT($conn, $kra['kra_id'])) . '%';
+                                    $obj_weight = displayOBJweightMT($conn, $kra['kra_id']);
+                                    ?>
+                                <input type="hidden" name="obj_weight[]" value="<?php echo $obj_weight ?? 0  ?>" />
                             </p>
                         </td>
                         <!-- DISPLAY WEIGHT per OBJECTIVE -->
@@ -183,9 +187,9 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- END DISPLAY TIMELINESS -->
 
                         <!-- DISPLAY AVERAGE -->
-                        <td>
+                        <!-- <td>
                             <p class="font-weight-bold text-center">AVERAGE</p>
-                        </td>
+                        </td> -->
                         <!--END  DISPLAY AVERAGE -->
 
                         <!-- DISPLAY SCORE -->
