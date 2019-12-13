@@ -15,6 +15,13 @@
     <div class="card-header text-white text-center bg-dark h4">
     Self Assessment Tool Form / Part II / Master Teacher / Objectives
     </div>
+    <h8><font color="red"><strong>Legend:</strong></font>
+    <strong><font color="green">Very High</strong> - 4
+    <strong><font color="green">High</strong> - 3
+    <strong><font color="green">Moderate</strong> - 2
+    <strong><font color="green">Low</strong> - 1
+    </h8>
+    </div>
     <div class="card-body">
 
     <form action="includes/processESATsurvey.php" method="POST">
