@@ -17,7 +17,14 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
   <div class="card">
     <div class="card-header h4 bg-dark text-white text-center">
       Self Assessment Tool Form / Part II / Teacher / Objectives
+      
     </div>
+    <h8><font color="red"><strong>Legend:</strong></font>
+    <strong><font color="green">Very High</strong> - 4
+    <strong><font color="green">High</strong> - 3
+    <strong><font color="green">Moderate</strong> - 2
+    <strong><font color="green">Low</strong> - 1
+    </h8>
     <div class="card-body">
 
 
