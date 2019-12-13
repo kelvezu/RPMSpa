@@ -592,7 +592,7 @@ s
                            
             
                             <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="dbTeacher.php" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i> Reports</a>
+                            <a class="nav-link dropdown-toggle" href="" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i> Reports</a>
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                     <a href="#" class="dropdown-item">Teacher KRA Challenges</a>
                                     <a href="#" class="dropdown-item">Teacher Performance Summary </a>
@@ -610,8 +610,6 @@ s
                                 </div>
                             </li>
             
-                           
-            
                         ';
             $nav .= '</ul>';
 
@@ -619,7 +617,7 @@ s
             $nav .= '<ul class="navbar-nav mr-auto ">';
             $nav .= '  
                                 <li class="nav-item active">
-                                    <a id="home-btn" class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
+                                    <a id="home-btn" class="nav-link" href="dbTeacher.php"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a>
                                 </li>
                 
                                 <li class="nav-item dropdown active">

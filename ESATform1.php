@@ -26,20 +26,29 @@
 
           <label><strong>1. Age Option</strong></label>
           <br>
-          <select name="age" id="" class="form-control" required>
-            <option>--Select Age--</option>
-            <?php
-            $ageresult = $conn->query('SELECT * FROM age_tbl')  or die($conn->error);
-            while ($agerow = $ageresult->fetch_assoc()) :
-              $age_id = $agerow['age_id'];
-              $age_name = $agerow['age_name'];
-              ?>
-              <option value="<?php echo $age_id ?>"><?php echo $age_name; ?>
-              <?php endwhile ?>
-              </option>
-          </select>
+          <?php
+            $qry = $conn->query("SELECT * FROM account_tbl WHERE `user_id` = ".$_SESSION['user_id']." ");
+              while($agerow = $qry->fetch_assoc()):
+                $birthdate = $agerow['birthdate'];
+                $from = new DateTime($birthdate);
+                $to   = new DateTime('today');
+                $age = $from->diff($to)->y;
+              endwhile;
+              if($age > 55) : $AgeRange = "Over 55 years old";
+              elseif ($age >= 51 && $age <= 55) : $AgeRange = "51-55 years old";
+              elseif ($age >= 46 && $age <= 50) : $AgeRange = "46-50 years old";
+              elseif ($age >= 41 && $age <= 45) : $AgeRange = "41-45 years old";
+              elseif ($age >= 36 && $age <= 40) : $AgeRange = "36-40 years old";
+              elseif ($age >= 31 && $age <= 35) : $AgeRange = "31-35 years old";
+              elseif ($age >= 25 && $age <= 30) : $AgeRange = "25-30 years old";
+              elseif ($age < 25 ): $AgeRange = "Under 25 years old";
+              else:  $AgeRange = "Invalid Age";
+              endif;
+          ?>
+          <input type="text" name="age" value="<?php echo $AgeRange; ?>" class="form-control" readonly>
           <br>
-          <label><strong>2. Gender Option</strong></label>
+          
+          <label><strong>2. Sex Option</strong></label>
           <br>
           <?php
           $genderresult = $conn->query('SELECT * FROM account_tbl WHERE `user_id` = "' . $_SESSION['user_id'] . '"')  or die($conn->error);
@@ -144,15 +153,8 @@
           <label><strong>9. Grade Level Taught</strong></label>
           <br>
           <div class="card-body text-dark">
-            <?php
-            $gradelvlresult = $conn->query('SELECT * FROM gradelvltaught_tbl')  or die($conn->error);
-            while ($gralvlrow = $gradelvlresult->fetch_assoc()) :
-              $gradelvltaught_id = $gralvlrow['gradelvltaught_id'];
-              $gradelvltaught_name = $gralvlrow['gradelvltaught_name'];
-              ?>
-              <input type="checkbox" name="glt[]" value="<?php echo $gradelvltaught_id ?>"><?php echo $gradelvltaught_name ?>
-              </input><br>
-            <?php endwhile ?>
+            <input type="text" class="form-control" value="<?php echo displaySchoolLevelName($conn,displaySchoolLevel($conn, $_SESSION['school_id']));?>"  readonly>
+            <input type="hidden" name="glt" class="form-control" value="<?php echo displaySchoolLevel($conn, $_SESSION['school_id']);?>"  readonly>
           </div>
           <br>
 
@@ -160,25 +162,16 @@
           <label><strong>10. Curricular Classification of the School</strong></label>
           <br>
           <div class="card-body text-dark">
-            <select name="curriclass" id="" class="form-control" required>
-              <option value="">--Select Curricular Classification</option>
-              <?php
-              $curriresult = $conn->query('SELECT * FROM curriclass_tbl')  or die($conn->error);
-              while ($currirow = $curriresult->fetch_assoc()) :
-                $curriclass_id = $currirow['curriclass_id'];
-                $curriclass_name = $currirow['curriclass_name'];
-                ?>
-                <option value="<?php echo $curriclass_id ?>"><?php echo ' ' . $curriclass_name ?>
-                <?php endwhile ?>
-                </option>
-            </select>
+            <input type="text" class="form-control" value="<?php echo displaySchoolCurriClass($conn,displaySchoolCurri($conn, $_SESSION['school_id']));?>" readonly>
+            <input type="hidden" name="curriclass" class="form-control" value="<?php echo displaySchoolCurri($conn, $_SESSION['school_id']);?>" readonly>
+
           </div>
           <br>
 
 
           <label><strong>11. Region</strong></label>
           <div class="card-body text-dark">
-            <input type="text" name="region1" value="<?php echo displayregion($conn, (FetchSchoolRegion($conn, $_SESSION['school_id']))); ?>" class="form-control" readonly>
+            <input type="text"  value="<?php echo displayregion($conn, (FetchSchoolRegion($conn, $_SESSION['school_id']))); ?>" class="form-control" readonly>
             <input type="hidden" name="region" value="<?php echo FetchSchoolRegion($conn, $_SESSION['school_id']); ?>" class="form-control" readonly>
           </div>
 

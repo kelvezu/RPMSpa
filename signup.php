@@ -183,9 +183,9 @@ include_once 'sampleheader.php';
                         echo '<input type="text" class="form-control my-1" name="contact"  placeholder="Enter your Contact number..." value="' . $contact . '" maxlength="11">';
                     }
 
-                    echo '<label for="gender" class="form-control-label "><strong>Gender:</strong></label>';
+                    echo '<label for="gender" class="form-control-label "><strong></strong></label>';
                     ?>
-                    <label for="gender" class="form-control-label "><strong>Gender:</strong></label>
+                    <label for="gender" class="form-control-label "><strong>Sex:</strong></label>
                     <select name="gender" id="" class="form-control">
                         <option>--Select Gender--</option>
                         <?php

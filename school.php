@@ -9,6 +9,24 @@ include 'sampleheader.php';
 
 <script>
 
+
+     $(document).ready(function() {
+        $('#sgl').on('change', function() {
+            var sgl = $(this).val(); 
+            if (sgl) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'ajaxschoollevel.php',
+                    data: 'schoollevel_id=' + sgl,
+                    success: function(html) {
+                        $('#school_curri').html(html);
+                    }
+                });
+            } else {
+                $('#school_curri').html('<option value="">Select School Grade Level first</option>');
+            }
+        });
+     });
     $(document).ready(function() {
         $('#region').on('change', function() {
             var regionID = $(this).val(); 
@@ -62,11 +80,26 @@ include 'sampleheader.php';
                     <div class="form-group row">
                         <div class="col-sm">
                             <label for="school-no" class="col-form-label"><strong>School Grade Level</strong></label>
-                            <select class="form-control" name="sgl" id="">
-                                <option value="">--Select--</option>
-                                <option value="Elementary School">Elementary School</option>
-                                <option value="Secondary School">Secondary School</option>
-                                <option value="Division Office">Division Office</option>
+                            <select class="form-control" name="sgl" id="sgl">
+                                <option value="" disabled selected>--Select--</option>
+                               <?php
+                                    $levelqry = $conn->query("SELECT * FROM school_grade_level_tbl");
+                                        while ($schoolLevel = $levelqry->fetch_assoc()):
+                                            $lvlid = $schoolLevel['schoollevel_id'];
+                                            $lvlname = $schoolLevel['schoollevel_name'];
+                                ?>
+                                <option value="<?php echo $lvlid; ?>"><?php echo $lvlname; ?></option>
+                                        <?php endwhile;?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm">
+                            <label for="school-no" class="col-form-label"><strong>School Curricular Classification</strong></label>
+                            <select class="form-control" name="school_curri" id="school_curri">
+                                <option value="" disabled selected>Select School Grade Level first</option>
+                            </select>
                             </select>
                         </div>
                     </div>
@@ -146,7 +179,7 @@ include 'sampleheader.php';
         </div>
     <?php endif ?>
 
-    <main>
+
         <div class="container">
          
                 <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#school-modal">Add School</button>
@@ -158,12 +191,13 @@ include 'sampleheader.php';
                 $query2 = mysqli_query($conn, "SELECT region_tbl.region_name,division_tbl.divi_name,municipality_tbl.muni_name,school_tbl.* FROM (((school_tbl INNER JOIN region_tbl ON school_tbl.reg_id = region_tbl.reg_id) INNER JOIN division_tbl ON school_tbl.div_id = division_tbl.div_id) INNER JOIN municipality_tbl ON school_tbl.muni_id = municipality_tbl.muni_id) ORDER BY school_id") or die($conn->error);
 
                 ?>
-
+<small>
                 <table class="table table-sm">
                     <caption>School Information</caption>
                     <thead class="bg-success text-white text-nowrap ">
                         <tr>
                             <th>School Grade Level</th>
+                             <th>School Curricular Classification</th>
                             <th>School Number</th>
                             <th>School Name</th>
                             <th>Telephone Number</th>
@@ -178,7 +212,8 @@ include 'sampleheader.php';
                         ?>
                         <tbody class="text-justify">
                             <tr>
-                                <td><?php echo $rows['school_grade_lvl']; ?></td>
+                                <td><?php echo displaySchoolGradeLevel($conn, $rows['school_grade_lvl']); ?></td>
+                                 <td><?php echo  displaySchoolCurriClass($conn, $rows['school_curriclass']); ?></td>
                                 <td><?php echo $rows['school_no']; ?></td>
                                 <td><?php echo $rows['school_name']; ?></td>
                                 <td><?php echo $rows['tel_no']; ?></td>
@@ -194,7 +229,8 @@ include 'sampleheader.php';
                             </tr>
 
                         </tbody>
-                </table>
+                </table>    
+                </small>
             </div>
         </div>
 </div>
