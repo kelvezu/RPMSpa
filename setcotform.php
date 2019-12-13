@@ -59,7 +59,7 @@ endif;
 
                                 if ($queryObserver2) :
                                     while ($row = $queryObserver2->fetch_assoc()) :
-                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'];
+                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname']. ' - ' .$row['position'];
                                         ?>
 
                                         <option value="<?= $row['user_id'] ?>"><?php echo $name; ?></option>
@@ -110,7 +110,7 @@ endif;
 
                                 if ($queryObserver3) :
                                     while ($row = $queryObserver3->fetch_assoc()) :
-                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'];
+                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname']. ' - ' .$row['position'];
                                         ?>
 
                                         <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
@@ -250,6 +250,44 @@ endif;
                         $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
                         $resultqry = $conn->query($periodqry)  or die($conn->error);
                         ?>
+<!-- LEGEND OF COT RUBRICS-->
+                <div class="container">
+                        
+                        <div class="right">
+                            <div class="h4 breadcrumb bg-dark text-white " style="font-size: 12px;">COT Rubric for Teacher I-III</div>
+                                    <?php
+                                    
+                                    $result = $conn->query('SELECT * FROM trubric_tbl')  or die($conn->error);
+                                    ?>
+
+                                    <table class="table table-bordered table-responsive-sm table-sm">
+                                        <thead class="bg-success text-white">
+                                            <tr>
+                                                <th style="font-size: 13px;">Level</th>
+                                                <th style="font-size: 13px;">Level Name</th>
+                                                <th style="font-size: 13px;">Level Description</th>
+                                            </tr>
+                                        </thead>
+                                        <?php
+                                        while ($row = $result->fetch_assoc()) :
+                                            ?>
+                                            <tbody class="text-justify">
+                                                <tr>
+                                                    <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_lvl']; ?></td>
+                                                    <td style="font-size: 12px; font-style: italic;" ><?php echo $row['level_name']; ?></td>
+                                                    <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_description']; ?></td>
+                                                    
+                                                    </td>
+                                                </tr>
+                                            <?php endwhile; ?>
+                                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                
+<!-- END OF LEGEND-->
+
 
 
                         <table class="table table-bordered" style="background-color: white; table-layout: 10;">
