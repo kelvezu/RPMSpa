@@ -122,7 +122,7 @@
                                                 <div class="d-flex justify-content-between">
                                                     <div class="p-2"></div>
                                                     <div class="p-2"><label for="a_strength" class="form-control-label">Development Needs</label></div>
-                                                    <div class="p-2"><a href="gendevplanT.php?btn=editdev" class="btn btn-primary text-white">Edit</a></div>
+                                                    <div class="p-2"></div>
                                                     </div>
                                             </div>
                                            
@@ -204,7 +204,7 @@
                                                     <div class="d-flex justify-content-between">
                                                     <div class="p-2"></div>
                                                     <div class="p-2"><label for="b_strength" class="form-control-label ">Strengths</label></div>
-                                                    <div class="p-2"><a href="gendevplanT.php?btn=editstrcbc" class="btn btn-primary text-white">Edit</a></div>
+                                                    <div class="p-2"></div>
                                                     </div>
                                                     </div>
                                                 <!-- ----------------------------- -->
@@ -237,11 +237,11 @@
                                                     <div class="bg-black"><div class="d-flex justify-content-between">
                                                     <div class="p-2"></div>
                                                     <div class="p-2"><label for="b_strength" class="form-control-label ">Development Needs</label></div>
-                                                    <div class="p-2"><a href="gendevplanT.php?btn=editdevcbc" class="btn btn-primary text-white">Edit</a></div>
+                                                    <div class="p-2"></div>
                                                     </div>
                                                     </div>
 <!-- ------------------------------------------------------------------------ -->
-<?php if($cbc_devneeds):
+                                                <?php if($cbc_devneeds):
                                                     foreach($cbc_devneeds as $devneed_cbc):
                                                     // pre_r($cbc_str);
                                                     ?>

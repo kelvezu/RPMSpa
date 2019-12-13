@@ -13,6 +13,7 @@ if (isset($_GET['edit'])) {
     $record = mysqli_fetch_array($query);
     $school_id = $record['school_id'];
     $school_grade_lvl = $record['school_grade_lvl'];
+    $school_curriclass =  $record['school_curriclass'];
     $school_name = $record['school_name'];
     $school_no = $record['school_no'];
     $tel_no = $record['tel_no'];
@@ -48,13 +49,34 @@ if (isset($_GET['edit'])) {
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-lg">
+                        <div class="col-sm">
                             <label for="school-no" class="col-form-label"><strong>School Grade Level</strong></label>
-                            <select class="form-control" name="sgl" id="">
-                                <option value="<?php echo $school_grade_lvl; ?>"><?php echo $school_grade_lvl; ?></option>
-                                <option value="Elementary School">Elementary School</option>
-                                <option value="Secondary School">Secondary School</option>
-                                <option value="Division Office">Division Office</option>
+                           <?php
+
+                    $query = $conn->query("SELECT * FROM  school_grade_level_tbl");
+                    $rowCount = $query->num_rows;
+                    ?>
+                    <select name="sgl" id="sgl" class="form-control">
+                        <option value="<?php echo $school_grade_lvl; ?>"><?php echo displaySchoolGradeLevel($conn,$school_grade_lvl); ?></option>
+                        <?php
+                        if ($rowCount > 0) {
+                            while ($row = $query->fetch_assoc()) {
+                                echo '<option value="' . $row['schoollevel_id'] . '">' . $row['schoollevel_name'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">Curricular Classification not available</option>';
+                        }
+                        ?>
+                    </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm">
+                            <label for="school-no" class="col-form-label"><strong>School Curricular Classification</strong></label>
+                            <select class="form-control" name="school_curri" id="school_curri">
+                                 <option value="<?php echo $school_curriclass; ?>"><?php echo displaySchoolCurriClass($conn,$school_curriclass); ?></option>
+                            </select>
                             </select>
                         </div>
                     </div>
@@ -119,6 +141,24 @@ if (isset($_GET['edit'])) {
 <script src="jquery.min.js"></script>
 
 <script type="text/javascript">
+  $(document).ready(function() {
+        $('#sgl').on('change', function() {
+            var sgl = $(this).val(); 
+            if (sgl) {
+                $.ajax({
+                    type: 'POST',
+                    url: '../ajaxschoollevel.php',
+                    data: 'schoollevel_id=' + sgl,
+                    success: function(html) {
+                        $('#school_curri').html(html);
+                    }
+                });
+            } else {
+                $('#school_curri').html('<option value="">Select School Grade Level first</option>');
+            }
+        });
+     });
+
     $(document).ready(function() {
         $('#region').on('change', function() {
             var regionID = $(this).val();

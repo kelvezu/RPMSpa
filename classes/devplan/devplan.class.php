@@ -328,10 +328,44 @@ class DevPlan
         else : return false;
         endif;
     }
+
+    public static function showA3ActionAdmin($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplant_a3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+
     public static function showA3ActionMT($conn)
     {
         $result_arr = [];
         $qry1 = 'SELECT * FROM `devplanmt_a3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+     public static function showA3ActionMTAdmin($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplanmt_a3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
         $result = mysqli_query($conn, $qry1) or die($conn->error);
 
         $result = mysqli_query($conn, $qry1);
@@ -359,10 +393,44 @@ class DevPlan
         else : return false;
         endif;
     }
+
+
+     public static function showB3ActionAdmin($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplant_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
     public static function showB3ActionMT($conn)
     {
         $result_arr = [];
         $qry1 = 'SELECT * FROM `devplanmt_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+     public static function showB3ActionMTAdmin($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplanmt_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
         $result = mysqli_query($conn, $qry1) or die($conn->error);
 
         $result = mysqli_query($conn, $qry1);
@@ -390,10 +458,43 @@ class DevPlan
         else : return false;
         endif;
     }
+
+    public static function showDevCAdmin($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplant_c_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
     public static function showDevCMT($conn)
     {
         $result_arr = [];
         $qry1 = 'SELECT * FROM `devplanmt_c_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND school = ' . $_SESSION['school_id'] . ' AND `status` = "Submit"';
+        $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+        $result = mysqli_query($conn, $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+     public static function showDevCMTAdmin($conn)
+    {
+        $result_arr = [];
+        $qry1 = 'SELECT * FROM `devplanmt_c_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
         $result = mysqli_query($conn, $qry1) or die($conn->error);
 
         $result = mysqli_query($conn, $qry1);

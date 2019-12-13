@@ -7,6 +7,7 @@ $conn = mysqli_connect("localhost", "root", "", "rpms");
 //ADD MOV
 if (isset($_POST['save'])) {
     $school_grade_lvl = $_POST['sgl'];
+    $school_curriclass =  $_POST['school_curri'];
     $school_no = $_POST['school_no'];
     $school_name = $_POST['school_name'];
     $tel_no = $_POST['tel_no'];
@@ -14,7 +15,7 @@ if (isset($_POST['save'])) {
     $div_id = $_POST['division'];
     $muni_id = $_POST['municipality'];
 
-    $query = "INSERT INTO school_tbl(school_grade_lvl,school_no,school_name,tel_no,reg_id,div_id,muni_id) VALUES('$school_grade_lvl','$school_no','$school_name','$tel_no','$reg_id','$div_id','$muni_id')";
+    $query = "INSERT INTO school_tbl(school_grade_lvl,school_curriclass,school_no,school_name,tel_no,reg_id,div_id,muni_id) VALUES('$school_grade_lvl','$school_curriclass','$school_no','$school_name','$tel_no','$reg_id','$div_id','$muni_id')";
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
@@ -41,13 +42,14 @@ if (isset($_POST['update'])) {
     $school_id = $_POST['school_id'];
     $school_name = $_POST['school_name'];
     $school_grade_lvl = $_POST['sgl'];
+     $school_curriclass =  $_POST['school_curri'];
     $school_no = $_POST['school_no'];
     $tel_no = $_POST['tel_no'];
     $reg_id = $_POST['region'];
     $div_id = $_POST['division'];
     $muni_id = $_POST['municipality'];
 
-    $query = "UPDATE school_tbl SET school_id='$school_id', school_name='$school_name', school_grade_lvl='$school_grade_lvl', school_no='$school_no', tel_no='$tel_no', reg_id='$reg_id', div_id='$div_id', muni_id='$muni_id' WHERE school_id='$school_id'";
+    $query = "UPDATE school_tbl SET school_id='$school_id', school_name='$school_name', school_grade_lvl='$school_grade_lvl', school_curriclass = '$school_curriclass' ,school_no='$school_no', tel_no='$tel_no', reg_id='$reg_id', div_id='$div_id', muni_id='$muni_id' WHERE school_id='$school_id'";
     $query_run = mysqli_query($conn, $query) or die($conn->error);
 
     if ($query_run) {
