@@ -163,7 +163,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                             <p class="font-weight-bold text-center">
                                 <?php if ($kra['mtobj_id'] == 2) : ?>
                                     <select name="timeliness[]" class="form-control" required>
-                                        <option value="null">
+                                        <option readonly>
                                             --- Select Rate for Timeliness ---
                                         </option>
                                         <option value=5>

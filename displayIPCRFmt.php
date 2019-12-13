@@ -15,8 +15,11 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 $ipcrf_details = $ipcrf->fetchIPCRF('ipcrf_mt');
 $ipcrf_final_details = $ipcrf->fetchIPCRF('ipcrf_final_mt');
 // pre_r($ipcrf_final_details);
-$final_rating = $ipcrf_final_details[0]['final_rating'];
-$adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
+if ($ipcrf_final_details) :
+    $final_rating = $ipcrf_final_details[0]['final_rating'];
+    $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
+endif;
+
 // echo $final_rating;
 
 
@@ -91,7 +94,7 @@ $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
                             </p>
                         </th>
                         <th>
-                            <p>
+                            <p class="text-center">
                                 Score
                             </p>
                         </th>
@@ -159,10 +162,7 @@ $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
                                 <!-- END OF EFFICIENCY  -->
                                 <td>
                                     <p class="text-center font-weight-bold">
-                                        <?php if ($details['timeliness'] != 0) : echo $details['timeliness'];
-                                                else : echo "---";
-                                                endif;
-                                                ?>
+                                        <?php echo ($details['timeliness'] != 0) ?  $details['timeliness'] : "---" ?>
                                     </p>
                                 </td>
                                 <td>
@@ -180,11 +180,20 @@ $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
                                         <?php echo $details['score'] ?>
                                     </p>
                                 </td>
+
                     </tr>
-            <?php
-                endforeach;
-            endif;
-            ?>
+                <?php
+                    endforeach;
+                else : ?>
+                <tr>
+                    <td colspan="12">
+                        <p class="red-notif-border">
+                            No record!
+                        </p>
+                    </td>
+                </tr>
+            <?php endif; ?>
+
                 </tbody>
                 <tfoot>
                     <tr>
@@ -196,8 +205,10 @@ $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
                         </td>
                         <td>
                             <p class="text-center font-weight-bold">
-                                <?php echo $final_rating ?><br>
-                                <?php echo $adj_rating ?><br>
+                                <?php echo $final_rating
+                                ?><br>
+                                <?php echo $adj_rating
+                                ?><br>
                             </p>
                         </td>
                     </tr>
