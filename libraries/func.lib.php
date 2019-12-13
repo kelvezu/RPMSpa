@@ -2480,7 +2480,24 @@
                 elseif (($final_score <= 1.499)) : return "Poor";
                 else : return 'etiits';
                 endif;
-            } 
+            }
+
+
+
+            function getPosition($conn, $user)
+            {
+                $qry = "SELECT * FROM `account_tbl` WHERE `user_id` = $user";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return ($res['position']);
+                    endforeach;
+                else : return false;
+                endif;
+            }
+
+
+
 
                /* THIS METHOD WILL PUSH ALL THE SCORE IN AN ARRAY  
         array_push($score_array, generateScore(generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]), $obj_weight[$count]));

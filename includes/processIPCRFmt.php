@@ -1,6 +1,10 @@
 <?php
+
+use IPCRF\IPCRF;
+
 include 'conn.inc.php';
 include '../libraries/func.lib.php';
+include '../classes/ipcrf/ipcrf.class.php';
 $score_array = [];
 
 
@@ -18,7 +22,29 @@ if (isset($_POST['submit_mt'])) :
     $obj_weight = $_POST['obj_weight'];
 
     // echo generateAVG($quality, $efficiency, $timeliness);
+
+
+    $ipcrf = new IPCRF($user, $sy, $school, $position);
+    $hasIPCRF = $ipcrf->hasIPCRF('ipcrf_mt');
+    $hasFinalIPCRF = $ipcrf->hasIPCRF('ipcrf_final_mt');
     pre_r($_POST);
+
+
+    // for ($count = 0; $count < count($obj); $count++) :
+    //     if ($quality[$count] == "") :
+    //         echo "Quality must have a value!";
+    //         exit();
+    //     endif;
+    // endfor;
+
+    /* CHECK IF THE USER HAS IPCRF RECORD ALREADY  */
+    if ($hasFinalIPCRF or $hasIPCRF) :
+        // header('location:../ipcrf_mt.php?notif=ipcrfexist');
+        echo 'User already have an Final IPCRF';
+        exit();
+    endif;
+    /* ------------------------------------- */
+
 
     for ($count = 0; $count < count($obj); $count++) {
         $conn->query('INSERT INTO `ipcrf_mt`( `user_id`, `kra_uid`, `obj_id`, `quality`, `efficiency`, `timeliness`, `average`,`objective_weight`,`score`,`rater_id`, `sy_id`, `school_id`, `position`, `division`,`date_created`) VALUES (' . $user . ',' . $kra[$count] . ',' . $obj[$count] . ',' . $quality[$count] . ',' . $efficiency[$count] . ',' . $timeliness[$count] . ',' . generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]) . ',' . $obj_weight[$count] . ',' . generateScore(generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]), $obj_weight[$count]) . ',' . $rater . ',' . $sy . ',' . $school . ',"' . $position . '",' . $school . ',"' . date("Y-m-d H:i:s") . '")')  or die($conn->error);
@@ -38,7 +64,7 @@ if (isset($_POST['submit_mt'])) :
         echo 'success';
     }
 
-// header('location:../ipcrf_mt.php?notif=Success');
+    header('location:../ipcrf_mt.php?notif=Success');
 
 
 
