@@ -9,8 +9,6 @@ $position = $_SESSION['position'];
 $school = $_SESSION['school_id'];
 $rater =  $_SESSION['rater'];
 $num = 1;
-
-
 $ipcrf = new IPCRF($user, $sy, $school, $position);
 $ipcrf_details = $ipcrf->fetchIPCRF('ipcrf_mt');
 $ipcrf_final_details = $ipcrf->fetchIPCRF('ipcrf_final_mt');
