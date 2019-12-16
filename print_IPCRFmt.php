@@ -17,13 +17,9 @@ if ($ipcrf_final_details) :
     $final_rating = $ipcrf_final_details[0]['final_rating'];
     $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
 endif;
-
 // echo $final_rating;
-
-
 // pre_r($ipcrf_details);
 /* <p><?php echo displayName($conn, $user); ?></p>*/
-
 ?>
 <div class="container-fluid">
 

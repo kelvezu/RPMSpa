@@ -58,7 +58,7 @@
                 return $notif_array;
             }
 
-            function isSubmit( $dbcon)
+            function isSubmit($dbcon)
             {
                 $notif_array = [];
                 $submit_result = $dbcon->query(' SELECT * FROM `devplan_c_tbl` WHERE `user_id` ="' . $_SESSION['user_id'] . '" AND status = "Submit" ');
@@ -78,7 +78,7 @@
                 return $notif_array;
             }
 
-            function isTakenEsat( $dbcon, $position, $user_id)
+            function isTakenEsat($dbcon, $position, $user_id)
             {
                 $notif_array = [];
                 //THIS WILL CHECK THE POSITION OF THE USER
@@ -387,7 +387,7 @@
 
             function fullnameFormat($firstname, $middlename, $surname)
             {
-                echo $firstname . ' ' . substr($middlename, 0, 1) . '. ' . $surname;
+                return $firstname . ' ' . substr($middlename, 0, 1) . '. ' . $surname;
             }
 
             /* 
@@ -436,7 +436,7 @@
                 $result = mysqli_query($conn, $qry);
                 if ($result) :
                     foreach ($result as $res) :
-                        return fullnameFormat($res['firstname'], $res['middlename'], $res['surname']);
+                        return strval(fullnameFormat($res['firstname'], $res['middlename'], $res['surname']));
                     endforeach;
                 else :
                     return false;
@@ -2007,7 +2007,7 @@
                 }
             }
 
-             function mt_fetch_STR_OBJ_Admin($conn, $sy, $a_str)
+            function mt_fetch_STR_OBJ_Admin($conn, $sy, $a_str)
             {
                 $qry = " SELECT * FROM `devplanmt_a1_strength_tbl` WHERE `status` = 'Submit' AND a_strengths = $a_str AND sy = '$sy'  group by strengths_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2033,7 +2033,7 @@
                 }
             }
 
-             function t_fetch_STR_OBJ_Admin($conn, $sy, $a_str)
+            function t_fetch_STR_OBJ_Admin($conn, $sy, $a_str)
             {
                 $qry = " SELECT * FROM `devplant_a1_strength_tbl` WHERE `status` = 'Submit' AND a_strengths = $a_str AND sy = '$sy' group by strengths_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2059,7 +2059,7 @@
                 }
             }
 
-             function mt_fetch_DEV_NEEDS_Admin($conn, $sy)
+            function mt_fetch_DEV_NEEDS_Admin($conn, $sy)
             {
                 $qry = " SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `status` = 'Submit' AND sy = '$sy' group by a_devneeds";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2084,7 +2084,7 @@
                     return $res_array;
                 }
             }
-            
+
             function t_fetch_DEV_NEEDS_Admin($conn, $sy)
             {
                 $qry = " SELECT * FROM `devplant_a2_devneeds_tbl` WHERE `status` = 'Submit' AND sy = '$sy' group by a_devneeds";
@@ -2111,7 +2111,7 @@
                 }
             }
 
-             function mt_fetch_DEVNEEDS_OBJ_Admin($conn, $sy, $a_str)
+            function mt_fetch_DEVNEEDS_OBJ_Admin($conn, $sy, $a_str)
             {
                 $qry = " SELECT * FROM `devplanmt_a2_devneeds_tbl` WHERE `status` = 'Submit' AND a_devneeds = $a_str AND sy = '$sy' group by devneeds_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2137,7 +2137,7 @@
                 }
             }
 
-             function t_fetch_DEVNEEDS_OBJ_Admin($conn, $sy, $a_str)
+            function t_fetch_DEVNEEDS_OBJ_Admin($conn, $sy, $a_str)
             {
                 $qry = " SELECT * FROM `devplant_a2_devneeds_tbl` WHERE `status` = 'Submit' AND a_devneeds = $a_str AND sy = '$sy' group by devneeds_mtobj";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2163,7 +2163,7 @@
                 }
             }
 
-             function mt_fetch_STR_KRA_Admin($conn, $sy)
+            function mt_fetch_STR_KRA_Admin($conn, $sy)
             {
                 $qry = "SELECT * FROM `devplanmt_b1_strength_tbl` WHERE sy = $sy group by strength_cbc_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2189,7 +2189,7 @@
                 }
             }
 
-             function t_fetch_STR_KRA_Admin($conn, $sy)
+            function t_fetch_STR_KRA_Admin($conn, $sy)
             {
                 $qry = "SELECT * FROM `devplant_b1_strength_tbl` WHERE sy = $sy  group by strength_cbc_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2215,7 +2215,7 @@
                 }
             }
 
-             function mt_fetch_STR_IND_CBC_Admin($conn, $sy, $cbc_id)
+            function mt_fetch_STR_IND_CBC_Admin($conn, $sy, $cbc_id)
             {
                 $qry = " SELECT * FROM `devplanmt_b1_strength_tbl` WHERE `status` = 'Submit' AND strength_cbc_id = $cbc_id AND sy = '$sy' group by strength_cbc_ind_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2241,7 +2241,7 @@
                 }
             }
 
-             function t_fetch_STR_IND_CBC_Admin($conn, $sy, $cbc_id)
+            function t_fetch_STR_IND_CBC_Admin($conn, $sy, $cbc_id)
             {
                 $qry = " SELECT * FROM `devplant_b1_strength_tbl` WHERE `status` = 'Submit' AND strength_cbc_id = $cbc_id AND sy = '$sy'  group by strength_cbc_ind_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2293,7 +2293,7 @@
                 }
             }
 
-             function t_fetch_DEVNEED_KRA_Admin($conn, $sy)
+            function t_fetch_DEVNEED_KRA_Admin($conn, $sy)
             {
                 $qry = "SELECT * FROM `devplant_b2_devneeds_tbl` WHERE sy = $sy group by devneed_cbc_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2346,7 +2346,7 @@
                 }
             }
 
-             function t_fetch_DEVNEED_IND_CBC_Admin($conn, $sy, $cbc_id)
+            function t_fetch_DEVNEED_IND_CBC_Admin($conn, $sy, $cbc_id)
             {
                 $qry = " SELECT * FROM `devplant_b2_devneeds_tbl` WHERE `status` = 'Submit' AND devneed_cbc_id = $cbc_id AND sy = '$sy' group by devneed_cbc_ind_id";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2499,7 +2499,7 @@
 
 
 
-               /* THIS METHOD WILL PUSH ALL THE SCORE IN AN ARRAY  
+            /* THIS METHOD WILL PUSH ALL THE SCORE IN AN ARRAY  
         array_push($score_array, generateScore(generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]), $obj_weight[$count]));
     }
 
@@ -2514,7 +2514,7 @@
     endif; */
 
 
-        function displaySchoolGradeLevel($conn, $school_grade_level)
+            function displaySchoolGradeLevel($conn, $school_grade_level)
             {
                 $qry = "SELECT * FROM school_grade_level_tbl WHERE schoollevel_id = $school_grade_level";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
@@ -2528,8 +2528,8 @@
                 }
             }
 
-            
-        function displaySchoolCurriClass($conn, $curri_class)
+
+            function displaySchoolCurriClass($conn, $curri_class)
             {
                 $qry = "SELECT * FROM curriclass_tbl WHERE curriclass_id = $curri_class";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
@@ -2543,7 +2543,7 @@
                 }
             }
 
-        function displaySchoolCurri($conn, $school)
+            function displaySchoolCurri($conn, $school)
             {
                 $qry = "SELECT * FROM school_tbl WHERE school_id = $school";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
@@ -2557,7 +2557,7 @@
                 }
             }
 
-        function displaySchoolLevel($conn, $school)
+            function displaySchoolLevel($conn, $school)
             {
                 $qry = "SELECT * FROM school_tbl WHERE school_id = $school";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
@@ -2571,7 +2571,7 @@
                 }
             }
 
-        function displaySchoolLevelName($conn, $school_level)
+            function displaySchoolLevelName($conn, $school_level)
             {
                 $qry = "SELECT * FROM school_grade_level_tbl WHERE schoollevel_id = $school_level";
                 $results = mysqli_query($conn, $qry) or die($conn->error);
