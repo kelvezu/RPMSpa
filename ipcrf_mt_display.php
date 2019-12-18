@@ -96,9 +96,7 @@ endif;
                 </thead>
                 <tbody>
                     <tr>
-                        <?php
-                        if ($ipcrf_details) :
-                            foreach ($ipcrf_details as $details) : ?>
+                        <?php if ($ipcrf_details) : foreach ($ipcrf_details as $details) : ?>
                                 <!-- number -->
                                 <td>
                                     <p>
@@ -110,7 +108,7 @@ endif;
                                 <!-- KRA DISPLAY  -->
                                 <td>
                                     <p class="font-weight-bold">
-                                        <?php echo displayKRA($conn, $details['kra_uid']) ?>
+                                        <?php echo displayKRA($conn, $details['kra_id']) ?>
                                     </p>
                                 </td>
                                 <!-- END OF KRA  -->
@@ -177,8 +175,8 @@ endif;
 
                     </tr>
                 <?php
-                    endforeach;
-                else : ?>
+                                                                                                    endforeach;
+                                                                                                else : ?>
                 <tr>
                     <td colspan="12">
                         <p class="red-notif-border">

@@ -250,4 +250,154 @@ class IPCRF
             return $result_arr;
         endif;
     }
+
+    /* THIS WILL FETCH THE KRA WEIGHT */
+    public function fetchKRAweight($kra_id)
+    {
+        $qry  = "SELECT * FROM `kra_weight` where kra_id = $kra_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (floatval($r['weight']) * 100) . '%';
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+
+    /* 
+        THIS WILL COUNT THE OBJECTIVE
+        TABLE: mtobj_tbl,tobj_tbl
+    */
+    public function countKRAobjective($kra_id, $table_name)
+    {
+        $qry  = "SELECT COUNT(kra_id) as obj_count FROM `$table_name` WHERE kra_id = $kra_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (intval($r['obj_count']));
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function fetchObjKRA($table_name)
+    {
+        $qry  = "SELECT * FROM `$table_name` GROUP BY kra_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+
+
+    public function getOBJ($table_name, $kra_id)
+    {
+        $qry  = "SELECT * FROM `$table_name` WHERE kra_id = $kra_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    /*
+     THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF 
+        TABLES: 
+        ipcrf_mt, 
+        ipcrf_t
+    */
+    public function fetchQuality($table, $obj_id)
+    {
+        $qry  = "SELECT * FROM `$table` WHERE obj_id = $obj_id AND `user_id` = " . $this->user . " AND sy_id = " . $this->sy . " AND school_id =" . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (floatval($r['quality']));
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function fetchEfficiency($table, $obj_id)
+    {
+        $qry  = "SELECT * FROM `$table` WHERE obj_id = $obj_id AND `user_id` = " . $this->user . " AND sy_id = " . $this->sy . " AND school_id =" . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (floatval($r['efficiency']));
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function fetchOBJweight($kra_id)
+    {
+        $qry = "SELECT * FROM `kra_weight` WHERE kra_id = $kra_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) {
+            foreach ($result as $r) :
+                $qry1 = "SELECT COUNT(kra_id) as count_kra FROM `mtobj_tbl` WHERE kra_id = " . $r['kra_id'] . "";
+                $w_obj = mysqli_query($this->conn(), $qry1) or die($this->conn()->error . $qry1);
+                if ($w_obj) :
+                    foreach ($w_obj as $w) :
+                        return floatval($r['weight'] / $w['count_kra']);
+                    endforeach;
+                endif;
+            endforeach;
+        }
+    }
+
+    public function fetchTimeliness($table, $obj_id)
+    {
+        $qry  = "SELECT * FROM `$table` WHERE obj_id = $obj_id AND `user_id` = " . $this->user . " AND sy_id = " . $this->sy . " AND school_id =" . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (floatval($r['timeliness']));
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function fetchAVG($table, $obj_id)
+    {
+        $qry  = "SELECT * FROM `$table` WHERE obj_id = $obj_id AND `user_id` = " . $this->user . " AND sy_id = " . $this->sy . " AND school_id =" . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (floatval($r['average']));
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function fetchScore($table, $obj_id)
+    {
+        $qry  = "SELECT * FROM `$table` WHERE obj_id = $obj_id AND `user_id` = " . $this->user . " AND sy_id = " . $this->sy . " AND school_id =" . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (floatval($r['score']));
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
 }

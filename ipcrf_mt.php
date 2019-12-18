@@ -24,9 +24,9 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
     <?php if (!$kras) : ?>
         <p class="text-center red-notif-border m-5">No result!</p>
     <?php
-        include 'samplefooter.php';
-        exit();
-    endif; ?>
+                include 'samplefooter.php';
+                exit();
+            endif; ?>
 
     <div class="d-flex justify-content-center">
         <div class="h4"><strong> Master Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
@@ -101,9 +101,9 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <td>
                             <p class="font-weight-bold text-center">
                                 <?php
-                                    echo showPercent(displayOBJweightMT($conn, $kra['kra_id'])) . '%';
-                                    $obj_weight = displayOBJweightMT($conn, $kra['kra_id']);
-                                    ?>
+                                                                echo showPercent(displayOBJweightMT($conn, $kra['kra_id'])) . '%';
+                                                                $obj_weight = displayOBJweightMT($conn, $kra['kra_id']);
+                                ?>
                                 <input type="hidden" name="obj_weight[]" value="<?php echo $obj_weight ?? 0  ?>" />
                             </p>
                         </td>
@@ -114,7 +114,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                             <p class="font-weight-bold text-center">
                                 <!-- THIS WILL SHOW THE INDICATOR AVG OF OBJECTIVE 1  -->
                                 <?php
-                                    if ($kra['mtobj_id'] == 1) : ?>
+                                                                                if ($kra['mtobj_id'] == 1) : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra['kra_id'] ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $kra['mtobj_id'] ?>">
                                     <input class="form-control-sm text-center" type="number" required step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGmt(1) ?? 0 ?>">

@@ -21,14 +21,11 @@ include 'sampleheader.php';
                                 <option>Select KRA</option>
                                 <?php
                                 $query = mysqli_query($conn, "SELECT * from kra_tbl");
-                                while ($row = mysqli_fetch_array($query)) {
+                                while ($row = mysqli_fetch_array($query)) :
                                     $kra_id = $row['kra_id'];
-                                    $kra_name = $row['kra_name'];
-                                    ?>
+                                    $kra_name = $row['kra_name']; ?>
                                     <option value="<?php echo $kra_id ?>"><?php echo $kra_name; ?></option>
-                                <?php
-                                }
-                                ?>
+                                <?php endwhile; ?>
                             </select>
                         </div>
                     </div>
@@ -84,72 +81,72 @@ include 'sampleheader.php';
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">
         <?php
-            echo $_SESSION['message'];
-            unset($_SESSION['message']);
-            ?>
+                                                                            echo $_SESSION['message'];
+                                                                            unset($_SESSION['message']);
+        ?>
     </div>
 <?php endif ?>
 
 <div class="container">
-        <div class="right">
-            <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#perfmtindicator-modal">Add Indicator </button>
+    <div class="right">
+        <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#perfmtindicator-modal">Add Indicator </button>
 
-            <div class="h4 breadcrumb bg-dark text-white ">Master Teacher Performance Indicator </div>
+        <div class="h4 breadcrumb bg-dark text-white ">Master Teacher Performance Indicator </div>
 
-            <script type="text/javascript">
-                function change_kra() {
-                    var xmlhttp = new XMLHttpRequest();
-                    xmlhttp.open("GET", "ajaxmtmov.php?kra=" + document.getElementById("kradd").value, false);
-                    xmlhttp.send(null);
-                    document.getElementById("objective").innerHTML = xmlhttp.responseText;
+        <script type="text/javascript">
+            function change_kra() {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET", "ajaxmtmov.php?kra=" + document.getElementById("kradd").value, false);
+                xmlhttp.send(null);
+                document.getElementById("objective").innerHTML = xmlhttp.responseText;
 
-                }
-            </script>
+            }
+        </script>
 
-         
-                        <?php
-                        
-                        $result = $conn->query('SELECT kra_tbl.kra_name,mtobj_tbl.mtobj_name,perfmtindicator_tbl.* FROM (perfmtindicator_tbl INNER JOIN kra_tbl ON perfmtindicator_tbl.kra_id = kra_tbl.kra_id) 
+
+        <?php
+
+                                                                        $result = $conn->query('SELECT kra_tbl.kra_name,mtobj_tbl.mtobj_name,perfmtindicator_tbl.* FROM (perfmtindicator_tbl INNER JOIN kra_tbl ON perfmtindicator_tbl.kra_id = kra_tbl.kra_id) 
                     INNER JOIN mtobj_tbl ON perfmtindicator_tbl.mtobj_id = mtobj_tbl.mtobj_id')  or die($conn->error);
-                        ?>
+        ?>
 
-                        <table class="table table-responsive-sm table-sm">
-                            <caption>Master Teacher Performance Indicator</caption>
-                            <thead class="bg-info text-nowrap text-white">
-                                <tr>
-                                    <th class="text-center">KRA</th>
-                                    <th class="text-center">Objective</th>
-                                    <th class="text-center">QET</th>
-                                    <th class="text-center">Level No</th>
-                                    <th class="text-center">Indicator Name</th>
-                                    <th class="text-center">Description</th>
-                                    <th colspan="2" class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <?php
-                            while ($row = $result->fetch_assoc()) :
-                                ?>
-                                <tbody class="text-justify">
-                                    <tr>
-                                        <td><?php echo $row['kra_name']; ?></td>
-                                        <td><?php echo $row['mtobj_name']; ?></td>
-                                        <td><?php echo $row['qet']; ?></td>
-                                        <td><?php echo $row['level_no']; ?></td>
-                                        <td><?php echo $row['indicator_name']; ?></td>
-                                        <td><?php echo $row['desc_name']; ?></td>
-                                        <td><a href="update/updateperfmtindicator.php?edit=<?php echo $row['perfmtindicator_id']; ?>" class="btn btn-outline-primary">Update</a></td>
-                                        <td><a href="delete/deleteperfmtindicator.php?delete=<?php echo $row['perfmtindicator_id']; ?>" class="btn btn-outline-danger">Delete</a>
+        <table class="table table-responsive-sm table-sm">
+            <caption>Master Teacher Performance Indicator</caption>
+            <thead class="bg-info text-nowrap text-white">
+                <tr>
+                    <th class="text-center">KRA</th>
+                    <th class="text-center">Objective</th>
+                    <th class="text-center">QET</th>
+                    <th class="text-center">Level No</th>
+                    <th class="text-center">Indicator Name</th>
+                    <th class="text-center">Description</th>
+                    <th colspan="2" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <?php
+                                                                        while ($row = $result->fetch_assoc()) :
+            ?>
+                <tbody class="text-justify">
+                    <tr>
+                        <td><?php echo $row['kra_name']; ?></td>
+                        <td><?php echo $row['mtobj_name']; ?></td>
+                        <td><?php echo $row['qet']; ?></td>
+                        <td><?php echo $row['level_no']; ?></td>
+                        <td><?php echo $row['indicator_name']; ?></td>
+                        <td><?php echo $row['desc_name']; ?></td>
+                        <td><a href="update/updateperfmtindicator.php?edit=<?php echo $row['perfmtindicator_id']; ?>" class="btn btn-outline-primary">Update</a></td>
+                        <td><a href="delete/deleteperfmtindicator.php?delete=<?php echo $row['perfmtindicator_id']; ?>" class="btn btn-outline-danger">Delete</a>
 
-                                        </td>
-                                    </tr>
-                                <?php endwhile; ?>
-                                </tbody>
-                        </table>
-                    </div>
-                </div>
- 
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+                </tbody>
+        </table>
+    </div>
+</div>
+
 <br>
 <?php
 
-include 'samplefooter.php';
+                                                                            include 'samplefooter.php';
 ?>
