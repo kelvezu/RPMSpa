@@ -363,8 +363,8 @@ class Dashboard
                                 <a class="dropdown-item" href="cotAveTprincipal.php">View Teacher Average COT</a>
                                 <a class="dropdown-item" href="cotrateviewMTprincipal.php">View Master Teacher COT</a>
                                 <a class="dropdown-item" href="cotAveMTprincipal.php">View Master Teacher Average COT</a>
-                                <a class="dropdown-item" href="cotformT.php">Rate Teacher COT</a>
-                                <a class="dropdown-item" href="cotformMT.php">Rate Master Teacher COT</a>
+                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
 
@@ -461,8 +461,8 @@ class Dashboard
                                 <a class="dropdown-item" href="cotAveTschoolhead.php">View Teacher Average COT</a>
                                 <a class="dropdown-item" href="cotrateviewMTschoolhead.php">View Master Teacher COT</a>
                                 <a class="dropdown-item" href="cotAveMTschoolhead.php">View Master Teacher Average COT</a>
-                                <a class="dropdown-item" href="cotformT.php">Rate Teacher COT</a>
-                                <a class="dropdown-item" href="cotformMT.php">Rate Master Teacher COT</a>
+                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="setcotformMT.php">Rate Master Teacher COT</a>
                             </div>
                         </li>
 
@@ -574,7 +574,7 @@ s
                                 <a class="dropdown-item" href="cotAveTschoolhead.php">View Teacher Average COT</a>
                                 <a class="dropdown-item" href="cotrateviewMT.php">View My COT Rating</a>
                                 <a class="dropdown-item" href="cotAveMT.php">View My Average COT</a>
-                                <a class="dropdown-item" href="cotformT.php">Rate Teacher COT</a>
+                                <a class="dropdown-item" href="setcotform.php">Rate Teacher COT</a>
                             </div>
                         </li>
         
