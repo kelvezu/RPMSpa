@@ -128,7 +128,7 @@ class IPCRF
         elseif ($eff_count == 3) : $eff = 3;
         elseif ($eff_count == 2) : $eff = 2;
         elseif ($eff_count == 1) : $eff = 1;
-        else : $eff = 0;
+        else : $eff = 1;
         endif;
         return floatval($eff);
     }
@@ -397,6 +397,160 @@ class IPCRF
             foreach ($result as $r) :
                 return (floatval($r['score']));
             endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+
+    // TABLE = perfmtindicator_tbl,perftindicator_tbl
+    public function getTimeliness($table_name, $kra_id, $obj_id)
+    {
+        $qry  = "  SELECT * FROM `$table_name` WHERE kra_id =  $kra_id and mtobj_id = $obj_id AND qet = 'Timeliness' ORDER BY level_no desc";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    // TABLE = perfmtindicator_tbl,perftindicator_tbl
+    public function getTimelinessT($table_name, $kra_id, $obj_id)
+    {
+        $qry  = "  SELECT * FROM `$table_name` WHERE kra_id =  $kra_id and tobj_id = $obj_id AND qet = 'Timeliness' ORDER BY level_no desc";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+
+    /* 
+    THIS WILL DISPLAY THE RESULT OF QUALITY BASED ON RPMS RANGE
+    TABLES: perfmtindicator_tbl, perftindicator_tbl 
+    */
+
+    public function actualResultQuality($table_name, $kra_id, $obj_id, $quality_rate)
+    {
+        floatval($quality_rate);
+
+        if ($quality_rate >= 4.500 and $quality_rate <= 5.000) :
+            $quality_rate = 5;
+        elseif ($quality_rate >= 3.500 and $quality_rate <= 4.499) :
+            $quality_rate = 4;
+
+        elseif ($quality_rate >= 2.500 and $quality_rate <= 3.499) :
+            $quality_rate = 3;
+
+        elseif ($quality_rate >= 1.500 and $quality_rate <= 2.499) :
+            $quality_rate = 2;
+
+        elseif ($quality_rate <= 1.499) :
+            $quality_rate = 1;
+        else : $quality_rate = 1.000;
+        endif;
+
+        $qry  = "SELECT * FROM `$table_name` WHERE kra_id = $kra_id and mtobj_id = $obj_id and qet = 'Quality' and status = 'Active' AND level_no = $quality_rate";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['perfmtindicator_id'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    /* 
+    THIS WILL DISPLAY THE RESULT OF EFFICIENCY BASED ON RPMS RANGE
+    TABLES: perfmtindicator_tbl, perftindicator_tbl 
+    */
+
+    public function actualResultEfficiency($table_name, $kra_id, $obj_id, $quality_rate)
+    {
+        floatval($quality_rate);
+
+        if ($quality_rate >= 4.500 and $quality_rate <= 5.000) :
+            $quality_rate = 5;
+        elseif ($quality_rate >= 3.500 and $quality_rate <= 4.499) :
+            $quality_rate = 4;
+
+        elseif ($quality_rate >= 2.500 and $quality_rate <= 3.499) :
+            $quality_rate = 3;
+
+        elseif ($quality_rate >= 1.500 and $quality_rate <= 2.499) :
+            $quality_rate = 2;
+
+        elseif ($quality_rate <= 1.499) :
+            $quality_rate = 1;
+        else : $quality_rate = 1.000;
+        endif;
+
+        $qry  = "SELECT * FROM `$table_name` WHERE kra_id = $kra_id and mtobj_id = $obj_id and qet = 'Efficiency' and status = 'Active' AND level_no = $quality_rate";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['perfmtindicator_id'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function getQualityRange($quality_rate)
+    {
+        floatval($quality_rate);
+
+        if ($quality_rate >= 4.500 and $quality_rate <= 5.000) :
+            return 5;
+        elseif ($quality_rate >= 3.500 and $quality_rate <= 4.499) :
+            return 4;
+
+        elseif ($quality_rate >= 2.500 and $quality_rate <= 3.499) :
+            return 3;
+
+        elseif ($quality_rate >= 1.500 and $quality_rate <= 2.499) :
+            return 2;
+
+        elseif ($quality_rate <= 1.499) :
+            return 1;
+        else : return 1;
+        endif;
+    }
+
+
+    /* 
+    THIS WILL DISPLAY THE RESULT OF EFFICIENCY BASED ON RPMS RANGE
+    TABLES: perfmtindicator_tbl, perftindicator_tbl 
+    */
+    public function displayPerfIndicator($table_name, $perf_id)
+    {
+        $qry  = " SELECT * FROM `$table_name` where perfmtindicator_id = $perf_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function displayTimelinessDesc($table_name, $kra_id, $obj_id, $level_no)
+    {
+        $qry  = "  SELECT * FROM `$table_name` WHERE kra_id =  $kra_id and mtobj_id = $obj_id AND qet = 'Timeliness' AND level_no = $level_no ";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+
         else : die($this->conn()->error . $qry);
         endif;
     }

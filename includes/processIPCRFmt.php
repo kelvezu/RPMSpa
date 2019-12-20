@@ -17,9 +17,11 @@ if (isset($_POST['submit_mt'])) :
     $obj = $_POST['obj'];
     $quality = $_POST['quality'];
     $efficiency = $_POST['efficiency'];
-    $timeliness = $_POST['timeliness'];
+    $timeliness = ($_POST['timeliness']);
     $rater = $_POST['rater'];
     $obj_weight = $_POST['obj_weight'];
+    $timeline = $_POST['timeline'];
+
 
     // echo generateAVG($quality, $efficiency, $timeliness);
 
@@ -29,13 +31,6 @@ if (isset($_POST['submit_mt'])) :
     $hasFinalIPCRF = $ipcrf->hasIPCRF('ipcrf_final_mt');
     pre_r($_POST);
 
-
-    // for ($count = 0; $count < count($obj); $count++) :
-    //     if ($quality[$count] == "") :
-    //         echo "Quality must have a value!";
-    //         exit();
-    //     endif;
-    // endfor;
 
     /* CHECK IF THE USER HAS IPCRF RECORD ALREADY  */
     if ($hasFinalIPCRF or $hasIPCRF) :
@@ -48,7 +43,27 @@ if (isset($_POST['submit_mt'])) :
 
 
     for ($count = 0; $count < count($obj); $count++) {
-        $conn->query('INSERT INTO `ipcrf_mt`( `user_id`, `kra_uid`, `obj_id`, `quality`, `efficiency`, `timeliness`, `average`,`objective_weight`,`score`,`rater_id`, `sy_id`, `school_id`, `position`, `division`,`date_created`) VALUES (' . $user . ',' . $kra[$count] . ',' . $obj[$count] . ',' . $quality[$count] . ',' . $efficiency[$count] . ',' . $timeliness[$count] . ',' . generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]) . ',' . $obj_weight[$count] . ',' . generateScore(generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]), $obj_weight[$count]) . ',' . $rater . ',' . $sy . ',' . $school . ',"' . $position . '",' . $school . ',"' . date("Y-m-d H:i:s") . '")')  or die($conn->error);
+
+        $qry = $conn->query('INSERT INTO `ipcrf_mt`( `user_id`, `kra_id`, `obj_id`, `quality`, `efficiency`, `timeliness`, `average`,`objective_weight`,`score`,`rater_id`, `sy_id`, `school_id`, `position`, `division`,`date_created`,`timeline`,`actual_result_quality`,`actual_result_efficiency`) VALUES (
+            ' . $user . ',
+            ' . $kra[$count] . ',
+            ' . $obj[$count] . ',
+            ' . $ipcrf->getQualityRange($quality[$count]) . ',
+            ' . $efficiency[$count] . ',
+            ' . $timeliness[$count] . ',
+            ' . generateAVG($ipcrf->getQualityRange($quality[$count]), $efficiency[$count], $timeliness[$count]) . ',
+            ' . $obj_weight[$count] . ',
+            ' . generateScore(generateAVG($ipcrf->getQualityRange($quality[$count]), $efficiency[$count], $timeliness[$count]), $obj_weight[$count]) . ',
+            ' . $rater . ',
+            ' . $sy . ',
+            ' . $school . ',
+            "' . $position . '",
+            ' . $school . ',
+            "' . date("Y-m-d H:i:s") . '",
+            "' . $timeline[$count] . '",
+            ' . $ipcrf->actualResultQuality('perfmtindicator_tbl', $kra[$count], $obj[$count], $quality[$count]) . ',
+            ' . $ipcrf->actualResultEfficiency('perfmtindicator_tbl', $kra[$count], $obj[$count], $efficiency[$count]) . ')')
+            or die($conn->error . $qry);
 
         /* THIS METHOD WILL PUSH ALL THE SCORE IN AN ARRAY  */
         array_push($score_array, generateScore(generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]), $obj_weight[$count]));
@@ -59,17 +74,12 @@ if (isset($_POST['submit_mt'])) :
     $adj_rating =  adjectivalRating($final_score);
     $final_mt_ipcrf = "INSERT INTO `ipcrf_final_mt`(`user_id`, `position`, `sy_id`, `school_id`, `final_rating`, `adjectival_rating`, `rater_id`, `date_created`) VALUES ($user,'$position',$sy,$school,$final_score,'" . $adj_rating . "',$rater,'" . dateNow() . "')";
 
-    $r = mysqli_query($conn, $final_mt_ipcrf) or die($conn->error);
+    $r = mysqli_query($conn, $final_mt_ipcrf) or die($conn->error . $final_mt_ipcrf);
 
-    if ($r) {
+    if ($r) :
         echo 'success';
-    }
-
-    header('location:../ipcrf_mt.php?notif=Success');
-
-
-
-
+        header('location:../ipcrf_mt.php?notif=Success');
+    endif;
 
 
 

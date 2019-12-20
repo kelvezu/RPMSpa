@@ -73,9 +73,6 @@ endif;
 $ipcrf = new IPCRF($user_id, $_SESSION['active_sy_id'], $_SESSION['school_id'], $position);
 $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
 // pre_r($cot_count);
-
-
-
 ?>
 
 
@@ -127,23 +124,23 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                             <!-- COLUMN FOR MAIN MOV -->
                             <td>
                                 <?php
-                                    /* THIS WILL SHOW THE COT IN MOV  */
+                                /* THIS WILL SHOW THE COT IN MOV  */
 
-                                    /* THIS BLOCK WILL DISPLAY THE COT FOR OBJECTIVES */
-                                    if ($mov['mov_type'] == "COT") :
-                                        foreach ($cot_count as $c_count) : ?>
+                                /* THIS BLOCK WILL DISPLAY THE COT FOR OBJECTIVES */
+                                if ($mov['mov_type'] == "COT") :
+                                    foreach ($cot_count as $c_count) : ?>
                                         <p>
                                             <button class="btn btn-sm btn-outline-info" data-toggle="modal" data-target="#COTmodal<?php echo $c_count['obs_period'] ?>">
                                                 COT <?php echo $c_count['obs_period']; ?>
                                             </button>
                                         </p>
                                     <?php endforeach;
-                                        else :
-                                            /* THIS BLOCK WILL DISPLAY THE ATTACHMENTS FOR OBJECTIVES */
-                                            ?>
+                                else :
+                                    /* THIS BLOCK WILL DISPLAY THE ATTACHMENTS FOR OBJECTIVES */
+                                    ?>
                                     <?php $main_att = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
-                                            if (isset($main_att)) :
-                                                foreach ($main_att as $mmov) : ?>
+                                    if (isset($main_att)) :
+                                        foreach ($main_att as $mmov) : ?>
                                             <p class="text-justify text-nowrap">
                                                 <button data-toggle="modal" data-target="#updateModal<?php echo $mmov['mov_id'] . $mov['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm"><?php echo displayMOVfileMT($conn, $mmov['mov_id']);  ?>
                                                 </button>
@@ -227,22 +224,22 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                                             </div>
                                             <!-- End tag of Update Modal -->
                                         <?php
-                                                    endforeach;
-                                                else : ?>
+                                        endforeach;
+                                    else : ?>
                                         <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif;
-                                    endif;
-                                    ?>
+                                endif;
+                                ?>
                                 <!----------------------------------------------------->
                             </td>
                             <!-- END OF COLUMN FOR MAIN MOV -->
                             <td>
                                 <!-- COLUMN FOR MAIN MOV STATUS -->
                                 <?php
-                                    $fetch_main_status = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
-                                    if ($fetch_main_status) :
-                                        foreach ($fetch_main_status as $m_stats) :
-                                            $m_status = $m_stats['doc_status']; ?>
+                                $fetch_main_status = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
+                                if ($fetch_main_status) :
+                                    foreach ($fetch_main_status as $m_stats) :
+                                        $m_status = $m_stats['doc_status']; ?>
                                         <p>
                                             <?php if ($m_status == "For Approval") : ?>
                                                 <button class="btn btn-info btn-sm btn-block  text-white">
@@ -263,7 +260,7 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                                             <?php endif; ?>
                                         </p>
                                     <?php endforeach;
-                                        else : ?>
+                                else : ?>
                                     <p class="text-center font-weight-bold"> ----- </p>
 
                                 <?php endif; ?>
@@ -272,11 +269,11 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                             <td>
                                 <!-- COLUMN FOR SUPP MOV -->
                                 <?php
-                                    $supp_mov =  rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
+                                $supp_mov =  rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
 
-                                    if ($supp_mov) :
-                                        foreach ($supp_mov as $smov) :
-                                            ?>
+                                if ($supp_mov) :
+                                    foreach ($supp_mov as $smov) :
+                                ?>
                                         <p class="text-justify text-nowrap">
                                             <button data-toggle="modal" data-target="#updateModal<?php echo $smov['mov_id'] . $mov['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm"><?php echo  displayMOVfileMT($conn, $smov['mov_id']) ?>
                                             </button>
@@ -364,8 +361,8 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                                         <!-- End tag of Update Modal -->
 
                                     <?php
-                                            endforeach;
-                                        else : ?>
+                                    endforeach;
+                                else : ?>
                                     <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
                             </td>
@@ -373,10 +370,10 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                             <td>
                                 <!-- COLUMN FOR SUPP MOV STATUS -->
                                 <?php
-                                    $fetch_supp_status = rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
-                                    if ($fetch_supp_status) :
-                                        foreach ($fetch_supp_status as $s_stats) :
-                                            $s_status = $s_stats['doc_status']; ?>
+                                $fetch_supp_status = rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
+                                if ($fetch_supp_status) :
+                                    foreach ($fetch_supp_status as $s_stats) :
+                                        $s_status = $s_stats['doc_status']; ?>
                                         <p>
                                             <?php if ($s_status == "For Approval") : ?>
                                                 <button class="btn btn-info btn-sm btn-block  text-white">
@@ -397,14 +394,14 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                                             <?php endif; ?>
                                         </p>
                                     <?php endforeach;
-                                        else : ?>
+                                else : ?>
                                     <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
                                 <!-- END COLUMN FOR SUPP MOV STATUS  -->
                             </td>
                     </tr>
                 <?php
-                endforeach; ?>
+                        endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -434,11 +431,11 @@ foreach ($cot_count as $c_count) : ?>
                         </thead>
                         <tbody>
                             <?php
-                                $cot_details = $ipcrf->fetchCOTdetails($c_count['obs_period'], 'cot_mt_rating_a_tbl');
-                                $cot_num = 1;
-                                if ($cot_details) :
-                                    foreach ($cot_details as $cot) :
-                                        ?>
+                            $cot_details = $ipcrf->fetchCOTdetails($c_count['obs_period'], 'cot_mt_rating_a_tbl');
+                            $cot_num = 1;
+                            if ($cot_details) :
+                                foreach ($cot_details as $cot) :
+                            ?>
                                     <tr>
                                         <td>
                                             <p class="font-weight-bold">
@@ -459,7 +456,7 @@ foreach ($cot_count as $c_count) : ?>
                                     </tr>
 
                                 <?php endforeach;
-                                    else : ?>
+                            else : ?>
                                 <p class="red-notif-border">
                                     No record!
                                 </p>

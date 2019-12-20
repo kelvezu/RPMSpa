@@ -81,13 +81,13 @@ include 'sampleheader.php';
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">
         <?php
-                                                                            echo $_SESSION['message'];
-                                                                            unset($_SESSION['message']);
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
         ?>
     </div>
 <?php endif ?>
 
-<div class="container">
+<div class="container-fluid">
     <div class="right">
         <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#perfmtindicator-modal">Add Indicator </button>
 
@@ -102,11 +102,9 @@ include 'sampleheader.php';
 
             }
         </script>
-
-
         <?php
 
-                                                                        $result = $conn->query('SELECT kra_tbl.kra_name,mtobj_tbl.mtobj_name,perfmtindicator_tbl.* FROM (perfmtindicator_tbl INNER JOIN kra_tbl ON perfmtindicator_tbl.kra_id = kra_tbl.kra_id) 
+        $result = $conn->query('SELECT kra_tbl.kra_name,mtobj_tbl.mtobj_name,perfmtindicator_tbl.* FROM (perfmtindicator_tbl INNER JOIN kra_tbl ON perfmtindicator_tbl.kra_id = kra_tbl.kra_id) 
                     INNER JOIN mtobj_tbl ON perfmtindicator_tbl.mtobj_id = mtobj_tbl.mtobj_id')  or die($conn->error);
         ?>
 
@@ -124,7 +122,7 @@ include 'sampleheader.php';
                 </tr>
             </thead>
             <?php
-                                                                        while ($row = $result->fetch_assoc()) :
+            while ($row = $result->fetch_assoc()) :
             ?>
                 <tbody class="text-justify">
                     <tr>
@@ -133,7 +131,7 @@ include 'sampleheader.php';
                         <td><?php echo $row['qet']; ?></td>
                         <td><?php echo $row['level_no']; ?></td>
                         <td><?php echo $row['indicator_name']; ?></td>
-                        <td><?php echo $row['desc_name']; ?></td>
+                        <td><?php echo trim($row['desc_name']); ?></td>
                         <td><a href="update/updateperfmtindicator.php?edit=<?php echo $row['perfmtindicator_id']; ?>" class="btn btn-outline-primary">Update</a></td>
                         <td><a href="delete/deleteperfmtindicator.php?delete=<?php echo $row['perfmtindicator_id']; ?>" class="btn btn-outline-danger">Delete</a>
 
@@ -148,5 +146,5 @@ include 'sampleheader.php';
 <br>
 <?php
 
-                                                                            include 'samplefooter.php';
+include 'samplefooter.php';
 ?>
