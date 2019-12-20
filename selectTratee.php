@@ -26,9 +26,13 @@
                                     <?php
                                     $showratee = showRatee($_SESSION['position']);
                                     $fetchRateeresults = mysqli_query($conn, $showratee);
-                                    if (!empty($fetchRateeresults)) :
+                                    if (empty($fetchRateeresults)) :
                                         ?>
-                                        <table class="table table-hover table-borderless">
+                                         <p class="red-notif-border text-center"><b>No Teacher Record.</b></p>
+                                    <?php
+                                    else :
+                                        ?>
+                                         <table class="table table-hover table-borderless">
                                             <thead>
                                                 <tr>
                                                     <th>Teacher's Name</th>
@@ -52,10 +56,7 @@
                                             <?php endforeach; ?>
                                             </tbody>
                                         </table>
-                                    <?php
-                                    else :
-                                        ?>
-                                        <p class="red-notif-border text-center"><b>No Teacher Record.</b></p>
+                                       
 
                                     <?php
 

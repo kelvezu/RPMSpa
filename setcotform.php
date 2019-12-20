@@ -20,7 +20,7 @@ endif;
 
 <div class="container text-center">
     <div class="breadcome-list shadow-reset">
-        <form action="includes/processcotformT.php" method="POST">
+        <form action="includes/processcotformT.php" method="POST" id="COTForm">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
             <h5>COT-RPMS</h5>
 
@@ -32,16 +32,17 @@ endif;
             <h4> Classroom Observation Rating Form</h4>
             <h5 class="text-left">
 
-                <div class="breadcome-list shadow-reset">
+              
                     <div class="row">
                         <div class="col-lg-6">
                             <label>OBSERVER 1: </label>&nbsp;
-                            <?php echo $_SESSION['fullname']; ?>
+                            <input type="text"  id="observe" value="<?php echo displayName($conn,$_SESSION['user_id']); ?>" readonly>
+                            <input type="hidden" name="observer1" id="observer1" value="<?php echo $_SESSION['user_id']; ?>" readonly>
                         </div>
 
                         <div class="col-lg-6">
                             <label>DATE:</label>
-                            <?php echo date("Y/m/d"); ?>
+                            <input type="text" name="date" id="date" value="<?php echo date("Y/m/d"); ?>" readonly>
 
                         </div>
                     </div>
@@ -49,7 +50,7 @@ endif;
                     <div class="row">
                         <div class="col-lg-6">
                             <label>OBSERVER 2: </label>&nbsp;
-                            <select name="observer2">
+                            <select name="observer2" id="observer2">
                                 <option value="<?= NULL ?>">Select Observer</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -67,14 +68,17 @@ endif;
                                         endwhile;
                                     else : ?>
                                     <option value=""> No Record!</option>
+
+                                    
                                 <?php
                                 endif; ?>
                             </select>
+
                         </div>
 
                         <div class="col-lg-6">
                             <label>TEACHER OBSERVED: </label>
-                            <select name="tobserved" required="required">
+                            <select name="tobserved" id="tobserved" required>
                                 <option value="" disabled selected>--Select Teacher--</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -100,7 +104,7 @@ endif;
                     <div class="row">
                         <div class="col-lg-6">
                             <label>OBSERVER 3: </label>&nbsp;
-                            <select name="observer3">
+                            <select name="observer3" id="observer3">
                                 <option value="<?= NULL ?>">Select Observer</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -130,7 +134,7 @@ endif;
                             <label>
                                 SUBJECT:
                             </label>
-                            <select name="tsubject" required="required">
+                            <select name="tsubject" required id="tsubject">
                                 <option value="" disabled selected>--Select Subject--</option>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
@@ -149,7 +153,7 @@ endif;
                             <label for="gradeleveltaught">
                                 GRADE LEVEL TAUGHT:
                             </label>
-                            <select name="tgradelvltaught" required="required">
+                            <select name="tgradelvltaught" required id="tgradelvltaught">
                                 <option value="" disabled selected>--Select Grade Level Taught--</option>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
@@ -222,7 +226,7 @@ endif;
                             endif;
                             ?>
 
-                            <input type="text" name="obs" value="<?php echo $period; ?>" readonly />
+                            <input type="text" name="obs" id="obs" value="<?php echo $period; ?>" readonly />
                         </div>
 
                         <br>
@@ -305,15 +309,15 @@ endif;
                                 ?>
 
 
-                                <input type="hidden" name="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
-                                <input type="hidden" name="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
+                                <input type="hidden" name="indicator_id[]" id="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
+                                <input type="hidden" name="indicator_name[]" id="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
 
                                 <tbody>
                                     <tr>
                                         <td><?php echo $row['indicator_id']; ?></td>
                                         <td><?php echo $row['indicator_name']; ?></td>
                                         <td>
-                                            <select name="rating[]" required="required">
+                                            <select name="rating[]" required id="rating[]">
                                                 <option value="" disabled selected>--Select--</option>
                                                 <option value="1">3</option>
                                                 <option value="2">4</option>
@@ -341,13 +345,116 @@ endif;
 
 
 
-            <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
+            <textarea class="form-control" name="ioaf_comment" id="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
-            <button type="submit" class="btn btn-primary" name="save">Submit</button>
-
-    </div>
+            <input type="button" name="save" value="Submit" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-default" />
+        </form>                        
 </div>
-</form>
+    </div>
+
+
+
+
+<div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title " id="exampleModalLabel">Classroom Observation Confirmation</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                            Are you sure you want to submit the following details for Classroom Observation?<br>
+            <center>
+ <?php
+               
+                            $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
+                            ?>
+
+                            <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
+                            <h5>COT-RPMS</h5>
+
+                            <div class="h3 bg-success text-white">Teacher I-III
+                            </div>
+
+                            <h4> COT Rating Sheet</h4>
+
+
+
+                            <h6 class="text-left">
+                                <table>
+                                    <tr>
+                                        <th>Observer 1</th>
+                                        <td id="obs1"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Observer 2</th>
+                                        <td id="obs2"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Observer 3</th>
+                                        <td id="obs3"></td>
+                                    </tr>
+                                     <tr>
+                                        <th>Observer 3</th>
+                                        <td id="obs3"></td>
+                                    </tr>
+                                </table>
+                                
+                            </h6>
+                        </div>
+                        <table class="table table-bordered" style="background-color: white; table-layout: 10;">
+                            <thead class="legend-control bg-success text-white ">
+                                <tr>
+                                    <th>Indicator No</th>
+                                    <th>Indicator Name</th>
+                                    <th>Final Rating</th>
+                                </tr>
+                            </thead>
+                           
+                        </table>
+                        <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required></textarea>
+            
+                            <div class="m-2">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" name="save">Submit</button>
+                                </center>   
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+
+$('#submitBtn').click(function() {
+     /* when the button in the form, display the entered values in the modal */
+
+    $('#obs1').text($('#observe').val());
+    $('#obs2').text($('#observer2').val());
+    $('#obs3').text($('#observer3').val());
+    $('#date').text($('#date').val());
+    $('#tobs').text($('#tobserved').val());
+    $('#tsubj').text($('#tsubject').val());
+    $('#tglt').text($('#tgradelvltaught').val());
+    $('#obs').text($('#obs').val());
+    $('#indicator_id[]').text($('#indicator_id[]').val());
+    $('#indicator_name[]').text($('#indicator_name[]').val());
+    $('#rating[]').text($('#rating[]').val());
+});
+
+$('#submit').click(function(){
+     /* when the submit button in the modal is clicked, submit the form */
+    alert('submitting');
+    $('#COTForm').submit();
+});
+
+</script>
+
+
+
 <br>
 
 <?php

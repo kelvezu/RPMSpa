@@ -286,7 +286,7 @@
                     elseif (strpos($position, 'aster')) :
                         return  'SELECT * FROM account_tbl WHERE rater = "' . $_SESSION['user_id'] . '"  AND school_id = "' . $_SESSION['school_id'] . '"  AND position IN ("Teacher I", "Teacher II", "Teacher III") AND status = "Active" ';
                     else :
-                        return false;
+                        return "No record Found";
                         exit();
                     endif;
                 else :
@@ -304,7 +304,7 @@
                     elseif (strpos($position, 'aster')) :
                         return 'SELECT * FROM account_tbl WHERE position IN ("Teacher I","Teacher II","Teacher III") AND rater IS NULL AND school_id = "' . $_SESSION['school_id'] . '"  AND `user_id` <> " ' . $_SESSION['user_id'] . '" AND status = "Active"';
                     else :
-                        return false;
+                        return "No Record Found";
                     endif;
                 else :
                     echo '<p class="red-notif-border">You dont have a position!</p>';
@@ -1090,7 +1090,7 @@
 
             function showSchool($conn)
             {
-                $qry = "SELECT * FROM school_tbl WHERE school_grade_lvl IN ('Elementary School','Secondary School')";
+                $qry = "SELECT * FROM school_tbl";
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
 
                 if ($result) :

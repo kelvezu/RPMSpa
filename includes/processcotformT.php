@@ -26,7 +26,7 @@ if (isset($_POST['save'])) {
         $rater_id3 =  $_POST['observer3'];
     }
 
-    $rater_id = $_POST['rater_id'];
+    $rater_id = $_POST['observer1'];
     $date = date("Y/m/d");
     $user_id = $_POST['tobserved'];
     $subject = $_POST['tsubject'];
@@ -39,7 +39,7 @@ if (isset($_POST['save'])) {
     $school_id = $_POST['school_id'];
     $status = "Active";
 
-    pre_r($_POST);
+
 
     $checkCOTqry = "SELECT * FROM cot_t_rating_a_tbl WHERE sy = $sy_id AND obs_period = '$obs_period' AND school_id= $school_id AND `user_id` = '$user_id'";
     $cotquery = mysqli_query($conn, $checkCOTqry) or die($conn->error);

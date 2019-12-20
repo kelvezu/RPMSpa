@@ -121,12 +121,12 @@ $show_devneed_kra_cbc = mt_fetch_DEVNEED_KRA($conn,$sy,$school);
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="learning_objectives">Learning Objectives:</label>
-                                                    <textarea name="a_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" disabled class="form-control textarea"><?php echo $learn ?></textarea>
+                                                    <textarea name="a_learning_objectives" id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" disabled class="form-control textarea"><?php if (!empty($learn)): echo $learn; else: echo "No record found"; endif; ?></textarea>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="a_intervention">Interventions:</label>
-                                                    <textarea name="a_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" disabled class="form-control textarea"><?php echo $inter ?></textarea>
+                                                    <textarea name="a_intervention" id="" cols="30" rows="10" placeholder="Enter the Interventions" disabled class="form-control textarea"><?php if (!empty($inter)): echo $inter; else: echo "No record found"; endif; ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,11 +138,11 @@ $show_devneed_kra_cbc = mt_fetch_DEVNEED_KRA($conn,$sy,$school);
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="timelines">Timelines:</label>
-                                                    <textarea name="a_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." disabled class="form-control textarea"><?php echo $time ?></textarea>
+                                                    <textarea name="a_timeline" id="" cols="30" rows="10" placeholder="Enter Timelines." disabled class="form-control textarea"><?php if (!empty($time)): echo $time; else: echo "No record found"; endif; ?></textarea>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label for="resources_needed">Resources needed:</label>
-                                                    <textarea name="a_resources_needed" id="" cols="30" disabled rows="10" placeholder="Enter the Resources needed." class="form-control textarea"><?php echo $resource ?></textarea>
+                                                    <textarea name="a_resources_needed" id="" cols="30" disabled rows="10" placeholder="Enter the Resources needed." class="form-control textarea"><?php if (!empty($resource)): echo $resource; else: echo "No record found"; endif; ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -203,12 +203,12 @@ $show_devneed_kra_cbc = mt_fetch_DEVNEED_KRA($conn,$sy,$school);
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="learning_objectives">Learning Objectives:</label>
-                                                    <textarea name="b_learning_objectives" disabled id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"><?php echo $learnb; ?> </textarea>
+                                                    <textarea name="b_learning_objectives" disabled id="" cols="30" rows="10" placeholder="Enter the Learning Objectives" class="form-control textarea"><?php if (!empty($learnb)): echo $learnb; else: echo "No record found"; endif;?> </textarea>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="intervention">Interventions:</label>
-                                                    <textarea name="b_intervention" id="" disabled cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"> <?php echo $interb; ?> </textarea>
+                                                    <textarea name="b_intervention" id="" disabled cols="30" rows="10" placeholder="Enter the Interventions" class="form-control textarea"> <?php if (!empty($interb)): echo $interb; else: echo "No record found"; endif; ?> </textarea>
                                                 </div>
                                             </div>
 
@@ -222,12 +222,12 @@ $show_devneed_kra_cbc = mt_fetch_DEVNEED_KRA($conn,$sy,$school);
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="timelines">Timelines:</label>
-                                                    <textarea name="b_timeline" id="" cols="30" disabled rows="10" placeholder="Enter Timelines." class="form-control textarea"> <?php echo $timeb; ?></textarea>
+                                                    <textarea name="b_timeline" id="" cols="30" disabled rows="10" placeholder="Enter Timelines." class="form-control textarea"> <?php if (!empty($timeb)): echo $timeb; else: echo "No record found"; endif; ?></textarea>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="resources_needed">Resources needed:</label>
-                                                    <textarea name="b_resources_needed" id="" disabled cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"> <?php echo $resourceb; ?></textarea>
+                                                    <textarea name="b_resources_needed" id="" disabled cols="30" rows="10" placeholder="Enter the Resources needed." class="form-control textarea"> <?php if (!empty($resourceb)): echo $resourceb; else: echo "No record found"; endif; ?></textarea>
                                                 </div>
                                             </div>
 
@@ -239,7 +239,7 @@ $show_devneed_kra_cbc = mt_fetch_DEVNEED_KRA($conn,$sy,$school);
                                                         endforeach;
                                                         ?>
                                                 <label for="learn-objectives" class="form-control-label">Feedback: </label>
-                                                <textarea name="feedback" id="" cols="30" disabled rows="10" class="form-control textarea" placeholder=""><?php echo $act3 ?></textarea>
+                                                <textarea name="feedback" id="" cols="30" disabled rows="10" class="form-control textarea" placeholder=""><?php if (!empty($act3)): echo $act3; else: echo "No record found"; endif; ?></textarea>
                                             </div>
                                         </div>
 
