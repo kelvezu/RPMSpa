@@ -581,7 +581,7 @@ s
                             <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
+                                <a href="esatmasterteacherconsent.php" class="dropdown-item">ESAT Form</a>
                                 <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>                  <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a> 
                                 <a href="viewgendevplanmt.php" class="dropdown-item">Development Plan</a>
                                 <a href="pmcf.php" class="dropdown-item">PMCF</a>
@@ -670,7 +670,7 @@ s
                                 <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
                                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                    <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
+                                    <a href="esatteacherconsent.php" class="dropdown-item">ESAT Form</a>
                                     <a href="viewgendevplant.php" class="dropdown-item">My Development Plan</a>
                                     <a href="pmcf.php" class="dropdown-item">PMCF</a>
                                     <a href="mrf.php" class="dropdown-item">MRF</a>
