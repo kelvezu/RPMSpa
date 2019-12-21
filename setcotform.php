@@ -18,16 +18,55 @@ endif;
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+
+
+
+    <script>
+
+    function ddlselect(){
+        var obs = document.getElementById("observer2");
+        var observer2 = obs.options[obs.selectedIndex].text;
+        document.getElementById("observe2").value = observer2;
+
+    }
+
+    function obs3select(){
+        var obs = document.getElementById("observer3");
+        var observer3 = obs.options[obs.selectedIndex].text;
+        document.getElementById("observe3").value= observer3;
+
+    }
+
+    function selectTobs(){
+        var tobs = document.getElementById("tobserved");
+        var tobserve = tobs.options[tobs.selectedIndex].text;
+        document.getElementById("tobserve").value= tobserve;
+    }
+
+    function selectSubject(){
+        var subj = document.getElementById("tsubject");
+        var tsubj = subj.options[subj.selectedIndex].text;
+        document.getElementById("tsubjec").value= tsubj;
+    }
+    
+    function selectGlt(){
+        var glt = document.getElementById("tgradelvltaught");
+        var tgradelvl = glt.options[glt.selectedIndex].text;
+        document.getElementById("tgradelvl").value= tgradelvl;
+    }
+
+   
+
+    </script>
+
 <div class="container text-center">
     <div class="breadcome-list shadow-reset">
-        <form action="includes/processcotformT.php" method="POST" id="COTForm">
+       
             <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
             <h5>COT-RPMS</h5>
 
             <div class="h3 bg-success text-white">Teacher I-III</div>
-            <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
-            <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
-            <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
+           
 
             <h4> Classroom Observation Rating Form</h4>
             <h5 class="text-left">
@@ -37,7 +76,7 @@ endif;
                         <div class="col-lg-6">
                             <label>OBSERVER 1: </label>&nbsp;
                             <input type="text"  id="observe" value="<?php echo displayName($conn,$_SESSION['user_id']); ?>" readonly>
-                            <input type="hidden" name="observer1" id="observer1" value="<?php echo $_SESSION['user_id']; ?>" readonly>
+                            <input type="hidden" name="observer1" id="observer1" value="<?php echo $_SESSION['user_id']; ?>">
                         </div>
 
                         <div class="col-lg-6">
@@ -50,13 +89,13 @@ endif;
                     <div class="row">
                         <div class="col-lg-6">
                             <label>OBSERVER 2: </label>&nbsp;
-                            <select name="observer2" id="observer2">
+                            <select name="observer2" id="observer2" onchange="ddlselect()">
                                 <option value="<?= NULL ?>">Select Observer</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver2 = mysqli_query($conn, 'SELECT * FROM account_tbl WHERE `user_id` != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver2 = mysqli_query($conn, 'SELECT * FROM account_tbl WHERE `user_id` != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal","Principal-OIC") ') or die($conn->error);
 
                                 if ($queryObserver2) :
                                     while ($row = $queryObserver2->fetch_assoc()) :
@@ -73,12 +112,13 @@ endif;
                                 <?php
                                 endif; ?>
                             </select>
+                           <input type="hidden" id="observe2" >
 
                         </div>
 
                         <div class="col-lg-6">
                             <label>TEACHER OBSERVED: </label>
-                            <select name="tobserved" id="tobserved" required>
+                            <select name="tobserved" id="tobserved" required onchange="selectTobs()">
                                 <option value="" disabled selected>--Select Teacher--</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -98,26 +138,27 @@ endif;
                                 <?php
                                 endif; ?>
                             </select>
+                            <input type="hidden" id="tobserve">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <label>OBSERVER 3: </label>&nbsp;
-                            <select name="observer3" id="observer3">
+                            <select name="observer3" id="observer3" onchange="obs3select()">
                                 <option value="<?= NULL ?>">Select Observer</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal","Principal-OIC") ') or die($conn->error);
 
                                 if ($queryObserver3) :
                                     while ($row = $queryObserver3->fetch_assoc()) :
                                         $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname']. ' - ' .$row['position'];
                                         ?>
 
-                                        <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
+                                        <option value="<?= $row['user_id']; ?>"><?php echo $name; ?></option>
                                     <?php
                                         endwhile;
                                     else : ?>
@@ -125,7 +166,7 @@ endif;
                                 <?php
                                 endif; ?>
                             </select>
-                            </select>
+                                <input type="hidden" id="observe3">
                         </div>
 
 
@@ -134,7 +175,7 @@ endif;
                             <label>
                                 SUBJECT:
                             </label>
-                            <select name="tsubject" required id="tsubject">
+                            <select name="tsubject" required id="tsubject" onchange="selectSubject()">
                                 <option value="" disabled selected>--Select Subject--</option>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
@@ -145,6 +186,7 @@ endif;
                                     <option value=" <?php echo $subject_id; ?>"><?php echo $subject; ?></option>
                                 <?php endwhile; ?>
                             </select>
+                            <input type="hidden" id="tsubjec">
                         </div>
                     </div>
 
@@ -153,7 +195,7 @@ endif;
                             <label for="gradeleveltaught">
                                 GRADE LEVEL TAUGHT:
                             </label>
-                            <select name="tgradelvltaught" required id="tgradelvltaught">
+                            <select name="tgradelvltaught" required id="tgradelvltaught" onchange="selectGlt()">
                                 <option value="" disabled selected>--Select Grade Level Taught--</option>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
@@ -164,6 +206,7 @@ endif;
                                     <option value=" <?php echo $glt_id; ?>"><?php echo $glt; ?></option>
                                 <?php endwhile; ?>
                             </select>
+                            <input type="hidden" id="tgradelvl">
                         </div>
 
                         <script>
@@ -251,7 +294,7 @@ endif;
                             echo 'invalid period!';
                         endif;
 
-                        $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+                      
                         $resultqry = $conn->query($periodqry)  or die($conn->error);
                         ?>
 <!-- LEGEND OF COT RUBRICS-->
@@ -309,16 +352,17 @@ endif;
                                 ?>
 
 
-                                <input type="hidden" name="indicator_id[]" id="indicator_id[]" value="<?php echo $row['indicator_id']; ?>" />
-                                <input type="hidden" name="indicator_name[]" id="indicator_name[]" value="<?php echo $row['indicator_name']; ?>" />
+                                <input type="hidden" name="indicator_id[]" id="indicator_id<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_id']; ?>" />
+                                 <input type="hidden" name="indicator_id[]" id="tindicator_id<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_id']; ?>" />
+                                <input type="hidden" name="indicator_name[]" id="indicator_name<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_name']; ?>" />
 
                                 <tbody>
                                     <tr>
                                         <td><?php echo $row['indicator_id']; ?></td>
                                         <td><?php echo $row['indicator_name']; ?></td>
                                         <td>
-                                            <select name="rating[]" required id="rating[]">
-                                                <option value="" disabled selected>--Select--</option>
+                                            <select name="rating[]" required id="rating<?php echo $indicator_no; ?>" onchange="selectRating<?php echo $indicator_no; ?>()">
+                                                <option value="<?= NULL ?>" disabled selected>--Select--</option>
                                                 <option value="1">3</option>
                                                 <option value="2">4</option>
                                                 <option value="3">5</option>
@@ -326,10 +370,18 @@ endif;
                                                 <option value="5">7</option>
                                                 <option value="1">NO*</option>
                                             </select>
+                                            <input type="hidden" id="rate<?php echo $indicator_no; ?>">
 
                                         </td>
 
-
+                                        
+                                            <script>
+                                                 function selectRating<?php echo $indicator_no; ?>(){
+                                                        var rating = document.getElementById("rating<?php echo $indicator_no; ?>");
+                                                        var cotrate = rating.options[rating.selectedIndex].text;
+                                                        document.getElementById("rate<?php echo $indicator_no; ?>").value= cotrate;
+                                                    }
+                                            </script>
                                     <?php
                                         $indicator_no++;
                                     endwhile;
@@ -347,14 +399,13 @@ endif;
 
             <textarea class="form-control" name="ioaf_comment" id="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
-            <input type="button" name="save" value="Submit" id="submitBtn" data-toggle="modal" data-target="#confirm-submit" class="btn btn-default" />
-        </form>                        
+            <input type="submit" name="save" value="Submit" id="submitBtn" class="btn btn-default" />
+       
 </div>
     </div>
 
 
-
-
+<!-- Modal -->
 <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -366,7 +417,7 @@ endif;
             </div>
 
             <div class="modal-body">
-                            Are you sure you want to submit the following details for Classroom Observation?<br>
+                            <h4><div class="tomato-color font-italic">Are you sure you want to submit the following details for Classroom Observation?</div></h4><br>
             <center>
  <?php
                
@@ -381,25 +432,51 @@ endif;
 
                             <h4> COT Rating Sheet</h4>
 
-
-
+                            <form method="POST" action="includes/processcotformT.php">
+                                <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
+                                <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
+                                <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
                             <h6 class="text-left">
                                 <table>
                                     <tr>
-                                        <th>Observer 1</th>
+                                        <th>Observer 1: </th>
                                         <td id="obs1"></td>
+                                        <input type="hidden" name="observer1" id="cotobs1" readonly>
                                     </tr>
                                     <tr>
-                                        <th>Observer 2</th>
+                                        <th>Observer 2: </th>
                                         <td id="obs2"></td>
+                                        <input type="hidden" name="observer2" id="cotobs2" readonly>
                                     </tr>
                                     <tr>
-                                        <th>Observer 3</th>
+                                        <th>Observer 3: </th>
                                         <td id="obs3"></td>
+                                        <input type="hidden" name="observer3" id="cotobs3" readonly>
                                     </tr>
                                      <tr>
-                                        <th>Observer 3</th>
-                                        <td id="obs3"></td>
+                                        <th>Date: </th>
+                                        <td><?php echo date("Y/m/d"); ?></td>
+                                        <input type="hidden" name="date" value="<?php echo date("Y/m/d"); ?>" readonly>
+                                    </tr>
+                                     <tr>
+                                        <th>Teacher Observed: </th>
+                                        <td id="tobs"></td>
+                                        <input type="hidden" name="tobserved" id="cottobs" readonly>
+                                    </tr>
+                                    <tr>
+                                        <th>Subject: </th>
+                                        <td id="tsub"></td>
+                                        <input type="hidden" name="tsubject" id="cottsub" readonly>
+                                    </tr>
+                                    <tr>
+                                        <th>Grade Level Taught: </th>
+                                        <td id="tglt"></td>
+                                        <input type="hidden" name="tgradelvltaught" id="cottglt" readonly>
+                                    </tr>
+                                    <tr>
+                                        <th>Observation Period: </th>
+                                        <td id="observation"></td>
+                                        <input type="hidden" name="obs" id="cotobservation" readonly>
                                     </tr>
                                 </table>
                                 
@@ -413,42 +490,85 @@ endif;
                                     <th>Final Rating</th>
                                 </tr>
                             </thead>
-                           
+                            <tbody>
+                               <?php 
+                                for( $num = 1; $num <=7; $num++):
+                               ?>
+                                    <tr>
+                                        <td id="indi_id<?php echo $num;?>"></td>
+                                        <input type="hidden" name="indicator_id[]" id="tindi_id<?php echo $num;?>" readonly>
+                                        
+                                        <td id="indi_name<?php echo $num;?>"></td>
+                                        
+                                        <td id="cotrating2<?php echo $num;?>"></td>
+                                        <input type="hidden" name="rating[]" id="cotrate<?php echo $num;?>" readonly>
+                                    </tr>
+                                <?php endfor; ?>
+                            </tbody>
+                                        
                         </table>
-                        <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required></textarea>
-            
+                       <table>
+                           <tr>
+                               <th>Comments</th>
+                               <td><textarea name="ioaf_comment" id="comment" cols="15" rows="5" class="form-control"></textarea></td>
+
+                           </tr>
+                       </table>
+         
                             <div class="m-2">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="save">Submit</button>
+                                <input type="submit" class="btn btn-primary" name="save" id="submitConfirm" value="Submit">
                                 </center>   
+                                </form>
                             </div>
                         </div>
             </div>
         </div>
     </div>
+    <!-- END OF MODAL  -->
+
 
 <script>
+$(document).ready(function(){
+    $('#submitBtn').click(function() {
+        
+        if(($('#observer1').val() !== '') && ($('#tobserve').val() !== '') && ($('#date').val() !== '') && ($('#tsubjec').val() !== '') && ($('#tgradelvl').val() !== '') && ($('#obs').val() !== '') && ($('#rate1').val() !== '') && ($('#rate2').val() !== '') && ($('#rate3').val() !== '') && ($('#rate4').val() !== '') && ($('#rate5').val() !== '') && ($('#rate6').val() !== '') && ($('#rate7').val() !== '') && ($('#ioaf_comment').val() !== '') ){
+      
+    $('#confirm-submit').modal('show');
 
-$('#submitBtn').click(function() {
-     /* when the button in the form, display the entered values in the modal */
+        $('#obs1').text($('#observe').val());
+        $('#obs2').text($('#observe2').val());
+        $('#obs3').text($('#observe3').val());
+        $('#date').text($('#date').val());  
+        $('#tobs').text($('#tobserve').val());
+        $('#tsub').text($('#tsubjec').val());
+        $('#tglt').text($('#tgradelvl').val());
+        $('#observation').text($('#obs').val());
+        $('#comment').text($('#ioaf_comment').val());
 
-    $('#obs1').text($('#observe').val());
-    $('#obs2').text($('#observer2').val());
-    $('#obs3').text($('#observer3').val());
-    $('#date').text($('#date').val());
-    $('#tobs').text($('#tobserved').val());
-    $('#tsubj').text($('#tsubject').val());
-    $('#tglt').text($('#tgradelvltaught').val());
-    $('#obs').text($('#obs').val());
-    $('#indicator_id[]').text($('#indicator_id[]').val());
-    $('#indicator_name[]').text($('#indicator_name[]').val());
-    $('#rating[]').text($('#rating[]').val());
-});
+        $('#cotobs1').val($('#observer1').val());
+        $('#cotobs2').val($('#observer2').val());
+        $('#cotobs3').val($('#observer3').val());
+        $('#cotdate').val($('#date').val());  
+        $('#cottobs').val($('#tobserved').val());
+        $('#cottsub').val($('#tsubject').val());
+        $('#cottglt').val($('#tgradelvltaught').val());
+        $('#cotobservation').val($('#obs').val());
+        
+        
 
-$('#submit').click(function(){
-     /* when the submit button in the modal is clicked, submit the form */
-    alert('submitting');
-    $('#COTForm').submit();
+    for(let num = 0; num <= 7; num ++){
+        $(`#indi_id${num}`).text($(`#indicator_id${num}` ).val());
+        $(`#tindi_id${num}`).val($(`#tindicator_id${num}` ).val());
+        $(`#indi_name${num}`).text($(`#indicator_name${num}` ).val());
+        $(`#cotrating2${num}`).text($(`#rate${num}`).val());
+        $(`#cotrate${num}`).val($(`#rating${num}`).val());
+    }  
+}else{
+    alert("There are empty fields!");
+}
+    
+    })
 });
 
 </script>
