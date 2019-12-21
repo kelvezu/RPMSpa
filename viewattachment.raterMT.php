@@ -242,7 +242,7 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                                         $m_status = $m_stats['doc_status']; ?>
                                         <p>
                                             <?php if ($m_status == "For Approval") : ?>
-                                                <button class="btn btn-info btn-sm btn-block  text-white">
+                                                <button class="btn btn-secondary btn-sm btn-block  text-white">
                                                     <?php echo trim($m_status); ?>
                                                 </button>
                                             <?php elseif ($m_status == "Approved") : ?>
@@ -376,7 +376,7 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                                         $s_status = $s_stats['doc_status']; ?>
                                         <p>
                                             <?php if ($s_status == "For Approval") : ?>
-                                                <button class="btn btn-info btn-sm btn-block  text-white">
+                                                <button class="btn btn-secondary btn-sm btn-block  text-white">
                                                     <?php echo trim($s_status); ?>
                                                 </button>
                                             <?php elseif ($s_status == "Approved") : ?>

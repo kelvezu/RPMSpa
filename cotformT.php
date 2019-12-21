@@ -2,9 +2,6 @@
 
 include_once 'sampleheader.php';
 
-
-
-$conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
 ?>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
@@ -64,13 +61,13 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
                                 if ($queryObserver2) :
                                     while ($row = $queryObserver2->fetch_assoc()) :
-                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname']. ' - ' . $row['position'];
-                                        ?>
+                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'] . ' - ' . $row['position'];
+                                ?>
 
                                         <option value="<?= $row['user_id'] ?>"><?php echo $name; ?></option>
                                     <?php
-                                        endwhile;
-                                    else : ?>
+                                    endwhile;
+                                else : ?>
                                     <option value=""> No Record!</option>
                                 <?php
                                 endif; ?>
@@ -89,12 +86,12 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 if ($queryObserved) :
                                     while ($row = $queryObserved->fetch_assoc()) :
                                         $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'];
-                                        ?>
+                                ?>
 
                                         <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
                                     <?php
-                                        endwhile;
-                                    else : ?>
+                                    endwhile;
+                                else : ?>
                                     <option value=""> No Record!</option>
                                 <?php
                                 endif; ?>
@@ -115,13 +112,13 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
 
                                 if ($queryObserver3) :
                                     while ($row = $queryObserver3->fetch_assoc()) :
-                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname']. ' - ' .$row['position'];
-                                        ?>
+                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'] . ' - ' . $row['position'];
+                                ?>
 
                                         <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
                                     <?php
-                                        endwhile;
-                                    else : ?>
+                                    endwhile;
+                                else : ?>
                                     <option value=""> No Record!</option>
                                 <?php
                                 endif; ?>
@@ -142,7 +139,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 while ($subjrow = $querySubject->fetch_assoc()) :
                                     $subject_id = $subjrow['subject_id'];
                                     $subject = $subjrow['subject_name'];
-                                    ?>
+                                ?>
                                     <option value=" <?php echo $subject_id; ?>"><?php echo $subject; ?></option>
                                 <?php endwhile; ?>
                             </select>
@@ -161,7 +158,7 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                                 while ($gradelvltaught = $queryGlt->fetch_assoc()) :
                                     $glt_id = $gradelvltaught['gradelvltaught_id'];
                                     $glt = $gradelvltaught['gradelvltaught_name'];
-                                    ?>
+                                ?>
                                     <option value=" <?php echo $glt_id; ?>"><?php echo $glt; ?></option>
                                 <?php endwhile; ?>
                             </select>
@@ -218,41 +215,41 @@ $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error
                         <br>
                         <!-- LEGEND OF COT RUBRICS-->
                         <div class="container">
-                        
-                        <div class="right">
-                            <div class="h4 breadcrumb bg-dark text-white " style="font-size: 12px;">COT Rubric for Teacher I-III</div>
+
+                            <div class="right">
+                                <div class="h4 breadcrumb bg-dark text-white " style="font-size: 12px;">COT Rubric for Teacher I-III</div>
+                                <?php
+
+                                $result = $conn->query('SELECT * FROM trubric_tbl')  or die($conn->error);
+                                ?>
+
+                                <table class="table table-bordered table-responsive-sm table-sm">
+                                    <thead class="bg-success text-white">
+                                        <tr>
+                                            <th style="font-size: 13px;">Level</th>
+                                            <th style="font-size: 13px;">Level Name</th>
+                                            <th style="font-size: 13px;">Level Description</th>
+                                        </tr>
+                                    </thead>
                                     <?php
-                                    
-                                    $result = $conn->query('SELECT * FROM trubric_tbl')  or die($conn->error);
+                                    while ($row = $result->fetch_assoc()) :
                                     ?>
-
-                                    <table class="table table-bordered table-responsive-sm table-sm">
-                                        <thead class="bg-success text-white">
+                                        <tbody class="text-justify">
                                             <tr>
-                                                <th style="font-size: 13px;">Level</th>
-                                                <th style="font-size: 13px;">Level Name</th>
-                                                <th style="font-size: 13px;">Level Description</th>
-                                            </tr>
-                                        </thead>
-                                        <?php
-                                        while ($row = $result->fetch_assoc()) :
-                                            ?>
-                                            <tbody class="text-justify">
-                                                <tr>
-                                                    <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_lvl']; ?></td>
-                                                    <td style="font-size: 12px; font-style: italic;" ><?php echo $row['level_name']; ?></td>
-                                                    <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_description']; ?></td>
-                                                    
-                                                    </td>
-                                                </tr>
-                                            <?php endwhile; ?>
-                                            </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                                <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_lvl']; ?></td>
+                                                <td style="font-size: 12px; font-style: italic;"><?php echo $row['level_name']; ?></td>
+                                                <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_description']; ?></td>
 
-                
-<!-- END OF LEGEND-->
+                                                </td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <!-- END OF LEGEND-->
 
                         <div id="show">
 

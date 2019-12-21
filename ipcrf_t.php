@@ -29,7 +29,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
     endif; ?>
 
     <div class="d-flex justify-content-center">
-        <div class="h4"><strong> Master Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
+        <div class="h4"><strong> Teacher Individual Performance Commitment and Review Rating Sheet </strong></div>
     </div>
 
     <table id="rating" class="table  table-sm table-responsive-sm  table-bordered">
