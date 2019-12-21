@@ -43,7 +43,7 @@ endif;
         </div>
         <div class="card-body">
             <table class="table table-sm table-responsive-sm table-bordered">
-                <thead class="text-white bg-primary">
+                <thead class="text-white bg-dark font-weight-bold">
                     <tr>
                         <th>
                             <p>#</p>
@@ -64,6 +64,22 @@ endif;
                         </th>
                         <th>
                             <p>
+                                Actual Result of Quality
+                            </p>
+                        </th>
+                        <th>
+                            <p>
+                                Actual Result of Efficiency
+                            </p>
+                        </th>
+
+                        <th>
+                            <p>
+                                Actual Result of Timeliness
+                            </p>
+                        </th>
+                        <th>
+                            <p>
                                 Quality
                             </p>
                         </th>
@@ -75,11 +91,6 @@ endif;
                         <th>
                             <p>
                                 Timeliness
-                            </p>
-                        </th>
-                        <th>
-                            <p class="text-nowrap">
-                                Actual Results
                             </p>
                         </th>
                         <th>
@@ -124,7 +135,7 @@ endif;
                                 <!-- TIMELINE  -->
                                 <td>
                                     <p>
-                                        TIMELINE
+                                        <?php echo $details['timeline'] ?>
                                     </p>
                                 </td>
                                 <!-- END OF TIMELINE -->
@@ -137,8 +148,33 @@ endif;
                                 </td>
                                 <!-- END QUALITY WEIGHT -->
 
+                                <!-- OBJECTIVE ACTUAL RESULT QUALITY -->
+                                <td>
+                                    <p class="text-justify font-italic">
+                                        <?php echo $ipcrf->displayPerfIndicator('perfmtindicator_tbl', $details['actual_result_quality']) ?>
+                                    </p>
+                                </td>
+                                <!-- END QUALITY ACTUAL RESULT QUALITY -->
+
+                                <!-- OBJECTIVE ACTUAL RESULT EFFICIENCY -->
+                                <td>
+                                    <p class="text-justify font-italic">
+                                        <?php echo $ipcrf->displayPerfIndicator('perfmtindicator_tbl', $details['actual_result_efficiency']) ?>
+                                    </p>
+                                </td>
+                                <!-- END QUALITY ACTUAL RESULT EFFICIENCY -->
+
+                                <!-- OBJECTIVE TIMELINESS DESC -->
+                                <td>
+                                    <p class="text-justify font-italic">
+                                        <?php echo $ipcrf->displayTimelinessDesc('perfmtindicator_tbl', $details['kra_id'], $details['obj_id'], $details['timeliness']) ?>
+                                    </p>
+                                </td>
+                                <!-- END QUALITY TIMELINESS DESC -->
+
                                 <!-- OBJECTIVE WEIGHT -->
                                 <td>
+
                                     <p class="text-center font-weight-bold">
                                         <?php echo $details['quality'] ?>
                                     </p>
@@ -158,11 +194,6 @@ endif;
                                     </p>
                                 </td>
                                 <td>
-                                    <p>
-                                        actual results
-                                    </p>
-                                </td>
-                                <td>
                                     <p class="text-center font-weight-bold">
                                         <?php echo $details['average'] ?>
                                     </p>
@@ -175,8 +206,8 @@ endif;
 
                     </tr>
                 <?php
-                                                                                                    endforeach;
-                                                                                                else : ?>
+                            endforeach;
+                        else : ?>
                 <tr>
                     <td colspan="12">
                         <p class="red-notif-border">
@@ -189,7 +220,7 @@ endif;
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="10">
+                        <td colspan="12">
                             <p class="text-right">
                                 <span>Final Rating: </span><br>
                                 <span>Adjectival Rating: </span><br>
@@ -197,9 +228,14 @@ endif;
                         </td>
                         <td>
                             <p class="text-center font-weight-bold">
-                                <?php echo $final_rating
+                                <?php
+                                if (!empty($final_rating)) {
+                                    echo $final_rating;
+                                }
                                 ?><br>
-                                <?php echo $adj_rating
+                                <?php if (!empty($adj_rating)) {
+                                    echo $adj_rating;
+                                }
                                 ?><br>
                             </p>
                         </td>
