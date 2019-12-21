@@ -95,7 +95,7 @@ endif;
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver2 = mysqli_query($conn, 'SELECT * FROM account_tbl WHERE `user_id` != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver2 = mysqli_query($conn, 'SELECT * FROM account_tbl WHERE `user_id` != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal","Principal-OIC") ') or die($conn->error);
 
                                 if ($queryObserver2) :
                                     while ($row = $queryObserver2->fetch_assoc()) :
@@ -151,7 +151,7 @@ endif;
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
 
-                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal") ') or die($conn->error);
+                                $queryObserver3 = $conn->query('SELECT * FROM account_tbl WHERE user_id != ' . $rater . ' AND school_id = ' . $school . '  AND position  IN ("Master Teacher I","Master Teacher II","Master Teacher III", "Master Teacher IV","School Head","Principal","Principal-OIC") ') or die($conn->error);
 
                                 if ($queryObserver3) :
                                     while ($row = $queryObserver3->fetch_assoc()) :
