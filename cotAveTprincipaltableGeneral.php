@@ -62,7 +62,7 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
                         <th>2nd COT</th>
                         <th>3rd COT</th>
                         <th>4th COT</th>
-                        <th>Average</th>
+                        <th>COT Average</th>
                     </tr>
                 </thead>
                 <?php
@@ -79,12 +79,47 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
 
                                     <?php
                                             $position = "Teacher I";
-                                            $t_average =  rawRate(viewAdminratingT($conn, $school, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
+                                            $t_average =  rawRate(viewAdminratingTObs1($conn, $school, $ind['indicator_id'], $sy_id), $position);
                                             if ($t_average) :
                                                 echo $t_average;
                                             else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                             endif; ?>
                                 </td>
+                                  <td class="text-center text-success">
+
+                                    <?php
+                                            $position = "Teacher I";
+                                            $t_average =  rawRate(viewAdminratingTObs2($conn, $school, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                                  <td class="text-center text-success">
+
+                                    <?php
+                                            $position = "Teacher I";
+                                            $t_average =  rawRate(viewAdminratingTObs3($conn, $school, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                                  <td class="text-center text-success">
+
+                                    <?php
+                                            $position = "Teacher I";
+                                            $t_average =  rawRate(viewAdminratingTObs4($conn, $school, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+
+
+
+
+
                             <?php endforeach; ?>
                             <td class="text-center font-weight-bold text-success">
                                 <?php echo rawRate(fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>

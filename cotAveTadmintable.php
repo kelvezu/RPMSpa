@@ -77,7 +77,34 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school_id);
                                 <td class="text-center text-success">
                                     <?php
                                             $position = "Teacher I";
-                                            $t_average =  rawRate(viewAdminratingT($conn, $school_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
+                                            $t_average =  rawRate(viewAdminratingTObs1($conn, $school_id, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                                <td class="text-center text-success">
+                                    <?php
+                                            $position = "Teacher I";
+                                            $t_average =  rawRate(viewAdminratingTObs2($conn, $school_id, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                                <td class="text-center text-success">
+                                    <?php
+                                            $position = "Teacher I";
+                                            $t_average =  rawRate(viewAdminratingTObs3($conn, $school_id, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>s
+                                <td class="text-center text-success">
+                                    <?php
+                                            $position = "Teacher I";
+                                            $t_average =  rawRate(viewAdminratingTObs4($conn, $school_id, $ind['indicator_id'], $sy_id), $position);
                                             if ($t_average) :
                                                 echo $t_average;
                                             else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";

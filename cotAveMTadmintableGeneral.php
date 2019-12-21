@@ -74,12 +74,45 @@ $obs_period_arr =  showObsPeriodAveAdminMTGeneral($conn, $sy_id);
 
                                     <?php
                                             $position = "Master Teacher I";
-                                            $t_average =  rawRate(viewAdminratingMTGeneral($conn, $obsper['obs_period'], $ind['indicator_id'], $sy_id), $position);
+                                            $t_average =  rawRate(viewAdminratingMTGeneralObs1($conn, $ind['indicator_id'], $sy_id), $position);
                                             if ($t_average) :
                                                 echo $t_average;
                                             else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                             endif; ?>
                                 </td>
+                                 <td class="text-center text-success">
+
+                                    <?php
+                                            $position = "Master Teacher I";
+                                            $t_average =  rawRate(viewAdminratingMTGeneralObs2($conn, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                           
+                            <td class="text-center text-success">
+
+                                    <?php
+                                            $position = "Master Teacher I";
+                                            $t_average =  rawRate(viewAdminratingMTGeneralObs3($conn, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                           
+                            <td class="text-center text-success">
+
+                                    <?php
+                                            $position = "Master Teacher I";
+                                            $t_average =  rawRate(viewAdminratingMTGeneralObs4($conn, $ind['indicator_id'], $sy_id), $position);
+                                            if ($t_average) :
+                                                echo $t_average;
+                                            else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                            endif; ?>
+                                </td>
+                           
                            
                             <?php endforeach; ?>
                             <td class="text-center font-weight-bold text-success"><?php echo rawRate(fetchIndicatorAVGAdminMtGeneral($conn, $ind['indicator_id'], $sy_id), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>

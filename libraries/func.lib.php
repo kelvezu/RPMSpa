@@ -1141,9 +1141,104 @@
                 }
             }
 
+            function fetchCOTratingMTObs1($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 1 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+            function fetchCOTratingMTObs2($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 2 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+             function fetchCOTratingMTObs3($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 3 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+             function fetchCOTratingMTObs4($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
             function fetchCOTratingT($conn, $user, $obs_period, $indicator_id, $sy, $school)
             {
                 $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+            function fetchCOTratingTObs1($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 1 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+            function fetchCOTratingTObs2($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 2 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+            function fetchCOTratingTObs3($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 3 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return $r['rating'];
+                    }
+                }
+            }
+
+             function fetchCOTratingTObs4($conn, $user, $indicator_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
 
                 if (mysqli_num_rows($result) > 0) {
@@ -1364,9 +1459,45 @@
             }
 
 
-            function viewAdminratingT($conn, $school, $obs_period, $indicator_id, $sy)
+            function viewAdminratingTObs1($conn, $school, $indicator_id, $sy)
             {
-                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 1 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
+            function viewAdminratingTObs2($conn, $school, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 2 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
+            function viewAdminratingTObs3($conn, $school, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 3 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
+             function viewAdminratingTObs4($conn, $school, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
 
                 if (mysqli_num_rows($result) > 0) {
@@ -1379,6 +1510,54 @@
             function viewAdminratingMT($conn, $school, $obs_period, $indicator_id, $sy)
             {
                 $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['MT_RATING']), 3);
+                    }
+                }
+            }
+
+            function viewAdminratingMTObs1($conn, $school, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 1 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['MT_RATING']), 3);
+                    }
+                }
+            }
+
+             function viewAdminratingMTObs2($conn, $school, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 2 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['MT_RATING']), 3);
+                    }
+                }
+            }
+
+             function viewAdminratingMTObs3($conn, $school, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 3 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['MT_RATING']), 3);
+                    }
+                }
+            }
+
+             function viewAdminratingMTObs4($conn, $school, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
 
                 if (mysqli_num_rows($result) > 0) {
@@ -2385,6 +2564,54 @@
                 }
             }
 
+            function viewAdminratingTGeneralObs1($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 1 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
+            function viewAdminratingTGeneralObs2($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 2 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
+            function viewAdminratingTGeneralObs3($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 3 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
+            function viewAdminratingTGeneralObs4($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
             function viewAdminratingMTGeneral($conn, $obs_period, $indicator_id, $sy)
             {
                 $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = $obs_period and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
@@ -2396,6 +2623,52 @@
                     }
                 }
             }
+
+            function viewAdminratingMTGeneralObs1($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 1 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+            function viewAdminratingMTGeneralObs2($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 2 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+            function viewAdminratingMTGeneralObs3($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period =3 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+            function viewAdminratingMTGeneralObs4($conn, $indicator_id, $sy)
+            {
+                $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND status = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        return round(floatval($r['T_RATING']), 3);
+                    }
+                }
+            }
+
 
             function fetchIndicatorAVGAdmintGeneral($conn, $indicator, $sy)
             {

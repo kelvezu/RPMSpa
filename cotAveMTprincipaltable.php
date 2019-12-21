@@ -94,10 +94,34 @@ while ($row = $qry->fetch_assoc()) :
 
                                     <td class="text-center text-primary">
                                         <?php
-                                                    if (empty(fetchCOTratingMT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id))) :
+                                                    if (empty(fetchCOTratingMTObs1($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id))) :
                                                         echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                                     else :
-                                                        echo rawRate(fetchCOTratingMT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id), $position);
+                                                        echo rawRate(fetchCOTratingMTObs1($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position);
+                                                    endif;   ?>
+                                    </td>
+                                    <td class="text-center text-primary">
+                                        <?php
+                                                    if (empty(fetchCOTratingMTObs2($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id))) :
+                                                        echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                                    else :
+                                                        echo rawRate(fetchCOTratingMTObs2($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position);
+                                                    endif;   ?>
+                                    </td>
+                                    <td class="text-center text-primary">
+                                        <?php
+                                                    if (empty(fetchCOTratingMTObs3($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id))) :
+                                                        echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                                    else :
+                                                        echo rawRate(fetchCOTratingMTObs3($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position);
+                                                    endif;   ?>
+                                    </td>
+                                    <td class="text-center text-primary">
+                                        <?php
+                                                    if (empty(fetchCOTratingMTObs4($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id))) :
+                                                        echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                                    else :
+                                                        echo rawRate(fetchCOTratingMTObs4($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position);
                                                     endif;   ?>
                                     </td>
 

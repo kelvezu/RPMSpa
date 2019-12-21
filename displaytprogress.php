@@ -38,16 +38,16 @@ Teacher Progress View
                                     <td width="20%"><?php echo $teacher['position']; ?></td>
                                     <td width="20%"><?= ((RPMSdb::isEsatCompleteBool($conn, $teacher['position'], $teacher['user_id']))) ?
                                         '<a href="redisplaytchart.php?user_id='.$teacher["user_id"].'"><i class="fa fa-check-circle text-success"></i></a>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= RPMSdb::TcheckResult_Obs1($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                    <td><?= RPMSdb::TcheckResult_Obs1($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
                                         '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=1"><i class="fa fa-check-circle text-success"></i></a>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= RPMSdb::TcheckResult_Obs2($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                    <td><?= RPMSdb::TcheckResult_Obs2($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
                                         '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=2"><i class="fa fa-check-circle text-success"></i></a>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= RPMSdb::TcheckResult_Obs3($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                    <td><?= RPMSdb::TcheckResult_Obs3($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
                                         '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=3"><i class="fa fa-check-circle text-success"></i></a>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= RPMSdb::TcheckResult_Obs4($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
+                                    <td><?= RPMSdb::TcheckResult_Obs4($conn, $teacher['user_id'], $_SESSION['active_sy_id'], $_SESSION['school_id']) ?
                                         '<a href="displaytcotprogress.php?user_id='.$teacher["user_id"].'&obs=4"><i class="fa fa-check-circle text-success"></i></a>'  : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
-                            <td><?= '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                                    <td><?= '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
+                                    <td><?= '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
 
 
                                 </tr>

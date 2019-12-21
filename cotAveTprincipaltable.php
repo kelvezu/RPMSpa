@@ -76,7 +76,7 @@ while ($result = $positionQry->fetch_assoc()) :
                             <th>2nd COT</th>
                             <th>3rd COT</th>
                             <th>4th COT</th>
-                            <th>RPMS Average</th>
+                            <th>COT Average</th>
                         </tr>
                     </thead>
                     <?php
@@ -91,10 +91,37 @@ while ($result = $positionQry->fetch_assoc()) :
 
                                     <td class="text-center text-success">
                                         <?php
-                                                    if (empty(fetchCOTratingT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id))) :
+                                                    if (empty(fetchCOTratingTObs1($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id))) :
                                                         echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                                     else :
-                                                        echo rawRate(fetchCOTratingT($conn, $teacher_id, $obsper['obs_period'], $ind['indicator_id'], $sy_id, $school_id), $position);
+                                                        echo rawRate(fetchCOTratingTObs1($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position);
+                                                    endif;
+                                                    ?>
+                                    </td>
+                                    <td class="text-center text-success">
+                                        <?php
+                                                    if (empty(fetchCOTratingTObs2($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id))) :
+                                                        echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                                    else :
+                                                        echo rawRate(fetchCOTratingTObs2($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position);
+                                                    endif;
+                                                    ?>
+                                    </td>
+                                     <td class="text-center text-success">
+                                        <?php
+                                                    if (empty(fetchCOTratingTObs3($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id))) :
+                                                        echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                                    else :
+                                                        echo rawRate(fetchCOTratingTObs3($conn, $teacher_id,$ind['indicator_id'], $sy_id, $school_id), $position);
+                                                    endif;
+                                                    ?>
+                                    </td>
+                                     <td class="text-center text-success">
+                                        <?php
+                                                    if (empty(fetchCOTratingTObs4($conn, $teacher_id,$ind['indicator_id'], $sy_id, $school_id))) :
+                                                        echo "<p class='font-weight-bold text-danger'>N/A</p>";
+                                                    else :
+                                                        echo rawRate(fetchCOTratingTObs4($conn, $teacher_id, $ind['indicator_id'], $sy_id, $school_id), $position);
                                                     endif;
                                                     ?>
                                     </td>
