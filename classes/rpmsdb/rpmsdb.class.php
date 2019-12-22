@@ -1752,6 +1752,25 @@ class RPMSdb
         endif;
     }
 
+     public static function fetchtallTrate($conn, $school_id, $rater_id)
+    {
+        $qry = "SELECT * FROM account_tbl WHERE position IN('Teacher I','Teacher II','Teacher III') AND `status` = 'Active' AND school_id = $school_id AND rater = $rater_id ORDER BY FIELD(position,
+        'Teacher III',
+        'Teacher II',
+        'Teacher I'
+       ) ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetchtallT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+            endforeach;
+            return $result_array;
+        else :
+            return "No Record Found";
+        endif;
+    }
+
     public static function fetchtallMT($conn, $school_id)
     {
         $qry = "SELECT * FROM account_tbl WHERE position IN('Master Teacher I','Master Teacher II','Master Teacher III','Master Teacher IV') AND `status` = 'Active' AND school_id = $school_id ORDER BY FIELD(position,
@@ -1769,6 +1788,26 @@ class RPMSdb
             return $result_array;
         else :
             return false;
+        endif;
+    }
+
+    public static function fetchtallMTrate($conn, $school_id,$rater_id)
+    {
+        $qry = "SELECT * FROM account_tbl WHERE position IN('Master Teacher I','Master Teacher II','Master Teacher III','Master Teacher IV') AND `status` = 'Active' AND school_id = $school_id AND rater = $rater_id ORDER BY FIELD(position,
+        'Master Teacher IV'
+        'Master Teacher III',
+        'Master Teacher II',
+        'Master Teacher I'
+       ) ";
+        $result = mysqli_query($conn, $qry) or die($conn->error . 'fetchtallT');
+        if (mysqli_num_rows($result) > 0) :
+            $result_array = [];
+            foreach ($result as $res) :
+                array_push($result_array, $res);
+            endforeach;
+            return $result_array;
+        else :
+            return "No Record Found";
         endif;
     }
 

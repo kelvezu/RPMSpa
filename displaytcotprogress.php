@@ -7,23 +7,49 @@ include 'sampleheader.php';
 
 
 
+
 $teacher_id = $_GET['user_id'];
 $school_id = $_SESSION['school_id'];
 $sy_id = $_SESSION['active_sy_id'];
 $obs = $_GET['obs'];
 
-$positionQry = $conn->query("SELECT * FROM account_tbl WHERE `user_id` = '$teacher_id' ");
-while ($result = $positionQry->fetch_assoc()) :
-    $position = $result['position'];
+$indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $sy_id, $school_id,  $teacher_id);
+?>
 
-  
 
-    $indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $sy_id, $school_id,  $teacher_id);
-    ?>
+ 
+<style>
+#form {
+
+display:none;
+
+}
+</style>
+
+<script>
+
+$(document).ready(function() {
+  $("#editbtncot").click(function() {
+    $("#form").toggle();
+  });
+});
+</script>
 
 
 
     <div class="container">
+        
+    <button type="button" class="btn btn-outline-success" id="editbtncot">Edit</button>
+        <form action="coteditT.php" id="form">
+            <label><strong>Enter Principal Password:</strong></label>
+            <input type="hidden" name="user_id" value="<?php echo $teacher_id; ?>">
+            <input type="hidden" name="school_id" value="<?php echo $school_id; ?>">
+            <input type="hidden" name="sy_id" value="<?php echo $sy_id; ?>">
+            <input type="hidden" name="obs" value="<?php echo $obs; ?>">
+            <input type="password" name="pass">
+            <input type="submit" value="Go" class="btn btn-success" name="password_sub">
+        </form>
+
 
         <div class="d-flex justify-content-center">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle">
@@ -66,6 +92,9 @@ while ($result = $positionQry->fetch_assoc()) :
                     </tr>
                 </thead>
                 <?php
+                $positionQry = $conn->query("SELECT * FROM account_tbl WHERE `user_id` = '$teacher_id' ");
+                    while ($result = $positionQry->fetch_assoc()) :
+                    $position = $result['position'];
                     $num = 1;
                     foreach ($indicator_arr as $ind) :
                         ?>
@@ -89,7 +118,6 @@ while ($result = $positionQry->fetch_assoc()) :
             </table>
         </div>
         </div>
-
 
     </div>
 
