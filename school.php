@@ -2,6 +2,24 @@
 
 include 'sampleheader.php';
 
+
+if(isset($_POST['notif'])):
+    if(isset($_POST['notif']) == 'taken'):
+    echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (isset($_POST['notif']) == 'whitespace'):
+    echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (isset($_POST['notif']) == 'duplicate'):
+    echo "<div class='red-notif-border'>Telephone number should be unique. Unable to proceed!</div>";
+    elseif (isset($_POST['notif']) == 'success'):
+     echo "<div class='green-notif-border'>School has been added!</div>";
+    elseif (isset($_POST['notif']) == 'error'):
+    echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (isset($_POST['notif']) == 'charNumber'):
+    echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    endif;
+endif;
+
+
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -76,11 +94,11 @@ include 'sampleheader.php';
             </div>
 
             <div class="modal-body">
-                <form action="includes/processschool.php" method="POST">
+                <form action="includes/processschool.php" method="POST" id="schoolForm">
                     <div class="form-group row">
                         <div class="col-sm">
                             <label for="school-no" class="col-form-label"><strong>School Grade Level</strong></label>
-                            <select class="form-control" name="sgl" id="sgl">
+                            <select class="form-control" name="sgl" id="sgl" required>
                                 <option value="" disabled selected>--Select--</option>
                                <?php
                                     $levelqry = $conn->query("SELECT * FROM school_grade_level_tbl");
@@ -97,7 +115,7 @@ include 'sampleheader.php';
                     <div class="form-group row">
                         <div class="col-sm">
                             <label for="school-no" class="col-form-label"><strong>School Curricular Classification</strong></label>
-                            <select class="form-control" name="school_curri" id="school_curri">
+                            <select class="form-control" name="school_curri" id="school_curri" required>
                                 <option value="" disabled selected>Select School Grade Level first</option>
                             </select>
                             </select>
@@ -107,20 +125,26 @@ include 'sampleheader.php';
                     <div class="form-group row">
                         <div class="col-sm">
                             <label for="school-no" class="col-form-label"><strong>School Number</strong></label>
-                            <input type="number" name="school_no" id="school-no" class="form-control" placeholder="Enter the School No..." required pattern="[0-9]{3,}" title="Input three or more numbers and input should not include special characters">
+                            <input type="number" name="school_no" id="schoolno" class="form-control" placeholder="Enter the School No..." required pattern="[0-9]{3,}" title="Input three or more numbers and input should not include special characters">
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm">
                             <label for="school-name" class="col-form-label"><strong>School Name</strong></label>
-                            <input type="text" name="school_name" id="school-name" class="form-control" placeholder="Enter the School Name..." required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <input type="text" name="school_name" id="schoolname" class="form-control" placeholder="Enter the School Name..." required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters" >
+                             <div id="errorName"></div>
+                              <div id="errorName2"></div>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-sm">
                             <label for="tel-no" class="col-form-label"><strong>Telephone Number</strong></label>
-                            <input type="number" name="tel_no" id="tel-no" class="form-control" placeholder="Enter the Telephone Number..." required pattern="[0-9-]{8}" title="Input eight digit number">
+                            <input type="number" name="tel_no" id="telno" class="form-control" placeholder="Enter the Telephone Number..." required pattern="[0-9-]{8}" title="Input eight digit number">
+                            <div id="errortelNo"></div>
+                            <input type="number" name="tel_no2" id="telno2" class="form-control" placeholder="Enter the Telephone Number..." pattern="[0-9-]{8}" title="Input eight digit number">
+                            <div id="errortelNo2"></div>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -134,7 +158,7 @@ include 'sampleheader.php';
 
                             $rowCount = $query->num_rows;
                             ?>
-                            <select name="region" id="region" class="form-control">
+                            <select name="region" id="region" class="form-control" required>
                                 <option value="">Select Region</option>
                                 <?php
                                 if ($rowCount > 0) {
@@ -147,7 +171,7 @@ include 'sampleheader.php';
                                 ?>
                             </select>
                             <label for="sel-reg" class=" col-form-label"><strong>Select Division</strong></label>
-                            <select name="division" id="division" class="form-control">
+                            <select name="division" id="division" class="form-control" required>
                                 <option value="">Select Region first</option>
                             </select>
                             <label for="sel-reg" class=" col-form-label"><strong>Select Municipality</strong></label>
@@ -168,6 +192,89 @@ include 'sampleheader.php';
     </div>
 </div>
 </div>
+
+
+
+<script>
+
+$(document).ready(function() {
+        $('#schoolno').on('change', function() {
+            var schoolno = $(this).val(); 
+            if (schoolno) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateschool.php',
+                    data: 'school_no=' + schoolno,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#schoolname').on('change', function() {
+            var schoolname = $(this).val(); 
+            if (schoolname) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateschool.php',
+                    data: 'school_name=' + schoolname,
+                    success: function(html) {
+                         $('#errorName').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school name";
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#telno').on('change', function() {
+            var telno = $(this).val(); 
+            if (telno) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateschool.php',
+                    data: 'telno=' + telno,
+                    success: function(html) {
+                         $('#errortelNo').html(html);
+                    }
+                });
+            } else {
+                return "Please enter telephone number";
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#telno2').on('change', function() {
+            var telno = $('#telno').val(); 
+            var telno2 = $(this).val(); 
+            if (telno2) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateschool1.php',
+                    data: 'telno2=' + telno2 + '&telno='+ telno,
+                    success: function(html) {
+                         $('#errortelNo2').html(html);
+                    }
+                });
+            } else {
+                return "Please enter telephone number";
+            }
+        });
+     });
+
+
+
+
+</script>
+
 <div class="right">
 
     <?php if (isset($_SESSION['message'])) : ?>
@@ -188,11 +295,11 @@ include 'sampleheader.php';
                 <div class="h4 breadcrumb bg-dark text-white ">School Information </div>
                 <?php
 
-                $query2 = mysqli_query($conn, "SELECT region_tbl.region_name,division_tbl.divi_name,municipality_tbl.muni_name,school_tbl.* FROM (((school_tbl INNER JOIN region_tbl ON school_tbl.reg_id = region_tbl.reg_id) INNER JOIN division_tbl ON school_tbl.div_id = division_tbl.div_id) INNER JOIN municipality_tbl ON school_tbl.muni_id = municipality_tbl.muni_id) ORDER BY school_id") or die($conn->error);
+                $query2 = mysqli_query($conn, "SELECT region_tbl.region_name,division_tbl.divi_name,municipality_tbl.muni_name, school_tbl.* FROM (((school_tbl INNER JOIN region_tbl ON school_tbl.reg_id = region_tbl.reg_id) INNER JOIN division_tbl ON school_tbl.div_id = division_tbl.div_id) INNER JOIN municipality_tbl ON school_tbl.muni_id = municipality_tbl.muni_id) ORDER BY school_id") or die($conn->error);
 
                 ?>
 <small>
-                <table class="table table-sm">
+                <table class="table table-sm table-bordered">
                     <caption>School Information</caption>
                     <thead class="bg-success text-white text-nowrap ">
                         <tr>
@@ -200,7 +307,8 @@ include 'sampleheader.php';
                              <th>School Curricular Classification</th>
                             <th>School Number</th>
                             <th>School Name</th>
-                            <th>Telephone Number</th>
+                            <th>Tel No.</th>
+                            <th>Alt No.</th>
                             <th>Region</th>
                             <th>Division</th>
                             <th>Municipality</th>
@@ -217,11 +325,12 @@ include 'sampleheader.php';
                                 <td><?php echo $rows['school_no']; ?></td>
                                 <td><?php echo $rows['school_name']; ?></td>
                                 <td><?php echo $rows['tel_no']; ?></td>
+                                <td><?php echo $rows['tel_no2']; ?></td>
                                 <td><?php echo $rows['region_name']; ?></td>
                                 <td><?php echo $rows['divi_name']; ?></td>
                                 <td><?php echo $rows['muni_name']; ?></td>
-                                <td><a href="update/updateschool.php?edit=<?php echo $rows['school_id']; ?>" class="btn btn-outline-primary">Update</a></td>
-                                <td><a href="delete/deleteschool.php?delete=<?php echo $rows['school_id']; ?>" class="btn btn-outline-danger">Delete</a></td>
+                                <td><a href="update/updateschool.php?edit=<?php echo $rows['school_id']; ?>" class="btn btn-outline-primary btn-sm">Update</a></td>
+                                <td><a href="delete/deleteschool.php?delete=<?php echo $rows['school_id']; ?>" class="btn btn-outline-danger btn-sm">Delete</a></td>
 
 
 

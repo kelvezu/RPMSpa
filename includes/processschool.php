@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-require_once 'conn.inc.php';
+include 'conn.inc.php';
+include '../libraries/func.lib.php';
 $conn = mysqli_connect("localhost", "root", "", "rpms");
 
 //ADD MOV
@@ -11,22 +12,45 @@ if (isset($_POST['save'])) {
     $school_no = $_POST['school_no'];
     $school_name = $_POST['school_name'];
     $tel_no = $_POST['tel_no'];
+    $tel_no2 = $_POST['tel_no2'] ?? "NULL";
     $reg_id = $_POST['region'];
     $div_id = $_POST['division'];
-    $muni_id = $_POST['municipality'];
+    $muni_id = $_POST['municipality'] ?? "NULL";
 
-    $query = "INSERT INTO school_tbl(school_grade_lvl,school_curriclass,school_no,school_name,tel_no,reg_id,div_id,muni_id) VALUES('$school_grade_lvl','$school_curriclass','$school_no','$school_name','$tel_no','$reg_id','$div_id','$muni_id')";
+   
+    $validate = $conn->query("SELECT * FROM school_tbl");
+        while($row = $validate->fetch_assoc()){
+            $exist_school_no = $row['school_no'];
+            $exist_school_name = $row['school_name'];
+            $exist_tel_no = $row['tel_no'];
+            $exist_tel_no2 = $row['tel_no2'];
+        }
+        
+    if(($school_no == $exist_school_no) || ($school_name == $exist_school_name) || ($tel_no == $exist_tel_no) || ($tel_no2 == $exist_tel_no2) ){
+        header("school.php?notif=taken");
+        exit();
+    }elseif(ctype_space($school_no) || ctype_space($school_name) || ctype_space($tel_no) || ctype_space($tel_no2)){
+        header("school.php?notif=whitespace");
+        exit();
+    }elseif($tel_no == $tel_no2){
+        header("school.php?notif=duplicate");
+        exit();
+    }elseif((strlen($school_no)) < 8 || (strlen($school_name)) < 8) {
+        header("school.php?notif=charNumber");
+        exit();
+    }else{
+
+    $query = "INSERT INTO school_tbl(school_grade_lvl,school_curriclass,school_no,school_name,tel_no,tel_no2,reg_id,div_id,muni_id) VALUES('$school_grade_lvl','$school_curriclass','$school_no','$school_name','$tel_no','$tel_no2','$reg_id','$div_id','$muni_id')" or die ($conn->error);
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
-        $_SESSION['message'] = "School Successfully Added!";
-        $_SESSION['msg_type'] = "success";
-        header('location:../school.php');
+        header('location:../school.php?notif=success');
     } else {
-        $_SESSION['message'] = "Adding School Information Failed! ";
-        $_SESSION['msg_type'] = "danger";
-        header('location:../school.php');
+      
+        header('location:../school.php?notif=error');
     }
+}
+
 }
 //DELETE MOV
 if (isset($_GET['delete'])) {
