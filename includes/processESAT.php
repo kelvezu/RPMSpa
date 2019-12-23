@@ -27,7 +27,7 @@ if (isset($_POST['subjectsave'])) {
 if (isset($_POST['updateSUB'])) {
     $subject_id = $_POST['subject_id'];
     $subject_name = $_POST['subject_name'];
-    $qrySJ = mysqli_query($conn, 'UPDATE subject_tbl SET subject_id = ' . $subject_id . ', subject_name = ' . $subject_name . ', `status` = "Active" WHERE subject_id = ' . $subject_id . ' ');
+    $qrySJ = mysqli_query($conn, 'UPDATE subject_tbl SET subject_id = ' . $subject_id . ', subject_name = "' . $subject_name . '", `status` = "Active" WHERE subject_id = ' . $subject_id . ' ') or die($conn->error);
     if ($qrySJ) {
         $_SESSION['message'] = 'Subject Option has been updated!';
         $_SESSION['msg_type'] = 'green-notif-border';

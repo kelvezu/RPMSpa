@@ -14,7 +14,7 @@ if(isset($_POST['school_no'])):
     elseif(ctype_space($school_no)):
         echo "<div class='tomato-color'>Whitespace are not allowed.</div>";
     elseif((strlen($school_no)) < 6):
-        echo "<div class='tomato-color'>School Number should contain 8 digits above.</div>";
+        echo "<div class='tomato-color'>School Number should contain 6 digits above.</div>";
     else:
         echo "<div class='apple-color'>Valid</div>";
     endif;

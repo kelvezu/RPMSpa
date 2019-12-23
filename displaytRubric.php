@@ -2,6 +2,19 @@
 
 include 'sampleheader.php';
 
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Rubric has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    endif;
+endif;
 
 
 ?>
@@ -22,17 +35,20 @@ include 'sampleheader.php';
                     <div class="form-group row">
                         <div class="col-lg">
                             <label for="level" class="control-label"><strong>Rubric Level</strong></label>
-                            <input type="number" name="rubric_lvl" id="rubric-lvl" class="form-control" width="500" placeholder="Enter the rubric level..." required pattern="[0-9]" title="Input number only">
+                            <input type="number" name="rubric_lvl" id="rubriclvl" class="form-control" width="500" placeholder="Enter the rubric level..." required pattern="[0-9]" title="Input number only">
+                            <div id="errorNo"></div>
                         </div>
 
                         <div class="col-sm-6">
                             <label for="level-name" class="control-label"><strong>Level Name</strong></label>
-                            <input type="text" name="level_name" id="level-name" class="form-control" width="500" placeholder="Enter the Level Name..." required pattern="[A-Za-z]{3,}" title="Input three or more characters and input should not include numbers and special characters" />
+                            <input type="text" name="level_name" id="levelname" class="form-control" width="500" placeholder="Enter the Level Name..." required pattern="[A-Za-z]{3,}" title="Input three or more characters and input should not include numbers and special characters" />
+                            <div id="errorNo2"></div>
                         </div>
                     </div>
                     <div>
                         <label for="description" class="control-label w-25 "><strong>Description</strong></label>
-                        <textarea name="rubric_description" id="policy-content" cols="5" rows="5" class="form-control" value="" placeholder="Enter the description..." required></textarea>
+                        <textarea name="rubric_description" id="desc" cols="5" rows="5" class="form-control" value="" placeholder="Enter the description..." required></textarea>
+                        <div id="errorNo3"></div>
                     </div>
                     <div class="m-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -43,6 +59,69 @@ include 'sampleheader.php';
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#rubriclvl').on('change', function() {
+            var rubriclvl = $(this).val(); 
+            if (rubriclvl) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validaterubric.php',
+                    data: 'rubriclvl=' + rubriclvl,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#levelname').on('change', function() {
+            var levelname = $(this).val(); 
+            if (levelname) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validaterubric.php',
+                    data: 'levelname=' + levelname,
+                    success: function(html) {
+                         $('#errorNo2').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+    $(document).ready(function() {
+    $('#desc').on('change', function() {
+        var desc = $(this).val(); 
+        if (desc) {
+            $.ajax({
+                type: 'POST',
+                url: 'validaterubric.php',
+                data: 'desc=' + desc,
+                success: function(html) {
+                        $('#errorNo3').html(html);
+                }
+            });
+        } else {
+            
+        }
+    });
+    });
+
+</script>
+
+
+
+
+
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">
         <?php
