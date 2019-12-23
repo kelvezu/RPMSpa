@@ -1,28 +1,71 @@
 <?php
 
 use IPCRF\IPCRF;
+use RPMSdb\RPMSdb;
 
 include 'sampleheader.php';
+
 $num = 1;
 $kra_num = 0;
 $tobj_num = 1;
-$position = $_SESSION['position'];
-$kras = displayKRAandOBJ($conn, $position);
-$user = $_SESSION['user_id'];
-$sy = $_SESSION['active_sy_id'];
-$school = $_SESSION['school_id'];
-$rater = $_SESSION['rater'];
-$app_auth = $_SESSION['approving_authority'] ?? 0;
+// $position = ($_SESSION['position']) ? $_SESSION['position'] : "No Position!";
 
-$ipcrf = new IPCRF($user, $sy, $school, $position);
+// $user = $_SESSION['user_id'];
+$sy = ($_SESSION['active_sy_id']) ? $_SESSION['active_sy_id'] : "No School Year!";
+$school = ($_SESSION['school_id']) ? $_SESSION['school_id'] : "No Rater!";
+$rater = ($_SESSION['user_id']) ? $_SESSION['rater'] : "No Rater!";
+$app_auth = ($_SESSION['approving_authority']) ? $_SESSION['approving_authority'] : "No Approving Authority!";
+
+
+
+if (isset($_POST['select_user'])) :
+    $user = $_POST['user_id'];
+    $position = displayPosition($conn, $user);
+    $kras = displayKRAandOBJ($conn, $position);
+    $ipcrf = new IPCRF($user, $sy, $school, $position);
+endif;
+
+?>
+
+<div class="container mb-5">
+    <div class="card">
+        <div class="card-header">
+            <p>Master Teacher with MOV's</p>
+        </div>
+        <div class="card-body overflow-auto">
+            <!-- action="viewattachment.ratert.php" -->
+            <form method="post">
+                <input type="hidden" id="sy_id" name="sy_id" value="<?php echo $_SESSION['active_sy_id'] ?>">
+                <input type="hidden" id="school_id" name="school_id" value="<?php echo $_SESSION['school_id'] ?>">
+                <input type="hidden" id="rater_id" name="rater_id" value="<?php echo $_SESSION['user_id'] ?>">
+                <div class="d-flex justify-content-center">
+                    <div class="p-2">
+                        <select id="user_id" name="user_id" class="form-control-sm">
+                            <option value="">--Select Master Teacher--</option>
+                            <?php
+                            foreach (rpmsdb::showRateesMT($conn, $_SESSION['user_id'],  $_SESSION['school_id']) as $ratees) : ?>
+                                <option value=" <?php echo intval($ratees['user_id']) ?>"><?php echo displayName($conn, $ratees['user_id']) ?> </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" name="select_user" class="btn btn-sm btn-primary">View IPCRF</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<?php
+
 ?>
 
 
 
 <div class="container-fluid">
     <!-- <?php echo $position ?> -->
-    <?php if (!$kras) : ?>
-        <p class="text-center red-notif-border m-5">No result!</p>
+    <?php if (!isset($kras)) : ?>
+        <p class="text-center red-notif-border m-5">No Record!</p>
     <?php
         include 'samplefooter.php';
         exit();
@@ -85,7 +128,8 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
             <tbody>
                 <?php foreach ($kras as $kra) :
                     $kra_id = $kra['kra_id'];
-                    $obj_id = $kra['tobj_id'];
+                    $obj_id = $kra['mtobj_id'];
+                    $mov_type = $kra['mov_type'];
                 ?>
                     <tr>
                         <td>
@@ -102,7 +146,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 
                         <!-- DISPLAY OBJECTIVE -->
                         <td>
-                            <p class=" font-italic"><?php echo $obj_id . ' - ' . displayObjectiveT($conn, $obj_id); ?></p>
+                            <p class=" font-italic"><?php echo $obj_id . ' - ' . displayObjectivemT($conn, $obj_id); ?></p>
                         </td>
                         <!-- END DISPLAY OBJECTIVE  -->
 
@@ -112,8 +156,8 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <td>
                             <p class="font-weight-bold text-center">
                                 <?php
-                                echo showPercent(displayOBJweightT($conn, $kra_id)) . '%';
-                                $obj_weight = displayOBJweightT($conn, $kra_id);
+                                echo showPercent(displayOBJweightmT($conn, $kra_id)) . '%';
+                                $obj_weight = displayOBJweightmT($conn, $kra_id);
                                 ?>
                                 <input type="hidden" name="obj_weight[]" value="<?php echo $obj_weight ?? 0  ?>" />
                             </p>
@@ -133,36 +177,18 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <td>
                             <p class="font-weight-bold text-center">
                                 <!-- THIS WILL SHOW THE INDICATOR AVG OF OBJECTIVE 1  -->
-                                <?php
-                                if ($obj_id == 1) : ?>
+                                <?php if ($mov_type == "COT") : $indicator = $kra['indicator_id'];
+                                    $quality_rate =  $ipcrf->getIndicatorAVGmt($indicator);  ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra_id ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $obj_id ?>">
-                                    <input class="form-control-sm text-center" type="number" required step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGt(1) ?? 0 ?>">
-
-                                <?php elseif ($obj_id == 3) : ?>
-                                    <input type="hidden" name="kra[]" value="<?php echo $kra_id ?>">
-                                    <input type="hidden" name="obj[]" value="<?php echo $obj_id ?>">
-                                    <input class="form-control-sm text-center" type="number" required step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGt(2) ?? 0; ?>">
-
-                                <?php elseif ($obj_id == 4) : ?>
-                                    <input type="hidden" name="kra[]" value="<?php echo $kra_id ?>">
-                                    <input type="hidden" name="obj[]" value="<?php echo $obj_id ?>">
-                                    <input class="form-control-sm text-center" type="number" required step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGt(3) ?? 0; ?>">
-
-                                <?php elseif ($obj_id == 5) : ?>
-                                    <input type="hidden" name="kra[]" value="<?php echo $kra_id ?>">
-                                    <input type="hidden" name="obj[]" value="<?php echo $obj_id ?>">
-                                    <input class="form-control-sm text-center" type="number" required step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGt(4) ?? 0; ?>">
-
-                                <?php elseif ($obj_id == 7) : ?>
-                                    <input type="hidden" name="kra[]" value="<?php echo $kra_id ?>">
-                                    <input type="hidden" name="obj[]" value="<?php echo $obj_id ?>">
-                                    <input class="form-control-sm text-center" type="number" required step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->getIndicatorAVGt(5) ?? 0; ?>">
+                                    <input class="form-control-sm text-center font-weight-bold" type="hidden" required step="any" name="quality[]" value="<?php echo $ipcrf->getQualityRange($quality_rate)  ?>" readonly>
+                                    <p class="text-center font-weight-bold"><?php echo rawRate($ipcrf->getQualityRange($quality_rate), $position)  ?></p>
 
                                 <?php else : ?>
                                     <input type="hidden" name="kra[]" value="<?php echo $kra_id ?>">
                                     <input type="hidden" name="obj[]" value="<?php echo $obj_id ?>">
-                                    <input class="form-control-sm text-center" type="number" required step="any" name="quality[]" id="" value="<?php echo $quality_rate =  $ipcrf->countMOV($kra_id, $obj_id, 'mov_main_t_attach_tbl') ?? 0; ?>">
+                                    <input class="form-control-sm text-center" type="hidden" required step="any" name="quality[]" value="<?php echo $quality_rate =  $ipcrf->countMOV($kra_id, $obj_id, 'mov_main_mt_attach_tbl') ?? 1; ?>" reaonly>
+                                    <p class="text-center font-weight-bold"><?php echo rawRate($quality_rate, $position) ?></p>
 
                                 <?php endif; ?>
                                 <!-- ------------------------------------------------- -->
@@ -173,7 +199,8 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- DISPLAY EFFICIENCY -->
                         <td>
                             <p class="font-weight-bold text-center">
-                                <input class="form-control-sm text-center" type="number" required step="any" name="efficiency[]" value="<?php echo $efficiency_rate = $ipcrf->getEfficiency($kra_id, $obj_id, 'mov_supp_t_attach_tbl')  ?? $efficiency_rate = 1 ?>">
+                                <input class="form-control-sm text-center" type="hidden" required step="any" name="efficiency[]" value="<?php echo $efficiency_rate = $ipcrf->getEfficiency($kra_id, $obj_id, 'mov_supp_mt_attach_tbl')  ?? $efficiency_rate = 1 ?>">
+                                <p class="text-center font-weight-bold"><?php echo  rawRate($efficiency_rate, $position)  ?></p>
                             </p>
                         </td>
                         <!-- END DISPLAY EFFICIENCY -->
@@ -181,13 +208,14 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
                         <!-- DISPLAY TIMELINESS -->
                         <td>
                             <p class="font-weight-bold text-center">
-                                <?php if ($obj_id == 11 or $obj_id == 12) : ?>
+                                <?php $timeliness = $ipcrf->getTimeliness('perfmtindicator_tbl', $kra_id, $obj_id);
+                                if ($timeliness) : ?>
                                     <select name="timeliness[]" class="form-control" required>
                                         <option readonly>
                                             --- Select Rate for Timeliness ---
                                         </option>
-                                        <?php foreach ($ipcrf->getTimelinessT('perftindicator_tbl', $kra_id, $obj_id) as $time) : ?>
-                                            <option value="<?= intval($time['level_no']) ?>"><?= $time['level_no'] . ' - ' . $time['desc_name'] ?></option>
+                                        <?php foreach ($timeliness as $time) : ?>
+                                            <option value="<?= intval($time['level_no']) ?>"><?= rawRate($time['level_no'], $position) . ' - ' . $time['desc_name'] ?></option>
                                         <?php endforeach ?>
                                     <?php else : echo "-----"; ?>
                                         <input type="hidden" name="timeliness[]" value=0>
@@ -210,25 +238,6 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
         </tfoot>
 
         </form>
-
-        <!-- <tfoot>
-            <tr>
-                <td colspan="5" class="bg-dark">
-
-                </td>
-                <td colspan="2" class="text-left px-5">
-                    <input type="number" name="f_rating" id="f_rating" class="input form-control" disabled> -->
-        <!-- <p><strong>Final Rating: </strong> 9sdsad.9%</p>
-        <p><strong>Adjectival Rating:</strong> 99.9%</p>
-        </td>
-
-
-        </tr>
-
-
-
-
-        </tfoot> -->
     </table>
 
 </div>

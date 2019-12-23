@@ -19,8 +19,8 @@ $rater_position = ($rater) ? getPosition($conn, $rater) : "No rater";
 $app_auth = displayName($conn, $_SESSION['approving_authority']) or $app_auth = "N/A";
 $num = 1;
 $ipcrf = new IPCRF($user, $sy, $school, $position);
-$ipcrf_details = $ipcrf->fetchIPCRF('ipcrf_mt');
-$ipcrf_final_details = $ipcrf->fetchIPCRF('ipcrf_final_mt');
+$ipcrf_details = $ipcrf->fetchIPCRF('ipcrf_t');
+$ipcrf_final_details = $ipcrf->fetchIPCRF('ipcrf_final_t');
 // pre_r($ipcrf_final_details);
 if ($ipcrf_final_details) :
     $final_rating = $ipcrf_final_details[0]['final_rating'];
@@ -62,7 +62,7 @@ $pdf->WriteHTML('
     ');
 
 $pdf->WriteHTML('
-         <h4 class="header_pdf">INDIVIDUAL PERFORMANCE COMMITMENT AND REVIEW FORM – Master Teacher I-IV (High-Proficient Teachers)</h4>
+         <h4 class="header_pdf">INDIVIDUAL PERFORMANCE COMMITMENT AND REVIEW FORM – Teacher I-III (Proficient Teachers)</h4>
 ');
 
 $pdf->WriteHTML('
@@ -130,7 +130,7 @@ $pdf->WriteHTML('<table>
         </p>
     </th>
     <th>
-        <p class="text-center"> 
+        <p class="text-center">
             Score
         </p>
     </th>
@@ -145,7 +145,7 @@ $pdf->WriteHTML('<table>
 foreach (kra_tbl($conn) as $details) :
     $kra_id =  $details['kra_id'];
     $kra_name = $details['kra_name'];
-    $count_obj = $ipcrf->countKRAobjective($kra_id, 'mtobj_tbl');
+    $count_obj = $ipcrf->countKRAobjective($kra_id, 'tobj_tbl');
     $kra_weight = $ipcrf->fetchKRAweight($kra_id);
 
 
@@ -159,16 +159,16 @@ foreach (kra_tbl($conn) as $details) :
     );
 
     // OBJECTIVE
-    foreach ($ipcrf->getOBJ('mtobj_tbl', $kra_id) as $obj) :
-        $obj_id = $obj['mtobj_id'];
+    foreach ($ipcrf->getOBJ('tobj_tbl', $kra_id) as $obj) :
+        $obj_id = $obj['tobj_id'];
         $pdf->writeHTML('<p> Objective ' . $obj_id  . '</p> <br>');
     endforeach;
     $pdf->writeHTML('
     </td>
         <td>');
     // OBJECTIVE WEIGHT
-    foreach ($ipcrf->getOBJ('mtobj_tbl', $kra_id) as $obj) :
-        $obj_id = $obj['mtobj_id'];
+    foreach ($ipcrf->getOBJ('tobj_tbl', $kra_id) as $obj) :
+        $obj_id = $obj['tobj_id'];
         $obj_weight = $ipcrf->fetchOBJweight($obj['kra_id']) * 100;
         $pdf->writeHTML('<p>' . $obj_weight  . '%</p> <br> ');
     endforeach;
@@ -178,10 +178,10 @@ foreach (kra_tbl($conn) as $details) :
         <td>');
 
     // OBJECTIVE QUALITY
-    foreach ($ipcrf->getOBJ('mtobj_tbl', $kra_id) as $obj) :
-        $obj_id = $obj['mtobj_id'];
-        $obj_quality = ($ipcrf->fetchQuality('ipcrf_mt', $obj_id) != 0) ?  $ipcrf->fetchQuality('ipcrf_mt', $obj_id) : "---";
-        // $obj_quality = $ipcrf->fetchQuality('ipcrf_mt', $obj_id);
+    foreach ($ipcrf->getOBJ('tobj_tbl', $kra_id) as $obj) :
+        $obj_id = $obj['tobj_id'];
+        $obj_quality = ($ipcrf->fetchQuality('ipcrf_t', $obj_id) != 0) ?  $ipcrf->fetchQuality('ipcrf_t', $obj_id) : "---";
+        // $obj_quality = $ipcrf->fetchQuality('ipcrf_t', $obj_id);
         $pdf->writeHTML(' <p>' . $obj_quality  . '</p> <br>');
     endforeach;
 
@@ -191,10 +191,10 @@ foreach (kra_tbl($conn) as $details) :
     <td>');
 
     // OBJECTIVE EFFICIENCY
-    foreach ($ipcrf->getOBJ('mtobj_tbl', $kra_id) as $obj) :
-        $obj_id = $obj['mtobj_id'];
-        $obj_efficiency = ($ipcrf->fetchEfficiency('ipcrf_mt', $obj_id) != 0) ?  $ipcrf->fetchEfficiency('ipcrf_mt', $obj_id) : "---";
-        // $obj_efficiency = $ipcrf->fetchEfficiency('ipcrf_mt', $obj_id);
+    foreach ($ipcrf->getOBJ('tobj_tbl', $kra_id) as $obj) :
+        $obj_id = $obj['tobj_id'];
+        $obj_efficiency = ($ipcrf->fetchEfficiency('ipcrf_t', $obj_id) != 0) ?  $ipcrf->fetchEfficiency('ipcrf_t', $obj_id) : "---";
+        // $obj_efficiency = $ipcrf->fetchEfficiency('ipcrf_t', $obj_id);
         $pdf->writeHTML('<p>' . $obj_efficiency  . '</p> <br>');
     endforeach;
 
@@ -204,9 +204,9 @@ foreach (kra_tbl($conn) as $details) :
     <td>');
 
     // OBJECTIVE TIMELINESS
-    foreach ($ipcrf->getOBJ('mtobj_tbl', $kra_id) as $obj) :
-        $obj_id = $obj['mtobj_id'];
-        $obj_timeliness = ($ipcrf->fetchTimeliness('ipcrf_mt', $obj_id) != 0) ?  $ipcrf->fetchTimeliness('ipcrf_mt', $obj_id) : "---";
+    foreach ($ipcrf->getOBJ('tobj_tbl', $kra_id) as $obj) :
+        $obj_id = $obj['tobj_id'];
+        $obj_timeliness = ($ipcrf->fetchTimeliness('ipcrf_t', $obj_id) != 0) ?  $ipcrf->fetchTimeliness('ipcrf_t', $obj_id) : "---";
         $pdf->writeHTML('<p>' . $obj_timeliness  . '</p> <br> ');
     endforeach;
 
@@ -216,9 +216,9 @@ foreach (kra_tbl($conn) as $details) :
     </tr>
     <td>');
     // OBJECTIVE AVERAGE
-    foreach ($ipcrf->getOBJ('mtobj_tbl', $kra_id) as $obj) :
-        $obj_id = $obj['mtobj_id'];
-        $obj_avg = $ipcrf->fetchAVG('ipcrf_mt', $obj_id);
+    foreach ($ipcrf->getOBJ('tobj_tbl', $kra_id) as $obj) :
+        $obj_id = $obj['tobj_id'];
+        $obj_avg = $ipcrf->fetchAVG('ipcrf_t', $obj_id);
         $pdf->writeHTML('<p>' . $obj_avg  . '</p> <br> ');
     endforeach;
 
@@ -228,9 +228,9 @@ foreach (kra_tbl($conn) as $details) :
     <td>');
 
     // OBJECTIVE SCORE
-    foreach ($ipcrf->getOBJ('mtobj_tbl', $kra_id) as $obj) :
-        $obj_id = $obj['mtobj_id'];
-        $obj_score = $ipcrf->fetchScore('ipcrf_mt', $obj_id);
+    foreach ($ipcrf->getOBJ('tobj_tbl', $kra_id) as $obj) :
+        $obj_id = $obj['tobj_id'];
+        $obj_score = $ipcrf->fetchScore('ipcrf_t', $obj_id);
         $pdf->writeHTML('<p>' . $obj_score  . '</p> <br> ');
     endforeach;
 
@@ -295,6 +295,6 @@ $pdf->WriteHTML('
 </table>
 ');
 
-$pdf->Output("" . $name . "_IPCRF.pdf", "I");
+$pdf->Output('ipcrf_t.pdf', 'I');
 
     // header('location:print_ipcrfmt.php');

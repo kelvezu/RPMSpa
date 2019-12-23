@@ -2,13 +2,12 @@
 
 include 'sampleheader.php';
 
-if(isset($_GET['notif'])):
-    if($_GET['notif'] == 'success'):
-       echo '<div class="green-notif-border">You have successfully attached files!</div>';
-       else:
+if (isset($_GET['notif'])) :
+    if ($_GET['notif'] == 'success') :
+        echo '<div class="green-notif-border">You have successfully attached files!</div>';
+    else :
         echo '<div class="red-notif-border">There was an error uploading your files!</div>';
     endif;
-
 endif;
 ?>
 
@@ -28,8 +27,6 @@ endif;
                 </div>
 
                 <div class="card-body box">
-
-
                     <table class="table table-hover table-responsive-sm table-sm table-bordered">
                         <!-- Start loop for  KRA -->
                         <?php
@@ -41,7 +38,7 @@ endif;
                             $kra_id = $row['kra_id'];
                             $kra_name = $row['kra_name'];
                             $kra_num++;
-                            ?>
+                        ?>
                             <thead class="thead-dark">
                                 <tr>
                                     <!-- ASSIGN THE VALUE FROM THE DB  -->
@@ -56,27 +53,27 @@ endif;
                                 <tr>
                                     <!-- START OF LOOP FROM OBJECTIVE -->
                                     <?php
-                                        //QUERY FOR INDICATORS TABLE 
-                                        $indresult = $conn->query("SELECT * FROM mtobj_tbl WHERE kra_id = '$kra_id'")  or die($conn->error);
-                                        //FETCH THE DATA FROM INDICATOR TABLE
+                                    //QUERY FOR INDICATORS TABLE 
+                                    $indresult = $conn->query("SELECT * FROM mtobj_tbl WHERE kra_id = '$kra_id'")  or die($conn->error);
+                                    //FETCH THE DATA FROM INDICATOR TABLE
 
-                                        while ($rows = $indresult->fetch_assoc()) : ?>
+                                    while ($rows = $indresult->fetch_assoc()) : ?>
                                         <td><small>
 
                                                 <?php
-                                                        //ASSIGN THE VALUE FROM THE DB
+                                                //ASSIGN THE VALUE FROM THE DB
 
-                                                        echo 'Objective' . $mtobj_id = $rows['mtobj_id'];
+                                                echo 'Objective' . $mtobj_id = $rows['mtobj_id'];
 
-                                                        ?>
+                                                ?>
                                             </small>
                                         </td>
 
                                         <?php
-                                                //QUERY FOR MOV TABLE 
-                                                $movresult = $conn->query("SELECT * FROM mtmov_tbl WHERE kra_id = '$kra_id' AND mtobj_id = '$mtobj_id'")  or die($conn->error);
-                                                while ($rowss = $movresult->fetch_assoc()) :
-                                                    ?>
+                                        //QUERY FOR MOV TABLE 
+                                        $movresult = $conn->query("SELECT * FROM mtmov_tbl WHERE kra_id = '$kra_id' AND mtobj_id = '$mtobj_id'")  or die($conn->error);
+                                        while ($rowss = $movresult->fetch_assoc()) :
+                                        ?>
                                             <td class="text-justify"><small><?php echo $rowss['main_mov']; ?></small></td>
                                             <td class="text-justify"><small><?php echo $rowss['supp_mov']; ?></small></td>
                                 </tr>
@@ -128,7 +125,7 @@ endif;
                                 $kra_id = $resultQry['kra_id'];
                                 $obj_id = $resultQry['mtobj_id'];
 
-                                ?>
+                            ?>
                                 <input type="checkbox" name="obj[]" value="<?php echo $obj_id; ?>" /><?php echo "<a data-toggle='tooltip' data-placement='top' title='" . displayKRA($conn, $kra_id) . "'>KRA " . $kra_id . "</a> - <a data-toggle='tooltip' data-placement='top' title='" . displayObjectiveMT($conn, $obj_id) . "'>Objective " . $obj_id . "</a>"; ?><br>
 
                             <?php endwhile; ?>

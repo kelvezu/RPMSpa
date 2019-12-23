@@ -130,7 +130,7 @@ $pdf->WriteHTML('<table>
         </p>
     </th>
     <th>
-        <p class="text-center"> 
+        <p class="text-center">
             Score
         </p>
     </th>

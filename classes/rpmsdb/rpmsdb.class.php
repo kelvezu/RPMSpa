@@ -15,7 +15,7 @@ class RPMSdb
     {
         $result_arr = [];
         $totalqry = 'SELECT *,(With_ESAT/Total_Teacher) as x FROM tbl_rptwithesat 
-        where sy_id ="'. $_SESSION['active_sy_id'] . '"';
+        where sy_id ="' . $_SESSION['active_sy_id'] . '"';
         $result = mysqli_query($conn, $totalqry);
 
         if (!empty($result)) :
@@ -1752,7 +1752,7 @@ class RPMSdb
         endif;
     }
 
-     public static function fetchtallTrate($conn, $school_id, $rater_id)
+    public static function fetchtallTrate($conn, $school_id, $rater_id)
     {
         $qry = "SELECT * FROM account_tbl WHERE position IN('Teacher I','Teacher II','Teacher III') AND `status` = 'Active' AND school_id = $school_id AND rater = $rater_id ORDER BY FIELD(position,
         'Teacher III',
@@ -1791,7 +1791,7 @@ class RPMSdb
         endif;
     }
 
-    public static function fetchtallMTrate($conn, $school_id,$rater_id)
+    public static function fetchtallMTrate($conn, $school_id, $rater_id)
     {
         $qry = "SELECT * FROM account_tbl WHERE position IN('Master Teacher I','Master Teacher II','Master Teacher III','Master Teacher IV') AND `status` = 'Active' AND school_id = $school_id AND rater = $rater_id ORDER BY FIELD(position,
         'Master Teacher IV'
@@ -1825,7 +1825,7 @@ class RPMSdb
         endif;
     }
 
-       public static function fetch_MAIN_T_MOV_ATT($conn, $user_id, $school_id, $sy_id, $obj, $kra)
+    public static function fetch_MAIN_T_MOV_ATT($conn, $user_id, $school_id, $sy_id, $obj, $kra)
     {
         $qry = "SELECT * FROM mov_main_t_attach_tbl WHERE `user_id` = $user_id AND kra_id = $kra  AND obj_id = $obj AND school_id = $school_id AND sy_id = $sy_id AND `status` = 'Active' ";
         $result = mysqli_query($conn, $qry) or die($conn->error . 'fetch_MAIN_T_MOV_ATT');

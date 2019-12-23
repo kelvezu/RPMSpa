@@ -1,6 +1,5 @@
 <?php include_once 'sampleheader.php';
-
-use DevPlan\DevPlan;
+  use DevPlan\DevPlan;
 ?>
 <div class="container ">
     <div class="breadcome-list shadow-reset">
@@ -31,9 +30,7 @@ use DevPlan\DevPlan;
                                 $kra_name = $row['kra_name'];
                                 ?>
                                 <option value="<?php echo $kra_id ?>"><?php echo $kra_name; ?></option>
-                            <?php
-                            endwhile;
-                            ?>
+                            <?php  endwhile;  ?>
                         </select>
                         <label for="sel-mov" class=" col-form-label"><strong>Select Objective</strong></label>
                         <div id="objective">
