@@ -8,7 +8,7 @@ if(isset($_GET['user_id'])):
     $teacher_id = $_GET['user_id'];
     $school_id = $_GET['school_id'];
     $obs = $_GET['obs'];
-    $sy_id = $_GET['sy_id'];
+    $sy_id = $_SESSION['active_sy_id'];
     $position = 'Teacher I';
 endif;
 
@@ -105,9 +105,10 @@ $cotobsB = getCOTobserverB($conn,$teacher_id,$sy_id,$school_id,$obs);
             <?php
                 $commentQry = $conn->query("SELECT * FROM cot_t_rating_b_tbl WHERE `user_id` = '$teacher_id' AND sy = '$sy_id' AND obs_period = '$obs' AND school_id = '$school_id'");
                 while ($comment = $commentQry->fetch_assoc()):
+                    $commentresult = $comment['comment'];
             ?>
         
-            <textarea name="comment" cols="15" rows="5" class="form-control"><?php echo $comment['comment'];?></textarea>
+            <textarea name="comment" cols="15" rows="5" class="form-control"><?php echo $commentresult;?></textarea>
                 <?php endwhile; ?>
         
       
