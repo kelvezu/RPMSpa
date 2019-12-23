@@ -14,6 +14,12 @@ $sy_id = $_SESSION['active_sy_id'];
 $obs = $_GET['obs'];
 
 $indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $sy_id, $school_id,  $teacher_id);
+
+if(isset($_GET['notif'])):
+    if($_GET['notif'] == 'pwerror'):
+        echo '<div class="red-notif-border">Principal Password Entered Invalid!</div>';
+    endif;
+endif;
 ?>
 
 
@@ -40,7 +46,7 @@ $(document).ready(function() {
     <div class="container">
         
     <button type="button" class="btn btn-outline-success" id="editbtncot">Edit</button>
-        <form action="coteditT.php" id="form">
+        <form action="coteditT.php" id="form" method="POST">
             <label><strong>Enter Principal Password:</strong></label>
             <input type="hidden" name="user_id" value="<?php echo $teacher_id; ?>">
             <input type="hidden" name="school_id" value="<?php echo $school_id; ?>">
@@ -119,6 +125,8 @@ $(document).ready(function() {
         </div>
         </div>
 
+
+  
     </div>
 
     <?php

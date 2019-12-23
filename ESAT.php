@@ -19,7 +19,8 @@ include 'sampleheader.php';
 
                     <div class="form-group row">
                         <div class="col-md">
-                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Science and Technolgy" required pattern="[A-Za-z ]{4,}" title="Input four or more characters and input should not include numbers and special characters">
+                            <input type="text" class="form-control" name="subject" id="subj" placeholder="Science and Technology" required pattern="[A-Za-z ]{4,}" title="Input four or more characters and input should not include numbers and special characters">
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div>
@@ -32,6 +33,47 @@ include 'sampleheader.php';
         </div>
     </div>
 </div>
+
+
+<script>
+
+$(document).ready(function() {
+        $('#subj').on('change', function() {
+            var subj = $(this).val(); 
+            if (subj) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateesat.php',
+                    data: 'subj=' + subj,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#levelname').on('change', function() {
+            var levelname = $(this).val(); 
+            if (levelname) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validaterubric.php',
+                    data: 'levelname=' + levelname,
+                    success: function(html) {
+                         $('#errorNo2').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+</script>
 <!-- End of  Subject Modal -->
 
 <!-- Age modal -->
