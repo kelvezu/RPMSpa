@@ -1,8 +1,6 @@
 <?php
 
 include 'sampleheader.php';
-
-$conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
 ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -27,7 +25,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
             <h5>COT-RPMS</h5>
 
             <div class="h3 bg-info text-white">Master Teacher I-IV</div>
-            <input type="hidden" name="rater_id" value="<?php echo $_SESSION['user_id']; ?>" />
+            <input type="hidden" name="observer1" value="<?php echo $_SESSION['user_id']; ?>" />
             <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
             <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
@@ -61,13 +59,13 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
                                 if ($queryObserver2) :
                                     while ($row = $queryObserver2->fetch_assoc()) :
-                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname']. ' - ' . $row['position'];
-                                        ?>
+                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'] . ' - ' . $row['position'];
+                                ?>
 
                                         <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
                                     <?php
-                                        endwhile;
-                                    else : ?>
+                                    endwhile;
+                                else : ?>
                                     <option value=""> No Record!</option>
                                 <?php
                                 endif; ?>
@@ -76,7 +74,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
                         <div class="col-lg-6">
                             <label>MASTER TEACHER OBSERVED: </label>
-                            <select name="mtobserved" required="required">
+                            <select name="tobserved " required="required">
                                 <option value="" disabled selected>Select Master Teacher</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -86,12 +84,12 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                 if ($queryObserved) :
                                     while ($row = $queryObserved->fetch_assoc()) :
                                         $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'];
-                                        ?>
+                                ?>
 
                                         <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
                                     <?php
-                                        endwhile;
-                                    else : ?>
+                                    endwhile;
+                                else : ?>
                                     <option value=""> No Record!</option>
                                 <?php
                                 endif; ?>
@@ -112,13 +110,13 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
 
                                 if ($queryObserver3) :
                                     while ($row = $queryObserver3->fetch_assoc()) :
-                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname']. ' - ' . $row['position'];
-                                        ?>
+                                        $name = $row['firstname'] . ' ' . substr($row['middlename'], 0, 1) . '. ' . $row['surname'] . ' - ' . $row['position'];
+                                ?>
 
                                         <option value="<?php echo $row['user_id']; ?>"><?php echo $name; ?></option>
                                     <?php
-                                        endwhile;
-                                    else : ?>
+                                    endwhile;
+                                else : ?>
                                     <option value=""> No Record!</option>
                                 <?php
                                 endif; ?>
@@ -132,14 +130,14 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                             <label>
                                 SUBJECT:
                             </label>
-                            <select name="mtsubject" required="required">
+                            <select name="tsubject " required="required">
                                 <option value="" disabled selected>Select Subject</option>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
                                 while ($subjrow = $querySubject->fetch_assoc()) :
                                     $subject_id = $subjrow['subject_id'];
                                     $subject = $subjrow['subject_name'];
-                                    ?>
+                                ?>
                                     <option value="<?php echo $subject_id; ?>"><?php echo $subject; ?></option>
                                 <?php endwhile; ?>
                             </select>
@@ -151,14 +149,14 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                             <label for="gradeleveltaught">
                                 GRADE LEVEL TAUGHT:
                             </label>
-                            <select name="mtgradelvltaught" required="required">
+                            <select name="tgradelvltaught " required="required">
                                 <option value="" disabled selected>Select Grade Level Taught</option>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
                                 while ($gradelvltaught = $queryGlt->fetch_assoc()) :
                                     $glt_id = $gradelvltaught['gradelvltaught_id'];
                                     $glt = $gradelvltaught['gradelvltaught_name'];
-                                    ?>
+                                ?>
                                     <option value="<?php echo $glt_id; ?>"><?php echo $glt; ?></option>
                                 <?php endwhile; ?>
                             </select>
@@ -203,7 +201,7 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                 OBSERVATION PERIOD:
                             </label>
 
-                            <select name="mtobs" onchange="showIndicator(this.value)" required="required">
+                            <select name="obs " onchange="showIndicator(this.value)" required="required">
                                 <option value="" disabled selected>Select Period</option>
                                 <option value="1">1st</option>
                                 <option value="2">2nd</option>
@@ -211,43 +209,43 @@ $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->erro
                                 <option value="4">4th</option>
                             </select>
                         </div>
-  <!-- LEGEND OF COT RUBRICS-->
-  <div class="container">
-                        
-                        <div class="right">
-                            <div class="h4 breadcrumb bg-dark text-white " style="font-size: 12px;">COT Rubric for Master Teacher I-IV</div>
+                        <!-- LEGEND OF COT RUBRICS-->
+                        <div class="container">
+
+                            <div class="right">
+                                <div class="h4 breadcrumb bg-dark text-white " style="font-size: 12px;">COT Rubric for Master Teacher I-IV</div>
+                                <?php
+
+                                $result = $conn->query('SELECT * FROM mtrubric_tbl')  or die($conn->error);
+                                ?>
+
+                                <table class="table table-bordered table-responsive-sm table-sm">
+                                    <thead class="bg-info text-white">
+                                        <tr>
+                                            <th style="font-size: 13px;">Level</th>
+                                            <th style="font-size: 13px;">Level Name</th>
+                                            <th style="font-size: 13px;">Level Description</th>
+                                        </tr>
+                                    </thead>
                                     <?php
-                                    
-                                    $result = $conn->query('SELECT * FROM mtrubric_tbl')  or die($conn->error);
+                                    while ($row = $result->fetch_assoc()) :
                                     ?>
-
-                                    <table class="table table-bordered table-responsive-sm table-sm">
-                                        <thead class="bg-info text-white">
+                                        <tbody class="text-justify">
                                             <tr>
-                                                <th style="font-size: 13px;">Level</th>
-                                                <th style="font-size: 13px;">Level Name</th>
-                                                <th style="font-size: 13px;">Level Description</th>
-                                            </tr>
-                                        </thead>
-                                        <?php
-                                        while ($row = $result->fetch_assoc()) :
-                                            ?>
-                                            <tbody class="text-justify">
-                                                <tr>
-                                                    <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_lvl']; ?></td>
-                                                    <td style="font-size: 12px; font-style: italic;" ><?php echo $row['level_name']; ?></td>
-                                                    <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_description']; ?></td>
-                                                    
-                                                    </td>
-                                                </tr>
-                                            <?php endwhile; ?>
-                                            </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                                <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_lvl']; ?></td>
+                                                <td style="font-size: 12px; font-style: italic;"><?php echo $row['level_name']; ?></td>
+                                                <td style="font-size: 12px; font-style: italic;"><?php echo $row['rubric_description']; ?></td>
 
-                
-<!-- END OF LEGEND-->                           
+                                                </td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                        </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <!-- END OF LEGEND-->
                         <br>
                         <div id="show">
 

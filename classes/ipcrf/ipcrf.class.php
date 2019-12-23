@@ -112,11 +112,20 @@ class IPCRF
     {
         $qry  = "SELECT * FROM `$table_name` WHERE `kra_id` = $kra AND `obj_id` = $obj and `user_id` = " . $this->user . " AND `school_id` = " . $this->school . "  and sy_id = " . $this->sy . " AND doc_status = 'Approved' and status = 'Active'";
         $result =  mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
-        $res_arr = [];
-        foreach ($result as $r) :
-            array_push($res_arr, $r);
-        endforeach;
-        return intval(count($res_arr));
+        if ($result) :
+            $res_arr = [];
+            foreach ($result as $r) :
+                array_push($res_arr, $r);
+            endforeach;
+            $mov_count =  intval(count($res_arr));
+            if ($mov_count == 0) :
+                return 1;
+            else :  return $mov_count;
+            endif;
+
+
+        else : return 1;
+        endif;
     }
 
     public function getEfficiency($kra_id, $obj_id, $table_name)
@@ -438,7 +447,7 @@ class IPCRF
     TABLES: perfmtindicator_tbl, perftindicator_tbl 
     */
 
-    public function actualResultQuality($table_name, $kra_id, $obj_id, $quality_rate)
+    public function actualResultQualityMT($kra_id, $obj_id, $quality_rate)
     {
         floatval($quality_rate);
 
@@ -458,11 +467,23 @@ class IPCRF
         else : $quality_rate = 1.000;
         endif;
 
-        $qry  = "SELECT * FROM `$table_name` WHERE kra_id = $kra_id and mtobj_id = $obj_id and qet = 'Quality' and status = 'Active' AND level_no = $quality_rate";
+        $qry  = "SELECT * FROM `perfmtindicator_tbl` WHERE kra_id = $kra_id and mtobj_id = $obj_id and qet = 'Quality' and status = 'Active' AND level_no = $quality_rate";
         $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
         if ($result) :
             foreach ($result as $r) :
                 return $r['perfmtindicator_id'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function actualResultQualityT($kra_id, $obj_id, $quality_rate)
+    {
+        $qry  = "SELECT * FROM `perftindicator_tbl` WHERE kra_id = $kra_id and tobj_id = $obj_id and qet = 'Quality' and status = 'Active' AND level_no = $quality_rate";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['perftindicator_id'];
             endforeach;
         else : die($this->conn()->error . $qry);
         endif;
@@ -473,7 +494,7 @@ class IPCRF
     TABLES: perfmtindicator_tbl, perftindicator_tbl 
     */
 
-    public function actualResultEfficiency($table_name, $kra_id, $obj_id, $quality_rate)
+    public function actualResultEfficiencyMT($kra_id, $obj_id, $quality_rate)
     {
         floatval($quality_rate);
 
@@ -493,7 +514,7 @@ class IPCRF
         else : $quality_rate = 1.000;
         endif;
 
-        $qry  = "SELECT * FROM `$table_name` WHERE kra_id = $kra_id and mtobj_id = $obj_id and qet = 'Efficiency' and status = 'Active' AND level_no = $quality_rate";
+        $qry  = "SELECT * FROM `perfmtindicator_tbl` WHERE kra_id = $kra_id and mtobj_id = $obj_id and qet = 'Efficiency' and status = 'Active' AND level_no = $quality_rate";
         $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
         if ($result) :
             foreach ($result as $r) :
@@ -502,6 +523,44 @@ class IPCRF
         else : die($this->conn()->error . $qry);
         endif;
     }
+
+    public function actualResultEfficiencyT($kra_id, $obj_id, $quality_rate)
+    {
+        $qry  = "SELECT * FROM `perftindicator_tbl` WHERE kra_id = $kra_id and tobj_id = $obj_id and qet = 'Efficiency' and status = 'Active' AND level_no = $quality_rate";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['perftindicator_id'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function actualResultTimelinessT($kra_id, $obj_id, $quality_rate)
+    {
+        $qry  = "SELECT * FROM `perftindicator_tbl` WHERE kra_id = $kra_id and tobj_id = $obj_id and qet = 'Timeliness' and status = 'Active' AND level_no = $quality_rate";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['perftindicator_id'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function actualResultTimelinessMT($kra_id, $obj_id, $quality_rate)
+    {
+        $qry  = "SELECT * FROM `perfmtindicator_tbl` WHERE kra_id = $kra_id and tobj_id = $obj_id and qet = 'Timeliness' and `status` = 'Active' AND level_no = $quality_rate";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        $result_count = mysqli_num_rows($result);
+        if ($result_count > 0) :
+            foreach ($result as $r) :
+                return $r['perfmtindicator_id'];
+            endforeach;
+        else : return 0;
+        endif;
+    }
+
 
     public function getQualityRange($quality_rate)
     {
@@ -550,8 +609,33 @@ class IPCRF
             foreach ($result as $r) :
                 return $r['desc_name'];
             endforeach;
-
         else : die($this->conn()->error . $qry);
         endif;
+    }
+
+    public function fetchTObjective_tbl()
+    {
+        $qry = "SELECT * FROM `tobj_tbl`";
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    public function fetchMTObjective_tbl()
+    {
+        $qry = "SELECT * FROM `tobj_tbl`";
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
     }
 }
