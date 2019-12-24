@@ -600,9 +600,34 @@ class IPCRF
         endif;
     }
 
+    public function displayPerfIndicatorT($table_name, $perf_id)
+    {
+        $qry  = " SELECT * FROM `$table_name` where perftindicator_id = $perf_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
     public function displayTimelinessDesc($table_name, $kra_id, $obj_id, $level_no)
     {
         $qry  = "  SELECT * FROM `$table_name` WHERE kra_id =  $kra_id and mtobj_id = $obj_id AND qet = 'Timeliness' AND level_no = $level_no ";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function displayTimelinessDescT($table_name, $kra_id, $obj_id, $level_no)
+    {
+        $qry  = "  SELECT * FROM `$table_name` WHERE kra_id =  $kra_id and tobj_id = $obj_id AND qet = 'Timeliness' AND level_no = $level_no ";
         $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
 
         if ($result) :
