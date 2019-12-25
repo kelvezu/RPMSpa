@@ -10,7 +10,7 @@ if (isset($_POST['view'])) :
     //$position = "Teacher I";
 
     $ipcrf_array = [];
-    $qry = $conn->query("SELECT * FROM ipcrf_t  WHERE sy_id = $sy_id AND `school_id` = $school_id  ") or die($conn->error);
+    $qry = $conn->query("SELECT * FROM ipcrf_t  WHERE sy_id = $sy_id AND `school_id` = $school_id") or die($conn->error);
     if (mysqli_num_rows($qry) == 0) :
         echo '<div class="red-notif-border">Average IPCRF is not available</div>';
         exit();
@@ -58,7 +58,7 @@ endif;
       function chartIPCRFave() {
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable([
-          ['Obj_id','Current SYear','Last Year 2','Last Year 3','Average'],
+          ['Obj_id','Current Year','Last Year 2','Last Year 3','Average'],
           <?php
 
               $qry = $conn->query("SELECT a.obj_id, round(a.sy)as sy, round(a.sy2)as sy2 ,round(a.sy3)as sy3,round(avg(a.average))as average  FROM

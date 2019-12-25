@@ -124,7 +124,7 @@ endif;
     var data = google.visualization.arrayToDataTable([
       ['obj_id', 'Quality', 'Efficiency', 'Timeliness','Average'],
       <?php
-      $tIndi = fetchMTindicator($conn);
+     // $tIndi = fetchMTindicator($conn);
       //foreach ($tIndi as $indi) :
         $qry = $conn->query("SELECT obj_id,quality,efficiency,timeliness,average
         FROM ipcrf_mt WHERE user_id = '$teacher_id' AND sy_id = '$sy_id' AND school_id = '$school_id' group by obj_id order by obj_id,average") or die($conn->error);

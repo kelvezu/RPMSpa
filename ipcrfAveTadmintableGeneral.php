@@ -7,23 +7,23 @@ include 'libraries/func.lib.php';
 include 'includes/conn.inc.php';
 
 
-$user = $_GET['user'];
-$school = $_GET['sch'];
-$rater = $_GET['rater'];
+//$user = $_GET['user'];
+//$school = $_GET['sch'];
+//$rater = $_GET['rater'];
 $sy_id = $_GET['sy'];
-$position = $_GET['pos'];
+//$position = $_GET['pos'];
 
 
 $num = 1;
-$ipcrf = new IPCRF($user, $sy_id, $school, $position);
-$ipcrf_details = $ipcrf->fetchIPCRF('ipcrf_t');
-$ipcrf_final_details = $ipcrf->fetchIPCRF('ipcrf_final_t');
+///$ipcrf = new IPCRF('', $sy_id, '', '');
+$ipcrf_details = IPCRF::fetchIPCRFGenT($conn,$sy_id);
+$ipcrf_final_details = IPCRF::fetchIPCRFGenFinalT($conn,$sy_id);
 // pre_r($ipcrf_final_details);
 if ($ipcrf_final_details) :
     $final_rating = $ipcrf_final_details[0]['final_rating'];
     $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
 endif;
-// echo $final_rating;
+//echo $final_rating;
 // pre_r($ipcrf_details);
 /* <p><?php echo displayName($conn, $user); ?></p>*/
 ?>
@@ -34,16 +34,8 @@ endif;
             <div class="d-flex justify-content-between">
                 <div class="p-2">
                     <p>
-                        <span class="font-weight-bold">Name of Employee: </span><?php echo displayname($conn, $user); ?><br>
-                        <span class="font-weight-bold">Position: </span><?php echo $position ?><br>
-                        <span class="font-weight-bold">Bureau/Center/Service/Division: </span><?php echo displaySchool($conn, $school) ?><br>
                         <span class="font-weight-bold">Rating Period: </span><?php echo displaySydesc($conn, $sy_id) ?><br>
                     </p>
-                </div>
-                <div class="p-2">
-                    <span class="font-weight-bold">Name of Employee: </span><?php echo ($rater) ? displayname($conn, $rater)  : "<span class='text-danger'>No rater!</span>"; ?><br>
-                    <span class="font-weight-bold">Position: </span><?php echo ($rater) ?  getPosition($conn, $rater) : "<span class='text-danger'>No rater!</span>"; ?><br>
-                    <span class="font-weight-bold">Date of Review: </span><i class="text-danger"> Error: Please indicate the date! </i><br>
                 </div>
             </div>
         </div>
@@ -113,7 +105,7 @@ endif;
                 </thead>
                 <tbody>
                     <tr>
-                        <?php if ($ipcrf_details) : foreach ($ipcrf_details as $details) : ?>
+                        <?php if (IPCRF::fetchIPCRFGenT($conn,$sy_id)) : foreach ($ipcrf_details = IPCRF::fetchIPCRFGenT($conn,$sy_id) as $details) : ?>
                                 <!-- number -->
                                 <td>
                                     <p>
@@ -157,7 +149,7 @@ endif;
                                 <!-- OBJECTIVE ACTUAL RESULT QUALITY -->
                                 <td>
                                     <p class="text-justify font-italic">
-                                        <?php echo $ipcrf->displayPerfIndicator('perftindicator_tbl', $details['actual_result_quality']) ?>
+                                        <?php echo IPCRF::displayPerfIndicatorGenT($conn, $details['actual_result_quality']) ?>
                                     </p>
                                 </td>
                                 <!-- END QUALITY ACTUAL RESULT QUALITY -->
@@ -165,7 +157,7 @@ endif;
                                 <!-- OBJECTIVE ACTUAL RESULT EFFICIENCY -->
                                 <td>
                                     <p class="text-justify font-italic">
-                                        <?php echo $ipcrf->displayPerfIndicator('perftindicator_tbl', $details['actual_result_efficiency']) ?>
+                                        <?php echo IPCRF::displayPerfIndicatorGenT($conn, $details['actual_result_efficiency']) ?>
                                     </p>
                                 </td>
                                 <!-- END QUALITY ACTUAL RESULT EFFICIENCY -->
@@ -173,7 +165,7 @@ endif;
                                 <!-- OBJECTIVE TIMELINESS DESC -->
                                 <td>
                                     <p class="text-justify font-italic">
-                                        <?php echo $ipcrf->displayTimelinessDesc('perftindicator_tbl', $details['kra_id'], $details['obj_id'], $details['timeliness']) ?>
+                                        <?php echo IPCRF::displayPerfIndicatorGenT($conn, $details['kra_id'], $details['obj_id'], $details['timeliness']) ?>
                                     </p>
                                 </td>
                                 <!-- END QUALITY TIMELINESS DESC -->

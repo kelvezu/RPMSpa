@@ -9,16 +9,13 @@ include 'sampleheader.php';
 
 <div class="container col-md-9">
 
-    <div class="bg-dark h4 text-white breadcrumb">Teacher COT Average</div>
+    <div class="bg-dark h4 text-white breadcrumb">Teacher IPCRF Average</div>
     <div class="px-3">
 
 
-  //      <form action="cotchartTadmin.php" method="POST" class="form-inline">
-
+       <form action="ipcrfAveAdminChartT.php" method="POST" class="form-inline">
 
             <input type="hidden" id="active_sy" name="active_sy" value="<?php echo $_SESSION['active_sy_id']; ?>">
-
-
             <div class="form-row">
                 <div class="form-group mb-2">
                     <!-- School Year Dropdown -->
@@ -77,7 +74,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "cotAveTadmintableGeneral.php?sy=" + active_sy_id, true);
+            xmlhttp.open("GET", "ipcrfAveTadmintableGeneral.php?sy=" + active_sy_id, true);
             xmlhttp.send();
             return;
         } else {
@@ -88,7 +85,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "cotAveTadmintable.php?sy=" + sy_id + "&sch=" + school_id, true);
+            xmlhttp.open("GET", "ipcrfAveTadmintable.php?sy=" + sy_id + "&sch=" + school_id, true);
             xmlhttp.send();
             return;
         }

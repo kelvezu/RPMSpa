@@ -260,6 +260,31 @@ class IPCRF
         endif;
     }
 
+    public function fetchIPCRFGenT($conn,$sy_id)
+    {
+        $qry = "SELECT * FROM ipcrf_t WHERE `sy_id` = $sy_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+    public function fetchIPCRFGenFinalT($conn,$sy_id)
+    {
+        $qry = "SELECT * FROM ipcrf_final_t WHERE `sy_id` = $sy_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
     /* THIS WILL FETCH THE KRA WEIGHT */
     public function fetchKRAweight($kra_id)
     {
@@ -604,6 +629,18 @@ class IPCRF
     {
         $qry  = " SELECT * FROM `$table_name` where perftindicator_id = $perf_id";
         $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function displayPerfIndicatorGenT($conn)
+    {
+        $qry  = "SELECT * FROM perftindicator_tbl";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
         if ($result) :
             foreach ($result as $r) :
                 return $r['desc_name'];
