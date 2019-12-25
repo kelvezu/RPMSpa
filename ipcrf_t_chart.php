@@ -5,12 +5,12 @@ include 'sampleheader.php';
 if (isset($_POST['view'])) :
     
     $sy_id = $_POST['sy_id'];
-    //$teacher_id = $_POST['user_id'];
+    $teacher_id = $_POST['user_id'];
     $school_id = $_POST['school_id'];
     //$position = "Teacher I";
 
     $ipcrf_array = [];
-    $qry = $conn->query("SELECT * FROM ipcrf_t  WHERE sy_id = $sy_id AND `school_id` = $school_id  ") or die($conn->error);
+    $qry = $conn->query("SELECT * FROM ipcrf_t  WHERE user_id = '$teacher_id' and sy_id = $sy_id AND `school_id` = $school_id  ") or die($conn->error);
     if (mysqli_num_rows($qry) == 0) :
         echo '<div class="red-notif-border">Average IPCRF is not available</div>';
         exit();
@@ -47,7 +47,7 @@ endif;
 
 </div>
 
-<!-- COT Chart Function -->
+<!-- IPCRF Chart Function -->
 
 <script type="text/javascript">
       google.charts.load('current', {
@@ -67,7 +67,7 @@ endif;
                CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') - 1 then avg(average) else 0 end as sy2,
                CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') then avg(average) else 0 end as sy
                 
-               FROM ipcrf_t WHERE school_id = '$school_id'  GROUP BY obj_id) a
+               FROM ipcrf_t WHERE user_id = '$teacher_id' and school_id = '$school_id'  GROUP BY obj_id) a
                 GROUP BY a.obj_id") or die($conn->error);
               while ($cotQry2 = $qry->fetch_assoc()) :
                 echo "['" . $cotQry2['obj_id'] . "', 
@@ -107,11 +107,11 @@ endif;
       }
     </script>
 
-    <!-- End of COT Chart Function -->
+    <!-- End of IPCRF Chart Function -->
 
 
 
-<!-- COT Average Chart Function -->
+<!-- IPCRF Average Chart Function -->
 
 <script type="text/javascript">
   google.charts.load('current', {
@@ -127,7 +127,7 @@ endif;
       //$tIndi = fetchTindicator($conn);
       //foreach ($tIndi as $indi) :
         $qry = $conn->query("SELECT obj_id,quality,efficiency,timeliness,average
-        FROM ipcrf_t WHERE sy_id = '$sy_id' AND school_id = '$school_id' group by obj_id order by obj_id,average") or die($conn->error);
+        FROM ipcrf_t WHERE user_id = '$teacher_id' and sy_id = '$sy_id' AND school_id = '$school_id' group by obj_id order by obj_id,average") or die($conn->error);
         while ($cotQry = $qry->fetch_assoc()) :
           echo "['" . $cotQry['obj_id'] . "', 
                 " . $cotQry['quality'] . ",  
@@ -166,7 +166,7 @@ endif;
     chart.draw(data, options);
   }
 </script>
-<!-- End of COT Average Chart Function -->
+<!-- End of IPCRF Average Chart Function -->
 
 
 <?php
