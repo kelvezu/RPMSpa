@@ -1165,7 +1165,7 @@
                 }
             }
 
-             function fetchCOTratingMTObs3($conn, $user, $indicator_id, $sy, $school)
+            function fetchCOTratingMTObs3($conn, $user, $indicator_id, $sy, $school)
             {
                 $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 3 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1176,7 +1176,7 @@
                     }
                 }
             }
-             function fetchCOTratingMTObs4($conn, $user, $indicator_id, $sy, $school)
+            function fetchCOTratingMTObs4($conn, $user, $indicator_id, $sy, $school)
             {
                 $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1236,7 +1236,7 @@
                 }
             }
 
-             function fetchCOTratingTObs4($conn, $user, $indicator_id, $sy, $school)
+            function fetchCOTratingTObs4($conn, $user, $indicator_id, $sy, $school)
             {
                 $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1495,7 +1495,7 @@
                 }
             }
 
-             function viewAdminratingTObs4($conn, $school, $indicator_id, $sy)
+            function viewAdminratingTObs4($conn, $school, $indicator_id, $sy)
             {
                 $qry = "SELECT AVG(rating) AS T_RATING FROM `cot_t_rating_a_tbl` WHERE obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1531,7 +1531,7 @@
                 }
             }
 
-             function viewAdminratingMTObs2($conn, $school, $indicator_id, $sy)
+            function viewAdminratingMTObs2($conn, $school, $indicator_id, $sy)
             {
                 $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 2 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1543,7 +1543,7 @@
                 }
             }
 
-             function viewAdminratingMTObs3($conn, $school, $indicator_id, $sy)
+            function viewAdminratingMTObs3($conn, $school, $indicator_id, $sy)
             {
                 $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 3 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1555,7 +1555,7 @@
                 }
             }
 
-             function viewAdminratingMTObs4($conn, $school, $indicator_id, $sy)
+            function viewAdminratingMTObs4($conn, $school, $indicator_id, $sy)
             {
                 $qry = "SELECT AVG(rating) AS MT_RATING FROM `cot_mt_rating_a_tbl` WHERE obs_period = 4 and indicator_id =$indicator_id  AND SY= $sy AND school_id = $school AND status = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2858,7 +2858,8 @@
                 }
             }
 
-             function getCOTobserver($conn,$user,$sy,$school_id,$obs_period){
+            function getCOTobserver($conn, $user, $sy, $school_id, $obs_period)
+            {
                 $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school_id AND `status` = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
@@ -2870,7 +2871,8 @@
                 }
             }
 
-             function getCOTobserverB($conn,$user,$sy,$school_id,$obs_period){
+            function getCOTobserverB($conn, $user, $sy, $school_id, $obs_period)
+            {
                 $qry = "SELECT * FROM `cot_t_rating_b_tbl` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school_id AND `status` = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
@@ -2880,4 +2882,23 @@
                     }
                     return $res_array;
                 }
+            }
+
+            function displayCoreComp($conn, $cbc_id)
+            {
+                $qry = "SELECT * FROM `core_behavioral_tbl` where cbc_id = $cbc_id";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
+                        return $res['cbc_name'];
+                    }
+                }
+            }
+
+            function showModal($modal_id)
+            {
+                echo "<script> $(document).ready(function() { $('#$modal_id').modal();});</script>";
             }

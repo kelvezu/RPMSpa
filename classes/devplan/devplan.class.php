@@ -523,4 +523,98 @@ class DevPlan
         else : return false;
         endif;
     }
+
+
+
+    /*
+    THIS TABLE WILL FETCH THE STRENGHT IN ESAT OBJECTIVES
+    TABLES: esat2_objectivesmt_tbl, esat2_objectivest_tbl 
+    */
+    public function fetchStrengthOBJ($table_name)
+    {
+        $result_arr = [];
+        $qry1 = "SELECT * FROM `$table_name` where `user_id` = " . $this->user . " and lvlcap >= 3 and priodev <= 2 and sy = " . $this->sy . " and school= " . $this->school . " and status = 'Active' ORDER BY lvlcap DESC LIMIT 5";
+        $result = mysqli_query($this->conn(), $qry1) or die($this->conn()->error);
+
+        $result = mysqli_query($this->conn(), $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    /*
+    THIS TABLE WILL FETCH THE DEVNEEDS IN ESAT OBJECTIVES
+    TABLES: esat2_objectivesmt_tbl, esat2_objectivest_tbl 
+    */
+    public function fetchDevNeedOBJ($table_name)
+    {
+        $result_arr = [];
+        $qry1 = "SELECT * FROM `$table_name` where `user_id` = " . $this->user . " and lvlcap <= 2 and priodev >= 3 and sy = " . $this->sy . " and school= " . $this->school . " and status = 'Active' ORDER BY lvlcap DESC LIMIT 4";
+        $result = mysqli_query($this->conn(), $qry1) or die($this->conn()->error);
+
+        $result = mysqli_query($this->conn(), $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    /*
+    THIS TABLE WILL FETCH THE STRENGTH IN ESAT BEHAVIORAL
+    TABLES: esat3_core_behavioralmt_tbl, esat3_core_behavioralt_tbl 
+    */
+    public function fetchCoreBehavioralStr($table_name)
+    {
+        $result_arr = [];
+        $qry1 = "SELECT SUM(cbc_score) AS total_score,cbc_id FROM `$table_name` where `user_id` = " . $this->user . "  AND sy = " . $this->sy . " AND school = " . $this->school . " GROUP BY cbc_id ORDER BY  SUM(cbc_score) DESC,cbc_id  LIMIT 5";
+        $result = mysqli_query($this->conn(), $qry1) or die($this->conn()->error);
+
+        $result = mysqli_query($this->conn(), $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    /*
+    THIS TABLE WILL FETCH THE DevNeed IN ESAT BEHAVIORAL
+    TABLES: esat3_core_behavioralmt_tbl, esat3_core_behavioralt_tbl 
+    */
+
+    public function fetchCoreBehavioralDevNeed($table_name)
+    {
+        $result_arr = [];
+        $qry1 = "SELECT SUM(cbc_score) AS total_score,cbc_id FROM `$table_name` where `user_id` = " . $this->user . "  AND sy = " . $this->sy . " AND school = " . $this->school . " GROUP BY cbc_id ORDER BY SUM(cbc_score),cbc_id desc LIMIT 3";
+        $result = mysqli_query($this->conn(), $qry1) or die($this->conn()->error);
+
+        $result = mysqli_query($this->conn(), $qry1);
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    /*
+    THIS TABLE WILL FETCH THE DevNeed IN ESAT BEHAVIORAL
+    TABLES: devplanmt_a1_strength_tbl, devplant_a1_strength_tbl 
+    */
+    public function checkOBJstr($table_name)
+    {
+        $qry1 = "SELECT * FROM `$table_name` WHERE `user_id` = " . $this->user . " AND `sy` = " . $this->sy . " AND `school` = " . $this->school . " and `position` = " . $this->position . "";
+        $result = mysqli_query($this->conn(), $qry1) or die($this->conn()->error);
+
+        $count_result = mysqli_num_rows($result);
+        if (($count_result) > 0) : return true;
+        else : return false;
+        endif;
+    }
 }
