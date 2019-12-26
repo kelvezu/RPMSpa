@@ -2,6 +2,8 @@
 
 namespace IPCRF;
 
+
+
 class IPCRF
 {
     public $servername = "localhost";
@@ -61,7 +63,7 @@ class IPCRF
 
 
 
-    /* 
+    /*
     THIS METHOD WILL COUNT THE OBJECTIVE IN KRA
     TABLE MT = mtobj_tbl
     TABLE MT = tobj_tbl
@@ -78,7 +80,7 @@ class IPCRF
     }
 
 
-    /* 
+    /*
     THIS METHOD WILL DISPLAY THE OBJECTIVE QUALITY THEN IT WILL CONVERT IT TO QUALITY RATING
     NOTE: use this method if the COT is the base of the QUALITY
 
@@ -202,7 +204,7 @@ class IPCRF
     }
 
     /*
-        THIS METHOD WILL FETCH ALL THE DATA IN COT 
+        THIS METHOD WILL FETCH ALL THE DATA IN COT
         TABLE: cot_mt_rating_a_tbl, cot_t_rating_a_tbl
     */
 
@@ -220,13 +222,13 @@ class IPCRF
     }
 
     /*
-        THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF 
+        THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF
 
-        TABLES: 
-        ipcrf_mt, 
-        ipcrf_t, 
-        ipcrf_final_mt, 
-        ipcrf_final_t 
+        TABLES:
+        ipcrf_mt,
+        ipcrf_t,
+        ipcrf_final_mt,
+        ipcrf_final_t
     */
 
     public function hasIPCRF($table_name)
@@ -240,12 +242,12 @@ class IPCRF
     }
 
     /*
-        THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF 
-        TABLES: 
-        ipcrf_mt, 
-        ipcrf_t, 
-        ipcrf_final_mt, 
-        ipcrf_final_t 
+        THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF
+        TABLES:
+        ipcrf_mt,
+        ipcrf_t,
+        ipcrf_final_mt,
+        ipcrf_final_t
     */
     public function fetchIPCRF($table_name)
     {
@@ -275,7 +277,7 @@ class IPCRF
     }
 
 
-    /* 
+    /*
         THIS WILL COUNT THE OBJECTIVE
         TABLE: mtobj_tbl,tobj_tbl
     */
@@ -323,9 +325,9 @@ class IPCRF
     }
 
     /*
-     THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF 
-        TABLES: 
-        ipcrf_mt, 
+     THIS METHOD WILL CHECK IF THERE ARE ALREADY A RECORD IN IPCRF
+        TABLES:
+        ipcrf_mt,
         ipcrf_t
     */
     public function fetchQuality($table, $obj_id)
@@ -442,9 +444,9 @@ class IPCRF
     }
 
 
-    /* 
+    /*
     THIS WILL DISPLAY THE RESULT OF QUALITY BASED ON RPMS RANGE
-    TABLES: perfmtindicator_tbl, perftindicator_tbl 
+    TABLES: perfmtindicator_tbl, perftindicator_tbl
     */
 
     public function actualResultQualityMT($kra_id, $obj_id, $quality_rate)
@@ -489,9 +491,9 @@ class IPCRF
         endif;
     }
 
-    /* 
+    /*
     THIS WILL DISPLAY THE RESULT OF EFFICIENCY BASED ON RPMS RANGE
-    TABLES: perfmtindicator_tbl, perftindicator_tbl 
+    TABLES: perfmtindicator_tbl, perftindicator_tbl
     */
 
     public function actualResultEfficiencyMT($kra_id, $obj_id, $quality_rate)
@@ -584,9 +586,9 @@ class IPCRF
     }
 
 
-    /* 
+    /*
     THIS WILL DISPLAY THE RESULT OF EFFICIENCY BASED ON RPMS RANGE
-    TABLES: perfmtindicator_tbl, perftindicator_tbl 
+    TABLES: perfmtindicator_tbl, perftindicator_tbl
     */
     public function displayPerfIndicator($table_name, $perf_id)
     {
@@ -600,9 +602,35 @@ class IPCRF
         endif;
     }
 
+
+    public function displayPerfIndicatorT($table_name, $perf_id)
+    {
+        $qry  = " SELECT * FROM `$table_name` where perftindicator_id = $perf_id";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
     public function displayTimelinessDesc($table_name, $kra_id, $obj_id, $level_no)
     {
         $qry  = "  SELECT * FROM `$table_name` WHERE kra_id =  $kra_id and mtobj_id = $obj_id AND qet = 'Timeliness' AND level_no = $level_no ";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function displayTimelinessDescT($table_name, $kra_id, $obj_id, $level_no)
+    {
+        $qry  = "  SELECT * FROM `$table_name` WHERE kra_id =  $kra_id and tobj_id = $obj_id AND qet = 'Timeliness' AND level_no = $level_no ";
         $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
 
         if ($result) :
@@ -629,6 +657,36 @@ class IPCRF
     public function fetchMTObjective_tbl()
     {
         $qry = "SELECT * FROM `tobj_tbl`";
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+
+
+    /* THIS FUNCTION WILL DISPLAY ALL SCHOOL PERSONNEL WITHIN THE SCHOOL */
+    public function fetchSchoolPersonnel()
+    {
+        $qry = "SELECT * FROM `account_tbl` where school_id = 14 AND status = 'Active'";
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    /* THIS FUNCTION WILL DISPLAY ALL TEACHER WITH COT THE SCHOOL */
+    public function fetchTeacherWithCOT()
+    {
+        $qry = "SELECT * FROM `ipcrf_mt` UNION SELECT * FROM `ipcrf_t` ORDER BY FIELD(position,'Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I','Teacher III','Teacher II','Teacher I')";
         $result = mysqli_query($this->conn(), $qry);
         if ($result) {
             $array_res = [];

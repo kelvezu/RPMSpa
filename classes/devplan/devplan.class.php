@@ -2,20 +2,37 @@
 
 namespace DevPlan;
 
+
+
 class DevPlan
 {
-    // public static function devplanStatus($position)
-    // {
-    //     if (isset($position)) :
-    //         if (!stripos(($position), 'dmin') || !stripos(($position), 'rincipal') || !stripos(($position), 'chool head') || !stripos(($position), 'chool head') || !stripos(($position), 'uperintendent')) :
-    //             if():
-    //             endif;
-    //         else: return false;
-    //         endif;
-    //     else :
-    //         return false;
-    //     endif;
-    // }
+
+    public $servername = "localhost";
+    public $dbUsername = "root";
+    public $dbPassword = "";
+    public $dbName = "rpms";
+
+    public function __construct($user, $sy, $school, $position)
+    {
+        $this->user = $user;
+        $this->sy = $sy;
+        $this->school = $school;
+        $this->position = $position;
+    }
+
+    public function conn()
+    {
+        $this->servername;
+        $this->dbUsername;
+        $this->dbPassword;
+        $this->dbName;
+        $conn =  mysqli_connect($this->servername,  $this->dbUsername,  $this->dbPassword,  $this->dbName);
+        if (!$conn) {
+            return  die("Connection Failed: " . mysqli_connect_error());
+        }
+        return $conn;
+    }
+
 
     /* STRENGTH IN DEVPLAN FOR MT */
     public static function showStrDevplanMT($conn)
@@ -187,10 +204,10 @@ class DevPlan
         endif;
     }
 
-    public static function showAllAppAuthforT($conn,$school)
+    public static function showAllAppAuthforT($conn, $school)
     {
         $result_arr = [];
-        $qry = 'SELECT * FROM account_tbl WHERE school_id = ' .$school . ' AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent","Principal","School Head","Principal Assistant" ) ';
+        $qry = 'SELECT * FROM account_tbl WHERE school_id = ' . $school . ' AND `status` = "Active" AND position IN ("Superintendent","Assistant Superintendent","Principal","School Head","Principal Assistant" ) ';
 
         $result = mysqli_query($conn, $qry);
         if (!empty($result)) :
@@ -362,7 +379,7 @@ class DevPlan
         endif;
     }
 
-     public static function showA3ActionMTAdmin($conn)
+    public static function showA3ActionMTAdmin($conn)
     {
         $result_arr = [];
         $qry1 = 'SELECT * FROM `devplanmt_a3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
@@ -395,7 +412,7 @@ class DevPlan
     }
 
 
-     public static function showB3ActionAdmin($conn)
+    public static function showB3ActionAdmin($conn)
     {
         $result_arr = [];
         $qry1 = 'SELECT * FROM `devplant_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
@@ -427,7 +444,7 @@ class DevPlan
         endif;
     }
 
-     public static function showB3ActionMTAdmin($conn)
+    public static function showB3ActionMTAdmin($conn)
     {
         $result_arr = [];
         $qry1 = 'SELECT * FROM `devplanmt_b3_actionplan_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';
@@ -491,7 +508,7 @@ class DevPlan
         endif;
     }
 
-     public static function showDevCMTAdmin($conn)
+    public static function showDevCMTAdmin($conn)
     {
         $result_arr = [];
         $qry1 = 'SELECT * FROM `devplanmt_c_tbl` WHERE sy = ' . $_SESSION['active_sy_id'] . ' AND `status` = "Submit"';

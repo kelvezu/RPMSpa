@@ -22,7 +22,10 @@ endif;
 /* <p><?php echo displayName($conn, $user); ?></p>*/
 ?>
 <div class="container-fluid">
-
+    <div>
+        <a href="ipcrf_mt_collection_pdf.php" class="btn btn-primary">Show in PDF</a>
+    </div>
+    <br>
     <div class="card">
         <div class="card-header">
             <div class="d-flex justify-content-between">
