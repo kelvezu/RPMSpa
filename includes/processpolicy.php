@@ -9,12 +9,27 @@ if(isset($_POST['save'])){
     $policy_title = $_POST['policytitle'];
     $policy_content = $_POST['policycontent'];
 
+      $validate = $conn->query("SELECT * FROM policy_tbl");
+        while($row = $validate->fetch_assoc()){
+            $exist_policy_title = $row['policy_title'];
+            $exist_policy_content = $row['policy_content'];
+        
+        if(($policy_title == $exist_policy_title) || ($policy_content == $exist_policy_content)){
+            header("location:../displaypolicy.php?notif=taken");
+            exit();
+        }elseif((ctype_space($policy_title)) || (ctype_space($policy_content))){
+            header("location:../displaypolicy.php?notif=whitespace");
+            exit();
+        }elseif((strlen($policy_title)) < 10 || (strlen($policy_content)) < 10){
+            header("location:../displaypolicy.php?notif=charNumber");
+            exit();
+        }else{
     $conn->query("INSERT INTO policy_tbl(policy_title,policy_content) VALUES ('$policy_title','$policy_content')") or die($conn->error);
-    $_SESSION['message'] = 'Policy has been added!';
-    $_SESSION['msg_type'] = 'success';
-    header('location:../displaypolicy.php');
-}
 
+    header('location:../displaypolicy.php?notif=success');
+}
+}
+}
 if(isset($_GET['delete'])){
     $id = $_GET['delete'];
     $conn->query("DELETE FROM policy_tbl WHERE policy_id=$id") or die($conn->error);

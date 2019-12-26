@@ -1,5 +1,20 @@
 <?php
 include 'sampleheader.php';
+
+
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>School has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    endif;
+endif;
 ?>
 
 <div class="modal fade" id="policy-modal" tabindex="-1" role="dialog" aria-labelledby="policyModal" aria-hidden="true">
@@ -17,12 +32,14 @@ include 'sampleheader.php';
                     <div class="form-group row">
                         <div class="col-lg">
                             <label for="policy-title" class="control-label"><strong>Policy Title</strong></label>
-                            <input type="text" name="policytitle" id=policy-title" class="form-control" width="500" placeholder="Enter the Policy Title..." required pattern="{3,}" title="Input three or more characters" />
+                            <input type="text" name="policytitle" id="policy_title" class="form-control" width="500" placeholder="Enter the Policy Title..." required pattern="{3,}" title="Input three or more characters" />
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div>
                         <label for="content" class="control-label w-25 "><strong>Policy Content</strong></label>
-                        <textarea name="policycontent" id="policy-content" cols="5" rows="5" class="form-control" value="" placeholder="Enter the Policy Content..." required></textarea>
+                        <textarea name="policycontent" id="policy_content" cols="5" rows="5" class="form-control" value="" placeholder="Enter the Policy Content..." required></textarea>
+                        <div id="errorNo2"></div>
                     </div>
                     <div class="m-2">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -33,6 +50,48 @@ include 'sampleheader.php';
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#policy_title').on('change', function() {
+            var policy_title = $(this).val(); 
+            if (policy_title) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatepolicy.php',
+                    data: 'policy_title=' + policy_title,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+
+$(document).ready(function() {
+        $('#policy_content').on('change', function() {
+            var policy_content = $(this).val(); 
+            if (policy_content) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatepolicy.php',
+                    data: 'policy_content=' + policy_content,
+                    success: function(html) {
+                         $('#errorNo2').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
+
+
 
 
 <?php if (isset($_SESSION['message'])) : ?>

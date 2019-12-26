@@ -24,19 +24,19 @@ if (isset($_POST['save'])) {
             $exist_school_name = $row['school_name'];
             $exist_tel_no = $row['tel_no'];
             $exist_tel_no2 = $row['tel_no2'];
-        }
+        
         
     if(($school_no == $exist_school_no) || ($school_name == $exist_school_name) || ($tel_no == $exist_tel_no) || ($tel_no2 == $exist_tel_no2) ){
-        header("school.php?notif=taken");
+        header("location:../school.php?notif=taken");
         exit();
     }elseif(ctype_space($school_no) || ctype_space($school_name) || ctype_space($tel_no) || ctype_space($tel_no2)){
-        header("school.php?notif=whitespace");
+        header("location:../school.php?notif=whitespace");
         exit();
     }elseif($tel_no == $tel_no2){
-        header("school.php?notif=duplicate");
+        header("location:../school.php?notif=duplicate");
         exit();
     }elseif((strlen($school_no)) < 8 || (strlen($school_name)) < 8) {
-        header("school.php?notif=charNumber");
+        header("location:../school.php?notif=charNumber");
         exit();
     }else{
 
@@ -50,7 +50,7 @@ if (isset($_POST['save'])) {
         header('location:../school.php?notif=error');
     }
 }
-
+}
 }
 //DELETE MOV
 if (isset($_GET['delete'])) {

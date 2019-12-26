@@ -225,7 +225,7 @@ include_once 'sampleheader.php'; ?>
         <!-- End Table for Principal List  -->
         <!-- End of First Row -->
     </div>
-    <br>
+    <br/>
     <!-- Second Row -->
     <div class="row">
         <!-- 1st column of 2nd row -->
@@ -247,7 +247,7 @@ include_once 'sampleheader.php'; ?>
         <!-- End of 1st column of 2nd row  -->
 
         <!--  2nd column of 2nd row -->
-
+        <br/>                        
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -265,6 +265,7 @@ include_once 'sampleheader.php'; ?>
         </div>
         <!-- End of 2nd column of 2nd row   -->
     </div>
+    <br/>
     <!-- End of Second Row -->
     <div class="row">
         <div class="col">
@@ -297,7 +298,7 @@ include_once 'sampleheader.php'; ?>
         <!-- End Table for Principal List  -->
     </div>
 
-
+    <br/>
     <div class="row">
         <div class="col">
             <!-- Card -->
@@ -326,9 +327,58 @@ include_once 'sampleheader.php'; ?>
                 </div>
             </div>
         </div>
+        <br/>
+                
+
         <!-- End Table for Principal List  -->
     </div>
 
+
+    <!-- Teacher Average IPCRF Summary -->
+
+    <div class="row">
+        <div class="col">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <h6><i class="fa fa-users"></i>Teacher Average IPCRF Summary</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body box">
+                    <div id="chartIPCRFT" style="width:max-width; height:300px;"></div>
+                </div>
+                <!-- end of card-body -->
+            </div>
+            <!-- end of card -->
+        </div>  
+<!-- End of Teacher Average IPCRF Summary -->
+<!-- Master Teacher Average IPCRF Summary -->
+
+        <div class="col">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <h6><i class="fa fa-users"></i>Master Teacher Average IPCRF Summary</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body box">
+                    <div id="chartIPCRFMT" style="width:max-width; height:300px;"></div>
+                </div>
+                <!-- end of card-body -->
+            </div>
+            <!-- end of card -->
+        </div>  
+        <!-- End of Teacher Average IPCRF Summary -->
+    </div>
+        
 </div>
 
 <!-- End of main container -->
@@ -730,6 +780,130 @@ include_once 'sampleheader.php'; ?>
 
     };
 </script>
+
+<!-- Start of IPCRF Teacher Chart Function -->
+
+<script type="text/javascript">
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(ipcrfchartT);
+
+    function ipcrfchartT() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['obj_id', 'Quality', 'Efficiency', 'Timeliness','Average'],
+            <?php
+
+            $qry = $conn->query("SELECT obj_id,
+                                avg(quality) as quality,
+                                avg(efficiency) as efficiency,
+                                avg(timeliness) as timeliness,
+                                round(avg(average)) as average
+                                FROM ipcrf_t group by obj_id order by obj_id") or die($conn->error);
+            while ($ipcrfqueryt = $qry->fetch_assoc()) :
+                echo "['" . $ipcrfqueryt['obj_id'] . "', 
+                " . $ipcrfqueryt['quality'] . ",  
+                " . $ipcrfqueryt['efficiency'] . ",   
+                " . $ipcrfqueryt['timeliness'] . ", 
+                " . $ipcrfqueryt['average'] . ", 
+                ],";
+            endwhile;
+            ?>
+        ]);
+
+        var options = {
+            title: 'IPCRF Rating',
+            vAxis: {
+                title: 'Rating'
+            },
+            hAxis: {
+                title: 'Objective and Rating'
+            },
+            explorer: {
+                axis: 'horizontal',
+                keepInBounds: true
+            },
+            seriesType: 'bars',
+            bar: {
+                groupWidth: 50
+            },
+            series: {
+                3: {
+                type: 'line'
+                }
+            }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRFT'));
+        chart.draw(data, options);
+    }
+</script>
+
+
+<!-- End of IPCRF Teacher Chart Function -->
+
+<!-- Start of IPCRF Master Teacher Chart Function -->
+
+<script type="text/javascript">
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+    google.charts.setOnLoadCallback(ipcrfchartMT);
+
+    function ipcrfchartMT() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['obj_id', 'Quality', 'Efficiency', 'Timeliness','Average'],
+            <?php
+
+            $qry = $conn->query("SELECT obj_id,
+                                avg(quality) as quality,
+                                avg(efficiency) as efficiency,
+                                avg(timeliness) as timeliness,
+                                round(avg(average)) as average
+                                FROM ipcrf_mt group by obj_id order by obj_id") or die($conn->error);
+            while ($ipcrfqueryt = $qry->fetch_assoc()) :
+                echo "['" . $ipcrfqueryt['obj_id'] . "', 
+                " . $ipcrfqueryt['quality'] . ",  
+                " . $ipcrfqueryt['efficiency'] . ",   
+                " . $ipcrfqueryt['timeliness'] . ", 
+                " . $ipcrfqueryt['average'] . ", 
+                ],";
+            endwhile;
+            ?>
+        ]);
+
+        var options = {
+            title: 'IPCRF Rating',
+            vAxis: {
+                title: 'Rating'
+            },
+            hAxis: {
+                title: 'Objective and Rating'
+            },
+            explorer: {
+                axis: 'horizontal',
+                keepInBounds: true
+            },
+            seriesType: 'bars',
+            bar: {
+                groupWidth: 50
+            },
+            series: {
+                3: {
+                type: 'line'
+                }
+            }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRFMT'));
+        chart.draw(data, options);
+    }
+</script>
+
+
+<!-- End of IPCRF Master Teacher Chart Function -->
 
 <?php include_once 'samplefooter.php' ?>
 <script>

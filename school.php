@@ -3,18 +3,18 @@
 include 'sampleheader.php';
 
 
-if(isset($_POST['notif'])):
-    if(isset($_POST['notif']) == 'taken'):
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
     echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
-    elseif (isset($_POST['notif']) == 'whitespace'):
+    elseif (($_GET['notif']) == 'whitespace'):
     echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
-    elseif (isset($_POST['notif']) == 'duplicate'):
+    elseif (($_GET['notif']) == 'duplicate'):
     echo "<div class='red-notif-border'>Telephone number should be unique. Unable to proceed!</div>";
-    elseif (isset($_POST['notif']) == 'success'):
+    elseif (($_GET['notif']) == 'success'):
      echo "<div class='green-notif-border'>School has been added!</div>";
-    elseif (isset($_POST['notif']) == 'error'):
+    elseif (($_GET['notif']) == 'error'):
     echo "<div class='red-notif-border'>Unable to proceed!</div>";
-    elseif (isset($_POST['notif']) == 'charNumber'):
+    elseif (($_GET['notif']) == 'charNumber'):
     echo "<div class='red-notif-border'>Lack of Characters!</div>";
     endif;
 endif;

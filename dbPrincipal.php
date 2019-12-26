@@ -272,7 +272,7 @@ include_once 'sampleheader.php'; ?>
         </div>
         <!-- End Table for Principal List  -->
     </div>
-
+<br/>
 
     <div class="row">
         <div class="col">
@@ -294,11 +294,46 @@ include_once 'sampleheader.php'; ?>
             <!-- end of card -->
         </div>
         <!-- Table for Principal List -->
+        <br/>
         <div class="col">
             <div class="card">
                 <div class="card-header font-weight-bold"><i class="fa fa-user-circle"></i> Master Teacher ESAT Level of Priority Summary</div>
                 <div class="card-body box">
                     <div id="levelofpriorityMT" style="width:max-width; height:300px;"></div>
+                </div>
+            </div>
+        </div>
+<br/>
+<br/>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <h6><i class="fa fa-users"></i> Teacher IPCRF Average</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body box">
+                    <div id="chartipcrf_ave" style="width: 1200px; height: 500px;"></div>
+                </div>
+            </div>
+        </div>
+<br/>
+<br/>
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <h6><i class="fa fa-users"></i>Master Teacher IPCRF Average</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body box">
+                    <div id="chartipcrf_ave2" style="width: 1200px; height: 500px;"></div>
                 </div>
             </div>
         </div>
@@ -711,6 +746,134 @@ showAllPersonnel();
 
 
 </script>
+
+
+<!-- IPCRF Chart Function -->
+
+<script type="text/javascript">
+      google.charts.load('current', {
+        'packages': ['corechart']
+      });
+      google.charts.setOnLoadCallback(chartIPCRFave);
+
+      function chartIPCRFave() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+          ['Obj_id','Current SYear','Last Year 2','Last Year 3','Average'],
+          <?php
+
+              $qry = $conn->query("SELECT a.obj_id, round(a.sy)as sy, round(a.sy2)as sy2 ,round(a.sy3)as sy3,round(avg(a.average))as average  FROM
+              (SELECT obj_id,AVG(average) average,
+               CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') - 2 then avg(average) else 0 end as sy3,
+               CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') - 1 then avg(average) else 0 end as sy2,
+               CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') then avg(average) else 0 end as sy
+                
+               FROM ipcrf_t WHERE  school_id = '" . $_SESSION['school_id'] . "'  GROUP BY obj_id) a
+                GROUP BY a.obj_id") or die($conn->error);
+              while ($cotQry2 = $qry->fetch_assoc()) :
+                echo "['" . $cotQry2['obj_id'] . "', 
+                " . $cotQry2['sy'] . ",  
+                " . $cotQry2['sy2'] . ",   
+                " . $cotQry2['sy3'] . ", 
+                " . $cotQry2['average'] . "],";
+              endwhile;
+              ?>
+        ]);
+
+        var options = {
+        title: 'IPCRF Rating',
+        vAxis: {
+            title: 'Rating'
+        },
+        hAxis: {
+            title: 'Objective and Rating'
+        },
+        explorer: {
+            axis: 'horizontal',
+            keepInBounds: true
+        },
+        seriesType: 'bars',
+        bar: {
+            groupWidth: 50
+        },
+        series: {
+            3: {
+            type: 'line'
+            }
+        }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <!-- End of IPCRF Chart Function -->
+
+    
+<!-- IPCRF Chart Function -->
+
+<script type="text/javascript">
+      google.charts.load('current', {
+        'packages': ['corechart']
+      });
+      google.charts.setOnLoadCallback(chartIPCRFave2);
+
+      function chartIPCRFave2() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+          ['Obj_id','Current SYear','Last Year 2','Last Year 3','Average'],
+          <?php
+
+              $qry = $conn->query("SELECT a.obj_id, round(a.sy)as sy, round(a.sy2)as sy2 ,round(a.sy3)as sy3,round(avg(a.average))as average  FROM
+              (SELECT obj_id,AVG(average) average,
+               CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') - 2 then avg(average) else 0 end as sy3,
+               CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') - 1 then avg(average) else 0 end as sy2,
+               CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') then avg(average) else 0 end as sy
+                
+               FROM ipcrf_mt WHERE  school_id = '" . $_SESSION['school_id'] . "'  GROUP BY obj_id) a
+                GROUP BY a.obj_id") or die($conn->error);
+              while ($cotQry2 = $qry->fetch_assoc()) :
+                echo "['" . $cotQry2['obj_id'] . "', 
+                " . $cotQry2['sy'] . ",  
+                " . $cotQry2['sy2'] . ",   
+                " . $cotQry2['sy3'] . ", 
+                " . $cotQry2['average'] . "],";
+              endwhile;
+              ?>
+        ]);
+
+        var options = {
+        title: 'IPCRF Rating',
+        vAxis: {
+            title: 'Rating'
+        },
+        hAxis: {
+            title: 'Objective and Rating'
+        },
+        explorer: {
+            axis: 'horizontal',
+            keepInBounds: true
+        },
+        seriesType: 'bars',
+        bar: {
+            groupWidth: 50
+        },
+        series: {
+            3: {
+            type: 'line'
+            }
+        }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave2'));
+        chart.draw(data, options);
+      }
+    </script>
+
+    <!-- End of IPCRF Chart Function -->
+
+
 
 <?php include_once 'samplefooter.php' ?>
 <script>

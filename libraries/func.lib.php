@@ -2751,7 +2751,7 @@
                 elseif (($final_score >= 2.500) or ($final_score  == 3.499)) : return "Satisfactory";
                 elseif (($final_score >= 1.500) or ($final_score == 2.499)) : return "Unsatisfactory";
                 elseif (($final_score <= 1.499)) : return "Poor";
-                else : return 'etiits';
+                else : return false;
                 endif;
             }
 
@@ -2855,5 +2855,29 @@
                     foreach ($results as $res) {
                         return $res['schoollevel_name'];
                     }
+                }
+            }
+
+             function getCOTobserver($conn,$user,$sy,$school_id,$obs_period){
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school_id AND `status` = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+             function getCOTobserverB($conn,$user,$sy,$school_id,$obs_period){
+                $qry = "SELECT * FROM `cot_t_rating_b_tbl` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school_id AND `status` = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
                 }
             }

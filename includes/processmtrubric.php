@@ -1,21 +1,36 @@
 <?php
 session_start();
-$rubric_lvl = $level_name = $rubric_description = "";
-$rubric_id = 0;
 
-$conn = new mysqli('localhost', 'root', '' ,'rpms') or die(mysqli_error($conn));
+include 'conn.inc.php';
+$conn = mysqli_connect("localhost","root","","rpms");
 
 if(isset($_POST['save'])){
     $rubric_lvl  = $_POST['rubric_lvl'];
     $level_name = $_POST['level_name'];
     $rubric_description = $_POST['rubric_description'];
 
+      $validate = $conn->query("SELECT * FROM mtrubric_tbl");
+        while($row = $validate->fetch_assoc()){
+            $exist_rubric_lvl = $row['rubric_lvl'];
+            $exist_levelname = $row['level_name'];
+            $exist_desc = $row['rubric_description'];
+       
+        if(($rubric_lvl == $exist_rubric_lvl) || ($level_name == $exist_levelname) || ($rubric_description == $exist_desc) ){
+            header("location:../displaymtrubric.php?notif=taken");
+            exit();
+        }elseif((ctype_space($rubric_lvl)) || (ctype_space($level_name)) || (ctype_space($rubric_description))){
+            header("location:../displaymtrubric.php?notif=whitespace");
+            exit();
+        }elseif((strlen($rubric_lvl)) < 0 || (strlen($level_name)) < 5 || (strlen($rubric_description)) < 10){
+            header("location:../displaymtrubric.php?notif=charNumber");
+            exit();
+        }else{
 
     $conn->query("INSERT INTO mtrubric_tbl(rubric_lvl,level_name,rubric_description) VALUES ('$rubric_lvl','$level_name','$rubric_description')") or die($conn->error);
-    $_SESSION['message'] = 'Rubric has been saved!';
-    $_SESSION['msg_type'] = 'success';
-    header('location:../displaymtRubric.php');
-    
+
+    header('location:../displaymtRubric.php?notif=success');
+     }
+}
 }
 
 if(isset($_GET['delete'])){

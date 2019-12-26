@@ -174,8 +174,8 @@ class Dashboard
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
-                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveAdminT.php">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveAdminMT.php">View Master Teacher IPCRF Rating</a>
                             </div>
                         </li>
     
@@ -379,8 +379,8 @@ class Dashboard
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
-                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveTprincipal.php">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveMTprincipal.php">View Master Teacher IPCRF Rating</a>
                             </div>
                         </li>
     
@@ -552,8 +552,8 @@ class Dashboard
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="ipcrf_t.php">View Teacher IPCRF Rating</a>
-                                <a class="dropdown-item" href="ipcrf_mt.php">View Master Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveMT.php">View Master Teacher IPCRF Rating</a>
                             </div>
                         </li>
 
@@ -645,7 +645,7 @@ s
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveT.php">View Teacher IPCRF Rating</a>
                                 <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
                             </div>
                         </li>
