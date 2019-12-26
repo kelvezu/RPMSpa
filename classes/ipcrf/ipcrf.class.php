@@ -286,9 +286,61 @@ class IPCRF
         endif;
     }
 
+    public function fetchIPCRFGenTP($conn,$sy_id,$school_id)
+    {
+        $qry = "SELECT * FROM ipcrf_t WHERE `sy_id` = $sy_id and school_id =$school_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public function fetchIPCRFGenMTP($conn,$sy_id,$school_id)
+    {
+        $qry = "SELECT * FROM ipcrf_mt WHERE `sy_id` = $sy_id and school_id =$school_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
     public function fetchIPCRFGenFinalT($conn,$sy_id)
     {
         $qry = "SELECT * FROM ipcrf_final_t WHERE `sy_id` = $sy_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public function fetchIPCRFGenFinalTP($conn,$sy_id,$school_id)
+    {
+        $qry = "SELECT * FROM ipcrf_final_t WHERE `sy_id` = $sy_id and school_id =$school_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        $result_arr = [];
+        if ($result) :
+            foreach ($result as $r) :
+                array_push($result_arr, $r);
+            endforeach;
+            return $result_arr;
+        endif;
+    }
+
+    public function fetchIPCRFGenFinalMTP($conn,$sy_id,$school_id)
+    {
+        $qry = "SELECT * FROM ipcrf_final_mt WHERE `sy_id` = $sy_id and school_id =$school_id";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
         $result_arr = [];
         if ($result) :
@@ -677,7 +729,31 @@ class IPCRF
         endif;
     }
 
+    public function displayPerfIndicatorGenTP($conn)
+    {
+        $qry  = "SELECT * FROM perftindicator_tbl";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
     public function displayPerfIndicatorGenMT($conn)
+    {
+        $qry  = "SELECT * FROM perfmtindicator_tbl";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if ($result) :
+            foreach ($result as $r) :
+                return $r['desc_name'];
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function displayPerfIndicatorGenMTP($conn)
     {
         $qry  = "SELECT * FROM perfmtindicator_tbl";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
