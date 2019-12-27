@@ -22,6 +22,7 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 $ipcrf_details = $ipcrf->fetchIPCRF('ipcrf_mt');
 $ipcrf_final_details = $ipcrf->fetchIPCRF('ipcrf_final_mt');
 // pre_r($ipcrf_final_details);
+
 if ($ipcrf_final_details) :
     $final_rating = $ipcrf_final_details[0]['final_rating'];
     $adj_rating = $ipcrf_final_details[0]['adjectival_rating'];
@@ -29,8 +30,6 @@ endif;
 
 $pdf = new Mpdf(['orientation' => 'L']);
 $pdf->WriteHTML('
-
-
 <style>
 
 .header_pdf{
@@ -57,13 +56,11 @@ $pdf->WriteHTML('
     }
     </style>
 
-    
-    
+
+
     ');
 
-$pdf->WriteHTML('
-         <h4 class="header_pdf">INDIVIDUAL PERFORMANCE COMMITMENT AND REVIEW FORM – Master Teacher I-IV (High-Proficient Teachers)</h4>
-');
+$pdf->WriteHTML('<h4 class="header_pdf">INDIVIDUAL PERFORMANCE COMMITMENT AND REVIEW FORM – Master Teacher I-IV (High-Proficient Teachers)</h4>');
 
 $pdf->WriteHTML('
 <table cellpadding="5">
@@ -85,18 +82,19 @@ $pdf->WriteHTML('
 </td>
 </tr>
 </table>');
+
 $pdf->WriteHTML('<table>
 <thead>
-<tr>      
+<tr>
     <th>
-        <p>KRA</p>
+        <p>Name: </p>
     </th>
 
     <th>
     <p>
         Weight per KRA
     </p>
-    </th>   
+    </th>
 
     <th>
         <p>Objectives</p>
@@ -107,7 +105,7 @@ $pdf->WriteHTML('<table>
             Weight per Objective
         </p>
     </th>
-    
+
     <th>
         <p>
             Quality
@@ -123,7 +121,7 @@ $pdf->WriteHTML('<table>
             Timeliness
         </p>
     </th>
- 
+
     <th>
         <p>
             Average
@@ -136,8 +134,6 @@ $pdf->WriteHTML('<table>
     </th>
         </tr>
     </thead>
-  
-
 <tbody>
 
 ');
@@ -187,7 +183,7 @@ foreach (kra_tbl($conn) as $details) :
 
 
     $pdf->writeHTML('
-    </td>   
+    </td>
     <td>');
 
     // OBJECTIVE EFFICIENCY
@@ -236,7 +232,7 @@ foreach (kra_tbl($conn) as $details) :
 
 
     $pdf->WriteHTML('
-    </td>    
+    </td>
 
 
     </tr>

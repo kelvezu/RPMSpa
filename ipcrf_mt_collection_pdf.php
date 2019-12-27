@@ -6,6 +6,7 @@ include 'libraries/func.lib.php';
 include 'classes/ipcrf/ipcrf.class.php';
 
 use Mpdf\Mpdf;
+
 use IPCRF\IPCRF;
 
 $user = $_SESSION['user_id'];
@@ -295,6 +296,6 @@ $pdf->WriteHTML('
 </table>
 ');
 
-$pdf->Output("" . $name . "_IPCRF.pdf", "I");
+$pdf->Output("" . $name . "_IPCRF.pdf", "D");
 
-    // header('location:print_ipcrfmt.php');
+header('location:print_ipcrfmt.php');

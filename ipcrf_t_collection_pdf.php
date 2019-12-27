@@ -295,6 +295,6 @@ $pdf->WriteHTML('
 </table>
 ');
 
-$pdf->Output('ipcrf_t.pdf', 'I');
+$pdf->Output("" . $name . "_IPCRF.pdf", "D");
 
-    // header('location:print_ipcrfmt.php');
+header('location:print_ipcrfmt.php');
