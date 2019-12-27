@@ -8,13 +8,19 @@ if(isset($_POST['updateIND'])){
     $cbc_ind_id = $_POST['cbc_ind_id'];
     $cbc_id = $_POST['cbc_id'];
     $indicator = $_POST['indicator'];
+
+    if(ctype_space($indicator)){
+            header("location:../displaycbc.php?notif=updatewhitespace");
+            exit();
+
+        }elseif(strlen($indicator) < 2){
+            header("location:../displaycbc.php?notif=updatecharNumber");
+            exit();
+        }else{
+
     mysqli_query($conn,"UPDATE cbc_indicators_tbl SET cbc_ind_id = '$cbc_ind_id', cbc_id = '$cbc_id', indicator = '$indicator' WHERE cbc_ind_id = '$cbc_ind_id' ");   
-    $_SESSION['message'] = 'Indicator has been updated!';
-    $_SESSION['msg_type'] = 'success';
-    header("location:../displaycbc.php");
+    header("location:../displaycbc.php?notif=updatesuccess");
 }
-else{
-    echo "failed to save";
 }
 
 //DELETE TOTAL YEAR
@@ -28,21 +34,31 @@ if(isset($_GET['delete'])){
 }
 
 //ADD CBC INDICATOR 
-if(isset($_POST['addcbc'])){
+
+if (isset($_POST['addcbc'])) {
+  
     $add_cbc = $_POST['add_cbc'];
     $addindicator = $_POST['addindicator'];
 
-    $query = "INSERT INTO cbc_indicators_tbl(cbc_id,indicator) VALUES('$add_cbc','$addindicator')";
-    $query_run = mysqli_query($conn,$query);
+        $validate = mysqli_query($conn,"SELECT * FROM cbc_indicators_tbl WHERE indicator = '$addindicator'") or die($conn->error);
+        $count_result = mysqli_num_rows($validate);
+        
+        if($count_result > 0){
+            header("location:../displaycbc.php?notif=taken");
+            exit();
+        }elseif(ctype_space($addindicator)){
+            header("location:../displaycbc.php?notif=whitespace");
+            exit();
 
-    if($query_run){
-        $_SESSION['message'] = "Indicator Successfully Inserted!";
-        $_SESSION['msg_type'] = "success";
-        header('location:../displaycbc.php');
-    }
-    else{
-        $_SESSION['message'] = "Indicator Insertion Failed";
-        $_SESSION['msg_type'] = "danger";
-        header('location:../displaycbc.php');
-    }
+        }elseif(strlen($addindicator) < 2){
+            header("location:../displaycbc.php?notif=charNumber");
+            exit();
+        }else{
+
+            
+        $query = "INSERT INTO cbc_indicators_tbl(cbc_id,indicator) VALUES('$add_cbc','$addindicator')";
+        $query_run = mysqli_query($conn,$query);
+            header('location:../displaycbc.php?notif=success');
+        }                 
+
 }

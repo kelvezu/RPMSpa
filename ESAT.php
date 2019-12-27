@@ -1,6 +1,28 @@
 <?php
 
 include 'sampleheader.php';
+
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
+
+
 ?>
 <b />
 
@@ -54,25 +76,6 @@ $(document).ready(function() {
             }
         });
      });
-
-$(document).ready(function() {
-        $('#levelname').on('change', function() {
-            var levelname = $(this).val(); 
-            if (levelname) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'validaterubric.php',
-                    data: 'levelname=' + levelname,
-                    success: function(html) {
-                         $('#errorNo2').html(html);
-                    }
-                });
-            } else {
-              
-            }
-        });
-     });
-
 </script>
 <!-- End of  Subject Modal -->
 
@@ -91,6 +94,7 @@ $(document).ready(function() {
                     <div class="form-group row">
                         <div class="col-md">
                             <input type="text" class="form-control" name="age" id="age" placeholder="Ex. 15-30 years" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters">
+                            <div id="errorNo1"></div>
                         </div>
                     </div>
                     <div>
@@ -102,7 +106,29 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#age').on('change', function() {
+            var age = $(this).val(); 
+            if (age) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateesat.php',
+                    data: 'age=' + age,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 <!-- End of Age Modal -->
+
 <!-- Gender modal -->
 <div class="modal fade" id="gender-modal" tabindex="-1" role="dialog" aria-labelledby="addGenderModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -129,6 +155,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
 <!-- End of Gender Modal -->
 <!-- Position modal -->
 <div class="modal fade" id="position-modal" tabindex="-1" role="dialog" aria-labelledby="addAgeModal" aria-hidden="true">
@@ -146,7 +173,8 @@ $(document).ready(function() {
                     <div class="form-group row">
 
                         <div class="col-sm">
-                            <input type="text" class="form-control" name="position" id="age" placeholder="Ex.Master Teacher I" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <input type="text" class="form-control" name="position" id="position" placeholder="Ex.Master Teacher I" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <div id="errorNo2"></div>
                         </div>
                     </div>
 
@@ -161,6 +189,27 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#position').on('change', function() {
+            var position = $(this).val(); 
+            if (position) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateesat.php',
+                    data: 'position=' + position,
+                    success: function(html) {
+                         $('#errorNo2').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 <!-- End of Position Modal-->
 <!-- Total Number of Years modal -->
 <div class="modal fade" id="totalyears-modal" tabindex="-1" role="dialog" aria-labelledby="totalyearsmodal" aria-hidden="true">
@@ -178,7 +227,8 @@ $(document).ready(function() {
                     <div class="form-group row">
 
                         <div class="col-sm">
-                            <input type="text" class="form-control" name="totalyears" id="age" placeholder="Ex.0-3 Years" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters">
+                            <input type="text" class="form-control" name="totalyears" id="totalyears" placeholder="Ex.0-3 Years" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include special characters">
+                            <div id="errorNo3"></div>
                         </div>
                     </div>
 
@@ -193,6 +243,27 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#totalyears').on('change', function() {
+            var totalyears = $(this).val(); 
+            if (totalyears) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateesat.php',
+                    data: 'totalyears=' + totalyears,
+                    success: function(html) {
+                         $('#errorNo3').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 <!-- End of Total Number of Years Modal-->
 
 <!-- Grade Level Taught modal -->
@@ -210,6 +281,7 @@ $(document).ready(function() {
                     <div class="form-group row">
                         <div class="col-md">
                             <input type="text" class="form-control" name="glt" id="glt" placeholder="Ex. Kindergarten" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <div id="errorNo4"></div>
                         </div>
                     </div>
                     <div>
@@ -221,6 +293,27 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#glt').on('change', function() {
+            var glt = $(this).val(); 
+            if (glt) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateesat.php',
+                    data: 'glt=' + glt,
+                    success: function(html) {
+                         $('#errorNo4').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 <!-- End of GradeLevelTaught Modal -->
 <!-- Curricular class modal -->
 <div class="modal fade" id="curriclass-modal" tabindex="-1" role="dialog" aria-labelledby="addCurriClassModal" aria-hidden="true">
@@ -236,7 +329,24 @@ $(document).ready(function() {
                 <form action="includes/processESAT.php" method="POST">
                     <div class="form-group row">
                         <div class="col-md">
+                            <select name="school_level" id="schoollevel" required class="form-control">
+                                <option value="" disabled selected>Select School Level</option>
+                                <?php 
+                                    $sglQry = $conn->query("SELECT * FROM school_grade_level_tbl");
+                                        while($sgl = $sglQry->fetch_assoc()):
+                                            $schoollvl_id = $sgl['schoollevel_id'];
+                                            $school_level = $sgl['schoollevel_name'];
+                                ?>
+                                <option value="<?php echo $schoollvl_id; ?>"><?php echo $school_level; ?></option>
+                                        <?php endwhile;?>
+                            </select> 
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md">
                             <input type="text" class="form-control" name="curri" id="curri" placeholder="ex. Kinder and Grade 1-6" required pattern="[0-9A-Za-z -]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                            <div id="errorNo5"></div>  
                         </div>
                     </div>
                     <div>
@@ -248,6 +358,28 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#curri').on('change', function() {
+            var curri = $(this).val(); 
+            if (curri) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateesat.php',
+                    data: 'curri=' + curri,
+                    success: function(html) {
+                         $('#errorNo5').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
+
 <!-- End of Curricular Modal -->
 <!-- Region class modal -->
 <div class="modal fade" id="region-modal" tabindex="-1" role="dialog" aria-labelledby="addRegionModal" aria-hidden="true">
@@ -264,6 +396,7 @@ $(document).ready(function() {
                     <div class="form-group row">
                         <div class="col-md">
                             <input type="text" class="form-control" name="region" id="region" placeholder="ex. Manila" required pattern="[A-Za-z -.]{3,}" title="Input three or more characters and input should not include special characters">
+                            <div id="errorNo6"></div>  
                         </div>
                     </div>
                     <div>
@@ -275,6 +408,27 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#region').on('change', function() {
+            var region = $(this).val(); 
+            if (region) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateesat.php',
+                    data: 'region=' + region,
+                    success: function(html) {
+                         $('#errorNo6').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 <!-- End of Region Modal -->
 <!-- Division class modal -->
 <div class="modal fade" id="division-modal" tabindex="-1" role="dialog" aria-labelledby="addDivisionModal" aria-hidden="true">
@@ -291,7 +445,7 @@ $(document).ready(function() {
                     <div class="form-group row">
                         <div class="col-md">
                             <label for="sel-reg" class=" col-form-label"><strong>Select Region</strong></label>
-                            <select name="regionname" class="form-control">
+                            <select name="regionname" class="form-control" required>
                                 <option>Select Region</option>
                                 <?php
                                 $connection = mysqli_connect("localhost", "root", "");
@@ -311,6 +465,7 @@ $(document).ready(function() {
                     <div class="form-group row">
                         <div class="col-md">
                             <input type="text" class="form-control" name="division" id="division" placeholder="ex. Makati" required pattern="[A-Za-z -.]{3,}" title="Input three or more characters and input should not include numbers and special characters">
+                             <div id="errorNo7"></div>  
                         </div>
                     </div>
                     <div>
@@ -512,7 +667,7 @@ $(document).ready(function() {
                 <div class="d-flex justify-content-between">
                     <div class="p-2"></div>
                     <div class="p-2">
-                        <h4 class="text-dark">Gender Option</h4>
+                        <h4 class="text-dark">Sex Option</h4>
                     </div>
                     <div class="p-2"></div>
                 </div>
@@ -557,7 +712,7 @@ $(document).ready(function() {
                     }
                     ?>
                 </table>
-                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#gender-modal">Add Gender Option</button>
+            
             </div><!-- End of col-md-6 -->
 
 

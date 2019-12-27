@@ -19,9 +19,6 @@ if (isset($_GET['edit'])) {
 
 ?>
 
-
-
-<main>
     <div class="container">
         <div class="breadcome-list map-mg-t-40-gl shadow-reset">
             <form action="../includes/processcbc.php" class="form-group sm" method="POST">
@@ -39,7 +36,7 @@ if (isset($_GET['edit'])) {
                         while ($rows = $cbcresult->fetch_assoc()) :
                             $cbc_name = $rows['cbc_name'];
                             ?>
-                            <select class="form-control" name="cbc_id" id="new-cbc_id">
+                            <select class="form-control" name="cbc_id" id="new-cbc_id" required>
                                 <option value="<?php echo $cbc_id; ?>" selected><?php echo $cbc_name; ?></option>
                                 <?php
                                     //SET THE QUERY TO DISPLAY ALL POSSIBLE OPTIONS FOR CORE BEHAVIORAL COMPETENCIES 
@@ -65,7 +62,7 @@ if (isset($_GET['edit'])) {
                 </div>
                 <div>
                     <label for="indicator" class="control-label "><strong>Indicator</strong></label>
-                    <input type="text" name="indicator" id="new-indicator" cols="30" rows="5" class="form-control" required pattern="[0-9A-Za-z -.]{3,}" title="Input three or more characters and input should not include special characters" value="<?php echo $indicator; ?>">
+                    <input type="text" name="indicator" id="indicator" cols="30" rows="5" class="form-control" required pattern="[0-9A-Za-z -.]{3,}" title="Input three or more characters and input should not include special characters" value="<?php echo $indicator; ?>">
                 </div>
                 <div class="row m-1">
                     <button type="submit" class="btn btn-secondary  my-4" name="updateIND">Update</button>&nbsp
@@ -79,8 +76,26 @@ if (isset($_GET['edit'])) {
     </div>
     <br>
 
+<script>
 
-</main>
+$(document).ready(function() {
+        $('#indicator').on('change', function() {
+            var indicator = $(this).val(); 
+            if (indicator) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatecbc.php',
+                    data: 'indicator=' + indicator,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 
 <?php
 

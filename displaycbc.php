@@ -8,6 +8,26 @@ include 'sampleheader.php';
 $result = $conn->query('SELECT * FROM core_behavioral_tbl')  or die($conn->error);
 $numcbc = 1;
 $numind = 1;
+
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 ?>
 
 <!-- Add CBC indicator  modal -->
@@ -26,7 +46,8 @@ $numind = 1;
                         <div class="col-md  ">
                             <label for="add-cbc" class=" col-form-label">Select Core Behavioral Competencies</label>
 
-                            <select name="add_cbc" id="" class="form-control">
+                            <select name="add_cbc" id="" class="form-control" required>
+                                <option value="" disabled selected>--Select--</option>
                                 <?php
                                 $addresult = $conn->query('SELECT * FROM core_behavioral_tbl')  or die($conn->error);
                                 while ($addrow = $addresult->fetch_assoc()) :
@@ -45,8 +66,8 @@ $numind = 1;
                     </div>
                     <div class="col-lg">
                         <label for="" class="col-form-label">Enter the indicator</label>
-                        <input type="text" name="addindicator" class="form-control" required pattern="[0-9A-Za-z -.]{3,}" title="Input three or more characters and input should not include special characters">
-                        </select>
+                        <input type="text" name="addindicator" id="indicator" class="form-control" required pattern="[0-9A-Za-z -.]{3,}" title="Input three or more characters and input should not include special characters">
+                        <div id="errorNo"></div>
                     </div>
 
                     <div class="m-2">
@@ -58,6 +79,28 @@ $numind = 1;
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#indicator').on('change', function() {
+            var indicator = $(this).val(); 
+            if (indicator) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatecbc.php',
+                    data: 'indicator=' + indicator,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
+
 <!-- End of  Add Modal -->
 
 
