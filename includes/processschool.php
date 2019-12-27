@@ -66,23 +66,27 @@ if (isset($_POST['update'])) {
     $school_id = $_POST['school_id'];
     $school_name = $_POST['school_name'];
     $school_grade_lvl = $_POST['sgl'];
-     $school_curriclass =  $_POST['school_curri'];
+    $school_curriclass =  $_POST['school_curri'];
     $school_no = $_POST['school_no'];
     $tel_no = $_POST['tel_no'];
+    $tel_no2 = $_POST['tel_no2'];
     $reg_id = $_POST['region'];
     $div_id = $_POST['division'];
     $muni_id = $_POST['municipality'];
 
+    if(ctype_space($school_no) || ctype_space($school_name) || ctype_space($tel_no) || ctype_space($tel_no2)){
+        header("location:../school.php?notif=updatewhitespace");
+        exit();
+    }elseif($tel_no == $tel_no2){
+        header("location:../school.php?notif=updateduplicate");
+        exit();
+    }elseif((strlen($school_no)) < 8 || (strlen($school_name)) < 8) {
+        header("location:../school.php?notif=updatecharNumber");
+        exit();
+    }else{
+
     $query = "UPDATE school_tbl SET school_id='$school_id', school_name='$school_name', school_grade_lvl='$school_grade_lvl', school_curriclass = '$school_curriclass' ,school_no='$school_no', tel_no='$tel_no', reg_id='$reg_id', div_id='$div_id', muni_id='$muni_id' WHERE school_id='$school_id'";
     $query_run = mysqli_query($conn, $query) or die($conn->error);
-
-    if ($query_run) {
-        $_SESSION['message'] = "School Successfully Updated!";
-        $_SESSION['msg_type'] = "success";
-        header('location:../school.php');
-    } else {
-        $_SESSION['message'] = "School Update Failed";
-        $_SESSION['msg_type'] = "danger";
-        header('location:../school.php');
+        header('location:../school.php?notif=updatesuccess');
     }
 }

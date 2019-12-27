@@ -1,6 +1,26 @@
 <?php
 
 include 'sampleheader.php';
+
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 ?>
 
 <div class="modal fade" id="perfmtindicator-modal" tabindex="-1" role="dialog" aria-labelledby="perfmtindicatorModal" aria-hidden="true">
@@ -17,7 +37,7 @@ include 'sampleheader.php';
                     <div class="row">
                         <div class="col-lg">
                             <label for="sel-kra" class="col-form-label"><strong>Select Key Result Areas</strong></label>
-                            <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control">
+                            <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control" required>
                                 <option>Select KRA</option>
                                 <?php
                                 $query = mysqli_query($conn, "SELECT * from kra_tbl");
@@ -33,7 +53,7 @@ include 'sampleheader.php';
                         <div class="col-lg">
                             <label for="sel-mov" class=" col-form-label"><strong>Select Objective</strong></label>
                             <div id="objective">
-                                <select class="form-control">
+                                <select class="form-control" required>
                                     <option>Select Objective</option>
                                 </select>
                             </div>
@@ -42,7 +62,7 @@ include 'sampleheader.php';
                     <div class="row">
                         <div class="col-lg">
                             <label for="indicator-no" class="control-label"><strong>QET</strong></label>
-                            <select name="qet" class="form-control">
+                            <select name="qet" class="form-control" required>
                                 <option value="">--Select--</option>
                                 <option value="Quality">Quality</option>
                                 <option value="Efficiency">Efficiency</option>
@@ -59,13 +79,15 @@ include 'sampleheader.php';
                     <div class="row">
                         <div class="col-lg">
                             <label for="indicator-name" class="control-label w-25 "><strong>Indicator Name</strong></label>
-                            <textarea name="indicator_name" id="indicator-name" cols="5" rows="5" class="form-control" placeholder="Enter the indicator name..." required></textarea>
+                            <textarea name="indicator_name" id="mtindicator_name" cols="5" rows="5" class="form-control" placeholder="Enter the indicator name..." required></textarea>
+                            <div id="errorNo1"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg">
                             <label for="desc" class="control-label w-25 "><strong>Indicator Description</strong></label>
-                            <textarea name="desc_name" id="desc" cols="5" rows="5" class="form-control" placeholder="Enter the indicator description..." required></textarea>
+                            <textarea name="desc_name" id="mtdesc" cols="5" rows="5" class="form-control" placeholder="Enter the indicator description..." required></textarea>
+                            <div id="errorNo2"></div>
                         </div>
                     </div>
                     <div class="m-2">
@@ -78,6 +100,46 @@ include 'sampleheader.php';
     </div>
 </div>
 
+<script>
+
+
+$(document).ready(function() {
+        $('#mtindicator_name').on('change', function() {
+            var mtindicator_name = $(this).val(); 
+            if (mtindicator_name) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateperfindicator.php',
+                    data: 'mtindicator_name=' + mtindicator_name,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#mtdesc').on('change', function() {
+            var mtdesc = $(this).val(); 
+            if (mtdesc) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateperfindicator.php',
+                    data: 'mtdesc=' + mtdesc,
+                    success: function(html) {
+                         $('#errorNo2').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+</script>
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">
         <?php
@@ -87,7 +149,7 @@ include 'sampleheader.php';
     </div>
 <?php endif ?>
 
-<div class="container-fluid">
+<div class="container">
     <div class="right">
         <button class="btn btn-sm btn-success m-1 " data-toggle="modal" data-target="#perfmtindicator-modal">Add Indicator </button>
 

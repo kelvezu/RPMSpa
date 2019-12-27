@@ -12,11 +12,23 @@ if(isset($_POST['save'])){
     $indicator_name  = $_POST['indicator_name'];
     $desc_name = $_POST['desc_name'];
     
-    $conn->query("INSERT INTO perftindicator_tbl(kra_id,tobj_id,qet,level_no,indicator_name,desc_name) VALUES ('$kra_id','$tobj_id','$qet','$level_no','$indicator_name','$desc_name')") or die($conn->error);
-    $_SESSION['message'] = 'Indicator has been saved!';
-    $_SESSION['msg_type'] = 'success';
-    header("location:../displayperftindicator.php");
-     
+    $validate = mysqli_query($conn,"SELECT * FROM perftindicator_tbl WHERE level_no = '$level_no' AND indicator_name = '$indicator_name' AND desc_name = '$desc_name'") or die($conn->error);
+    $count_result = mysqli_num_rows($validate);
+
+    if($count_result > 0){
+        header("location:../displayperftindicator.php?notif=taken");
+        exit();
+    }elseif((ctype_space($indicator_name)) || (ctype_space($desc_name))){
+        header("location:../displayperftindicator.php?notif=whitespace");
+        exit();
+    }elseif((strlen($indicator_name)) < 5 || (strlen($desc_name)) < 5){
+        header("location:../displayperftindicator.php?notif=charNumber");
+        exit();
+    }else{
+
+    mysqli_query($conn,"INSERT INTO perftindicator_tbl(kra_id,tobj_id,qet,level_no,indicator_name,desc_name) VALUES ('$kra_id','$tobj_id','$qet','$level_no','$indicator_name','$desc_name')") or die($conn->error);
+    header("location:../displayperftindicator.php?notif=success");
+    }
 }
 
 if(isset($_GET['delete'])){
@@ -38,11 +50,16 @@ if(isset($_POST['update'])){
     $indicator_name  = $_POST['indicator_name'];
     $desc_name = $_POST['desc_name'];
 
+    if((ctype_space($indicator_name)) || (ctype_space($desc_name))){
+            header("location:../displayperftindicator.php?notif=updatewhitespace");
+            exit();
+    }elseif((strlen($indicator_name)) < 5 || (strlen($desc_name)) < 5){
+            header("location:../displayperftindicator.php?notif=updatecharNumber");
+            exit();
+    }else{
+
     $qrySJ = mysqli_query($conn,"UPDATE perftindicator_tbl SET perftindicator_id='$perftindicator_id',kra_id='$kra_id',tobj_id='$tobj_id', qet='$qet', level_no='$level_no', indicator_name='$indicator_name', desc_name='$desc_name' WHERE perftindicator_id='$perftindicator_id' ");
-    if($qrySJ){
-        $_SESSION['message'] = 'Indicator has been updated!';
-        $_SESSION['msg_type'] = 'success';
-        header("location:../displayperftindicator.php");
+        header("location:../displayperftindicator.php?notif=updatesuccess");
     }   
     
 }

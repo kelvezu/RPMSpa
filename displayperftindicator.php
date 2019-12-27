@@ -1,6 +1,26 @@
 <?php
 
 include 'sampleheader.php';
+
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 ?>
 
 <div class="modal fade" id="perftindicator-modal" tabindex="-1" role="dialog" aria-labelledby="perftindicatorModal" aria-hidden="true">
@@ -17,7 +37,7 @@ include 'sampleheader.php';
                     <div class="row">
                         <div class="col-lg">
                             <label for="sel-kra" class="col-form-label"><strong>Select Key Result Areas</strong></label>
-                            <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control">
+                            <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control" required>
                                 <option>Select KRA</option>
                                 <?php
                                 $query = mysqli_query($conn, "SELECT * from kra_tbl");
@@ -36,7 +56,7 @@ include 'sampleheader.php';
                         <div class="col-lg">
                             <label for="sel-mov" class=" col-form-label"><strong>Select Objective</strong></label>
                             <div id="objective">
-                                <select class="form-control">
+                                <select class="form-control" required>
                                     <option>Select Objective</option>
                                 </select>
                             </div>
@@ -45,8 +65,8 @@ include 'sampleheader.php';
                     <div class="row">
                         <div class="col-lg">
                             <label for="indicator-no" class="control-label"><strong>QET</strong></label>
-                            <select name="qet" class="form-control">
-                                <option value="">--Select--</option>
+                            <select name="qet" class="form-control" required>
+                                <option value="" disabled selected>--Select--</option>
                                 <option value="Quality">Quality</option>
                                 <option value="Efficiency">Efficiency</option>
                                 <option value="Timeliness">Timeliness</option>
@@ -56,19 +76,22 @@ include 'sampleheader.php';
                     <div class="row">
                         <div class="col-lg">
                             <label for="lvl-no" class="control-label w-25 "><strong>Level No</strong></label>
-                            <input type="number" name="level_no" class="form-control" required pattern="[0-9]" title="Input number only">
+                            <input type="number" name="level_no" id="level_no" class="form-control" required pattern="[0-9]" title="Input number only">
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg">
                             <label for="indicator-name" class="control-label w-25 "><strong>Indicator Name</strong></label>
-                            <textarea name="indicator_name" id="indicator-name" cols="5" rows="5" class="form-control" placeholder="Enter the indicator name..." required></textarea>
+                            <textarea name="indicator_name" id="indicator_name" cols="5" rows="5" class="form-control" placeholder="Enter the indicator name..." required></textarea>
+                            <div id="errorNo1"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg">
                             <label for="desc" class="control-label w-25 "><strong>Indicator Description</strong></label>
                             <textarea name="desc_name" id="desc" cols="5" rows="5" class="form-control" placeholder="Enter the indicator description..." required></textarea>
+                            <div id="errorNo2"></div>
                         </div>
                     </div>
                     <div class="m-2">
@@ -80,6 +103,47 @@ include 'sampleheader.php';
         </div>
     </div>
 </div>
+
+<script>
+
+
+$(document).ready(function() {
+        $('#indicator_name').on('change', function() {
+            var indicator_name = $(this).val(); 
+            if (indicator_name) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateperfindicator.php',
+                    data: 'indicator_name=' + indicator_name,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#desc').on('change', function() {
+            var desc = $(this).val(); 
+            if (desc) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateperfindicator.php',
+                    data: 'desc=' + desc,
+                    success: function(html) {
+                         $('#errorNo2').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+</script>
 
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">

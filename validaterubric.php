@@ -83,7 +83,7 @@ if(isset($_POST['levelnameMT'])):
     elseif(ctype_space($levelnameMT)):
         echo "<div class='tomato-color'>Whitespace are not allowed.</div>";
     elseif((strlen($levelnameMT)) < 5):
-        echo "<div class='tomato-color'>Rubric Name should contain 10 digits above.</div>";
+        echo "<div class='tomato-color'>Rubric Name should contain 10 characters above.</div>";
     else:
         echo "<div class='apple-color'>Valid</div>";
     endif;
@@ -100,7 +100,7 @@ if(isset($_POST['descMT'])):
     elseif(ctype_space($descMT)):
         echo "<div class='tomato-color'>Whitespace are not allowed.</div>";
     elseif((strlen($descMT)) < 10):
-        echo "<div class='tomato-color'>Rubric Description should contain 10 digits above.</div>";
+        echo "<div class='tomato-color'>Rubric Description should contain 10 characters above.</div>";
     else:
         echo "<div class='apple-color'>Valid</div>";
     endif;

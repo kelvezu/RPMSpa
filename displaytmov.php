@@ -2,6 +2,25 @@
 
     include 'sampleheader.php';
 
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 
     ?>
 
@@ -21,8 +40,8 @@
                      
                             <div class="col">
                                 <label for="sel-kra" class="col-form-label"><strong>Select Key Result Areas</strong></label>
-                                <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control">
-                                    <option>Select KRA</option>
+                                <select name="kra_name" id="kradd" onChange="change_kra()" class="form-control" required>
+                                    <option value="" disabled selected>Select KRA</option>
                                     <?php
                                     $query = mysqli_query($conn, "SELECT * from kra_tbl");
                                     while ($row = mysqli_fetch_array($query)) {
@@ -39,18 +58,20 @@
                             <div class="col">
                                 <label for="sel-mov" class=" col-form-label"><strong>Select Objective</strong></label>
                                 <div id="objective">
-                                    <select class="form-control">
+                                    <select class="form-control" required>
                                         <option>Select Objective</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col">
                                 <label for="main-mov" class="col-form-label"><strong>Main MOV</strong></label>
-                                <input type="text" name="main_mov" id="main-mov" class="form-control" placeholder="Enter the main mov..." required>
+                                <input type="text" name="main_mov" id="main_mov" class="form-control" placeholder="Enter the main mov..." required>
+                                <div id="errorNo"></div>
                             </div>
                             <div class="col">
                                 <label for="supp-mov" class="col-form-label"><strong>Supporting MOV</strong></label>
-                                <input type="text" name="supp_mov" id="supp-mov" class="form-control" placeholder="Enter the supporting mov..." required>
+                                <input type="text" name="supp_mov" id="supp_mov" class="form-control" placeholder="Enter the supporting mov..." required>
+                                <div id="errorNo1"></div>
                             </div>
                             <div class="m-2">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -65,6 +86,43 @@
 
     </div>
 
+    <script>
+    $(document).ready(function() {
+        $('#main_mov').on('change', function() {
+            var main_mov = $(this).val(); 
+            if (main_mov) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatemov.php',
+                    data: 'main_mov=' + main_mov,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+         $(document).ready(function() {
+        $('#supp_mov').on('change', function() {
+            var supp_mov = $(this).val(); 
+            if (supp_mov) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatemov.php',
+                    data: 'supp_mov=' + supp_mov,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 
 
     <?php if (isset($_SESSION['message'])) : ?>

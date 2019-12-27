@@ -6,6 +6,26 @@ $kra_num = 0;
 $mtobj_num = 1;
 //QUERY FOR KRA TABLE  
 $result = $conn->query('SELECT * FROM kra_tbl ')  or die($conn->error);
+
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 ?>
 
 <!-- Add Objective  modal -->
@@ -24,8 +44,8 @@ $result = $conn->query('SELECT * FROM kra_tbl ')  or die($conn->error);
                     <div class="form-group row">
                         <div class="col-lg">
                             <label for="" class="col-form-label">Enter the KRA</label>
-                            <input type="text" name="addkra_name" class="form-control" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include special characters">
-                            </select>
+                            <input type="text" name="addkra_name" id="mtkra" class="form-control" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include special characters">
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div class="m-2">
@@ -37,6 +57,29 @@ $result = $conn->query('SELECT * FROM kra_tbl ')  or die($conn->error);
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#mtkra').on('change', function() {
+            var mtkra = $(this).val(); 
+            if (mtkra) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatekramov.php',
+                    data: 'mtkra=' + mtkra,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
+
+
 <div class="modal fade" id="objective-modal" tabindex="-1" role="dialog" aria-labelledby="addObjectModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,7 +96,8 @@ $result = $conn->query('SELECT * FROM kra_tbl ')  or die($conn->error);
                         <div class="col-md  ">
                             <label for="add-cbc" class=" col-form-label">Select Key Result Areas</label>
 
-                            <select name="select_kra" id="" class="form-control">
+                            <select name="select_kra" id="" class="form-control" required>
+                                <option value="" disabled selected>Select</option>
                                 <?php
                                 $addresult = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                                 while ($addrow = $addresult->fetch_assoc()) :
@@ -72,8 +116,8 @@ $result = $conn->query('SELECT * FROM kra_tbl ')  or die($conn->error);
                     </div>
                     <div class="col-lg">
                         <label for="" class="col-form-label">Enter the Objective</label>
-                        <input type="text" name="addobjname" class="form-control" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include special characters">
-                        </select>
+                        <input type="text" name="addobjname" id="mtobj_name" class="form-control" required pattern="[A-Za-z ]{3,}" title="Input three or more characters and input should not include special characters">
+                        <div id="errorNo1"></div>
                     </div>
 
                     <div class="m-2">
@@ -85,6 +129,26 @@ $result = $conn->query('SELECT * FROM kra_tbl ')  or die($conn->error);
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#mtobj_name').on('change', function() {
+            var mtobj_name = $(this).val(); 
+            if (mtobj_name) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatekramov.php',
+                    data: 'mtobj_name=' + mtobj_name,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 <!-- End of OBJECTIVE Add Modal -->
 
 <?php if (isset($_SESSION['message'])) : ?>

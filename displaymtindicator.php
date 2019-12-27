@@ -2,6 +2,25 @@
 
 include 'sampleheader.php';
 
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 
 ?>
 
@@ -24,13 +43,14 @@ include 'sampleheader.php';
                         <div class="col-lg">
                             <label for="mtindicator-no" class="control-label"><strong>Indicator Number</strong></label>
                             <input type="number" name="mtindicator_no" id="mtindicator_no" class="form-control" width="500" placeholder="Enter the Indicator Number..." required pattern="[0-9]" title="Input number only">
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg">
                             <label for="mtindicator_name" class="control-label w-25 "><strong>Indicator Name</strong></label>
-                            <textarea name="mtindicator_name" id="mtindicator-name" class="form-control" placeholder="Enter the indicator name..." required></textarea>
-
+                            <textarea name="mtindicator_name" id="mtindicator_name" class="form-control" placeholder="Enter the indicator name..." required></textarea>
+                            <div id="errorNo1"></div>
                         </div>
                     </div>
                     <div class="row">
@@ -52,6 +72,46 @@ include 'sampleheader.php';
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#mtindicator_no').on('change', function() {
+            var mtindicator_no = $(this).val(); 
+            if (mtindicator_no) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateindicator.php',
+                    data: 'mtindicator_no=' + mtindicator_no,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#mtindicator_name').on('change', function() {
+            var mtindicator_name = $(this).val(); 
+            if (mtindicator_name) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateindicator.php',
+                    data: 'mtindicator_name=' + mtindicator_name,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+</script>
 
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">
