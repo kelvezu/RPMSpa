@@ -2902,3 +2902,18 @@
             {
                 echo "<script> $(document).ready(function() { $('#$modal_id').modal();});</script>";
             }
+
+            function checkDPstr($table_name, $conn, $user, $sy, $school, $position)
+            {
+                /*
+        THIS function WILL FETCH THE DevNeed IN ESAT BEHAVIORAL
+        TABLES: devplanmt_a1_strength_tbl, devplant_a1_strength_tbl 
+    */
+                $qry1 = "SELECT * FROM `$table_name` WHERE `user_id` = " . $user . " AND `sy` = " . $sy . " AND `school` = " . $school . " and `position` = '" . $position . "'";
+                $result = mysqli_query($conn, $qry1) or die($conn->error);
+
+                $count_result = mysqli_num_rows($result);
+                if (($count_result) > 0) : return true;
+                else : return false;
+                endif;
+            }
