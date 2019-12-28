@@ -607,9 +607,9 @@ class DevPlan
     THIS TABLE WILL FETCH THE DevNeed IN ESAT BEHAVIORAL
     TABLES: devplanmt_a1_strength_tbl, devplant_a1_strength_tbl 
     */
-    public function checkOBJstr($table_name)
+    public function checkOBJ_dp($table_name)
     {
-        $qry1 = "SELECT * FROM `$table_name` WHERE `user_id` = " . $this->user . " AND `sy` = " . $this->sy . " AND `school` = " . $this->school . " and `position` = " . $this->position . "";
+        $qry1 = "SELECT * FROM `$table_name` WHERE `user_id` = " . $this->user . " AND `sy` = " . $this->sy . " AND `school` = " . $this->school . " and `position` = '" . $this->position . "'";
         $result = mysqli_query($this->conn(), $qry1) or die($this->conn()->error);
 
         $count_result = mysqli_num_rows($result);

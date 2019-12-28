@@ -20,6 +20,24 @@ $devneed_behavioral = $devplan->fetchCoreBehavioralDevNeed($core_behavioral_tabl
 // pre_r($strength_objective);
 ?>
 
+<?php
+if (isset($_GET['notif'])) :
+    $notif = $_GET['notif'];
+
+    if ($notif == 'recordexist') :
+        echo '<p class="green-notif-border">You have already submitted your Development Plan</p>';
+        include 'samplefooter.php';
+        exit();
+
+    elseif ($notif == 'success') :
+        echo '<p class="green-notif-border">Development Plan has been created!</p>';
+        include 'samplefooter.php';
+        exit();
+    endif;
+endif;
+
+?>
+
 <?php if (isset($_POST['create_dp_mt'])) :
 ?>
     <?php showModal('myModal') ?>
@@ -41,7 +59,6 @@ $devneed_behavioral = $devplan->fetchCoreBehavioralDevNeed($core_behavioral_tabl
                 $b_intervention = $_POST['b_intervention'];
                 $b_timeline = $_POST['b_timeline'];
                 $b_resource_needed = $_POST['b_resources_needed'];
-                pre_r($_POST);
                 if (!$obj_str) :
                     $error_array[] = "Please choose your Strength in objective!";
                 endif;
@@ -250,7 +267,7 @@ $devneed_behavioral = $devplan->fetchCoreBehavioralDevNeed($core_behavioral_tabl
             </div>
             <div class="p-2">
                 <p>
-                    <b>Direction:</b> <i>the generated suggestions are based on your E-SAT survey.</i>
+                    <b>Note:</b> <i>the generated data suggestions are based on your E-SAT survey.</i>
                 </p>
             </div>
 
