@@ -34,7 +34,7 @@ Teacher Progress View
                             ?>
                             <tbody>
                                 <tr>
-                                    <td width="20%" class="text-white"><?php echo $teachername; ?></td>
+                                    <td width="20%"><?php echo $teachername; ?></td>
                                     <td width="20%"><?php echo $teacher['position']; ?></td>
                                     <td width="20%"><?= ((RPMSdb::isEsatCompleteBool($conn, $teacher['position'], $teacher['user_id']))) ?
                                         '<a href="redisplaytchart.php?user_id='.$teacher["user_id"].'"><i class="fa fa-check-circle text-success"></i></a>' : '<i class="fa fa-times-circle text-danger"></i>'; ?></td>
