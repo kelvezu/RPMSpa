@@ -476,8 +476,8 @@ class Dashboard
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="">View Teacher IPCRF Rating</a>
-                                <a class="dropdown-item" href="">View Master Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveTschoolheads.php">View Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrfAveMTschoolheads.php">View Master Teacher IPCRF Rating</a>
                             </div>
                         </li>
             

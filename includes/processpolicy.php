@@ -24,7 +24,7 @@ if(isset($_POST['save'])){
             header("location:../displaypolicy.php?notif=charNumber");
             exit();
         }else{
-    $conn->query("INSERT INTO policy_tbl(policy_title,policy_content) VALUES ('$policy_title','$policy_content')") or die($conn->error);
+    mysqli_query($conn,"INSERT INTO policy_tbl(policy_title,policy_content) VALUES ('$policy_title','$policy_content')") or die($conn->error);
 
     header('location:../displaypolicy.php?notif=success');
 }
@@ -43,11 +43,17 @@ if(isset($_POST['update'])){
     $policy_title = $_POST['policy_title'];
     $policy_content = $_POST['policy_content'];
 
+    if((ctype_space($policy_title)) || (ctype_space($policy_content))){
+            header("location:../displaypolicy.php?notif=updatewhitespace");
+            exit();
+        }elseif((strlen($policy_title)) < 10 || (strlen($policy_content)) < 10){
+            header("location:../displaypolicy.php?notif=updatecharNumber");
+            exit();
+        }else{
+
     mysqli_query($conn,"UPDATE policy_tbl SET policy_title = '$policy_title', policy_content = '$policy_content' WHERE policy_id = '$policy_id' ");
-    $_SESSION['message'] = 'Policy has been updated!';
-    $_SESSION['msg_type'] = 'success';
-    header("location:../displaypolicy.php");
+    header("location:../displaypolicy.php?notif=updatesuccess");
 
 }
-
+}
 

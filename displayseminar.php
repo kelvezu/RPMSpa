@@ -2,6 +2,25 @@
 
 include 'sampleheader.php';
 
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 ?>
 
 <div class="modal fade" id="seminar-modal" tabindex="-1" role="dialog" aria-labelledby="seminarModal" aria-hidden="true">
@@ -19,19 +38,20 @@ include 'sampleheader.php';
                     <div class="form-group row">
                         <div class="col-lg">
                             <label for="start-date" class="col-form-label"><strong>Select Start Date</strong></label>
-                            <input type="date" name="start_date" class="form-control">
+                            <input type="date" name="start_date" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-lg">
                             <label for="end-date" class="col-form-label"><strong>Select End Date</strong></label>
-                            <input type="date" name="end_date" class="form-control">
+                            <input type="date" name="end_date" class="form-control" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg">
                             <label for="sem-name" class="col-form-label"><strong>Seminar Name</strong></label>
-                            <textarea name="seminar_name" id="sem-name" cols="5" rows="5" class="form-control" placeholder="Enter the seminar name..." required></textarea>
+                            <textarea name="seminar_name" id="semname" cols="5" rows="5" class="form-control" placeholder="Enter the seminar name..." required></textarea>
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div class="m-2">
@@ -44,6 +64,26 @@ include 'sampleheader.php';
         </div>
     </div>
 </div>
+
+<script>
+         $(document).ready(function() {
+        $('#semname').on('change', function() {
+            var semname = $(this).val(); 
+            if (semname) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateseminar.php',
+                    data: 'semname=' + semname,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+</script>
 
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">

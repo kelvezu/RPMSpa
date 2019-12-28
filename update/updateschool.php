@@ -17,6 +17,7 @@ if (isset($_GET['edit'])) {
     $school_name = $record['school_name'];
     $school_no = $record['school_no'];
     $tel_no = $record['tel_no'];
+    $tel_no2 = $record['tel_no2'];
     $reg_id = $record['reg_id'];
     $div_id = $record['div_id'];
     $muni_id = $record['muni_id'];
@@ -92,6 +93,7 @@ if (isset($_GET['edit'])) {
                         <div class="col-lg">
                             <label for="tel-no" class="col-form-label"><strong>Telephone Number</strong></label>
                             <input type="number" name="tel_no" id="tel-no" class="form-control" value="<?php echo $tel_no; ?>" placeholder="Enter the Telephone Number..." required pattern="[0-9 -]{8}" title="Input eight numbers">
+                            <input type="number" name="tel_no" id="tel-no" class="form-control" value="<?php echo $tel_no2; ?>" placeholder="Enter the Telephone Number..." required pattern="[0-9 -]{8}" title="Input eight numbers">
                         </div>
                     </div>
 

@@ -2,6 +2,26 @@
 
 include 'sampleheader.php';
 
+
+if(isset($_GET['notif'])):
+    if(($_GET['notif']) == 'taken'):
+        echo "<div class='red-notif-border'>Duplicate entry found. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'whitespace'):
+        echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'success'):
+        echo "<div class='green-notif-border'>Data has been added!</div>";
+    elseif (($_GET['notif']) == 'error'):
+        echo "<div class='red-notif-border'>Unable to proceed!</div>";
+    elseif (($_GET['notif']) == 'charNumber'):
+        echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
+    endif;
+endif;
 ?>
 
 
@@ -22,12 +42,14 @@ include 'sampleheader.php';
                         <div class="col-lg">
                             <label for="indicator-no" class="control-label"><strong>Indicator Number</strong></label>
                             <input type="number" name="indicator_no" id="indicator_no" class="form-control" width="500" placeholder="Enter the Indicator Number..." required pattern="[0-9]" title="Input number only">
+                            <div id="errorNo"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg">
                             <label for="description" class="control-label w-25 "><strong>Indicator Name</strong></label>
-                            <textarea name="indicator_name" id="indicator-name" class="form-control" placeholder="Enter the indicator name..." required></textarea>
+                            <textarea name="indicator_name" id="indicator_name" class="form-control" placeholder="Enter the indicator name..." required></textarea>
+                            <div id="errorNo1"></div>
                         </div>
                     </div>
                     <div class="row">
@@ -48,6 +70,46 @@ include 'sampleheader.php';
         </div>
     </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+        $('#indicator_no').on('change', function() {
+            var indicator_no = $(this).val(); 
+            if (indicator_no) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateindicator.php',
+                    data: 'indicator_no=' + indicator_no,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+$(document).ready(function() {
+        $('#indicator_name').on('change', function() {
+            var indicator_name = $(this).val(); 
+            if (indicator_name) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateindicator.php',
+                    data: 'indicator_name=' + indicator_name,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+              
+            }
+        });
+     });
+
+</script>
 
 <?php if (isset($_SESSION['message'])) : ?>
     <div class="alert alert-<?= $_SESSION['msg_type'] ?> breadcrumb">
@@ -207,7 +269,7 @@ include 'sampleheader.php';
 </div>
 </div>
 </div>
-</main>
+
 <br>
 <?php
 

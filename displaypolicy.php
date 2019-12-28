@@ -13,6 +13,12 @@ if(isset($_GET['notif'])):
         echo "<div class='red-notif-border'>Unable to proceed!</div>";
     elseif (($_GET['notif']) == 'charNumber'):
         echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
     endif;
 endif;
 ?>

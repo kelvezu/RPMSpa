@@ -8,11 +8,17 @@ if(isset($_GET['notif'])):
     elseif (($_GET['notif']) == 'whitespace'):
         echo "<div class='red-notif-border'>Too much space. Unable to proceed!</div>";
     elseif (($_GET['notif']) == 'success'):
-        echo "<div class='green-notif-border'>Rubric has been added!</div>";
+        echo "<div class='green-notif-border'>Data has been added!</div>";
     elseif (($_GET['notif']) == 'error'):
         echo "<div class='red-notif-border'>Unable to proceed!</div>";
     elseif (($_GET['notif']) == 'charNumber'):
         echo "<div class='red-notif-border'>Lack of Characters!</div>";
+    elseif (($_GET['notif']) == 'updatewhitespace'):
+        echo "<div class='red-notif-border'>Unable to Update. Too much space!</div>";
+    elseif (($_GET['notif']) == 'updatecharNumber'):
+        echo "<div class='red-notif-border'>Unable to Update. Field should contain at least 2 characters!</div>";
+    elseif (($_GET['notif']) == 'updatesuccess'):
+        echo "<div class='green-notif-border'>Update Success!</div>";
     endif;
 endif;
 
