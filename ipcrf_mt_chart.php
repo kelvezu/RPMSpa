@@ -30,7 +30,8 @@ endif;
   <div class="card-header bg-info">
     <div class=" text-center h4 text-white">IPCRF Average Per Year</div>
   </div>
-  <div class="card-body ">
+  <div class="card-body">
+  <input class="btn-info text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
       <div id="chartipcrf_ave" style="width: 1200px; height: 500px;"></div>
     </div>
@@ -40,6 +41,7 @@ endif;
     <div class=" text-center h4 text-white">IPCRF Average Per Rating(Current SY)</div>
   </div>
   <div class="card-body ">
+  <input class="btn-info text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
       <div id="chartIPCRF2" style="width: 1200px; height: 500px;"></div>
     </div>
@@ -102,7 +104,20 @@ endif;
         }
         };
 
+        var container = document.getElementById('chartipcrf_ave');
         var chart = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave'));
+        var btnSave = document.getElementById('save-pdf');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+      
         chart.draw(data, options);
       }
     </script>
@@ -161,13 +176,25 @@ endif;
         }
       }
     };
+        var container = document.getElementById('chartIPCRF2');
+        var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
+        var btnSave = document.getElementById('save-pdf2');
 
-    var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
-    chart.draw(data, options);
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+        
+        chart.draw(data, options);
   }
 </script>
 <!-- End of COT Average Chart Function -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
 <?php
 
