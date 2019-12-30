@@ -27,7 +27,8 @@ if (isset($_POST['view'])) :
   <div class="card-header bg-info">
     <div class=" text-center h4 text-white">IPCRF Average Per Year</div>
   </div>
-  <div class="card-body ">
+  <div class="card-body">
+  <input class="btn-info text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
       <div id="chartipcrf_ave" style="width: 1200px; height: 500px;"></div>
     </div>
@@ -37,6 +38,7 @@ if (isset($_POST['view'])) :
     <div class=" text-center h4 text-white">IPCRF Average Per Rating(Current SY)</div>
   </div>
   <div class="card-body ">
+  <input class="btn-info text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
       <div id="chartIPCRF2" style="width: 1200px; height: 500px;"></div>
     </div>
@@ -99,7 +101,20 @@ if (isset($_POST['view'])) :
         }
         };
 
+        var container = document.getElementById('chartipcrf_ave');
         var chart = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave'));
+        var btnSave = document.getElementById('save-pdf');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+      
         chart.draw(data, options);
       }
     </script>
@@ -159,11 +174,25 @@ if (isset($_POST['view'])) :
       }
     };
 
-    var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
-    chart.draw(data, options);
+    var container = document.getElementById('chartIPCRF2');
+        var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
+        var btnSave = document.getElementById('save-pdf2');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+        
+        chart.draw(data, options);
   }
 </script>
 <!-- End of IPCRF Average Chart Function -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
 <?php
   else:
@@ -182,7 +211,8 @@ if (isset($_POST['view'])) :
   <div class="card-header bg-info">
     <div class=" text-center h4 text-white">IPCRF Average Per Year</div>
   </div>
-  <div class="card-body ">
+  <div class="card-body">
+  <input class="btn-info text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
       <div id="chartipcrf_ave" style="width: 1200px; height: 500px;"></div>
     </div>
@@ -192,6 +222,7 @@ if (isset($_POST['view'])) :
     <div class=" text-center h4 text-white">IPCRF Average Per Rating(Current SY)</div>
   </div>
   <div class="card-body ">
+  <input class="btn-info text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
       <div id="chartIPCRF2" style="width: 1200px; height: 500px;"></div>
     </div>
@@ -219,7 +250,7 @@ if (isset($_POST['view'])) :
                CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') - 1 then avg(average) else 0 end as sy2,
                CASE when sy_id = ('" . $_SESSION['active_sy_id'] . "') then avg(average) else 0 end as sy
                 
-               FROM ipcrf_mt WHERE sy_id = '$sy_id' and user_id = '$teacher_id' and school_id = '$school_id'  GROUP BY obj_id) a
+               FROM ipcrf_mt WHERE school_id = '$school_id'  GROUP BY obj_id) a
                 GROUP BY a.obj_id") or die($conn->error);
               while ($cotQry2 = $qry->fetch_assoc()) :
                 echo "['" . $cotQry2['obj_id'] . "', 
@@ -254,7 +285,20 @@ if (isset($_POST['view'])) :
         }
         };
 
+        var container = document.getElementById('chartipcrf_ave');
         var chart = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave'));
+        var btnSave = document.getElementById('save-pdf');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+      
         chart.draw(data, options);
       }
     </script>
@@ -279,7 +323,7 @@ if (isset($_POST['view'])) :
       //$tIndi = fetchTindicator($conn);
       //foreach ($tIndi as $indi) :
         $qry = $conn->query("SELECT obj_id,quality,efficiency,timeliness,average
-        FROM ipcrf_mt WHERE user_id = '$teacher_id' and sy_id = '$sy_id' AND school_id = '$school_id' group by obj_id order by obj_id,average") or die($conn->error);
+        FROM ipcrf_mt WHERE sy_id = '$sy_id' and school_id = '$school_id' group by obj_id order by obj_id,average") or die($conn->error);
         while ($cotQry = $qry->fetch_assoc()) :
           echo "['" . $cotQry['obj_id'] . "', 
                 " . $cotQry['quality'] . ",  
@@ -314,11 +358,25 @@ if (isset($_POST['view'])) :
       }
     };
 
-    var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
-    chart.draw(data, options);
+    var container = document.getElementById('chartIPCRF2');
+        var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
+        var btnSave = document.getElementById('save-pdf2');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+        
+        chart.draw(data, options);
   }
 </script>
 <!-- End of IPCRF Average Chart Function -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
 <?php
 endif;
