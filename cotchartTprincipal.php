@@ -29,6 +29,7 @@ if (isset($_POST['view'])) :
         <div class=" text-center h4 text-white">COT Average</div>
       </div>
       <div class="card-body ">
+      <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
         <div class="d-flex justify-content-center">
           <div id="cotchart" style="width: 1200px; height: 500px;"></div>
         </div>
@@ -38,6 +39,7 @@ if (isset($_POST['view'])) :
         <div class=" text-center h4 text-white">Classroom Observation Period Average</div>
       </div>
       <div class="card-body ">
+      <input class="btn-success text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
         <div class="d-flex justify-content-center">
           <div id="cot2chart" style="width: 1200px; height: 500px;"></div>
         </div>
@@ -100,7 +102,20 @@ if (isset($_POST['view'])) :
           }
         };
 
+        var container = document.getElementById('cotchart');
         var chart = new google.visualization.ComboChart(document.getElementById('cotchart'));
+        var btnSave = document.getElementById('save-pdf');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+      
         chart.draw(data, options);
       }
     </script>
@@ -165,10 +180,23 @@ if (isset($_POST['view'])) :
           }
         };
 
+        var container = document.getElementById('cot2chart');
         var chart = new google.visualization.ComboChart(document.getElementById('cot2chart'));
+        var btnSave = document.getElementById('save-pdf2');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
         chart.draw(data, options);
       }
     </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 
     <!-- End of COT Average Chart Function -->
 
@@ -190,6 +218,7 @@ if (isset($_POST['view'])) :
         <div class=" text-center h4 text-white">COT Average</div>
       </div>
       <div class="card-body ">
+      <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
         <div class="d-flex justify-content-center">
           <div id="cotchart" style="width: 1200px; height: 500px;"></div>
         </div>
@@ -199,6 +228,7 @@ if (isset($_POST['view'])) :
         <div class=" text-center h4 text-white">Classroom Observation Period Average</div>
       </div>
       <div class="card-body ">
+      <input class="btn-success text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
         <div class="d-flex justify-content-center">
           <div id="cot2chart" style="width: 1200px; height: 500px;"></div>
         </div>
@@ -261,7 +291,20 @@ if (isset($_POST['view'])) :
           }
         };
 
+        var container = document.getElementById('cotchart');
         var chart = new google.visualization.ComboChart(document.getElementById('cotchart'));
+        var btnSave = document.getElementById('save-pdf');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+      
         chart.draw(data, options);
       }
     </script>
@@ -325,8 +368,23 @@ if (isset($_POST['view'])) :
           }
         };
 
+        var container = document.getElementById('cot2chart');
         var chart = new google.visualization.ComboChart(document.getElementById('cot2chart'));
+        var btnSave = document.getElementById('save-pdf2');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
         chart.draw(data, options);
+      }
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
       }
     </script>
 
