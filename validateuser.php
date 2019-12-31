@@ -33,6 +33,8 @@ if(isset($_POST['email'])):
         echo "<div class='tomato-color'>Whitespace are not allowed.</div>";
     elseif((strlen($email)) < 6):
         echo "<div class='tomato-color'>Invalid Email.</div>";
+    elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)):
+        echo "<div class='tomato-color'>Invalid Email Format.</div>";
     else:
         echo "<div class='apple-color'>Valid</div>";
     endif;
@@ -99,7 +101,7 @@ if(isset($_POST['contact'])):
     elseif(ctype_space($contact)):
         echo "<div class='tomato-color'>Whitespace are not allowed.</div>";
     elseif((strlen($contact)) < 11):
-        echo "<div class='tomato-color'>Contact should consist 11 digits.</div>";
+        echo "<div class='tomato-color'>Contact should consist of 11 digits.</div>";
     else:
         echo "<div class='apple-color'>Valid</div>";
     endif;
@@ -124,13 +126,18 @@ endif;
 if(isset($_POST['school']) && isset($_POST['position'])):
     $school = $_POST['school'];
     $position = $_POST['position'];
-    $query = $conn->query("SELECT * FROM account_tbl WHERE school_id = '$school' AND position = '$position'");
 
-    $rowCount = $query->num_rows;
+    if($position == 'Principal'):
+        $query = $conn->query("SELECT * FROM account_tbl WHERE school_id = '$school'");
+
+        $rowCount = $query->num_rows;
 
 
-    if($rowCount > 0):
-        echo "<div class='tomato-color'>Only one principal is allowed per school.</div>";
+        if($rowCount > 0):
+            echo "<div class='tomato-color'>Only one principal is allowed per school.</div>";
+        else:
+            echo "<div class='apple-color'>Valid</div>";
+        endif;
     else:
         echo "<div class='apple-color'>Valid</div>";
     endif;
