@@ -21,6 +21,7 @@ if(isset($_POST['view'])):
         <div class=" text-center h4 text-white">Core Behavioral Competencies Rating</div>
     </div>
     <div class="card-body ">
+    <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
         <div id="cbcchart" style="width: 900px; height: 500px;"></div>
     </div>
@@ -32,6 +33,7 @@ if(isset($_POST['view'])):
         <div class=" text-center h4 text-white">Assessment of Capabilities and Priorities</div>
     </div>
     <div class="card-body">
+    <input class="btn-success text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
         <div class="d-flex justify-content-center">
                 <div id="levelofcapability" style="width: 900px; height: 500px;"></div>
             </div>
@@ -81,9 +83,20 @@ let options = {
             bar: { groupWidth: 30 },
             series: {5: {type: 'line'}}        };
 
-        let chart = new google.visualization.ComboChart(document.getElementById('cbcchart'));
-        chart.draw(data, options)
-        
+        var container = document.getElementById('cbcchart');
+        var chart = new google.visualization.ComboChart(document.getElementById('cbcchart'));
+        var btnSave = document.getElementById('save-pdf');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+        chart.draw(data, options)        
         
         };
 </script>
@@ -127,13 +140,25 @@ function LevelofPriority() {
             bar: { groupWidth: 30 },
             series: {5: {type: 'line'}}        };
 
-        let chart = new google.visualization.ComboChart(document.getElementById('levelofcapability'));
-        chart.draw(data, options)
+        var container = document.getElementById('levelofcapability');
+        var chart = new google.visualization.ComboChart(document.getElementById('levelofcapability'));
+        var btnSave = document.getElementById('save-pdf2');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+        chart.draw(data, options)        
         
         
         };
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
 <!-- Assessment of Capabilities and Priorities Chart Function -->
 
 
@@ -153,10 +178,11 @@ function LevelofPriority() {
 <div class="card">
     
 <!-- CBC Chart -->
-    <div class="card-header bg-success">
+<div class="card-header bg-success">
         <div class=" text-center h4 text-white">Core Behavioral Competencies Rating</div>
     </div>
     <div class="card-body ">
+    <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
     <div class="d-flex justify-content-center">
         <div id="cbcchart" style="width: 900px; height: 500px;"></div>
     </div>
@@ -168,6 +194,7 @@ function LevelofPriority() {
         <div class=" text-center h4 text-white">Assessment of Capabilities and Priorities</div>
     </div>
     <div class="card-body">
+    <input class="btn-success text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
         <div class="d-flex justify-content-center">
                 <div id="levelofcapability" style="width: 900px; height: 500px;"></div>
             </div>
@@ -217,8 +244,20 @@ let options = {
             bar: { groupWidth: 30 },
             series: {5: {type: 'line'}}        };
 
-        let chart = new google.visualization.ComboChart(document.getElementById('cbcchart'));
-        chart.draw(data, options)
+        var container = document.getElementById('cbcchart');
+        var chart = new google.visualization.ComboChart(document.getElementById('cbcchart'));
+        var btnSave = document.getElementById('save-pdf');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+        chart.draw(data, options)    
         
         
         };
@@ -263,17 +302,27 @@ function LevelofPriority() {
             bar: { groupWidth: 30 },
             series: {5: {type: 'line'}}        };
 
-        let chart = new google.visualization.ComboChart(document.getElementById('levelofcapability'));
-        chart.draw(data, options)
+        var container = document.getElementById('levelofcapability');
+        var chart = new google.visualization.ComboChart(document.getElementById('levelofcapability'));
+        var btnSave = document.getElementById('save-pdf2');
+
+        google.visualization.events.addListener(chart, 'ready', function () {
+        btnSave.disabled = false;
+        });
+
+        btnSave.addEventListener('click', function () {
+        var doc = new jsPDF('l');
+        doc.addImage(chart.getImageURI(), 0, 0);
+        doc.save('chart.pdf');
+        }, false);
+        chart.draw(data, options)        
         
         
         };
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+        
 <!-- Assessment of Capabilities and Priorities Chart Function -->
-
-
-
 
 
 <?php
