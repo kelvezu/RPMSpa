@@ -205,6 +205,10 @@ endif;
 
 <script>
 
+document.getElementById('signup').style.display = "none";
+
+
+
 $(document).ready(function() {
         $('#prc_id').on('change', function() {
             var prc_id = $(this).val(); 
