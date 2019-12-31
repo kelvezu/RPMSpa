@@ -196,9 +196,8 @@ class Dashboard
                 <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-cog"></i> User Settings</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a href="displayusers.php" class="dropdown-item">View User</a>
+                                <a href="displayusers.php" class="dropdown-item">View and Add User</a>
                                 <a href="usercsv.php" class="dropdown-item">Mass Upload</a>
-                                <a href="signup.php" class="dropdown-item">Add User</a>
                                 <a href="promote.php" class="dropdown-item">Promote User</a>
                                 <a href="selectteacher.php" class="dropdown-item">Assign Teacher</a>
                                 <a href="SELECTTRATEE.php" class="dropdown-item">Assign Rater</a>

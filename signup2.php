@@ -1,14 +1,3 @@
-<?php
-
-
-include 'processsignup.php';
-
-?>
-<script src="js/jquery.min.js"></script>
-<script src="js/singup.js"></script>
-<html>
-
-
 
     <link rel="stylesheet" href="bootstrap4/b4css/main.css">
     <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
@@ -24,9 +13,8 @@ include 'processsignup.php';
     <div class="card-body">
       
     <form method="POST">
-  <div id="error_msg"></div>
 
-        <!-- <input type="hidden" name="added_by" value="<?php //echo $_SESSION['user_id'];  ?>"> -->
+        <input type="hidden" name="added_by" value="<?php //echo $_SESSION['user_id'];  ?>">
     <div>
         <label for="prcid"><strong>PRC ID:</strong></label>
         <input type="number" name="prc_id" placeholder="Enter PRC ID.." class="form-control" id="prc_id">

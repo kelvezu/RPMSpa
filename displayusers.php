@@ -57,10 +57,104 @@ endif;
             <div class="d-flex justify-content-between bg-dark">
                 <div class="p-2"></div>
                 <div class="p-2 h4 text-white"> Account Informations</div>
-                <div class="p-2"><a href="signup2.php" class="btn btn-primary">Add User</a></div>
+                <div class="p-2"> <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#adduser">Add User</button></div>
                
             </div>
             
+    <div class="modal fade" id="adduser" tabindex="-1" role="dialog" aria-labelledby="schoolModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title " id="exampleModalLabel">Add User</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="includes/signup.inc.php" method="post">
+                    <input type="hidden" name="added_by" value="<?php echo $_SESSION['user_id'];  ?>">
+
+                    <label for="prcid"><strong>PRC ID:</strong></label>
+                    <input type="number" name="prc_id" placeholder="Enter PRC ID.." class="form-control" id="prc_id" required>
+                    <div id="errorNo"></div>
+
+                    <label for="Email"><strong>Email:</strong></label>
+                    <input type="email" name="email" placeholder="Enter Email.." class="form-control" id="email" required>
+                    <div id="errorNo1"></div>
+
+                    <label for="surname"><strong>Surname:</strong></label>
+                    <input type="text" name="surname" placeholder="Enter Surname.." class="form-control" id="surname" required>
+                    <div id="errorNo2"></div>
+
+                    <label for="firstname"><strong>Firstname:</strong></label>
+                    <input type="text" name="firstname" placeholder="Enter Firstname.." class="form-control" id="firstname" required>
+                    <div id="errorNo3"></div>
+
+                    <label for="middlename"><strong>Middlename:</strong></label>
+                    <input type="text" name="middlename" placeholder="Enter Middlename.." class="form-control" id="middlename" required>
+                    <div id="errorNo4"></div>
+
+                    <label for="position"><strong>Position:</strong></label>
+                    <select name="position" class="form-control" required id="position">
+                        <option value="" disabled selected>Select Position</option>
+                        <?php
+                            $posiresult = $conn->query('SELECT * FROM position_tbl')  or die($conn->error);
+                            while ($posirow = $posiresult->fetch_assoc()) :
+                                $posi_id = $posirow['position_id'];
+                                $posi_name = $posirow['position_name'];
+                        ?>
+                                <option value="<?php echo $posi_name ?>"><?php echo $posi_name; ?>
+                        <?php endwhile; ?>
+                        </option>
+                    </select>
+                    <div id="errorNo5"></div>
+
+                    <label for="contact"><strong>Contact Number:</strong></label>
+                    <input name="contact" placeholder="Enter Contact Number.." class="form-control"  id="contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" required>
+                    <div id="errorNo6"></div>
+
+                    <label for="sex"><strong>Sex:</strong></label>
+                    <select name="gender" id="gender" class="form-control" required>
+                        <option>--Select Gender--</option>
+                        <?php
+                        $genderresult = $conn->query('SELECT * FROM gender_tbl')  or die($conn->error);
+                        while ($genrow = $genderresult->fetch_assoc()) :
+                            $gender_name = $genrow['gender_name'];
+                            ?>
+                            <option value="<?php echo $gender_name ?>"><?php echo $gender_name; ?>
+                            <?php endwhile ?>
+                            </option>
+                    </select>
+                    <div id="errorNo7"></div>
+
+                    <label for="birthdate"><strong>Birthdate:</strong></label>
+                    <input type="date" name="birthdate" class="form-control" id="birthdate" required>
+                    <div id="errorNo8"></div>
+
+                    <label for="school"><strong>School:</strong></label>
+                    <select name="school" id="school" class="form-control" required>
+                                    <option>--Select school--</option>
+                                    <?php
+                                    $schresult = $conn->query('SELECT * FROM school_tbl')  or die($conn->error);
+                                    while ($schrow = $schresult->fetch_assoc()) :
+                                        $sch_id = $schrow['school_id'];
+                                        $sch_name = $schrow['school_name'];
+                                        ?>
+                                        <option value="<?php echo $sch_id ?>"><?php echo $sch_name; ?>
+                                        <?php endwhile ?>
+                                        </option>
+                    </select>
+                    <div id="errorNo9"></div>
+
+        <br>
+    
+                    <a href="dbAdmin.php" class="btn btn-danger">Cancel</a>
+                    <button type="submit" name="signup" id="signup" class="btn btn-info">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <small>
             <table class="table table-bordered hover table-sm">
@@ -108,6 +202,158 @@ endif;
 
 
 <br>
+
+<script>
+
+$(document).ready(function() {
+        $('#prc_id').on('change', function() {
+            var prc_id = $(this).val(); 
+            if (prc_id) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'prc_id=' + prc_id,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#email').on('change', function() {
+            var email = $(this).val(); 
+            if (email) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'email=' + email,
+                    success: function(html) {
+                         $('#errorNo1').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#surname').on('change', function() {
+            var surname = $(this).val(); 
+            if (surname) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'surname=' + surname,
+                    success: function(html) {
+                         $('#errorNo2').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#firstname').on('change', function() {
+            var firstname = $(this).val(); 
+            if (firstname) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'firstname=' + firstname,
+                    success: function(html) {
+                         $('#errorNo3').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#middlename').on('change', function() {
+            var middlename = $(this).val(); 
+            if (middlename) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'middlename=' + middlename,
+                    success: function(html) {
+                         $('#errorNo4').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#contact').on('change', function() {
+            var contact = $(this).val(); 
+            if (contact) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'contact=' + contact,
+                    success: function(html) {
+                         $('#errorNo6').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#birthdate').on('change', function() {
+            var birthdate = $(this).val(); 
+            if (birthdate) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'birthdate=' + birthdate,
+                    success: function(html) {
+                         $('#errorNo8').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('#school').on('change', function() {
+            var school = $(this).val(); 
+            var position = $('#position').val();
+            if (school) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validateuser.php',
+                    data: 'school=' + school + '&position=' + position,
+                    success: function(html) {
+                         $('#errorNo9').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+    });
+</script>
+
+
+
+
 <?php
 
 include 'samplefooter.php';
