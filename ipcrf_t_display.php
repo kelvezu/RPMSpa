@@ -23,7 +23,7 @@ endif;
 ?>
 <div class="container-fluid">
     <div>
-        <a href="ipcrf_t_collection_pdf.php" class="btn btn-success">Show in PDF</a>
+        <a href="ipcrf_t_pdf.php" class="btn btn-success"><i class="fa fa-file-pdf"></i> Create PDF</a>
     </div>
     <br>
     <div class="card">

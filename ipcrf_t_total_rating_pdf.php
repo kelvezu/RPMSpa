@@ -19,11 +19,11 @@ $rater_position = ($rater) ? getPosition($conn, $rater) : "No rater";
 $app_auth = displayName($conn, $_SESSION['approving_authority']) or $app_auth = "N/A";
 $kra_tbl = kra_tbl($conn);
 $num = 1;
-$ipcrf_tbl = 'ipcrf_mt';
-$ipcrf_final_tbl = 'ipcrf_final_mt';
+$ipcrf_tbl = 'ipcrf_t';
+$ipcrf_final_tbl = 'ipcrf_final_t';
 $ipcrf = new IPCRF($user, $sy, $school, $position);
-$ipcrf_score = $ipcrf->fetch_QETscore_mt();
-$obj_tbl = $ipcrf->fetchMTObjective_tbl();
+$ipcrf_score = $ipcrf->fetch_QETscore_t();
+$obj_tbl = $ipcrf->fetchTObjective_tbl();
 $obj_count = intval(count($obj_tbl));
 $ipcrf_user = $ipcrf->fetch_ipcrf_users($ipcrf_final_tbl);
 
@@ -34,6 +34,20 @@ $pdf->WriteHTML('
 body{
     margin: 0;
 }
+
+.text-center{
+    text-align: center;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }
+
+
 
 .header_pdf{
     background-color:black;
@@ -69,7 +83,7 @@ body{
 
     ');
 
-$pdf->WriteHTML('<h4 class="header_pdf">INDIVIDUAL PERFORMANCE COMMITMENT AND REVIEW FORM – Master Teacher I-IV (High-Proficient Teachers)</h4>');
+$pdf->WriteHTML('<h4 class="header_pdf">INDIVIDUAL PERFORMANCE COMMITMENT AND REVIEW FORM – Teacher I-III (Proficient Teachers)</h4>');
 
 $pdf->WriteHTML('
 <table cellpadding="5">
@@ -118,14 +132,14 @@ $pdf->WriteHTML("
 
 foreach ($kra_tbl as $kra) :
     $kra_id =  $kra['kra_id'];
-    $pdf->writeHTML("<th colspan=" . $ipcrf->countKRAobjective($kra_id, 'mtobj_tbl') . "> <p> KRA: " . $kra_id . " </p> </th>");
+    $pdf->writeHTML("<th colspan=" . $ipcrf->countKRAobjective($kra_id, 'tobj_tbl') . "> <p> KRA: " . $kra_id . " </p> </th>");
 endforeach;
 
 
 $pdf->writehtml('</tr><tr>');
 
 foreach ($obj_tbl as $obj) :
-    $obj_id =  $obj['mtobj_id'];
+    $obj_id =  $obj['tobj_id'];
     $pdf->writeHTML("<th> <p> " . $obj_id . " </p> </th>");
 endforeach;
 
@@ -153,8 +167,8 @@ if ($ipcrf_user) :
         if ($obj_tbl) :
             foreach ($obj_tbl as $obj) :
                 // DISPLAY OBJECTIVE SCORE 
-                if ($ipcrf->fetch_user_Score($ipcrf_tbl, $obj['mtobj_id'], $users)) :
-                    $pdf->writehtml("<td><p> " . $ipcrf->fetch_user_Score($ipcrf_tbl, $obj['mtobj_id'], $users) . "</p>");
+                if ($ipcrf->fetch_user_Score($ipcrf_tbl, $obj['tobj_id'], $users)) :
+                    $pdf->writehtml("<td><p> " . $ipcrf->fetch_user_Score($ipcrf_tbl, $obj['tobj_id'], $users) . "</p>");
                 else :  $pdf->writehtml("<td><p> --- </p>");
                 endif;
             endforeach;
@@ -183,33 +197,41 @@ $pdf->WriteHTML(
 </table>'
 );
 
-$pdf->WriteHTML('
-<table style="border:none; margin-top:25px;">
-    <tr style="border:none;">
-        <td style="border:none;">
-            <p>
-                <u>' . $name . '</u>
-                <p><b>Ratee</b></p>
-            </p>
-        </td>
+// $pdf->WriteHTML('
+// <table style="border:none; margin-top:25px;">
+//     <tr style="border:none;">
+//         <td style="border:none;">
+//             <p>
+//                 <u>' . $name . '</u>
+//                 <p><b>Ratee</b></p>
+//             </p>
+//         </td>
 
-        <td style="border:none;">
-            <p>
-                <u>' . $rater_name . '</u>
-                <p><b>Rater</b></p>
-            </p>
-        </td>
+//         <td style="border:none;">
+//             <p>
+//                 <u>' . $rater_name . '</u>
+//                 <p><b>Rater</b></p>
+//             </p>
+//         </td>
 
-        <td style="border:none;">
-            <p>
-                <u>' . $app_auth . '</u>
-                <p><b>Approving Authority</b></p>
-            </p>
-        </td>
-    </tr>
-</table>
-');
+//         <td style="border:none;">
+//             <p>
+//                 <u>' . $app_auth . '</u>
+//                 <p><b>Approving Authority</b></p>
+//             </p>
+//         </td>
+//     </tr>
+// </table>
+// ');
 
-$pdf->Output("" . $name . "_IPCRF.pdf", "I");
+$pdf->writeHTML("
+<footer>
+<div class='center text-center'>
+    <i><small>*** This is a system-generated report and does not require a signature. ***</small></i>
+</div>
+</footer>
+");
 
-    // header('location:print_ipcrfmt.php');
+$pdf->Output("Teacher_IPCRF_" . displaysy($conn, $sy) . ".pdf", "D");
+
+    // header('location:print_ipcrft.php');

@@ -922,6 +922,20 @@ class IPCRF
         }
     }
 
+    public function fetch_QETscore_t()
+    {
+        $qry = "SELECT kra_id,obj_id,user_id,quality,efficiency,timeliness,position,average,objective_weight,score FROM `ipcrf_t` where sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' ORDER BY obj_id, FIELD (position,'Teacher III','Teacher II','Teacher I')";
+
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
 
     /* 
     THIS METHOD WILL SHOW ALL THE USER WITH IPCRF 
@@ -929,7 +943,7 @@ class IPCRF
 */
     public function fetch_ipcrf_users($table)
     {
-        $qry = "SELECT * FROM `ipcrf_final_mt` WHERE sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' ORDER BY FIELD(adjectival_rating,'Outstanding','Very Satisfactory','Satisfactory','Unsatisfactory','Poor'),final_rating";
+        $qry = "SELECT * FROM `$table` WHERE sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' ORDER BY FIELD(adjectival_rating,'Outstanding','Very Satisfactory','Satisfactory','Unsatisfactory','Poor'),final_rating";
 
         $result = mysqli_query($this->conn(), $qry);
         if ($result) {
