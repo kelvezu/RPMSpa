@@ -39,6 +39,64 @@ class RPMSdb
     }
 
 
+    public static function ipcrfsum($conn)
+    {
+        $result_arr = [];
+        $totalqry = 'SELECT a.sy_id,a.school_id,b.school_name,round(AVG(a.final_rating)) rating FROM
+                        (
+                        SELECT sy_id,adjectival_rating,school_id,final_rating FROM ipcrf_final_mt
+                        UNION ALL
+                        SELECT sy_id,adjectival_rating,school_id,final_rating FROM ipcrf_final_t
+                        ) a 
+                                      
+        INNER JOIN school_tbl b on a.school_id = b.school_id
+        where a.sy_id ="' . $_SESSION['active_sy_id'] . '"
+        group  by a.sy_id,b.school_name';
+
+        $result = mysqli_query($conn, $totalqry);
+
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            //pre_r($result_arr);
+            endforeach;
+            return  $result_arr;
+        else :
+            return false;
+        endif;
+        mysqli_close($conn);
+    }
+
+    public static function ipcrfsumP($conn)
+    {
+        $result_arr = [];
+        $totalqry = 'SELECT a.sy_id,b.school_name,a.user_id,round(AVG(a.final_rating)) rating FROM
+
+                    (
+                    SELECT sy_id,user_id,adjectival_rating,school_id,final_rating FROM ipcrf_final_mt
+                    UNION ALL
+                    SELECT sy_id,user_id,adjectival_rating,school_id,final_rating FROM ipcrf_final_t
+                    ) a 
+                
+                    INNER JOIN school_tbl b on a.school_id = b.school_id
+                    where  a.sy_id =17 AND a.school_id = 14
+                    GROUP BY a.sy_id,b.school_name,a.user_id';
+
+        $result = mysqli_query($conn, $totalqry);
+
+        if (!empty($result)) :
+            foreach ($result as $res) :
+                array_push($result_arr, $res);
+            //pre_r($result_arr);
+            endforeach;
+            return  $result_arr;
+        else :
+            return false;
+        endif;
+        mysqli_close($conn);
+    }
+
+
     public static function rptwithesat($conn)
     {
         $result_arr = [];
