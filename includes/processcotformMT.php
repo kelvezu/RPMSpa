@@ -63,3 +63,45 @@ if (isset($_POST['save'])) {
     // rpmsdb::generateCOTindicatorAVG($conn, $sy);
     exit();
 }
+
+if(isset($_POST['edit'])):
+
+     if (empty($_POST['rater_id2'])) {
+        $rater_id2 = "null";
+    } else {
+        $rater_id2 =  $_POST['rater_id2'];
+    }
+
+    if (empty($_POST['rater_id3'])) {
+        $rater_id3 = "null";
+    } else {
+        $rater_id3 =  $_POST['rater_id3'];
+    }
+
+    $mtioafrating_id = $_POST['mtioafrating_id'];
+    $rater_id = $_POST['rater_id1'];
+    $date = date("Y/m/d");
+    $user_id = $_POST['user_id'];
+    $subject = $_POST['subject'];
+    $gradelvltaught = $_POST['gradelvltaught'];
+    $obs_period = intval($_POST['obs']);
+    $indicator_id = $_POST['indicator_id'];
+    $tcotrating = $_POST['rating'];
+    $comment = $_POST['comment'];
+    $sy_id = $_POST['sy_id'];
+    $school_id = $_POST['school_id'];
+    $status = "Active";
+
+    
+    for ($count = 0; $count < count($indicator_id); $count++) {
+        $qry = mysqli_query($conn, 'UPDATE `cot_mt_rating_a_tbl` SET `rating` = '.$tcotrating[$count].' WHERE mtioafrating_id = '.$mtioafrating_id[$count].' ') or die ($conn->error .$qry);
+
+    }
+
+    $query2 = mysqli_query($conn, 'UPDATE `cot_mt_rating_b_tbl` SET `comment` = "'.$comment.'" WHERE `user_id` = '.$user_id.' AND obs_period = '.$obs_period.' AND `school_id` = '.$school_id.' AND `sy` = '.$sy_id.'') or die($conn->error .$query2);
+
+    header("location:../displaymtcotprogress.php?notif=success&user_id=$user_id&obs=$obs_period");
+    // rpmsdb::generateCOTindicatorAVG($conn, $sy);
+    exit();
+
+endif;
