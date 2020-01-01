@@ -43,7 +43,9 @@ $teacher_result = RPMSdb::fetchtallTrate($conn, $_SESSION['school_id'], $_SESSIO
                 <tbody class="text-center font-weight-bold">
                     <?php 
                     if(($teacher_result) > 0):
-                    foreach ($teacher_result as $t_res) : ?>
+                    foreach ($teacher_result as $t_res) : 
+                        
+                        ?>
                         <tr>
                             <td><?= $num_t++ ?></td>
                             <td><?= displayname($conn, $t_res['user_id']) ?></td>
@@ -63,12 +65,13 @@ $teacher_result = RPMSdb::fetchtallTrate($conn, $_SESSION['school_id'], $_SESSIO
                                         RPMSdb::TcheckResult_Obs3($conn, $t_res['user_id'], $sy, $school) &&
                                         RPMSdb::TcheckResult_Obs4($conn, $t_res['user_id'], $sy, $school)
                                     ) :
-                                        echo '<a class="btn btn-success btn-sm text-white">View Rating</a>';
-                                    else : echo '---';
+                                        echo '<a>Complete</a>';
+                                    else : echo 'Incomplete';
                                     endif;
                                     ?>
                             </td>
                         <?php endforeach; 
+                       
                         else:
                         echo "<div class='red-notif-border'>No Record Found</div>";
                         endif;?>
@@ -128,8 +131,8 @@ $masterteacher_result = RPMSdb::fetchtallMTrate($conn, $_SESSION['school_id'],$_
                                         RPMSdb::MTcheckResult_Obs3($conn, $mt_user, $sy, $school) &&
                                         RPMSdb::MTcheckResult_Obs4($conn, $mt_user, $sy, $school)
                                     ) :
-                                        echo '<a class="btn btn-primary btn-sm text-white">View Rating</a>';
-                                    else : echo '---';
+                                        echo '<a>Complete</a>';
+                                    else : echo 'Incomplete';
                                     endif;
                                     ?>
                             </td>

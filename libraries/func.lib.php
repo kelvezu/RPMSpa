@@ -432,7 +432,7 @@
 
             function displayName($conn, $user_id)
             {
-                $qry = "SELECT * FROM account_tbl WHERE user_id = $user_id";
+                $qry = "SELECT * FROM account_tbl WHERE `user_id` = $user_id";
                 $result = mysqli_query($conn, $qry);
                 if ($result) :
                     foreach ($result as $res) :
@@ -466,6 +466,19 @@
                     endforeach;
                 else :
                     return "School Undefined!";
+                endif;
+            }
+
+            function displaySubject($conn, $subject_id)
+            {
+                $qry = "SELECT * FROM subject_tbl WHERE subject_id  = $subject_id";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return $res['subject_name'];
+                    endforeach;
+                else :
+                    return "Subject Undefined!";
                 endif;
             }
 
@@ -563,6 +576,7 @@
                     return false;
                 endif;
             }
+
 
             // THIS FUNCTION IS FOR RATER 
             function showObsRatingT($conn, $obs_period, $indicator_id, $user_id, $sy, $school_id)
@@ -2874,6 +2888,32 @@
             function getCOTobserverB($conn, $user, $sy, $school_id, $obs_period)
             {
                 $qry = "SELECT * FROM `cot_t_rating_b_tbl` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school_id AND `status` = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+            function getCOTobserverMT($conn, $user, $sy, $school_id, $obs_period)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school_id AND `status` = 'Active'";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $res_array = [];
+                if (mysqli_num_rows($result) > 0) {
+                    foreach ($result as $r) {
+                        array_push($res_array, $r);
+                    }
+                    return $res_array;
+                }
+            }
+
+            function getCOTobserverBMT($conn, $user, $sy, $school_id, $obs_period)
+            {
+                $qry = "SELECT * FROM `cot_mt_rating_b_tbl` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school_id AND `status` = 'Active'";
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 $res_array = [];
                 if (mysqli_num_rows($result) > 0) {

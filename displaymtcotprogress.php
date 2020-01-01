@@ -16,14 +16,45 @@ $positionQry = $conn->query("SELECT * FROM account_tbl WHERE `user_id` = '$teach
 while ($result = $positionQry->fetch_assoc()) :
     $position = $result['position'];
 
-  
+$indicator_arr = RPMSdb::fetchSpecificMTindicatorPeriod($conn, $sy_id, $school_id,  $teacher_id,$obs);
 
-    $indicator_arr = RPMSdb::fetchSpecificMTindicator($conn, $sy_id, $school_id,  $teacher_id);
+if(isset($_GET['notif'])):
+    if($_GET['notif'] == 'pwerror'):
+        echo '<div class="red-notif-border">Principal Password Entered Invalid!</div>';
+    endif;
+endif;
+
     ?>
 
+<style>
+#form {
 
+display:none;
+
+}
+</style>
+
+<script>
+
+$(document).ready(function() {
+  $("#editbtncot").click(function() {
+    $("#form").toggle();
+  });
+});
+</script>
 
     <div class="container">
+
+    <button type="button" class="btn btn-outline-info" id="editbtncot">Edit</button>
+        <form action="coteditMT.php" id="form" method="POST">
+            <label><strong>Enter Principal Password:</strong></label>
+            <input type="hidden" name="user_id" value="<?php echo $teacher_id; ?>">
+            <input type="hidden" name="school_id" value="<?php echo $school_id; ?>">
+            <input type="hidden" name="sy_id" value="<?php echo $sy_id; ?>">
+            <input type="hidden" name="obs" value="<?php echo $obs; ?>">
+            <input type="password" name="pass">
+            <input type="submit" value="Go" class="btn btn-info" name="password_sub">
+        </form>
 
         <div class="d-flex justify-content-center">
             <img src="img\deped.png" width="100" height="100" class="rounded-circle">
@@ -87,6 +118,15 @@ while ($result = $positionQry->fetch_assoc()) :
             <?php endforeach;
             endwhile ?>
             </table>
+             <?php
+                $commentQry = $conn->query("SELECT * FROM cot_mt_rating_b_tbl WHERE `user_id` = '$teacher_id' AND sy = '$sy_id' AND obs_period = '$obs' AND school_id = '$school_id'");
+                while ($comment = $commentQry->fetch_assoc()):
+                    $commentresult = $comment['comment'];
+            ?>
+
+            <textarea name="comment" cols="10" rows="5" readonly class="form-control"><?php echo $commentresult; ?></textarea>
+
+                <?php endwhile; ?>
         </div>
         </div>
 

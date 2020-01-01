@@ -1179,6 +1179,7 @@ class RPMSdb
         endif;
     }
 
+
     public static function fetchTindicator($conn)
     {
         $result_arr = [];
@@ -1197,6 +1198,7 @@ class RPMSdb
         endif;
     }
 
+
     public static function fetchSpecificTindicator($conn, $sy, $school, $user)
     {
         $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
@@ -1210,9 +1212,35 @@ class RPMSdb
         endif;
     }
 
+        public static function fetchSpecificTindicatorPeriod($conn, $sy, $school, $user, $obs)
+    {
+        $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' AND obs_period = '$obs' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
+
     public static function fetchSpecificMTindicator($conn, $sy, $school, $user)
     {
         $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' GROUP by indicator_id";
+        $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+        if (mysqli_num_rows($result) > 0) :
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        endif;
+    }
+
+    public static function fetchSpecificMTindicatorPeriod($conn, $sy, $school, $user,$obs)
+    {
+        $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user'  AND obs_period = '$obs' GROUP by indicator_id";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
         if (mysqli_num_rows($result) > 0) :
             $res_array = [];
@@ -1967,6 +1995,23 @@ class RPMSdb
     {
         $result_arr = [];
         $qry1 = "SELECT * FROM `$table_name1` WHERE `user_id` = $user AND obs_period = $obs_period AND sy = $sy AND school_id = $school";
+
+        $qry1_results = mysqli_query($conn, $qry1) or die($conn->error . 'fetchCOTrating');
+
+
+        if (mysqli_num_rows($qry1_results) > 0) :
+            foreach ($qry1_results as $res1) :
+                array_push($result_arr, $res1);
+            endforeach;
+            return $result_arr;
+        else : return false;
+        endif;
+    }
+
+     public static function fetchCOTratingAll($conn, $sy, $school, $table_name1)
+    {
+        $result_arr = [];
+        $qry1 = "SELECT * FROM `$table_name1` WHERE sy = $sy AND school_id = $school";
 
         $qry1_results = mysqli_query($conn, $qry1) or die($conn->error . 'fetchCOTrating');
 
