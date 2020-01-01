@@ -31,12 +31,10 @@
 
     if (isset($_SESSION['position'])) :
       redirectToDashboard($_SESSION['position']);
-    else :
-      false;
     endif;
 
     if (isset($_GET['notif'])) :
-      if ($_GET['notif'] == 'loggedout') :
+      if ($_GET['notif'] == 'successset') :
         echo '<div class="green-notif-border">You have successfully set school year! Please log in again to continue.</div>';
       endif;
     endif;

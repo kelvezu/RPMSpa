@@ -216,19 +216,19 @@ echo BR;
 //     echo displayName($conn, $pri['user_id']) . BR;
 // endforeach;
 
-$date = date('Y/m/d');
-$intdate = intval(strtotime($date));
-echo ($intdate) . '<br/>';
+// $date = date('Y/m/d');
+// $intdate = intval(strtotime($date));
+// echo ($intdate) . '<br/>';
 
-$first_period_int = intval(strtotime($_SESSION['first_period']));
-echo ($first_period_int) . '<br/>';
+// $first_period_int = intval(strtotime($_SESSION['first_period']));
+// echo ($first_period_int) . '<br/>';
 
-$second_period_int = intval(strtotime($_SESSION['second_period']));
-echo ($second_period_int) . '<br/>';
-$third_period_int = intval(strtotime($_SESSION['third_period']));
-echo ($third_period_int) . '<br/>';
-$fourth_period_int = intval(strtotime($_SESSION['final_period']));
-echo ($fourth_period_int) . '<br/>';
+// $second_period_int = intval(strtotime($_SESSION['second_period']));
+// echo ($second_period_int) . '<br/>';
+// $third_period_int = intval(strtotime($_SESSION['third_period']));
+// echo ($third_period_int) . '<br/>';
+// $fourth_period_int = intval(strtotime($_SESSION['final_period']));
+// echo ($fourth_period_int) . '<br/>';
 
 
 // echo showObsAverage(3, 4, 5, "-") . BR;
@@ -286,10 +286,10 @@ $sy = $_SESSION['active_sy_id'];
 //     endforeach;
 // endif;
 
-echo $_SESSION['first_period'] . '<br>';
-echo $_SESSION['second_period'] . '<br>';
-echo $_SESSION['third_period'] . '<br>';
-echo $_SESSION['final_period'] . '<br>';
+// echo $_SESSION['first_period'] . '<br>';
+// echo $_SESSION['second_period'] . '<br>';
+// echo $_SESSION['third_period'] . '<br>';
+// echo $_SESSION['final_period'] . '<br>';
 ?>
 <!-- <img src="attachments/Master Teacher/5ddd6bcf16b707.61177521.jpg" width='600' height='1000' alt="ironman" /> -->
 
@@ -356,6 +356,33 @@ $ipcrf = new IPCRF($user, $sy, $school, $position);
 // foreach ($cot_count as $c_count) :
 //     echo $c_count['obs_period'] . '<br>';
 // endforeach;
+
+$today_date = date('Y-m-d');
+$enddate = $_SESSION['end_date'];
+// echo ' today ' . $today_date .  '<br>';
+// echo  ' end date ' . $enddate;
+
+$int_start = strtotime(intval($today_date));
+$int_end = strtotime(intval($enddate));
+
+echo 'TODAY DATE: ' . $today_date . ' END DATE: ' . $enddate . BR;
+
+
+var_dump($int_start);
+var_dump($int_end);
+// var_dump($int_end);
+
+
+
+
+
+
+if ($int_start >= $int_end) :
+    echo "tpos na school year doi!";
+else : echo 'error';
+endif;
+
+
 ?>
 
 <?php

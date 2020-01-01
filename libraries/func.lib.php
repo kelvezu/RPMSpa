@@ -230,22 +230,39 @@
                 endif;
             }
 
+            function getEndDate($conn)
+            {
+                $qry = "SELECT * FROM `sy_tbl` where status = 'Active'  ORDER BY sy_id";
+                $result = mysqli_query($conn, $qry) or die($conn->die . $qry);
+                if ($result) {
+                    foreach ($result as $r) :
+                        return $r['end_date'];
+                    endforeach;
+                }
+            }
+
             function endSchoolYear($conn, $sy_id)
             {
                 //SET THE DATABASE TO INACTIVE IF THE END DATE IS EQUAL TO END_DATE
                 if (!empty($sy_id)) :
                     // echo $_SESSION['end_date'];
-                    if (!empty($_SESSION['end_date'])) :
-                        $today_date = strtotime(intval(date('Y-m-d')));
-                        $enddate = strtotime(intval($_SESSION['end_date']));
-                        if ($today_date >= $enddate) :
+                    if (!empty(getEndDate($conn))) :
+                        $today_date = date('Y-m-d');
+                        $enddate = getEndDate($conn);
+
+                        // $today_date = date('Y-m-d');
+                        // $enddate = $_SESSION['end_date'];
+
+                        $int_today = intval(strtotime($today_date));
+                        $int_end = intval(strtotime($enddate));
+                        // echo ($int_today) . BR;
+                        // echo ($int_end) . BR;
+                        if ($int_today >=    $int_end) :
 
                             $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
                             mysqli_query($conn, $qry);
 
-                            // $qry_account = 'UPDATE account_tbl SET `status` = "Inactive" , rater = null, approving_authority = null WHERE `status` = "Active"';
-                            // mysqli_query($conn, $qry_account);
-
+                        
                             $qry_subject = 'UPDATE subject_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_subject) or die($conn->error);
 
@@ -261,18 +278,16 @@
                             $qry_kra = 'UPDATE kra_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_kra) or die($conn->error);
                             exit();
-                        else : return console_log('wala kang nakaset ng sy');
+                        else: 
+                        // else : return console_log('wala kang nakaset ng sy');
                         endif;
-                    else :
-                        $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
-                        mysqli_query($conn, $qry)  or die($conn->error . $qry);
-                        return false;
-                        console_log('inaupdate ko to hihi');
+                    // else :
+                    //     $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
+                    //     mysqli_query($conn, $qry)  or die($conn->error . $qry);
+                    //     return false;
+                    //     console_log('inaupdate ko to hihi');
                     endif;
-                else :
-                    // session_unset();
-                    // session_destroy();
-                    console_log("no school year!");
+
                 endif;
             }
 
@@ -425,7 +440,7 @@
             {
                 if (isset($active_sy)) :
                     echo '<p class="red-notif-border"> There is no Active School Year! </p>';
-                    include 'includes/footer.php';
+                    include 'samplefooter.php';
                     die();
                 endif;
             }
@@ -1959,6 +1974,32 @@
                 endif;
             }
 
+            function mtobj_tbl($conn)
+            {
+                $qry = "SELECT * FROM `mtobj_tbl`";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return $count_arr;
+                endif;
+            }
+
+            function tobj_tbl($conn)
+            {
+                $qry = "SELECT * FROM `tobj_tbl`";
+                $result = mysqli_query($conn, $qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return $count_arr;
+                endif;
+            }
+
             function displayCBC($conn)
             {
                 $qry = "SELECT * FROM core_behavioral_tbl";
@@ -2943,17 +2984,30 @@
                 echo "<script> $(document).ready(function() { $('#$modal_id').modal();});</script>";
             }
 
-            function checkDPstr($table_name, $conn, $user, $sy, $school, $position)
+            function filterString($input)
             {
-                /*
-        THIS function WILL FETCH THE DevNeed IN ESAT BEHAVIORAL
-        TABLES: devplanmt_a1_strength_tbl, devplant_a1_strength_tbl 
-    */
-                $qry1 = "SELECT * FROM `$table_name` WHERE `user_id` = " . $user . " AND `sy` = " . $sy . " AND `school` = " . $school . " and `position` = '" . $position . "'";
-                $result = mysqli_query($conn, $qry1) or die($conn->error);
+                $val1 =   filter_var($input, FILTER_FLAG_NO_ENCODE_QUOTES);
+                return filter_var($val1, FILTER_SANITIZE_STRING);
+            }
 
-                $count_result = mysqli_num_rows($result);
-                if (($count_result) > 0) : return true;
-                else : return false;
-                endif;
+            function filter_input_string($data)
+            {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return filter_var($data, FILTER_SANITIZE_STRING);
+            }
+
+            function displayPrincipal($conn, $school_id)
+            {
+                $qry = "SELECT * FROM `account_tbl` WHERE position = 'Principal' AND school_id = $school_id";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+
+                if ($count_res > 0) {
+
+                    foreach ($results as $res) {
+                        return $res['user_id'];
+                    }
+                }
             }

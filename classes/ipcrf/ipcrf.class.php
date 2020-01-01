@@ -517,6 +517,19 @@ class IPCRF
         endif;
     }
 
+    public function fetch_user_Score($table, $obj_id, $user)
+    {
+        $qry  = "SELECT * FROM `$table` WHERE obj_id = $obj_id AND `user_id` = $user AND sy_id = " . $this->sy . " AND school_id =" . $this->school . "";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return (floatval($r['score']));
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
 
     // TABLE = perfmtindicator_tbl,perftindicator_tbl
     public function getTimeliness($table_name, $kra_id, $obj_id)
@@ -810,7 +823,7 @@ class IPCRF
 
     public function fetchMTObjective_tbl()
     {
-        $qry = "SELECT * FROM `tobj_tbl`";
+        $qry = "SELECT * FROM `mtobj_tbl`";
         $result = mysqli_query($this->conn(), $qry);
         if ($result) {
             $array_res = [];
@@ -836,7 +849,6 @@ class IPCRF
             return $array_res;
         }
     }
-
     /* THIS FUNCTION WILL DISPLAY ALL TEACHER WITH COT THE SCHOOL */
     public function fetchTeacherWithCOT()
     {
@@ -849,5 +861,134 @@ class IPCRF
             }
             return $array_res;
         }
+    }
+    /* 
+        THIS FUNCTION WILL DISPLAY ALL SCORE 
+        table = ipcrf_mt, ipcrf_t
+    */
+    public function fetchTotalScoreKRA()
+    {
+        $qry = "SELECT a.kra_id,sum(a.roundScore) as total_score from ((SELECT kra_id,ROUND(SUM(score), 3) as roundScore,sy_id, school_id  FROM `ipcrf_mt` where sy_id = " . $this->sy . " and school_id = " . $this->school . "  group by kra_id) UNION ALL (SELECT kra_id,ROUND(SUM(score), 3) as roundScore,sy_id, school_id  F" . $this->school . "M `ipcrf_t` where sy_id = " . $this->sy . " and school_id = " . $this->school . "  group by kra_id))a GROUP BY a.kra_id";
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    public function fetchTotalScoreOBJ()
+    {
+        $qry = "SELECT a.obj_id, SUM(a.roundScore) AS total_score FROM ( ( SELECT obj_id, ROUND(SUM(score), 3) AS roundScore, sy_id, school_id FR" . $this->school . " `ipcrf_t` WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " GROUP BY obj_id ) UNION all ( SELECT obj_id, ROUND(SUM(score), 3) AS roundScore, sy_id, school_id FR" . $this->school . " `ipcrf_mt` WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " GROUP BY obj_id ) ) a GROUP BY a.obj_id";
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    //     SELECT * FROM (SELECT kra_id,obj_id,user_id,quality,efficiency,timeliness,position,average,objective_weight,score FROM `ipcrf_mt` where sy_id = 17 and school_id = 14 and status = 'Active' UNION ALL SELECT kra_id,obj_id,user_id,quality,efficiency,timeliness,position,average,objective_weight,score FROM `ipcrf_t` where sy_id = 17 and school_id = 14 and status = 'Active')a ORDER BY FIELD (a.position,'Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I','Teacher III','Teacher II','Teacher I')
+    // 
+
+    // public function fetchIPCRF_QETscore()
+    // {
+    //     $qry = "SELECT * FROM (SELECT kra_id,obj_id,user_id,quality,efficiency,timeliness,position,average,objective_weight,score FROM `ipcrf_mt` where sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' UNION ALL SELECT kra_id,obj_id,user_id,quality,efficiency,timeliness,position,average,objective_weight,score FROM `ipcrf_t` where sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active')a ORDER BY FIELD (a.position,'Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I','Teacher III','Teacher II','Teacher I')";
+    //     $result = mysqli_query($this->conn(), $qry);
+    //     if ($result) {
+    //         $array_res = [];
+    //         foreach ($result as $r) {
+    //             array_push($array_res, $r);
+    //         }
+    //         return $array_res;
+    //     }
+    // }
+
+    public function fetch_QETscore_mt()
+    {
+        $qry = "SELECT kra_id,obj_id,user_id,quality,efficiency,timeliness,position,average,objective_weight,score FROM `ipcrf_mt` where sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' ORDER BY obj_id, FIELD (position,'Master Teacher IV','Master Teacher III','Master Teacher II','Master Teacher I')";
+
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+
+    /* 
+    THIS METHOD WILL SHOW ALL THE USER WITH IPCRF 
+    TABLES: ipcrf_final_mt, ipcrf_final_t
+*/
+    public function fetch_ipcrf_users($table)
+    {
+        $qry = "SELECT * FROM `ipcrf_final_mt` WHERE sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' ORDER BY FIELD(adjectival_rating,'Outstanding','Very Satisfactory','Satisfactory','Unsatisfactory','Poor'),final_rating";
+
+        $result = mysqli_query($this->conn(), $qry);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    /* 
+    THIS METHOD WILL SHOW ALL THE DETAILS OF USER WITH IPCRF 
+    TABLES: ipcrf_mt, ipcrf_t
+    */
+
+    public function fetch_ipcrf_user_details($table, $user)
+    {
+        $qry = "SELECT * FROM `$table` WHERE sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' AND user_id = $user";
+
+        $result = mysqli_query($this->conn(), $qry) or console_log($$this->conn()->error);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    // ipcrf_final_mt, ipcrf_final_t
+
+    /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR RESULT OF COT  */
+    public function getFinalRating($table, $user)
+    {
+        $qry  = "SELECT final_rating FROM `$table` where `user_id` = $user AND sy_id = " . $this->sy . " AND school_id = " . $this->school . " and status = 'Active'";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return floatval($r['final_rating']);
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    // ipcrf_final_mt, ipcrf_final_t
+
+    /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR RESULT OF COT  */
+    public function getAdjectivalRating($table, $user)
+    {
+        $qry  = "SELECT adjectival_rating FROM `$table` where `user_id` = $user AND sy_id = " . $this->sy . " AND school_id = " . $this->school . " and status = 'Active'";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return ($r['adjectival_rating']);
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
     }
 }

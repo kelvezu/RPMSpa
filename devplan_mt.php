@@ -7,12 +7,14 @@ $user = $_SESSION['user_id'];
 $sy = $_SESSION['active_sy_id'];
 $school = $_SESSION['school_id'];
 $position = $_SESSION['position'];
-$objective_table = 'esat2_objectivesmt_tbl';
+$str_objective_table = 'devplanmt_a1_strength_tbl';
+$devneed_objective_table = 'devplanmt_a2_devneeds_tbl';
 $devplan = new DevPlan($user, $sy, $school, $position);
-$strength_objective = $devplan->fetchStrengthOBJ($objective_table);
-$devneed_objective = $devplan->fetchDevNeedOBJ($objective_table);
-// pre_r($strength_objective);
+$strength_objective = $devplan->fetch_dp($str_objective_table);
+$devneed_objective = $devplan->fetch_dp($devneed_objective_table);
 
+
+// pre_r($strength_objective);
 ?>
 
 
@@ -67,17 +69,8 @@ $devneed_objective = $devplan->fetchDevNeedOBJ($objective_table);
                     <tr>
                         <td>
                             <!-- STRENGTH -->
-                            <?php if ($strength_objective) : foreach ($strength_objective as $str_obj) :
-                                    $obj = $str_obj['mtobj_id'];
-                                    $kra = $str_obj['kra_id'];  ?>
-                                    <p class="text-center font-weight-bold">
+                            <?php if ($strength_objective) : foreach ($strength_objective as $str_obj) : ?>
 
-                                        <input class="form-check-input" type="checkbox" name="strength_objective[]" value="<?php echo $obj; ?>" />
-                                        <span data-toggle="tooltip" data-placement="top" title="<?php echo "KRA:\n-" . displayKRA($conn, $kra) . " \nObjective:\n-" . displayObjectiveMT($conn, $kra) ?>">
-                                            Objective <?= $obj ?>, KRA <?= $kra ?>
-                                        </span>
-
-                                    </p>
                             <?php endforeach;
                             else : echo "<p class='text-center'>---</p>";
                             endif; ?>
@@ -85,15 +78,8 @@ $devneed_objective = $devplan->fetchDevNeedOBJ($objective_table);
 
                         <td>
                             <!-- DEVNEEDS -->
-                            <?php if ($devneed_objective) : foreach ($devneed_objective as $str_obj) :
-                                    $obj = $str_obj['mtobj_id'];
-                                    $kra = $str_obj['kra_id'];  ?>
-                                    <p class="text-center font-weight-bold text-nowrap">
-                                        <input class="form-check-input" type="checkbox" name="devneed_objective[]" value="<?php echo $obj; ?>" />
-                                        <span data-toggle="tooltip" data-placement="top" title="<?php echo "KRA:\n-" . displayKRA($conn, $kra) . " \nObjective:\n-" . displayObjectiveMT($conn, $kra) ?>">
-                                            Objective <?= $obj ?>, KRA <?= $kra ?>
-                                        </span>
-                                    </p>
+                            <?php if ($devneed_objective) : foreach ($devneed_objective as $str_obj) : ?>
+
                             <?php endforeach;
                             else : echo "<p class='text-center'>---</p>";
                             endif; ?>

@@ -17,6 +17,22 @@ $devneed_objective = $devplan->fetchDevNeedOBJ($objective_table);
 $strength_behavioral = $devplan->fetchCoreBehavioralStr($core_behavioral_table);
 $devneed_behavioral = $devplan->fetchCoreBehavioralDevNeed($core_behavioral_table);
 
+// CHECK IF THERE ARE EXISTING RECORD
+$check_dp_str = $devplan->checkOBJ_dp('devplanmt_a1_strength_tbl');
+$check_dp_devneed = $devplan->checkOBJ_dp('devplanmt_a2_devneeds_tbl');
+$check_dp_actionplan = $devplan->checkOBJ_dp('devplanmt_a3_actionplan_tbl');
+$check_dp_str_behavioral = $devplan->checkOBJ_dp('devplanmt_b1_strength_tbl');
+$check_dp_devneeed_behavioral = $devplan->checkOBJ_dp('devplanmt_b2_devneeds_tbl');
+$check_dp_actionplan2 = $devplan->checkOBJ_dp('devplanmt_b3_actionplan_tbl');
+
+if ($check_dp_str && $check_dp_devneed && $check_dp_actionplan && $check_dp_str_behavioral && $check_dp_devneeed_behavioral && $check_dp_actionplan2) :
+
+    echo '<p class="green-notif-border">You have already have Development Plan</p>';
+    include 'samplefooter.php';
+    exit();
+
+endif;
+
 // pre_r($strength_objective);
 ?>
 
@@ -38,8 +54,7 @@ endif;
 
 ?>
 
-<?php if (isset($_POST['create_dp_mt'])) :
-?>
+<?php if (isset($_POST['create_dp_mt'])) : ?>
     <?php showModal('myModal') ?>
 
     <div id="myModal" class="modal container-fluid" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -59,6 +74,75 @@ endif;
                 $b_intervention = $_POST['b_intervention'];
                 $b_timeline = $_POST['b_timeline'];
                 $b_resource_needed = $_POST['b_resources_needed'];
+
+                // Validation 
+
+                if (strlen($a_learn_obj) < 10) :
+                    $error_array[] = "10 or more characters in Functional Learning Objectives is required!";
+                endif;
+
+                if (strlen($a_intervention) < 10) :
+                    $error_array[] = "10 or more characters in Functional Intervention is required!";
+                endif;
+
+                if (strlen($a_timeline) < 10) :
+                    $error_array[] = "10 or more characters in Functional Timeline is required!";
+                endif;
+
+                if (strlen($a_resource_needed) < 10) :
+                    $error_array[] = "10 or more characters in Functional Resources needed is required!";
+                endif;
+
+                if (strlen($b_learn_obj) < 10) :
+                    $error_array[] = "10 or more characters in Core Behavioral Competencies Learning Objectives is required!";
+                endif;
+
+                if (strlen($b_intervention) < 10) :
+                    $error_array[] = "10 or more characters in Core Behavioral Competencies Intervention is required!";
+                endif;
+
+                if (strlen($b_timeline) < 10) :
+                    $error_array[] = "10 or more characters in Core Behavioral Competencies Timeline is required!";
+                endif;
+
+                if (strlen($b_resource_needed) < 10) :
+                    $error_array[] = "10 or more characters in Core Behavioral Competencies Resources needed is required!";
+                endif;
+
+                // ---------------------------------
+
+                if (ctype_space($a_learn_obj)) :
+                    $error_array[] = "Functional Competencies Learning Objectives is required!";
+                endif;
+
+                if (ctype_space($a_intervention)) :
+                    $error_array[] = "Functional Competencies Intervention is required!";
+                endif;
+
+                if (ctype_space($a_timeline)) :
+                    $error_array[] = "Functional Competencies Timeline is required!";
+                endif;
+
+                if (ctype_space($a_resource_needed)) :
+                    $error_array[] = "Functional Competencies Resources needed is required!";
+                endif;
+
+                if (ctype_space($b_learn_obj)) :
+                    $error_array[] = "Core Behavioral Competencies Learning Objectives is required!";
+                endif;
+
+                if (ctype_space($b_intervention)) :
+                    $error_array[] = "Core Behavioral Competencies Intervention is required!";
+                endif;
+
+                if (ctype_space($b_timeline)) :
+                    $error_array[] = "Core Behavioral Competencies Timeline is required!";
+                endif;
+
+                if (ctype_space($b_resource_needed)) :
+                    $error_array[] = "Core Behavioral Competencies Resources needed is required!";
+                endif;
+
                 if (!$obj_str) :
                     $error_array[] = "Please choose your Strength in objective!";
                 endif;
@@ -75,6 +159,8 @@ endif;
                     $error_array[] = "Please choose your Development Need in Core Behaioral Competencies!";
                 endif;
 
+                // END OF VALIDATION
+
                 if (!empty($error_array)) :
                     echo '<ul class="red-notif-border text-justify">';
                     foreach ($error_array as $errors) :
@@ -83,6 +169,9 @@ endif;
                     echo '</ul>';
                 endif;
                 ?>
+
+
+
                 <form action="includes/processdevplan_mt.php" method="post">
                     <input type="hidden" name="user" value="<?php echo $user ?? null ?>">
                     <input type="hidden" name="sy" value="<?php echo $sy ?? null ?>">
@@ -92,6 +181,13 @@ endif;
                     <input type="hidden" name="position" value="<?php echo $position ?? null ?>">
 
                     <div class="m-3">
+
+                        <div class="bg-dark text-white p-2">
+                            <h4>
+                                Do you want to submit your Development Plan?
+                            </h4>
+                        </div>
+
                         <table class="table table-sm table-bordered text-justify">
                             <thead class="text-center bg-light font-weight-bold">
                                 <tr>
@@ -105,7 +201,6 @@ endif;
                                     <th colspan="2">
                                         <p>Action Plan</p>
                                     </th>
-
 
                                     <th rowspan="2">
                                         <p>Timeline</p>
@@ -252,6 +347,8 @@ endif;
     </div>
 <?php endif;
 ?>
+
+<!-- END OF MODAL -->
 
 
 
