@@ -32,9 +32,7 @@ if (isset($_POST['view'])) :
                 <div class="card-header bg-success">
                     <div class=" text-center h4 text-white">Age</div>
                 </div>
-                
-                <div class="card-body" id="chartContainer1">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
+                <div class="card-body ">
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -53,7 +51,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Gender</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -72,7 +69,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Employment Status</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -92,7 +88,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Position</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -112,7 +107,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Highest Degree Obtained</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -134,7 +128,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Total Number of Years in Teaching</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -154,7 +147,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Subject Taught</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -175,7 +167,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Grade Level Taught</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -195,7 +186,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Curricular Class of School</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -216,7 +206,6 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Region</div>
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -244,7 +233,6 @@ if (isset($_POST['view'])) :
 
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                     <div class="row">
                         <div id="selfassessmentchart" style="width: 1200px; height: 350px;"></div>
                     </div>
@@ -267,7 +255,7 @@ if (isset($_POST['view'])) :
 
                 </div>
                 <div class="card-body">
-                <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
+
                     <div class="d-flex justify-content-center">
                         <div id="corebehavioral" style="width: 900px; height: 350px;"></div>
                     </div>
@@ -297,7 +285,7 @@ if (isset($_POST['view'])) :
                 let data = google.visualization.arrayToDataTable([
                     ['Age', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_name WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name") or die($conn->error);
+                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name") or die($conn->error);
                             while ($AgeChart = $qry->fetch_assoc()) :
                                 echo "['" . $AgeChart['age_name'] . "', " . $AgeChart['total'] . "],";
                             endwhile; ?>
@@ -305,25 +293,9 @@ if (isset($_POST['view'])) :
                 let options = {
                     title: 'Age'
                 };
-//                let chart = new google.visualization.PieChart(document.getElementById('agechart'));
-  //              chart.draw(data, options);
-
-                var container = document.getElementById('age3');
-                var chart = new google.visualization.PieChart(document.getElementById('agechart'));
-                var btnSave = document.getElementById('save-pdf');
-
-                google.visualization.events.addListener(chart, 'ready', function () {
-                btnSave.disabled = false;
-                });
-
-                btnSave.addEventListener('click', function () {
-                var doc = new jsPDF('l');
-                doc.addImage(chart.getImageURI(), 0, 0);
-                doc.save('chart.pdf');
-                }, false);
-                chart.draw(data, options)        
-                }
-
+                let chart = new google.visualization.PieChart(document.getElementById('agechart'));
+                chart.draw(data, options);
+            }
         </script>
 
         <script type="text/javascript">
@@ -337,20 +309,20 @@ if (isset($_POST['view'])) :
                 var data = google.visualization.arrayToDataTable([
                     ['Age', 'School Year 1', 'School Year 2', 'School Year 3'],
                     <?php
-                           // $age = AgeDemoFetch($conn);
-                           // foreach ($age as $agedemo) :
-                                $qry = $conn->query("SELECT age_tbl.age_name as age_name,COUNT(esat1_demographicst_tbl.user_id) AS T_COUNT, 
-                                CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
-                                CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
-                                CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-                                FROM esat1_demographicst_tbl inner join age_tbl on esat1_demographicst_tbl.age = age_tbl.age_name WHERE esat1_demographicst_tbl.age = age_tbl.age_name AND esat1_demographicst_tbl.sy = '$sy' AND esat1_demographicst_tbl.school = '$school' group by age_tbl.age_name,esat1_demographicst_tbl.sy") or die($conn->error);
+                            $age = AgeDemoFetch($conn);
+                            foreach ($age as $agedemo) :
+                                $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
+CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
+CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
+FROM esat1_demographicst_tbl WHERE age = " . $agedemo['age_id'] . "  AND sy = '$sy' AND school = '$school' group by sy") or die($conn->error);
                                 while ($AgeQry = $qry->fetch_assoc()) :
-                                    echo "['" . $AgeQry['age_name'] . "', 
+                                    echo "['" . $agedemo['age_name'] . "', 
     " . intval($AgeQry['sy1']) . ",  
     " . intval($AgeQry['sy2']) . ",   
     " . intval($AgeQry['sy3']) . "],";
                                 endwhile;
-                         //  endforeach;
+                            endforeach;
                             ?>
                 ]);
 
@@ -377,26 +349,9 @@ if (isset($_POST['view'])) :
                     }
                 };
 
-               //var chart = new google.visualization.ComboChart(document.getElementById('age2chart'));
-                //chart.draw(data, options);
-
-                var container = document.getElementById('age2chart');
                 var chart = new google.visualization.ComboChart(document.getElementById('age2chart'));
-                var btnSave = document.getElementById('save-pdf');
-
-                google.visualization.events.addListener(chart, 'ready', function () {
-                btnSave.disabled = false;
-                });
-
-                btnSave.addEventListener('click', function () {
-                var doc = new jsPDF('l');
-                doc.addImage(chart.getImageURI(), 0, 0);
-                doc.save('chart.pdf');
-                }, false);
-                chart.draw(data, options);  
-
+                chart.draw(data, options);
             }
-        
         </script>
 
 
@@ -1356,7 +1311,7 @@ GROUP BY a.cbc_id") or die($conn->error . $qry);
             };
         </script>
         <!-- Core Behavioral Competencies Chart Function -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+
 
     <?php
 

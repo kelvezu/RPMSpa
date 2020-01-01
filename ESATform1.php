@@ -41,7 +41,7 @@
               elseif ($age >= 36 && $age <= 40) : $AgeRange = "36-40 years old";
               elseif ($age >= 31 && $age <= 35) : $AgeRange = "31-35 years old";
               elseif ($age >= 25 && $age <= 30) : $AgeRange = "25-30 years old";
-              elseif ($age < 25 ): $AgeRange = "Under 25";
+              elseif ($age < 25 ): $AgeRange = "Under 25 years old";
               else:  $AgeRange = "Invalid Age";
               endif;
           ?>
