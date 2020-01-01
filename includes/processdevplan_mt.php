@@ -7,7 +7,7 @@ include '../libraries/func.lib.php';
 include '../classes/devplan/devplan.class.php';
 
 if (isset($_POST['submit_dp'])) :
-    pre_r($_POST);
+    // pre_r($_POST);
 
     $user = $_POST['user'];
     $sy = $_POST['sy'];
@@ -17,16 +17,16 @@ if (isset($_POST['submit_dp'])) :
     $position = $_POST['position'];
     $strobj = $_POST['strobj'];
     $devneedobj = $_POST['devneedobj'];
-    $a_learn_obj = $_POST['a_learn_obj'];
-    $a_intervention = $_POST['a_intervention'];
-    $a_timeline = $_POST['a_timeline'];
-    $a_resource_needed = $_POST['a_resource_needed'];
+    $a_learn_obj = filter_input_string($_POST['a_learn_obj']);
+    $a_intervention = filter_input_string($_POST['a_intervention']);
+    $a_timeline = filter_input_string($_POST['a_timeline']);
+    $a_resource_needed = filter_input_string($_POST['a_resource_needed']);
     $strbehavioral = $_POST['strbehavioral'];
     $devneedbehavioral = $_POST['devneedbehavioral'];
-    $b_learn_obj = $_POST['b_learn_obj'];
-    $b_intervention = $_POST['b_intervention'];
-    $b_timeline = $_POST['b_timeline'];
-    $b_resource_needed = $_POST['b_resource_needed'];
+    $b_learn_obj = filter_input_string($_POST['b_learn_obj']);
+    $b_intervention = filter_input_string($_POST['b_intervention']);
+    $b_timeline = filter_input_string($_POST['b_timeline']);
+    $b_resource_needed = filter_input_string($_POST['b_resource_needed']);
     // pre_r($_POST);
     $devplan = new DevPlan($user, $sy, $school, $position);
 
@@ -109,6 +109,7 @@ if (isset($_POST['submit_dp'])) :
 
     if ($insert_sql_str_obj  && $insert_sql_devneed_obj  && $insert_sql_actionplan  && $insert_sql_str_behavioral  && $insert_sql_devneed_behavioral  && $insert_sql_actionplan2) :
         header("location:../devplan_create_mt.php?notif=success");
+        exit();
     endif;
 
 

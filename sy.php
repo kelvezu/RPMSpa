@@ -69,10 +69,6 @@ endif;
             ?>" class="form-control-sm mx-2" maxlength="4" disabled />
 
                         </div>
-
-
-
-
                         <!-- End of start year -->
                         <div class="row">
 
@@ -93,12 +89,10 @@ endif;
                                 <option value="12">December</option>
                             </select>
 
-
-
                             <select name="end-day[]" id="" class="form-control">
                                 <?php
                                 for ($i = 1; $i < 32; $i++) :
-                                    ?>
+                                ?>
                                     <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                                 <?php
                                 endfor ?>
@@ -172,18 +166,16 @@ endif;
                 $end = $row['end_date'];
                 $sy = $row['sy_desc'];
                 $status = $row['status'];
-                ?>
+            ?>
 
                 <form method="post" action="includes/importsy.inc.php">
-
-
                     <tr>
                         <input type="hidden" name="sy_id" value="<?= $sy_id; ?>">
                         <td><?php echo displayDate($start); ?></td>
                         <td><?php echo displayDate($end); ?></td>
                         <td><?php echo $sy; ?></td>
                         <td><?php echo $status; ?></td>
-                        <td><input type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter<?= $sy_id; ?>" value="Set"></button></td>
+                        <td><a href="<?= $sy_id; ?>" class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter<?= $sy_id; ?>">Set<?= $sy_id; ?></a></td>
 
                     </tr>
 
@@ -200,10 +192,14 @@ endif;
                                 </div>
                                 <div class="modal-body">
                                     Are you sure you want to set the school year? Please note that you will be forced log out by the system if you proceed.
+                                    <?= $sy_id; ?>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                    <button type="submit" name="sy_set" class="btn btn-primary">Yes</button>
+                                    <form action="" method="post">
+                                        <input type="hidden" name="sy_id" value="<?= $sy_id; ?>">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" name="sy_set" class="btn btn-primary">Yes</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

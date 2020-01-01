@@ -18,6 +18,10 @@ include_once 'libraries/func.lib.php';
 include_once 'includes/security.php';
 include_once 'libraries/queries.library.php';
 activeobsperiod($conn);
+
+// if (!empty($_SESSION['active_sy_id'])) :
+//     endSchoolYear($conn, $_SESSION['active_sy_id']);
+// endif;
 ?>
 
 <head>
@@ -29,6 +33,7 @@ activeobsperiod($conn);
     <link rel="stylesheet" href="bootstrap4/b4css/bootstrap.min.css">
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="bootstrap4/font_awesome/css/all.css">
+
 
     <!-- Script for Dynamic Dropdown -->
     <script src="bootstrap4/scripts/jquery-3.4.1.min.js"></script>

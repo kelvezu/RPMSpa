@@ -617,4 +617,18 @@ class DevPlan
         else : return false;
         endif;
     }
+
+    public function fetch_dp($table_name)
+    {
+        $res_arr = [];
+        $sql = "SELECT * FROM `$table_name` where `user_id` = " . $this->user . " AND `sy` = " . $this->sy . " AND `school` = " . $this->school . "";
+        $result = mysqli_query($this->conn(), $sql);
+
+        if ($result) :
+            foreach ($result as $r) :
+                $res_arr[] = $r;
+            endforeach;
+            return $res_arr;
+        endif;
+    }
 }
