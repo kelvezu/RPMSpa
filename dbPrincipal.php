@@ -195,9 +195,49 @@ include_once 'sampleheader.php'; ?>
         </div>
 
 
-        <div class="col text-info black-border">
-            <div id=""></div>
-        </div>
+        <div class="col">
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <h6><i class="fa fa-users"></i> IPCRF Rating</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body box">
+                        <div id="teacher_count_table">
+                            <table class=" table table-sm table-responsive-sm table-hover ">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>User</th>
+                                        <th>Rating</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="box">
+                                    <?php
+                                    //  and $sch_t['T'] || $sch_t['MT']
+                                    $num = 1;
+                                    $ipcrf_total = RPMSdb::ipcrfsumP($conn);
+                                    foreach ($ipcrf_total as $ipcrf_t) : ?>
+                                        
+                                            <td><?= $num++ ?></td>
+                                            <td><?= $ipcrf_t['user_id']; ?></td>
+                                            <td><?= $ipcrf_t['rating'] ?></td>
+                                            
+                
+                                </tbody>
+                            <?php endforeach; ?>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- end of card-body -->
+                </div>
+                <!-- end of card -->
+            </div>
 
         <!-- End of First Row -->
     </div>

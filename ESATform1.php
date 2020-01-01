@@ -34,14 +34,14 @@
                 $to   = new DateTime('today');
                 $age = $from->diff($to)->y;
               endwhile;
-              if($age > 55) : $AgeRange = "Over 55 years old";
+              if($age > 55) : $AgeRange = "Over 55";
               elseif ($age >= 51 && $age <= 55) : $AgeRange = "51-55 years old";
               elseif ($age >= 46 && $age <= 50) : $AgeRange = "46-50 years old";
               elseif ($age >= 41 && $age <= 45) : $AgeRange = "41-45 years old";
               elseif ($age >= 36 && $age <= 40) : $AgeRange = "36-40 years old";
               elseif ($age >= 31 && $age <= 35) : $AgeRange = "31-35 years old";
               elseif ($age >= 25 && $age <= 30) : $AgeRange = "25-30 years old";
-              elseif ($age < 25 ): $AgeRange = "Under 25 years old";
+              elseif ($age < 25 ): $AgeRange = "Under 25";
               else:  $AgeRange = "Invalid Age";
               endif;
           ?>

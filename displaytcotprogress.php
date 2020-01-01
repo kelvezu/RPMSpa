@@ -7,13 +7,14 @@ include 'sampleheader.php';
 
 
 
-
 $teacher_id = $_GET['user_id'];
 $school_id = $_SESSION['school_id'];
 $sy_id = $_SESSION['active_sy_id'];
 $obs = $_GET['obs'];
 
-$indicator_arr = RPMSdb::fetchSpecificTindicator($conn, $sy_id, $school_id,  $teacher_id);
+
+
+$indicator_arr = RPMSdb::fetchSpecificTindicatorPeriod($conn, $sy_id, $school_id,  $teacher_id,$obs);
 
 if(isset($_GET['notif'])):
     if($_GET['notif'] == 'pwerror'):
@@ -22,8 +23,6 @@ if(isset($_GET['notif'])):
 endif;
 ?>
 
-
- 
 <style>
 #form {
 
@@ -70,7 +69,7 @@ $(document).ready(function() {
                 <div class="row">
                     <div class="col">
                         <p>
-                            <b>Teacher Observed:</b> <?php displayname($conn, $teacher_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?><br />
+                            <b>Teacher Observed:</b> <?php displayName($conn,$teacher_id) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?><br />
                             <b>School :</b> <?= displaySchool($conn, $school_id) ?><br />
                             <b>Observation Period :</b> <?= $obs; ?>
                         </p>
@@ -107,7 +106,7 @@ $(document).ready(function() {
                     <tbody>
                         <tr>
                             <td class="font-weight-bold"><?= $num++ . '.'; ?></td>
-                            <td class="font-italic"><?= displayTindicator($conn, $ind['indicator_id']); ?></td>
+                            <td class="font-italic"><?= displayTindicator($conn,$ind['indicator_id']); ?></td>
                             <td class="text-center text-success">
                                 <?php
                                         if (empty(fetchCOTratingT($conn, $teacher_id, $obs, $ind['indicator_id'], $sy_id, $school_id))) :
@@ -122,6 +121,15 @@ $(document).ready(function() {
             <?php endforeach;
             endwhile ?>
             </table>
+             <?php
+                $commentQry = $conn->query("SELECT * FROM cot_t_rating_b_tbl WHERE `user_id` = '$teacher_id' AND sy = '$sy_id' AND obs_period = '$obs' AND school_id = '$school_id'");
+                while ($comment = $commentQry->fetch_assoc()):
+                    $commentresult = $comment['comment'];
+            ?>
+
+            <textarea name="comment" cols="10" rows="5" readonly class="form-control"><?php echo $commentresult; ?></textarea>
+
+                <?php endwhile; ?>
         </div>
         </div>
 

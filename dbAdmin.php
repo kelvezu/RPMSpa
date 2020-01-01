@@ -184,6 +184,58 @@ include_once 'sampleheader.php'; ?>
 
         </div>
 
+<!-- IPCRF Summary -->
+
+<div class="col">
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <h6><i class="fa fa-users"></i> IPCRF Rating Per Schools</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body box">
+                        <div id="teacher_count_table">
+                            <table class=" table table-sm table-responsive-sm table-hover ">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>School Name</th>
+                                        <th>Rating</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="box">
+                                    <?php
+                                    //  and $sch_t['T'] || $sch_t['MT']
+                                    $num = 1;
+                                    $ipcrf_total = RPMSdb::ipcrfsum($conn);
+                                    foreach ($ipcrf_total as $ipcrf_t) :
+                                        if (!empty($ipcrf_t['school_id'])) : ?>
+                                            <td><?= $num++ ?></td>
+                                            <td><?= displaySchool($conn, $ipcrf_t['school_id']); ?></td>
+                                            <td class="font-weight-bold text-success"><?= $ipcrf_t['rating'] ?></td>
+                                            
+                                        <?php endif ?>
+                                </tbody>
+                            <?php endforeach; ?>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- end of card-body -->
+                </div>
+                <!-- end of card -->
+            </div>
+
+
+        
+<!-- End of IPCRF -->
+
+
+
         <!-- Table for Principal List -->
         <div class="col">
             <div class="card">

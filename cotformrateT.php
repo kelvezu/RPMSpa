@@ -100,6 +100,12 @@ display:none;
         document.getElementById("tgradelvl").value= tgradelvl;
     }
 
+     function selectObs(){
+        var obs = document.getElementById("obs_period");
+        var observation_period = obs.options[obs.selectedIndex].text;
+        document.getElementById("observation").value= observation_period;
+    }
+
    
 
     </script>
@@ -285,96 +291,24 @@ $(document).ready(function() {
                             <input type="hidden" id="tgradelvl">
                         </div>
 
-                        <script>
-                            function showIndicator(str) {
-                                if (str == "") {
-                                    document.getElementById("show").innerHTML = "";
-                                    return;
-                                } else {
-                                    if (window.XMLHttpRequest) {
-                                        // code for IE7+, Firefox, Chrome, Opera, Safari
-                                        xmlhttp = new XMLHttpRequest();
-                                    } else {
-                                        // code for IE6, IE5
-                                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                                    }
-                                    xmlhttp.onreadystatechange = function() {
-                                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                                            document.getElementById("show").innerHTML = xmlhttp.responseText;
-                                        }
-                                    }
-                                    // getuser.php is seprate php file. q is parameter 
-                                    xmlhttp.open("GET", "ajaxtioaf.php?period=" + str, true);
-                                    xmlhttp.send();
-                                }
-                            }
-
-                            var $observer2 = $("select[name='observer2']");
-                            var $observer3 = $("select[name='observer3']");
-                            $observer2.change(function() {
-                                var selectedItem = $(this).val();
-                                var $options = $("select[name='observer2'] > option").clone();
-                                $("select[name='observer3']").html($options);
-                                $("select[name='observer3'] > option[value=" + selectedItem + "]").remove();
-                            });
-                        </script>
-                        <div class="col-lg-6">
+                         <div class="col-lg-6">
 
                             <label for="obsperiod" class="col-form-label">
                                <b> OBSERVATION PERIOD:</b>
                             </label>
 
-                            <?php
-                            $date = date('Y/m/d');
-                            $intdate = intval(strtotime($date));
-                            $first_period_int = intval(strtotime($_SESSION['first_period']));
-                            $second_period_int = intval(strtotime($_SESSION['second_period']));
-                            $third_period_int = intval(strtotime($_SESSION['third_period']));
-                            $fourth_period_int = intval(strtotime($_SESSION['final_period']));
+                             <select name="obs" id="obs_period" onchange="selectObs()" required class="select-style">
+                                <option value="" disabled selected>Select Period</option>
+                                <option value="1">1st</option>
+                                <option value="2">2nd</option>
+                                <option value="3">3rd</option>
+                                <option value="4">4th</option>
+                            </select>
 
-                            if ($intdate >= $fourth_period_int) :
-                                $period = 4;
-                            elseif ($intdate >= $third_period_int) :
-                                $period = 3;
-                            elseif ($intdate >= $second_period_int) :
-                                $period = 2;
-                            elseif ($intdate >= $first_period_int) :
-                                $period = 1;
-                            else :
-                                $period = "Invalid Period";
-                            endif;
+                            <?php $obs_period = '<input type="hidden" name="obs" id="observation" readonly class="select-style" />'; 
                             ?>
-
-                            <input type="text" name="obs" id="obs" value="<?php echo $period; ?>" readonly class="select-style" />
-                            
                         </div>
 
-                        
-
-                        <?php
-                        $date = date('Y/m/d');
-                        $intdate = intval(strtotime($date));
-                        $first_period_int = intval(strtotime($_SESSION['first_period']));
-                        $second_period_int = intval(strtotime($_SESSION['second_period']));
-                        $third_period_int = intval(strtotime($_SESSION['third_period']));
-                        $fourth_period_int = intval(strtotime($_SESSION['final_period']));
-
-                        if ($intdate >= $fourth_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period4=1';
-                        elseif ($intdate >= $third_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period3=1';
-                        elseif ($intdate >= $second_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period2=1';
-                        elseif ($intdate >= $first_period_int) :
-                            $periodqry = 'SELECT * FROM tindicator_tbl WHERE period1=1';
-                        else :
-                            echo 'invalid period!';
-                        endif;
-
-                      
-                        $resultqry = $conn->query($periodqry)  or die($conn->error);
-                        ?>
-                        <br>
 <!-- LEGEND OF COT RUBRICS-->
                 <div class="container">
                         
@@ -411,66 +345,104 @@ $(document).ready(function() {
                             </div>
 
                 
-<!-- END OF LEGEND-->
+                <!-- END OF LEGEND-->
+                
+<?php
+
+if (isset($_GET['obs'])) :
+    $obs = $_GET['obs'];
+    if ($period == 1) :
+        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period1=1';
+    elseif ($period == 2) :
+        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period2=1';
+    elseif ($period == 3) :
+        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period3=1';
+    elseif ($period == 4) :
+        $periodqry = 'SELECT * FROM tindicator_tbl WHERE period4=1';
+    else :
+        echo 'invalid period!';
+    endif;
+else :
+    $periodqry = 'SELECT * FROM tindicator_tbl';
+endif;
+
+$resultqry = $conn->query($periodqry)  or die($conn->error);    
+
+
+?>
+                
+            <table class="table table-bordered" style="background-color: white; table-layout: 10;">
+                <thead class="legend-control bg-success text-white ">
+                    <tr>
+                        <th>Indicator No</th>
+                        <th>Indicator Name</th>
+                        <th>COT Rating</th>
+                    </tr>
+                </thead>
+
+                <?php
+                // $indicator_no = 1;
+                // while ($row = $resultqry->fetch_assoc()) :
+                    ?>
 
 
 
-                        <table class="table table-bordered" style="background-color: white; table-layout: 10;">
-                            <thead class="legend-control bg-success text-white ">
-                                <tr>
-                                    <th>Indicator No</th>
-                                    <th>Indicator Name</th>
-                                    <th>COT Rating</th>
-                                </tr>
-                            </thead>
+                    <input type="hidden" name="indicator_id[]" id="indicator_id<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_id']; ?>" />
+                    <input type="hidden" name="indicator_name[]" id="indicator_name<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_name']; ?>" />
 
-                            <?php
-                            $indicator_no = 1;
-                            while ($row = $resultqry->fetch_assoc()) :
-                                ?>
+                    <tbody>
+                        <tr>
+                            <td><?php echo $row['indicator_id']; ?></td>
+                            <td><?php echo $row['indicator_name']; ?></td>
+                            <td>
+                                <select name="rating[]" required id="rating<?php echo $indicator_no; ?>" onchange="selectRating<?php echo $indicator_no; ?>()">
+                                    <option value="" disabled selected>--Select--</option>
+                                    <option value="1">3</option>
+                                    <option value="2">4</option>
+                                    <option value="3">5</option>
+                                    <option value="4">6</option>
+                                    <option value="5">7</option>
+                                    <option value="1">NO*</option>
+                                </select>
+                                <input type="text" id="rate<?php echo $indicator_no; ?>">
+                            </td>
+
+                        <script>
+                            function selectRating<?php echo $indicator_no; ?>(){
+                                var rating = document.getElementById("rating<?php echo $indicator_no; ?>");
+                                var cotrate = rating.options[rating.selectedIndex].text;
+                                document.getElementById("rate<?php echo $indicator_no; ?>").value= cotrate;
+                            }
+                        </script>
+
+                        <?php
+                            $indicator_no++;
+                        //endwhile;
+                        ?>
+                    </tbody>
+                    </tr>
+            </table>
+                        <script>
+
+                            var $observer2 = $("select[name='observer2']");
+                            var $observer3 = $("select[name='observer3']");
+                            $observer2.change(function() {
+                                var selectedItem = $(this).val();
+                                var $options = $("select[name='observer2'] > option").clone();
+                                $("select[name='observer3']").html($options);
+                                $("select[name='observer3'] > option[value=" + selectedItem + "]").remove();
+                            });
+                        </script>
+
+                        <br>
 
 
-                                <input type="hidden" name="indicator_id[]" id="indicator_id<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_id']; ?>" />
-                                 <input type="hidden" name="indicator_id[]" id="tindicator_id<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_id']; ?>" />
-                                <input type="hidden" name="indicator_name[]" id="indicator_name<?php echo $indicator_no; ?>" value="<?php echo $row['indicator_name']; ?>" />
-
-                                <tbody>
-                                    <tr>
-                                        <td><?php echo $row['indicator_id']; ?></td>
-                                        <td><?php echo $row['indicator_name']; ?></td>
-                                        <td>
-                                            <select name="rating[]" required id="rating<?php echo $indicator_no; ?>" onchange="selectRating<?php echo $indicator_no; ?>()">
-                                                <option value="<?= NULL ?>" disabled selected>--Select--</option>
-                                                <option value="1">3</option>
-                                                <option value="2">4</option>
-                                                <option value="3">5</option>
-                                                <option value="4">6</option>
-                                                <option value="5">7</option>
-                                                <option value="1">NO*</option>
-                                            </select>
-                                            <input type="hidden" id="rate<?php echo $indicator_no; ?>">
-
-                                        </td>
-
-                                        
-                                            <script>
-                                                 function selectRating<?php echo $indicator_no; ?>(){
-                                                        var rating = document.getElementById("rating<?php echo $indicator_no; ?>");
-                                                        var cotrate = rating.options[rating.selectedIndex].text;
-                                                        document.getElementById("rate<?php echo $indicator_no; ?>").value= cotrate;
-                                                    }
-                                            </script>
-                                    <?php
-                                        $indicator_no++;
-                                    endwhile;
-                                    ?>
+                                            
+                                  
                                 </tbody>
                                 </tr>
                         </table>
                 </div>
-
-
-
 
             <textarea class="form-control" name="ioaf_comment" id="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
             <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
@@ -570,8 +542,8 @@ $(document).ready(function() {
                                     </tr>
                                     <tr>
                                         <th>Observation Period: </th>
-                                        <td id="observation"></td>
-                                        <input type="hidden" name="obs" id="cotobservation" readonly>
+                                        <td id="obs"></td>
+                                        <input type="text" name="obs_period" id="cotobservation" readonly>
                                     </tr>
                                 </table>
                                 
@@ -638,7 +610,7 @@ $(document).ready(function(){
         $('#tobs').text($('#tobserve').val());
         $('#tsub').text($('#tsubjec').val());
         $('#tglt').text($('#tgradelvl').val());
-        $('#observation').text($('#obs').val());
+        $('#obs').text($('#observation').val());
         $('#comment').text($('#ioaf_comment').val());
 
         $('#cotobs1').val($('#observer1').val());
@@ -648,7 +620,7 @@ $(document).ready(function(){
         $('#cottobs').val($('#tobserved').val());
         $('#cottsub').val($('#tsubject').val());
         $('#cottglt').val($('#tgradelvltaught').val());
-        $('#cotobservation').val($('#obs').val());
+        $('#cotobservation').val($('#obs_period').val());
         
         
 

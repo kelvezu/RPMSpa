@@ -5,8 +5,8 @@ include 'sampleheader.php';
 
 $user = $_SESSION['user_id'];
 $sy = $_SESSION['active_sy_id'];
-$school = $_SESSION['school_id'];
-$position = $_SESSION['position'];
+$school_id = $_SESSION['school_id'];
+
 $rater = $_SESSION['rater'];
 $approving_authority = $_SESSION['approving_authority'];
 
@@ -28,14 +28,14 @@ $approving_authority = $_SESSION['approving_authority'];
                         $surname = $_POST['surname'];
                         $firstname = $_POST['firstname'];
                         $middlename = $_POST['middlename'];
-                        $position = $_POST['position'];
+                        $position = $_POST['position'] ?? "";
                         $contact = $_POST['contact'];
-                        $gender = $_POST['gender'];
+                        $gender = $_POST['gender'] ?? "";
                         $birthdate = $_POST['birthdate'];
                         $from = new DateTime($birthdate);
                         $to   = new DateTime('today');
                         $age = $from->diff($to)->y;
-                        $school = $_POST['school'];
+                        $school = $_POST['school'] ?? "";
 
                         $prc_Qry = $conn->query("SELECT * FROM account_tbl WHERE prc_id = '$prc_id'");
                         $prc_count = $prc_Qry->num_rows;
@@ -111,7 +111,14 @@ $approving_authority = $_SESSION['approving_authority'];
                                 endif;
                         endif;
 
-                         if (!empty($error_array)) :
+                        $user_Exist = $conn->query("SELECT * FROM account tbl WHERE surname = '$surname' AND firstname = '$firstname' AND middlename = '$middlename' AND birthdate = '$birthdate'");
+                        $user_count = $user_Exist->num_rows;
+
+                        if($user_count > 0):
+                                $error_array[] = "User already exist!";
+                        endif;
+
+                        if (!empty($error_array)) :
                                 echo '<ul class="red-notif-border text-justify">';
                                 foreach ($error_array as $errors) :
                                         echo '<li>' . $errors . '</li>';
@@ -121,11 +128,11 @@ $approving_authority = $_SESSION['approving_authority'];
                 ?>
                         <form action="includes/processsignup.php" method="post">
                                  <input type="hidden" name="added_by" value="<?php echo $user;  ?>">
-                                 <input type="hidden" name="school" value="<?php echo $school; ?>" >
+                                 <input type="hidden" name="school" value="<?php echo $school_id; ?>" >
                                  <input type="hidden" name="sy" value="<?php echo $sy; ?>" >
-                                 <input type="hidden" name="position" value="<?php echo $position; ?>" >
+                                
 
-
+                        <div class="tomato-color h4 font-italic">Are you sure you want to add user below?</div>
                         <div class="m-3">
                                 <table class="table table-sm table-bordered text-justify">
                             
@@ -198,27 +205,28 @@ $approving_authority = $_SESSION['approving_authority'];
                     <form method="post">
 
                     <label for="prcid"><strong>PRC ID:</strong></label>
-                    <input type="number" name="prc_id" placeholder="Enter PRC ID.." class="form-control" id="prc_id" required>
+                    <input type="number" name="prc_id" placeholder="Enter PRC ID.." class="form-control" id="prc_id" required value="<?php echo $prc_id ?? ""; ?>">
                     <div id="errorNo"></div>
 
                     <label for="Email"><strong>Email:</strong></label>
-                    <input type="text" name="email" placeholder="Enter Email.." class="form-control" id="email" required>
+                    <input type="text" name="email" placeholder="Enter Email.." class="form-control" id="email" required value="<?php echo $email ?? ""; ?>">
                     <div id="errorNo1"></div>
 
                     <label for="surname"><strong>Surname:</strong></label>
-                    <input type="text" name="surname" placeholder="Enter Surname.." class="form-control" id="surname" required>
+                    <input type="text" name="surname" placeholder="Enter Surname.." class="form-control" id="surname" required value="<?php echo $surname ?? ""; ?>">
                     <div id="errorNo2"></div>
 
                     <label for="firstname"><strong>Firstname:</strong></label>
-                    <input type="text" name="firstname" placeholder="Enter Firstname.." class="form-control" id="firstname" required>
+                    <input type="text" name="firstname" placeholder="Enter Firstname.." class="form-control" id="firstname" required value="<?php echo $firstname ?? ""; ?>">
                     <div id="errorNo3"></div>
 
                     <label for="middlename"><strong>Middlename:</strong></label>
-                    <input type="text" name="middlename" placeholder="Enter Middlename.." class="form-control" id="middlename" required>
+                    <input type="text" name="middlename" placeholder="Enter Middlename.." class="form-control" id="middlename" required value="<?php echo $middlename ?? ""; ?>">
                     <div id="errorNo4"></div>
 
                     <label for="position"><strong>Position:</strong></label>
                     <select name="position" class="form-control" required id="position">
+
                         <option value="" disabled selected>Select Position</option>
                         <?php
                             $posiresult = $conn->query('SELECT * FROM position_tbl')  or die($conn->error);
@@ -233,12 +241,12 @@ $approving_authority = $_SESSION['approving_authority'];
                     <div id="errorNo5"></div>
 
                     <label for="contact"><strong>Contact Number:</strong></label>
-                    <input name="contact" placeholder="Enter Contact Number.." class="form-control"  id="contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" required>
+                    <input name="contact" placeholder="Enter Contact Number.." class="form-control"  id="contact" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "11" required value="<?php echo $contact ?? ""; ?>">
                     <div id="errorNo6"></div>
 
                     <label for="sex"><strong>Sex:</strong></label>
                     <select name="gender" id="gender" class="form-control" required>
-                        <option value="" disabled selected>--Select Gender--</option>
+                        <option value="" disabled selected>Select Gender</option>
                         <?php
                         $genderresult = $conn->query('SELECT * FROM gender_tbl')  or die($conn->error);
                         while ($genrow = $genderresult->fetch_assoc()) :
@@ -247,16 +255,18 @@ $approving_authority = $_SESSION['approving_authority'];
                             <option value="<?php echo $gender_name ?>"><?php echo $gender_name; ?>
                             <?php endwhile ?>
                             </option>
+                        
                     </select>
                     <div id="errorNo7"></div>
 
                     <label for="birthdate"><strong>Birthdate:</strong></label>
-                    <input type="date" name="birthdate" class="form-control" id="birthdate" required>
+                    <input type="date" name="birthdate" class="form-control" id="birthdate" required value="<?php echo $birthdate ?? ""; ?>">
                     <div id="errorNo8"></div>
 
                     <label for="school"><strong>School:</strong></label>
                     <select name="school" id="school" class="form-control" required>
-                                    <option value="" disabled selected>--Select school--</option>
+                                <option value="" disabled selected>Select School</option>
+                                   
                                     <?php
                                     $schresult = $conn->query('SELECT * FROM school_tbl')  or die($conn->error);
                                     while ($schrow = $schresult->fetch_assoc()) :

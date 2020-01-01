@@ -82,6 +82,7 @@ if(isset($_POST['edit'])):
         $rater_id3 =  $_POST['rater_id3'];
     }
 
+    $tioafrating_id = $_POST['tioafrating_id'];
     $rater_id = $_POST['rater_id1'];
     $date = date("Y/m/d");
     $user_id = $_POST['user_id'];
@@ -95,11 +96,10 @@ if(isset($_POST['edit'])):
     $school_id = $_POST['school_id'];
     $status = "Active";
 
-    pre_r($_POST);
     
 
     for ($count = 0; $count < count($indicator_id); $count++) {
-        $qry = mysqli_query($conn, 'UPDATE `cot_t_rating_a_tbl` SET  `rating` = '.$tcotrating[$count].' WHERE `user_id` = '.$user_id.' AND obs_period = '.$obs_period.' AND `school_id` = '.$school_id.' AND `sy` = '.$sy_id.' ') or die ($conn->error .$qry);
+        $qry = mysqli_query($conn, 'UPDATE `cot_t_rating_a_tbl` SET `rating` = '.$tcotrating[$count].' WHERE tioafrating_id = '.$tioafrating_id[$count].' ') or die ($conn->error .$qry);
 
     }
 

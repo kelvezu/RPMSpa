@@ -1,8 +1,7 @@
 <?php
 
 include 'sampleheader.php';
-
-
+include_once 'libraries/func.lib.php';
 
 
 $resultquery = $conn->query('SELECT * FROM mtindicator_tbl')  or die($conn->error);
@@ -12,6 +11,8 @@ if (isset($_GET['notif'])) :
         echo '<div class="green-notif-border">Classroom Observation has been submitted!</div>';
     elseif ($_GET['notif'] == "recordexist") :
         echo '<div class="red-notif-border">Classroom Observation already exists!</div>';
+    elseif ($_GET['notif'] == "wrongpassword") :
+        echo '<div class="red-notif-border">Wrong Password!</div>';
     endif;
 endif;
 
@@ -20,6 +21,51 @@ endif;
 
 
 
+<style>
+    .select-style {
+        position: relative;
+        padding: 0;
+        margin: 0;
+        border: 1px solid #ccc;
+        width: 330px;
+        height: 30px;
+        overflow: hidden;
+        background: transparent;
+    }
+
+    .select-style select {
+        padding: 5px 8px;
+        width: 150%;
+        border: none;
+        background-color: transparent;
+        background-image: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+    .select-style select:focus {
+        outline: none;
+    }
+
+    .select-style:after {
+        position: absolute;
+        content: "";
+        width: 50px;
+        height: 100%;
+        background-color: #77d800;
+        top: 0;
+        right: -1px;
+        z-index: -1;
+        border-radius: 0 1px 1px 0;
+    }
+
+    #form {
+
+display:none;
+
+}
+
+</style>
 
 <script>
     function ddlselect() {
@@ -55,37 +101,64 @@ endif;
     }
 </script>
 
-<div class="container text-center">
-    <div class="breadcome-list shadow-reset">
 
-        <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
-        <h5>COT-RPMS</h5>
+<script>
+
+$(document).ready(function() {
+  $("#rateCot").click(function() {
+    $("#form").toggle();
+  });
+});
+</script>
+
+<div class="container">
+    <div class="d-flex bd-highlight text-center">
+        <div class="p-2 w-100 bd-highlight">
+             Rate Other Observation Period
+            <button type="button" class="btn btn-outline-primary" id="rateCot">Go</button>
+                <form action="ratecotMT.php" id="form" method="POST">
+                        <label><strong>Enter Principal Password:</strong></label>
+                        <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>">
+                        <!-- <input type="hidden" name="sy_id" value="<?php //echo $sy_id; ?>"> -->
+                        <input type="password" name="pass">
+                        <input type="submit" value="Go" class="btn btn-primary" name="password_sub">
+                    </form>
+        </div>
+        <div class="p-2 w-100 bd-highlight">
+            <a href="teachercotrate.php" class="btn btn-outline-primary">Cot Status</a>
+        </div>
+    </div>
+
+     <div class="card">
+        <div class="card-header text-center">
+            <img src="img\deped.png" width="100" height="100" class="rounded-circle"><br>
+                <h5>COT-RPMS</h5>
 
         <div class="h3 bg-info text-white">Master Teacher I-IV</div>
-
-
         <h4> Classroom Observation Rating Form</h4>
-        <h5 class="text-left">
 
+        </div>
+
+        <div class="card-body">
 
             <div class="row">
                 <div class="col-lg-6">
-                    <label>OBSERVER 1: </label>&nbsp;
-                    <input type="text" id="observe" value="<?php echo displayName($conn, $_SESSION['user_id']); ?>" readonly>
+                    <label><b>OBSERVER 1: </b></label>&nbsp;
+                    <input type="text" id="observe" value="<?php echo displayName($conn, $_SESSION['user_id']); ?>" readonly class="select-style">
                     <input type="hidden" name="observer1" id="observer1" value="<?php echo $_SESSION['user_id']; ?>">
                 </div>
 
                 <div class="col-lg-6">
-                    <label>DATE:</label>
-                    <input type="text" name="date" id="date" value="<?php echo date("Y/m/d"); ?>" readonly>
+                    <label><b>DATE:</b></label>
+                    <input type="text" name="date" id="date" value="<?php echo date("Y/m/d"); ?>" readonly class="select-style">
 
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-6">
-                    <label>OBSERVER 2: </label>&nbsp;
-                    <select name="observer2" id="observer2" onchange="ddlselect()">
+                    <label><b>OBSERVER 2:</b></label>&nbsp;
+                    <select name="observer2" id="observer2" onchange="ddlselect()" class="select-style">
                         <option value="<?= NULL ?>">Select Observer</option>
                         <?php
                         $school = $_SESSION['school_id'];
@@ -113,8 +186,8 @@ endif;
                 </div>
 
                 <div class="col-lg-6">
-                    <label>MASTER TEACHER OBSERVED: </label>
-                    <select name="tobserved" id="tobserved" required onchange="selectTobs()">
+                    <label><b>TEACHER OBSERVED: </b></label>
+                    <select name="tobserved" id="mtobserved" required onchange="selectTobs()" class="select-style">
                         <option value="" disabled selected>--Select Teacher--</option>
                         <?php
                         $school = $_SESSION['school_id'];
@@ -135,13 +208,14 @@ endif;
                         endif; ?>
                     </select>
                     <input type="hidden" id="tobserve">
+                    <div id="errorNo"></div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-6">
-                    <label>OBSERVER 3: </label>&nbsp;
-                    <select name="observer3" id="observer3" onchange="obs3select()">
+                    <label><b>OBSERVER 3:</b> </label>&nbsp;
+                    <select name="observer3" id="observer3" onchange="obs3select()" class="select-style">
                         <option value="<?= NULL ?>">Select Observer</option>
                         <?php
                         $school = $_SESSION['school_id'];
@@ -169,9 +243,9 @@ endif;
 
                 <div class="col-lg-6">
                     <label>
-                        SUBJECT:
+                       <b> SUBJECT:</b>
                     </label>
-                    <select name="tsubject" required id="tsubject" onchange="selectSubject()">
+                    <select name="tsubject" required id="tsubject" onchange="selectSubject()" class="select-style">
                         <option value="" disabled selected>--Select Subject--</option>
                         <?php
                         $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
@@ -189,9 +263,9 @@ endif;
             <div class="row">
                 <div class="col-lg-6">
                     <label for="gradeleveltaught">
-                        GRADE LEVEL TAUGHT:
+                       <b> GRADE LEVEL TAUGHT:</b>
                     </label>
-                    <select name="tgradelvltaught" required id="tgradelvltaught" onchange="selectGlt()">
+                    <select name="tgradelvltaught" required id="tgradelvltaught" onchange="selectGlt()" class="select-style">
                         <option value="" disabled selected>--Select Grade Level Taught--</option>
                         <?php
                         $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
@@ -241,7 +315,7 @@ endif;
                 <div class="col-lg-6">
 
                     <label for="obsperiod" class="col-form-label">
-                        OBSERVATION PERIOD:
+                       <b> OBSERVATION PERIOD:</b>
                     </label>
 
                     <?php
@@ -265,7 +339,7 @@ endif;
                     endif;
                     ?>
 
-                    <input type="text" name="obs" id="obs" value="<?php echo $period; ?>" readonly />
+                    <input type="text" name="obs" id="obs" value="<?php echo $period; ?>" readonly class="select-style"/>
                 </div>
 
                 <br>
@@ -386,10 +460,9 @@ endif;
                         </tr>
                 </table>
             </div>
-    </div>
 
 
-    </h5>
+
 
 
 
@@ -400,6 +473,28 @@ endif;
 </div>
 </div>
 
+
+<script>
+
+$(document).ready(function() {
+        $('#mtobserved').on('change', function() {
+            var mtobserved = $(this).val(); 
+            var obs = $('#obs').val();
+            if (mtobserved) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'validatecot.php',
+                    data: 'mtobserved=' + mtobserved + '&obs=' + obs,
+                    success: function(html) {
+                         $('#errorNo').html(html);
+                    }
+                });
+            } else {
+                return "Please enter school number";
+            }
+        });
+});
+</script>
 
 <!-- Modal -->
 <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

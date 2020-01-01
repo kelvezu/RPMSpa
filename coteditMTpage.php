@@ -9,12 +9,12 @@ if(isset($_GET['user_id'])):
     $school_id = $_GET['school_id'];
     $obs = $_GET['obs'];
     $sy_id = $_SESSION['active_sy_id'];
-    $position = 'Teacher I';
+    $position = 'Master Teacher I';
 endif;
 
 
-$cotobs = getCOTobserver($conn,$teacher_id,$sy_id,$school_id,$obs);
-$cotobsB = getCOTobserverB($conn,$teacher_id,$sy_id,$school_id,$obs);
+$cotobs = getCOTobserverMT($conn,$teacher_id,$sy_id,$school_id,$obs);
+$cotobsB = getCOTobserverBMT($conn,$teacher_id,$sy_id,$school_id,$obs);
 
 ?>
 
@@ -28,15 +28,15 @@ $cotobsB = getCOTobserverB($conn,$teacher_id,$sy_id,$school_id,$obs);
 
 <div class="card-body">
 
-    <form action="includes/processcotformT.php" method="POST">
+    <form action="includes/processcotformMT.php" method="POST">
           <center>
             <img src="img\deped.png" width="100" height="100" class="rounded-circle">
-             <h5><strong>COT-RPMS for Teacher I-III</strong></h5>       
+             <h5><strong>COT-RPMS for Master Teacher I-IV</strong></h5>       
              <br>
             </center>
             <table>
                 <?php foreach ($cotobs as $cobs):?>
-                     <input type="hidden" name="tioafrating_id[]" value="<?php echo $cobs['tioafrating_id'] ?>">
+                     <input type="hidden" name="mtioafrating_id[]" value="<?php echo $cobs['mtioafrating_id'] ?>">
                     <input type="hidden" name="rater_id1" value="<?php echo $cobs['rater_id1'] ?>">
                     <input type="hidden" name="rater_id2" value="<?php echo $cobs['rater_id2'] ?>">
                     <input type="hidden" name="rater_id3" value="<?php echo $cobs['rater_id3'] ?>">
@@ -71,7 +71,7 @@ $cotobsB = getCOTobserverB($conn,$teacher_id,$sy_id,$school_id,$obs);
             <br>
               
             <table class=" text-center  table table-bordered">
-                <thead class="bg-success text-white">
+                <thead class="bg-info text-white">
                    
                     <tr>
                         <th>Indicator ID</th>
@@ -81,21 +81,21 @@ $cotobsB = getCOTobserverB($conn,$teacher_id,$sy_id,$school_id,$obs);
                 </thead>
                 <tbody>
                     <?php
-                    $cotQry = $conn->query("SELECT * FROM cot_t_rating_a_tbl WHERE `user_id` = '$teacher_id' AND sy = '$sy_id' AND obs_period = '$obs' AND school_id = '$school_id'");
+                    $cotQry = $conn->query("SELECT * FROM cot_mt_rating_a_tbl WHERE `user_id` = '$teacher_id' AND sy = '$sy_id' AND obs_period = '$obs' AND school_id = '$school_id'");
                     
                     while($cotresult = $cotQry->fetch_assoc()):
                     ?>
                         <tr>
                             <td><?php echo $cotresult['indicator_id']; ?></td>
-                            <td><?php echo displayTindicator($conn, $cotresult['indicator_id']); ?></td>
+                            <td><?php echo displayMTindicator($conn, $cotresult['indicator_id']); ?></td>
                             <td>
                                 <select name="rating[]">
                                     <option value="<?php echo $cotresult['rating'];?>"><?php echo rawRate($cotresult['rating'],$position);?></option>
-                                    <option value="1">3</option>
-                                    <option value="2">4</option>
-                                    <option value="3">5</option>
-                                    <option value="4">6</option>
-                                    <option value="5">7</option>
+                                    <option value="1">4</option>
+                                    <option value="2">5</option>
+                                    <option value="3">6</option>
+                                    <option value="4">7</option>
+                                    <option value="5">8</option>
                                     <option value="1">NO*</option>
                                 </select>
                             </td>
@@ -104,7 +104,7 @@ $cotobsB = getCOTobserverB($conn,$teacher_id,$sy_id,$school_id,$obs);
                 </tbody>
             </table>
             <?php
-                $commentQry = $conn->query("SELECT * FROM cot_t_rating_b_tbl WHERE `user_id` = '$teacher_id' AND sy = '$sy_id' AND obs_period = '$obs' AND school_id = '$school_id'");
+                $commentQry = $conn->query("SELECT * FROM cot_mt_rating_b_tbl WHERE `user_id` = '$teacher_id' AND sy = '$sy_id' AND obs_period = '$obs' AND school_id = '$school_id'");
                 while ($comment = $commentQry->fetch_assoc()):
                     $commentresult = $comment['comment'];
             ?>
@@ -114,7 +114,7 @@ $cotobsB = getCOTobserverB($conn,$teacher_id,$sy_id,$school_id,$obs);
         
       
     <br>
-        <a href="displaytcotprogress.php?user_id=<?= $teacher_id?>&obs=<?=$obs?>" class="btn btn-outline-danger">Close</a>
+        <a href="displaymtcotprogress.php?user_id=<?= $teacher_id?>&obs=<?=$obs?>" class="btn btn-outline-danger">Close</a>
        <input type="submit" name="edit" value="Edit" class="btn btn-outline-secondary">
 </form>
 </div>
