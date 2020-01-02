@@ -17,7 +17,7 @@ $teacher_result = RPMSdb::fetchtallTrate($conn, $_SESSION['school_id'], $_SESSIO
 <div class="container-fluid">
     <div class="d-flex justify-content-center">
         <div class="p-2">
-            <h2>Class Observation Status of Teachers that I Rate</h2>
+            <h2>Class Observation Status </h2>
         </div>
     </div>
 

@@ -1,17 +1,19 @@
   <?php
   include_once 'sampleheader.php';
 
-  RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
-  FilterUser\FilterUser::filterEsatDemo($conn, $_SESSION['position']);
 
-  if(isset($_GET['notif'])):
-    if($_GET['notif']== 'updated'):
-      echo '<div class="green-notif-border">Updated!</div> Proceed to Part II. Click <a href="ESATform2t.php">here</a>';
-    endif;
+  $user_id = $_SESSION['user_id'];
+  $sy_id = $_SESSION['active_sy_id'];
+  $school = $_SESSION['school_id'];
 
-  endif;
+  
 
+ $ESAT_qry = $conn->query("SELECT * FROM esat1_demographicst_tbl WHERE `user_id` = '$user_id' AND sy = '$sy_id' AND school = '$school' ") or die ($conn->error);
 
+ foreach($ESAT_qry as $esat):
+
+    $checkbox_array_Area = explode(",", $esat['area_specialization']);
+    $checkbox_array_subj = explode(",", $esat['subject_taught']);
   ?>
 
 
@@ -25,7 +27,7 @@
         </div>
         <div class="card-body">
 
-
+            <input type="hidden" name="esat1_id" value="<?php echo $esat['esat1_id'] ?>">
           <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
           <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>">
           <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id'] ?>" />
@@ -71,7 +73,7 @@
           <label><strong>3. Employment Status</strong></label>
           <br>
           <select name="status" id="" class="form-control" required>
-            <option value="">--Select Employment Status</option>
+            <option value="<?php echo $esat['employment_status']; ?>"><?php echo $esat['employment_status']; ?></option>
             <option value="Regular Permanent">Regular Permanent</option>
             <option value="Substitute">Substitute</option>
             <option value="Provisional">Provisional</option>
@@ -90,16 +92,17 @@
           <label><strong>5. Highest Degree Obtained</strong></label>
           <br>
           <select name="hdo" id="" class="form-control my-1">
+            <option value="<?php echo $esat['highest_degree']; ?>"><?php echo $esat['highest_degree']; ?></option>
             <option value="Bachelor Degree">Bachelor Degree</option>
             <option value="Master Degree">Master Degree</option>
             <option value="Doctorate Degree">Doctorate Degree</option>
           </select>
-          <span><input type="text" name="course" id="" class="form-control" placeholder="Enter Course Degree taken"></span>
+          <span><input type="text" name="course" id="" class="form-control" placeholder="Enter Course Degree taken" value="<?php echo $esat['course_taken']; ?>"></span>
           <br>
           <label><strong>6. Total Number of Years in Teaching</strong></label>
           <br>
           <select name="totalyear" id="" class="form-control" required>
-            <option>--Select Total Years in Teaching--</option>
+            <option value="<?php echo $esat['totalyear']; ?>"><?php echo displayTotalyear($conn,$esat['totalyear']); ?></option>
             <?php
             $totalyrresult = $conn->query('SELECT * FROM totalyear_tbl')  or die($conn->error);
             while ($totalrow = $totalyrresult->fetch_assoc()) :
@@ -122,7 +125,7 @@
               $assubject_id = $assubjrow['subject_id'];
               $assubject_name = $assubjrow['subject_name'];
               ?>
-              <input type="checkbox" name="areaspec[]" value="<?php echo $assubject_name ?>"><?php echo $assubject_name ?><br>
+              <input type="checkbox" name="areaspec[]" value="<?php echo $assubject_name ?>" <?php if (in_array($assubject_name, $checkbox_array_Area)): echo 'checked="checked"'; endif;?>><?php echo $assubject_name ?><br>
             <?php endwhile ?>
             </input>
 
@@ -145,14 +148,14 @@
               $subject_id = $subjrow['subject_id'];
               $subject_name = $subjrow['subject_name'];
               ?>
-              <input type="checkbox" name="subject[]" value="<?php echo $subject_name ?>"><?php echo $subject_name ?></input><br>
+              <input type="checkbox" name="subject[]" value="<?php echo $subject_name ?>" <?php if (in_array($subject_name, $checkbox_array_subj)): echo 'checked="checked"'; endif;?>><?php echo $subject_name ?></input><br>
             <?php endwhile ?>
 
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Others(specify)</span>
               </div>
-              <input type="text" name="subject[]" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+              <input type="text" name="subject[]" class="form-control" aria-label="Username" aria-describedby="basic-addon1" >
             </div>
           </div>
           <br>
@@ -187,8 +190,8 @@
 
           <br>
 
-         
-          <button class="btn btn-success" name="submitESAT1">Submit</button>
+         <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
+          <button class="btn btn-success" name="updateESAT1">Update</button>
           <button class="btn btn-danger " name="cancelb">Cancel</button>
         </div>
       </div>
@@ -214,6 +217,6 @@
 
 
   <?php
-
+    endforeach;
   include 'samplefooter.php';
   ?>

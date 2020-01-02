@@ -866,7 +866,7 @@ class RPMSdb
 
 
     /* FUNCTION THAT WILL CHECK IF ESAT IS COMPLETE */
-    public static function isEsatComplete($conn, $position)
+    public static function isEsatCompleteOld($conn, $position)
     {
         if (isset($position)) :
             if (stripos(($position), 'aster')) :
@@ -894,6 +894,51 @@ class RPMSdb
             $esat3res = mysqli_num_rows($esat3result);
 
             if ($esat1res and $esat2res and $esat3res) :
+                echo '<p class="green-notif-border">You have already taken the ESAT.</p>';
+                directLastPage();
+                include 'samplefooter.php';
+                exit();
+            else :
+                return false;
+            endif;
+
+        else : return false;
+        endif;
+        mysqli_close($conn);
+    }
+
+    public static function isEsatComplete($conn, $position)
+    {
+        if (isset($position)) :
+            if (stripos(($position), 'aster')) :
+                $esat1qry = 'SELECT * FROM esat1_demographicsmt_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+                $esat2qry = 'SELECT * FROM `esat2_objectivesmt_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+                $esat3qry = 'SELECT * FROM esat3_core_behavioralmt_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+                $esat_form_2 = "esatform2mt.php";
+
+            elseif ($position = 'Teacher I' || $position = 'Teacher II' || $position = 'Teacher III') :
+                $esat1qry = 'SELECT * FROM esat1_demographicst_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+                $esat2qry = 'SELECT * FROM `esat2_objectivest_tbl` WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
+
+                $esat3qry = 'SELECT * FROM esat3_core_behavioralt_tbl WHERE school = ' . $_SESSION['school_id'] . ' AND sy = ' . $_SESSION['active_sy_id'] . ' AND `user_id` = ' . $_SESSION['user_id'] . ' AND `status` = "Active" ';
+
+                $esat_form_2 = "esatform2t.php";
+
+            else : return false;
+            endif;
+
+            $esat1result = mysqli_query($conn, $esat1qry);
+            $esat1res = mysqli_num_rows($esat1result);
+            $esat2result = mysqli_query($conn, $esat2qry);
+            $esat2res = mysqli_num_rows($esat2result);
+            $esat3result = mysqli_query($conn, $esat3qry);
+            $esat3res = mysqli_num_rows($esat3result);
+
+            if ($esat1res > 0  and $esat2res > 0 and $esat3res > 0) :
                 echo '<p class="green-notif-border">You have already taken the ESAT.</p>';
                 directLastPage();
                 include 'samplefooter.php';

@@ -1,6 +1,6 @@
 <?php
 include_once 'sampleheader.php';
-RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
+RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']) ;
 FilterUser\FilterUser::filterEsatT($conn, $_SESSION['position']);
 
 
@@ -125,8 +125,9 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
         //  }
       </script>
       <div class="card-footer text-muted ">
-        <button type="submit" class="btn btn-success btn-block my-2" name="submitESAT2t">Submit</button>
-        <a href="" role="button" class="btn btn-danger btn-block my-2">Cancel</a>
+         <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
+        <button type="submit" class="btn btn-success" name="submitESAT2t">Submit</button>
+        <a href="" role="button" class="btn btn-danger">Cancel</a>
       </div>
     </div>
   </div>

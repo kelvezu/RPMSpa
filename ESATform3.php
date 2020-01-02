@@ -81,8 +81,9 @@ $numind = 1;
 
                 </table>
                 <div class="card-footer text-muted ">
-                    <button type="submit" class="btn btn-success btn-block my-2" name="submitESAT3">Submit</button>
-                    <button type="submit" class="btn btn-danger btn-block my-2" name="cancel">Cancel</button>
+                    <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
+                    <button type="submit" class="btn btn-success" name="submitESAT3">Submit</button>
+                    <button type="submit" class="btn btn-danger" name="cancel">Cancel</button>
                 </div>
             </form>
         </div>
