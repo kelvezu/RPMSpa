@@ -31,8 +31,8 @@
                 if ($query_run = mysqli_query($conn, $query)) :
                     header('location:../esatform2mt.php');
                     exit();
-                else :
-                    echo 'Mysql Error!' . mysqli_error($conn);
+                // else :
+                //     echo 'Mysql Error!' . mysqli_error($conn);
                 endif;
 
             elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
@@ -40,12 +40,10 @@
                 if ($query_run = mysqli_query($conn, $query)) :
                     header('location:../esatform2t.php');
                     exit();
-                else :
-                    // echo "You are not required to take ESAT!";
-                    die($conn->error . $query_run);
+                // else :
+                //     // echo "You are not required to take ESAT!";
+                //     die($conn->error . $query_run);
                 endif;
-            else :
-                echo 'Mysql Error!' . mysqli_error($conn);
             endif;
         endif;
 
@@ -68,9 +66,6 @@
             }
             header('location:../ESATform3.php');
             exit();
-        else :
-
-            echo 'failed';
 
         endif;
 
@@ -114,5 +109,56 @@
             endif;
 
             directToCharts($position);
-        else : return false;
+        // else : return false;
+        endif;
+
+
+                //UPDATE ESAT FORM 1
+
+        if (isset($_POST['updateESAT1'])) :
+
+            $esat1_id = $_POST['esat1_id'];
+            $emp_position = $_POST['employee_position'];
+            $user_id = $_POST['user_id'];
+            $sy = $_POST['sy'];
+            $school = $_POST['school_id'];
+            $age = $_POST['age'];
+            $gender = $_POST['gender'];
+            $empstatus = $_POST['status'];
+            $position = $_POST['position'];
+            $highest_degree  = $_POST['hdo'];
+            $course  = $_POST['course'];
+            $totalyear  = $_POST['totalyear'];
+            $areaspec = implode(",", $_POST['areaspec']);
+            $subject = implode(",", $_POST['subject']);
+            $gradelvltaught = $_POST['glt'];
+            $curriclass = $_POST['curriclass'];
+            $region = $_POST['region'];
+
+            // pre_r($_POST);
+            // exit();
+
+            if ($position == "Master Teacher I" || $position == "Master Teacher II" || $position == "Master Teacher III" || $position == "Master Teacher IV") :
+                $query = "UPDATE esat1_demographicsmt_tbl SET age = '$age' , gender = '$gender' , employment_status = '$empstatus' , position = '$position' , highest_degree = '$highest_degree' , course_taken = '$course' , totalyear = '$totalyear' , area_specialization = '$areaspec' , subject_taught = '$subject' , grade_lvl_taught = '$gradelvltaught' , curri_class = '$curriclass' , region = '$region' , sy = '$sy' , school = '$school' , `status` = '$status' WHERE esat1_id = '$esat1_id' ";
+
+                if ($query_run = mysqli_query($conn, $query) or die ($conn->error)) :
+                    header('location:../ESATform1.php?notif=updated');
+                    exit();
+                else :
+                    echo 'Mysql Error!' . mysqli_error($conn);
+                endif;
+
+            elseif ($position == "Teacher I" || $position == "Teacher II" || $position == "Teacher III") :
+                $query = "UPDATE esat1_demographicst_tbl SET age = '$age', gender = '$gender', employment_status = '$empstatus', position = '$position', highest_degree = '$highest_degree', course_taken = '$course', totalyear = '$totalyear', area_specialization = '$areaspec', subject_taught = '$subject', grade_lvl_taught = '$gradelvltaught', curri_class = '$curriclass', region = '$region', sy = '$sy', school = '$school', `status` = '$status' WHERE esat1_id = '$esat1_id'";
+
+                if ($query_run = mysqli_query($conn, $query)  or die ($conn->error)) :
+                    header('location:../ESATform1.php?notif=updated');
+                    exit();
+                else :
+                    // echo "You are not required to take ESAT!";
+                    die($conn->error . $query_run);
+                endif;
+            else :
+                echo 'Mysql Error!' . mysqli_error($conn);
+            endif;
         endif;
