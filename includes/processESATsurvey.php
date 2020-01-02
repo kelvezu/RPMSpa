@@ -162,3 +162,45 @@
                 echo 'Mysql Error!' . mysqli_error($conn);
             endif;
         endif;
+
+
+// Update ESATFORM2
+
+     if (isset($_POST['updateESAT2t'])) :
+            $esat2_id = $_POST['esat2_id'];
+            $user_id = $_POST['user_id'];
+            $sy = $_POST['sy'];
+            $school = $_POST['school_id'];
+            $kra_id = $_POST['kra_id'];
+            $tobj_id = $_POST['tobj_id'];
+            $lvlcap = $_POST['lvlcap'];
+            $priodev = $_POST['priodev'];
+            $position = $_POST['position'];
+            pre_r($_POST);
+            
+            for ($count = 0; $count < count($tobj_id); $count++) {
+                $result = mysqli_query($conn, "UPDATE esat2_objectivest_tbl SET kra_id = '$kra_id[$count]', tobj_id = '$tobj_id[$count]' , lvlcap = '$lvlcap[$count]', priodev = '$priodev[$count]' WHERE esat2_id = '$esat2_id[$count]'  ") or die($conn->error);
+            }
+            header('location:../ESATform2t.php?notif=updated');
+            exit();
+
+        endif;
+
+        //-------ESAT FORM 2 master teacher objectives------//
+  
+
+        if (isset($_POST['updateESAT2mt'])) :
+            $user_id = $_POST['user_id'];
+            $sy = $_POST['sy'];
+            $school = $_POST['school_id'];
+            $kra_id = $_POST['kra_id'];
+            $mtobj_id = $_POST['mtobj_id'];
+            $lvlcap = $_POST['lvlcap'];
+            $priodev = $_POST['priodev'];
+            $position = $_POST['position'];
+
+            for ($count = 0; $count < count($kra_id); $count++) {
+                $conn->query('INSERT INTO esat2_objectivesmt_tbl(user_id,kra_id, mtobj_id, lvlcap, priodev,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $mtobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
+            }
+            header('location:../ESATform3.php');
+        endif;

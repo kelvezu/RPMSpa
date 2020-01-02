@@ -1,9 +1,9 @@
+
+
 <?php
 include_once 'sampleheader.php';
 
-
 $user_id = $_SESSION['user_id'];
-$school = $_SESSION['school_id'];
 $sy_id = $_SESSION['active_sy_id'];
 
 $kra_num = 0;
@@ -37,29 +37,122 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
         <input type="hidden" name="position" value="<?php echo $_SESSION['position'] ?>" />
         <input type="hidden" name="status" value="Active">
 
-    
-        <?php
-            $obj_Qry = $conn->query("SELECT * FROM esat2_objectivest_tbl WHERE sy = '$sy_id' AND `user_id` = '$user_id' AND school = '$school' ");
-            foreach ($obj_Qry as $esat):
-        ?>
-      <table>
-            <thead class="thead-dark text-nowrap">
-                <tr>
-                    <th><?php echo $esat['kra_id']; ?></th>
-                    <th>Level of Capability</th>
-                    <th>Priority for Development</th>
-                </tr>
-            </thead>
+        <strong>
+          <h3></h3>
+        </strong>
+    </div>
+
+    <div class="table">
+      <table class="table table-borderless table-hover table-responsive-sm table-sm ">
+
        
+        <?php
+      
+        while ($row = $result->fetch_assoc()) :
+          $kra_id = $row['kra_id'];
+          $kra_name = $row['kra_name'];
+          $kra_num++;
+          ?>
+          <thead class="thead-dark text-nowrap">
+        
+            <th class="bg-dark"><?php echo "KRA " . $kra_num . ": " . $row['kra_name'] ?></th>
+            <th class="bg-dark">Level of Capability</th>
+            <th class="bg-dark">Priority for Development</th>
+            </tr>
+          </thead>
+          <tbody class="text-dark">
+            <tr>
 
-        </table>
-   
+              <?php
+                
+                $indresult = $conn->query("SELECT * FROM tobj_tbl WHERE kra_id = '$kra_id'")  or die($conn->error);
+         
 
-        <?php endforeach;?>
+                while ($rows = $indresult->fetch_assoc()) :
+                    $tobj_id = $rows['tobj_id'];
+                  ?>
+                <td>
+                  <?php
+                     
+                      echo '<strong>' . $tobj_num++ . ".</strong> " . $tobj_name = $rows['tobj_name'];
+                      ?>
+                  <input type="hidden" name="user_id[]" value="<?php echo $_SESSION['user_id']; ?>">
+                  <input type="hidden" name="kra_id[]" value="<?php echo $row['kra_id'] ?>">
+                  <input type="hidden" name="tobj_id[]" value="<?php echo $rows['tobj_id'] ?>">
+
+                </td>
+                <?php
+                $objective_Query = $conn->query("SELECT * FROM esat2_objectivest_tbl WHERE kra_id = '$kra_id' AND tobj_id = '$tobj_id' AND `user_id` = '$user_id' ");
+                        while($res = $objective_Query->fetch_assoc()):
+                            $lvlcap = $res['lvlcap'];
+                            $priodev = $res['priodev'];
+                            $esat2_id = $res['esat2_id'];
+                    
+                    if($lvlcap == 4):
+                        $lvlcap_desc = "Very High";
+                    elseif($lvlcap == 3):
+                        $lvlcap_desc = "High";
+                    elseif($lvlcap == 2):
+                        $lvlcap_desc = "Moderate";
+                    elseif($lvlcap == 1):
+                        $lvlcap_desc = "Low";
+                    endif;
+
+                    if($priodev == 4):
+                        $priodev_desc = "Very High";
+                    elseif($priodev == 3):
+                        $priodev_desc = "High";
+                    elseif($priodev == 2):
+                        $priodev_desc = "Moderate";
+                    elseif($priodev == 1):
+                        $priodev_desc = "Low";
+                    endif;
+
+                ?>
+
+                <input type="hidden" name="esat2_id[]" value="<?php echo $esat2_id;?>">
+                <td>
+                  <select name="lvlcap[]" id="lvlcapp" onChange="change_cap()" class="form-control font-weight-bold" required>
+                    <option value="<?php echo $lvlcap ?>"><?php echo $lvlcap_desc ?></option>
+                    <option value=4>Very High</option>
+                    <option value=3>High</option>
+                    <option value=2>Moderate</option>
+                    <option value=1>Low</option>
+                  </select>
+                </td>
+                <td>
+                  <div id="priodev">
+                    <select name="priodev[]" class="form-control font-weight-bold" required>
+                      <option value="<?php echo $priodev ?>"><?php echo $priodev_desc ?></option>
+                      <option value=4>Very High</option>
+                      <option value=3>High</option>
+                      <option value=2>Moderate</option>
+                      <option value=1>Low</option>
+                    </select>
+                  </div>
+
+                </td>
+            </tr>
+
+            <?php
+            endwhile
+            ?>
+            <!-- END LOOP FOR THE CBC INDICATORS -->
+          <?php
+            endwhile
+            ?>
+          </tbody>
+          <!-- END LOOP FOR THE KRA -->
+        <?php
+          $tobj_num = 1;
+        endwhile
+        ?>
+
+      </table>
 
       <div class="card-footer text-muted ">
          <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
-        <button type="submit" class="btn btn-success" name="submitESAT2t">Submit</button>
+        <button type="submit" class="btn btn-success" name="updateESAT2t">Update</button>
         <a href="" role="button" class="btn btn-danger">Cancel</a>
       </div>
     </div>
@@ -71,7 +164,11 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 
 <br>
 <?php
-
 include_once 'includes/scripts.php';
 include_once 'samplefooter.php';
 ?>
+
+
+
+
+
