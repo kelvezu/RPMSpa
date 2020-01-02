@@ -33,7 +33,7 @@ endif;
                     </thead>
                     <tbody>
                         <?php
-                        $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicsmt_tbl.user_id) total FROM esat1_demographicsmt_tbl INNER JOIN age_tbl age_tbl on esat1_demographicsmt_tbl.age = age_tbl.age_id WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name");
+                        $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicsmt_tbl.user_id) total FROM esat1_demographicsmt_tbl INNER JOIN age_tbl age_tbl on esat1_demographicsmt_tbl.age = age_tbl.age_name WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name");
                         while ($esatresult = $qry->fetch_assoc()) : ?>
                             <tr>
                                 <td><?php echo $esatresult['age_name']; ?></td>

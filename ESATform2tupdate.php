@@ -1,14 +1,17 @@
+
+
 <?php
 include_once 'sampleheader.php';
-RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']) ;
-FilterUser\FilterUser::filterEsatT($conn, $_SESSION['position']);
 
+$user_id = $_SESSION['user_id'];
+$sy_id = $_SESSION['active_sy_id'];
 
 $kra_num = 0;
 $tobj_num = 1;
 $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR KRA TABLE  
 $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
+
 
 ?>
 
@@ -42,16 +45,16 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
     <div class="table">
       <table class="table table-borderless table-hover table-responsive-sm table-sm ">
 
-        <!-- Start loop for  KRA -->
+       
         <?php
-        //FETCH THE FIELDS FROM THE DB  
+      
         while ($row = $result->fetch_assoc()) :
           $kra_id = $row['kra_id'];
           $kra_name = $row['kra_name'];
           $kra_num++;
           ?>
           <thead class="thead-dark text-nowrap">
-            <!-- ASSIGN THE VALUE FROM THE DB  -->
+        
             <th class="bg-dark"><?php echo "KRA " . $kra_num . ": " . $row['kra_name'] ?></th>
             <th class="bg-dark">Level of Capability</th>
             <th class="bg-dark">Priority for Development</th>
@@ -59,17 +62,18 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
           </thead>
           <tbody class="text-dark">
             <tr>
-              <!-- START OF LOOP FROM OBJECTIVE -->
+
               <?php
-                //QUERY FOR INDICATORS TABLE 
+                
                 $indresult = $conn->query("SELECT * FROM tobj_tbl WHERE kra_id = '$kra_id'")  or die($conn->error);
-                //FETCH THE DATA FROM INDICATOR TABLE
+         
 
                 while ($rows = $indresult->fetch_assoc()) :
+                    $tobj_id = $rows['tobj_id'];
                   ?>
                 <td>
                   <?php
-                      //ASSIGN THE VALUE FROM THE DB
+                     
                       echo '<strong>' . $tobj_num++ . ".</strong> " . $tobj_name = $rows['tobj_name'];
                       ?>
                   <input type="hidden" name="user_id[]" value="<?php echo $_SESSION['user_id']; ?>">
@@ -77,10 +81,39 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                   <input type="hidden" name="tobj_id[]" value="<?php echo $rows['tobj_id'] ?>">
 
                 </td>
-                <td>
+                <?php
+                $objective_Query = $conn->query("SELECT * FROM esat2_objectivest_tbl WHERE kra_id = '$kra_id' AND tobj_id = '$tobj_id' AND `user_id` = '$user_id' ");
+                        while($res = $objective_Query->fetch_assoc()):
+                            $lvlcap = $res['lvlcap'];
+                            $priodev = $res['priodev'];
+                            $esat2_id = $res['esat2_id'];
+                    
+                    if($lvlcap == 4):
+                        $lvlcap_desc = "Very High";
+                    elseif($lvlcap == 3):
+                        $lvlcap_desc = "High";
+                    elseif($lvlcap == 2):
+                        $lvlcap_desc = "Moderate";
+                    elseif($lvlcap == 1):
+                        $lvlcap_desc = "Low";
+                    endif;
 
+                    if($priodev == 4):
+                        $priodev_desc = "Very High";
+                    elseif($priodev == 3):
+                        $priodev_desc = "High";
+                    elseif($priodev == 2):
+                        $priodev_desc = "Moderate";
+                    elseif($priodev == 1):
+                        $priodev_desc = "Low";
+                    endif;
+
+                ?>
+
+                <input type="hidden" name="esat2_id[]" value="<?php echo $esat2_id;?>">
+                <td>
                   <select name="lvlcap[]" id="lvlcapp" onChange="change_cap()" class="form-control font-weight-bold" required>
-                    <option value="">--Select--</option>
+                    <option value="<?php echo $lvlcap ?>"><?php echo $lvlcap_desc ?></option>
                     <option value=4>Very High</option>
                     <option value=3>High</option>
                     <option value=2>Moderate</option>
@@ -90,7 +123,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                 <td>
                   <div id="priodev">
                     <select name="priodev[]" class="form-control font-weight-bold" required>
-                      <option value="">--Select--</option>
+                      <option value="<?php echo $priodev ?>"><?php echo $priodev_desc ?></option>
                       <option value=4>Very High</option>
                       <option value=3>High</option>
                       <option value=2>Moderate</option>
@@ -101,6 +134,9 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                 </td>
             </tr>
 
+            <?php
+            endwhile
+            ?>
             <!-- END LOOP FOR THE CBC INDICATORS -->
           <?php
             endwhile
@@ -114,19 +150,9 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 
       </table>
 
-      <script type="text/javascript">
-        // function change_cap() {
-        //   var xmlhttp = new XMLHttpRequest();
-        //   xmlhttp.open("GET", "ajaxesat2T.php?cap=" + document.getElementById("lvlcapp").value, false);
-        //   document.getElementById("priodev").innerHTML = xmlhttp.responseText;
-        //   xmlhttp.send();
-
-
-        //  }
-      </script>
       <div class="card-footer text-muted ">
          <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
-        <button type="submit" class="btn btn-success" name="submitESAT2t">Submit</button>
+        <button type="submit" class="btn btn-success" name="updateESAT2t">Update</button>
         <a href="" role="button" class="btn btn-danger">Cancel</a>
       </div>
     </div>
@@ -141,3 +167,8 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 include_once 'includes/scripts.php';
 include_once 'samplefooter.php';
 ?>
+
+
+
+
+

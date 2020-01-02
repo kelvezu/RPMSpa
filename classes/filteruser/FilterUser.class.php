@@ -22,8 +22,9 @@ class FilterUser
                 $esat_demo_T = 'SELECT * FROM esat1_demographicsMT_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_demo_T_result = mysqli_query($conn, $esat_demo_T);
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
-                if ($check_e1_t) :
-                    echo  '<p class="green-notif-border">You have already taken the ESAT Demographics!</p>';
+                if ($check_e1_t > 0) :
+                    echo  '<p class="green-notif-border">You have already taken the ESAT Demographics! Do you want to update your answer? Click <a href="ESATform1update.php">here.</a></p>
+                    <p class="green-notif-border">Proceed to Part II. Click <a href="ESATform2t.php">here</a></p>';
                     include 'samplefooter.php';
                     exit();
                 else :
@@ -35,8 +36,10 @@ class FilterUser
                 $esat_demo_T = 'SELECT * FROM esat1_demographicst_tbl WHERE school = "' . $_SESSION['school_id'] . '" AND sy = "' . $_SESSION['active_sy_id'] . '" AND user_id = "' . $_SESSION['user_id'] . '" AND status = "Active" ';
                 $esat_demo_T_result = mysqli_query($conn, $esat_demo_T);
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
-                if ($check_e1_t) :
-                    echo  '<p class="green-notif-border">You have already taken the ESAT Demographics!</p>';
+                if ($check_e1_t > 0) :
+                    echo  '<p class="green-notif-border">You have already taken the ESAT Demographics! Do you want to update your answer? Click <a href="ESATform1update.php">here.</a></p>
+                        <p class="green-notif-border">Proceed to Part II. Click <a href="ESATform2t.php">here</a></p>';
+                    
                     include 'samplefooter.php';
                     exit();
                 else :
@@ -76,7 +79,8 @@ class FilterUser
                 $esat_objective_T_result = mysqli_query($conn, $esat_objective_T);
                 $check_e2_t = mysqli_num_rows($esat_objective_T_result);
                 if ($check_e2_t) :
-                    echo '<p class="green-notif-border">You have already answer the ESAT Objectives!</p>';
+                    echo '<p class="green-notif-border">You have already answer the ESAT Objectives! Do you want to update your answer? Click <a href="ESATform2tupdate.php">here.</a></p>
+                    <p class="green-notif-border">Proceed to Part III. Click <a href="ESATform3.php">here</a></p>';
                     directLastPage();
                     include 'samplefooter.php';
                     die();
@@ -117,7 +121,7 @@ class FilterUser
                 $check_e2_mt = mysqli_num_rows($esat_objective_MT_result);
 
                 if ($check_e2_mt) :
-                    echo '<p class="green-notif-border">You have already answer the ESAT Objectives!</p>';
+                    echo '<p class="green-notif-border">You have already answer the ESAT Objectives! Do you want to update your answer? Click <a href="ESATform2MTupdate.php">here.</a></p>';
                     directLastPage();
                     include 'samplefooter.php';
                     die();
@@ -153,7 +157,7 @@ class FilterUser
                 $esat_cbc_T_result = mysqli_query($conn, $esat_cbc_T);
                 $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
                 if ($check_e3_t) :
-                    echo  '<p class="green-notif-border">You have already taken the ESAT Core Behavioral Competencies!</p>';
+                    echo  '<p class="green-notif-border">You have already taken the ESAT Core Behavioral Competencies! Do you want to update your answer? Click <a href="ESATform3update.php">here.</a></p>';
                     include 'samplefooter.php';
                     exit();
                 else : return false;
@@ -164,7 +168,7 @@ class FilterUser
                 $esat_cbc_T_result = mysqli_query($conn, $esat_cbc_T);
                 $check_e3_t = mysqli_num_rows($esat_cbc_T_result);
                 if ($check_e3_t) :
-                    echo  '<p class="green-notif-border">You have already taken the ESAT Core Behavioral Competencies!</p>';
+                    echo  '<p class="green-notif-border">You have already taken the ESAT Core Behavioral Competencies! Do you want to update your answer? Click <a href="ESATform3update.php">here.</a></p>';
                     include 'samplefooter.php';
                     exit();
                 else : return false;

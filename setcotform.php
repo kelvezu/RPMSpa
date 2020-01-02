@@ -150,13 +150,13 @@ $(document).ready(function() {
                     <div class="row">
                         <div class="col-lg-6">
                             <label><b>OBSERVER 1: </b></label>&nbsp;
-                            <input type="text"  id="observe" value="<?php echo displayName($conn,$_SESSION['user_id']); ?>" readonly class="select-style">
+                            <input type="text"  id="observe" value="<?php echo displayName($conn,$_SESSION['user_id']); ?>" readonly class="form-control-sm">
                             <input type="hidden" name="observer1" id="observer1" value="<?php echo $_SESSION['user_id']; ?>">
                         </div>
 
                         <div class="col-lg-6">
                             <label><b>DATE:</b></label>
-                            <input type="text" name="date" id="date" value="<?php echo date("Y/m/d"); ?>" readonly class="select-style">
+                            <input type="text" name="date" id="date" value="<?php echo date("Y/m/d"); ?>" readonly class="form-control-sm">
 
                         </div>
                     </div>
@@ -164,7 +164,7 @@ $(document).ready(function() {
                     <div class="row">
                         <div class="col-lg-6">
                             <label><b>OBSERVER 2: </b></label>&nbsp;
-                            <select name="observer2" id="observer2" onchange="ddlselect()" class="select-style">
+                            <select name="observer2" id="observer2" onchange="ddlselect()" class="form-control-sm">
                                 <option value="<?= NULL ?>" disabled selected>Select Observer</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -193,7 +193,7 @@ $(document).ready(function() {
 
                         <div class="col-lg-6">
                             <label><b>TEACHER OBSERVED:</b> </label>
-                            <select name="tobserved" id="tobserved" required onchange="selectTobs()" class="select-style">
+                            <select name="tobserved" id="tobserved" required onchange="selectTobs()" class="form-control-sm">
                                 <option value="" disabled selected >--Select Teacher--</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -221,7 +221,7 @@ $(document).ready(function() {
                     <div class="row">
                         <div class="col-lg-6">
                             <label><b>OBSERVER 3:</b> </label>&nbsp;
-                            <select name="observer3" id="observer3" onchange="obs3select()" class="select-style">
+                            <select name="observer3" id="observer3" onchange="obs3select()" class="form-control-sm">
                                 <option value="<?= NULL ?>" disabled selected>Select Observer</option>
                                 <?php
                                 $school = $_SESSION['school_id'];
@@ -251,7 +251,7 @@ $(document).ready(function() {
                             <label>
                                 <b>SUBJECT:</b>
                             </label>
-                            <select name="tsubject" required id="tsubject" onchange="selectSubject()" class="select-style">
+                            <select name="tsubject" required id="tsubject" onchange="selectSubject()" class="form-control-sm">
                                 <option value="" disabled selected>--Select Subject--</option>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
@@ -271,7 +271,7 @@ $(document).ready(function() {
                             <label for="gradeleveltaught">
                                 <b>GRADE LEVEL TAUGHT:</b>
                             </label>
-                            <select name="tgradelvltaught" required id="tgradelvltaught" onchange="selectGlt()" class="select-style">
+                            <select name="tgradelvltaught" required id="tgradelvltaught" onchange="selectGlt()" class="form-control-sm">
                                 <option value="" disabled selected>--Select Grade Level Taught--</option>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
@@ -345,7 +345,7 @@ $(document).ready(function() {
                             endif;
                             ?>
 
-                            <input type="text" name="obs" id="obs" value="<?php echo $period; ?>" readonly class="select-style" />
+                            <input type="text" name="obs" id="obs" value="<?php echo $period; ?>" readonly class="form-control-sm" />
                             
                         </div>
 
@@ -439,7 +439,7 @@ $(document).ready(function() {
                                         <td><?php echo $row['indicator_id']; ?></td>
                                         <td><?php echo $row['indicator_name']; ?></td>
                                         <td>
-                                            <select name="rating[]" required id="rating<?php echo $indicator_no; ?>" onchange="selectRating<?php echo $indicator_no; ?>()">
+                                            <select name="rating[]" required id="rating<?php echo $indicator_no; ?>" onchange="selectRating<?php echo $indicator_no; ?>()" class="form-control-sm">
                                                 <option value="<?= NULL ?>" disabled selected>--Select--</option>
                                                 <option value="1">3</option>
                                                 <option value="2">4</option>
@@ -473,7 +473,7 @@ $(document).ready(function() {
 
 
             <textarea class="form-control" name="ioaf_comment" id="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
-            <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
+            <a href="javascript:history.back(1)" class="btn btn-danger">Back</a>
             <input type="submit" name="save" value="Submit" id="submitBtn" class="btn btn-default" />
 </div>
 </div>
