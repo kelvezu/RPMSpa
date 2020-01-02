@@ -49,7 +49,7 @@ $resultqry = $conn->query($periodqry)  or die($conn->error);
                 <td><?php echo $row['mtindicator_id']; ?></td>
                 <td><?php echo $row['mtindicator_name']; ?></td>
                 <td>
-                    <select name="mtrating[]" required="required">
+                    <select name="mtrating[]" required="required" class="form-control-sm">
                         <option value="" disabled selected>--Select--</option>
                         <option value="1">4</option>
                         <option value="2">5</option>

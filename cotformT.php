@@ -1,13 +1,15 @@
 <?php
 
 include_once 'sampleheader.php';
+include_once 'libraries/func.lib.php';
 
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
 
 if(isset($_POST['save'])):
-
     showModal('myModal')
 ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <style>
 .mystyle{
@@ -74,7 +76,7 @@ display:none;
                         $rater2 = $_POST['observer2'] ?? "";
                         $rater3 = $_POST['observer3'] ?? "";
                         $date = date("Y/m/d");
-                        $user_id = $_POST['tobserved'];
+                        $user_id = $_POST['tobserved'] ?? "";
                         $subject = $_POST['tsubject'];
                         $gradelvltaught = $_POST['tgradelvltaught'];
                         $obs_period = intval($_POST['obs']);
@@ -91,6 +93,19 @@ display:none;
                         if($cot_exist > 0):
                             $error_array[] = "Teacher has been rated for the specific observation period.";
                         endif;
+
+                        if(empty($user_id)):
+                            $error_array[] = "No Teacher selected!";
+                        endif;
+
+                        if (!empty($error_array)) :
+                                echo '<ul class="red-notif-border text-justify">';
+                                foreach ($error_array as $errors) :
+                                        echo '<li>' . $errors . '</li>';
+                                endforeach;
+                                echo '</ul>';
+                        endif;
+
                 ?>
 
                     <form action="includes/processcotformT.php" method="POST">
@@ -176,7 +191,7 @@ display:none;
                             <?php echo $indicator_name[$count]; ?>
                         </td>
                         <td><input type="hidden" name="rating[]" value="<?php echo $tcotrating[$count]; ?>" readonly class="shortinput">
-                            <?php echo $tcotrating[$count]; ?>
+                            <?php echo rawRate($tcotrating[$count],'Teacher I'); ?>
                         </td>
                         </tr>
                     <?php endfor;?>
@@ -207,7 +222,8 @@ display:none;
 
 <?php endif; ?>
  
-<div class="container text-center">
+<div class="container">
+      <a href="teachercotrate.php" class="btn btn-outline-primary">Cot Status</a>
     <div>
         <?php
         if (isset($_GET['notif'])) :
@@ -240,13 +256,13 @@ display:none;
                     <div class="row">
                         <div class="col-lg-6">
                              <label><b>OBSERVER 1: </b></label>&nbsp;
-                            <input type="text"  id="observe" value="<?php echo displayName($conn,$_SESSION['user_id']); ?>" readonly class="select-style">
+                            <input type="text"  id="observe" value="<?php echo displayName($conn,$_SESSION['user_id']); ?>" readonly class="form-control-sm">
                             <input type="hidden" name="observer1" id="observer1" value="<?php echo $_SESSION['user_id'] ?? ""; ?>" >
                         </div>
 
                         <div class="col-lg-6">
                             <label><b>DATE:</b></label>
-                            <input type="text" name="date" id="date" value="<?php echo date("Y/m/d") ?? ""; ?>" readonly class="select-style">
+                            <input type="text" name="date" id="date" value="<?php echo date("Y/m/d") ?? ""; ?>" readonly class="form-control-sm">
 
                         </div>
                     </div>
@@ -254,9 +270,12 @@ display:none;
                     <div class="row">
                         <div class="col-lg-6">
                             <label><b>OBSERVER 2: </b></label>&nbsp;
-                            <select name="observer2"  class="select-style">
+                            <select name="observer2"  class="form-control-sm">
+                                <?php if(isset($rater2)): ?>
                                 <option value="<?php echo $rater2 ?? ""; ?>" disabled selected><?php echo displayName($conn,$rater2) ?? "Select Observer"; ?></option>
-                                <option value="<?= NULL ?>" disabled selected>Select Observer</option>
+                                 <?php else: ?>
+                                    <option disabled selected>Select Observer</option>
+                                <?php endif ?>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
@@ -280,8 +299,12 @@ display:none;
 
                         <div class="col-lg-6">
                             <label><b>TEACHER OBSERVED:</b> </label>
-                            <select name="tobserved" required  class="select-style" >
+                            <select name="tobserved" required  class="form-control-sm" >
+                                 <?php if(isset($user_id)): ?>
                                 <option value="<?php echo $user_id ?? ""; ?>" disabled selected><?php echo displayName($conn,$user_id) ?? "Select Teacher"; ?></option>
+                                 <?php else: ?>
+                                    <option disabled selected>Select Teacher</option>
+                                 <?php endif; ?>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
@@ -306,9 +329,12 @@ display:none;
                     <div class="row">
                         <div class="col-lg-6">
                             <label><b>OBSERVER 3: </b></label>&nbsp;
-                            <select name="observer3"  class="select-style">
-                        
-                               <option value="<?php echo $rater3 ?? ""; ?>" disabled selected><?php echo displayName($conn,$rater3) ?? "Select Observer"; ?></option>
+                            <select name="observer3"  class="form-control-sm">
+                                <?php if(isset($rater3)): ?>
+                               <option value="<?php echo $rater3 ?? ""; ?>" disabled selected><?php echo displayName($conn,$rater3); ?></option>
+                                <?php else: ?>
+                                    <option disabled selected>Select Observer</option>
+                               <?php endif ?>
                                 <?php
                                 $school = $_SESSION['school_id'];
                                 $rater = $_SESSION['user_id'];
@@ -337,8 +363,12 @@ display:none;
                             <label>
                                 <b>SUBJECT:</b>
                             </label>
-                            <select name="tsubject" required  class="select-style">
-                                <option value="<?php echo $subject ?? ""; ?>" disabled selected><?php echo $subject ?? "Select Subject"; ?></option>
+                            <select name="tsubject" required  class="form-control-sm">
+                              <?php if(isset($subject)): ?>
+                                <option value="<?php echo $subject ?? ""; ?>" disabled selected><?php echo displaySubject($conn,$subject) ?? "Select Subject"; ?></option>
+                                 <?php else: ?>
+                                    <option disabled selected>Select Subject</option>
+                               <?php endif ?>
                                 <?php
                                 $querySubject = $conn->query('SELECT * FROM subject_tbl') or die($conn->error);
                                 while ($subjrow = $querySubject->fetch_assoc()) :
@@ -356,8 +386,12 @@ display:none;
                             <label for="gradeleveltaught">
                                 <b>GRADE LEVEL TAUGHT:</b>
                             </label>
-                            <select name="tgradelvltaught" required  class="select-style">
-                                <option value="<?php echo $gradelvltaught ?? ""; ?>" disabled selected><?php echo $gradelvltaught ?? "Select Grade Level Taught"; ?></option>
+                            <select name="tgradelvltaught" required  class="form-control-sm">
+                                <?php if(isset($gradelvltaught)): ?>
+                                <option value="<?php echo $gradelvltaught ?? ""; ?>" disabled selected><?php echo displayGradelvltaught($conn,$gradelvltaught) ?? "Select Grade Level Taught"; ?></option>
+                                 <?php else: ?>
+                                    <option disabled selected>Select Grade Level Taught</option>
+                               <?php endif ?>
                                 <?php
                                 $queryGlt = $conn->query('SELECT * FROM gradelvltaught_tbl') or die($conn->error);
                                 while ($gradelvltaught = $queryGlt->fetch_assoc()) :
@@ -408,7 +442,7 @@ display:none;
                                 <b>OBSERVATION PERIOD:</b>
                             </label>
 
-                            <select name="obs" onchange="showIndicator(this.value)" required  class="select-style">
+                            <select name="obs" onchange="showIndicator(this.value)" required  class="form-control-sm">
                                 <option value="<?php echo $obs_period ?? ""; ?>" disabled selected><?php echo $obs_period ?? "Select Period"; ?></option>
                                 <option value="1">1st</option>
                                 <option value="2">2nd</option>
@@ -464,7 +498,7 @@ display:none;
 
 
             <textarea class="form-control" name="ioaf_comment" rows="5" placeholder="OTHER COMMENTS" required="required"></textarea><br>
-            <a href="dbAdmin.php" role="button" class="btn btn-danger">Cancel</a>
+            <a href="javascript:history.back(1)" class="btn btn-danger">Back</a>
             <button type="submit" class="btn btn-primary" name="save">Submit</button>
 
     </div>
