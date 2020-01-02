@@ -82,7 +82,7 @@ endif;
     ]);
 
     var options = {
-      title: 'IPCRF Rating',
+      title: '<?= displaySchool($conn,$sy_id)?> IPCRF Rating for <?= displaySY($conn,$sy_id) ?>',
       vAxis: {
         title: 'Rating'
       },
@@ -157,8 +157,9 @@ endif;
       ?>
     ]);
 
+
     var options = {
-      title: 'IPCRF Rating',
+      title: '<?= displaySchool($conn,$sy_id)?> IPCRF Rating for <?= displaySY($conn,$sy_id) ?>',
       vAxis: {
         title: 'Rating'
       },
@@ -179,7 +180,7 @@ endif;
         }
       }
     };
-
+    
     var container = document.getElementById('chartIPCRF2');
     var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
     var btnSave = document.getElementById('save-pdf2');
@@ -195,6 +196,10 @@ endif;
     }, false);
 
     chart.draw(data, options);
+    
+
+
+
 
 
   }
