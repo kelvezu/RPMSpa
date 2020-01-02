@@ -320,7 +320,7 @@ class Dashboard
                 ';
             $nav .= '</ul>';
 
-        elseif ($_SESSION['position'] == "Principal" or $_SESSION['position'] == "Assistant Principal") :
+        elseif ($_SESSION['position'] == "Principal" or $_SESSION['position'] == "Assistant Principal" or $_SESSION['position'] == "Principal-OIC") :
             $nav .= '<ul class="navbar-nav mr-auto " >';
             $nav .= '  
                         <li class="nav-item active">
