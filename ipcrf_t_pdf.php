@@ -10,15 +10,18 @@ use IPCRF\IPCRF;
 
 if (isset($_GET['u_ipcrf'])) :
     $user = $_GET['u_ipcrf'];
+    $position = getPosition($conn, $user);
+    $school = getSchool($conn, $user);
+    $rater = getRater($conn, $user);
 else :
     $user = $_SESSION['user_id'];
+    $position = $_SESSION['position'];
+    $school = $_SESSION['school_id'];
+    $rater =  $_SESSION['rater'];
 endif;
 
 $name = displayName($conn, $user);
 $sy = $_SESSION['active_sy_id'];
-$position = $_SESSION['position'];
-$school = $_SESSION['school_id'];
-$rater =  $_SESSION['rater'];
 $rater_name = ($rater) ? displayName($conn, $rater) : "No rater";
 $rater_position = ($rater) ? getPosition($conn, $rater) : "No rater";
 $app_auth = displayName($conn, $_SESSION['approving_authority']) or $app_auth = "N/A";

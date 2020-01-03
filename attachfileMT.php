@@ -124,11 +124,13 @@ endif;
                             while ($resultQry = $qry->fetch_assoc()) :
                                 $kra_id = $resultQry['kra_id'];
                                 $obj_id = $resultQry['mtobj_id'];
-
+                                if ($resultQry['mov_type'] == "ATTACHMENT") :
                             ?>
-                                <input type="checkbox" name="obj[]" value="<?php echo $obj_id; ?>" /><?php echo "<a data-toggle='tooltip' data-placement='top' title='" . displayKRA($conn, $kra_id) . "'>KRA " . $kra_id . "</a> - <a data-toggle='tooltip' data-placement='top' title='" . displayObjectiveMT($conn, $obj_id) . "'>Objective " . $obj_id . "</a>"; ?><br>
 
-                            <?php endwhile; ?>
+                                    <input type="checkbox" name="obj[]" value="<?php echo $obj_id; ?>" /><?php echo "<a data-toggle='tooltip' data-placement='top' title='" . displayKRA($conn, $kra_id) . "'>KRA " . $kra_id . "</a> - <a data-toggle='tooltip' data-placement='top' title='" . displayObjectiveMT($conn, $obj_id) . "'>Objective " . $obj_id . "</a>"; ?><br>
+
+                            <?php endif;
+                            endwhile; ?>
                             <button type="submit" name="submit" class="btn btn-info">Upload</button>
                         </div>
                     </div>

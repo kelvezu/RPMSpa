@@ -78,7 +78,7 @@ if (isset($_GET['edit'])) {
 
                             <div class="form-row">
                                 <div class="form-group col-md-6"><button type="submit" name="update" class="btn btn-primary btn-block">Update</button></div>
-                                <div class="form-group col-md-6"><a href="../displayusers.php" class="btn btn-danger btn-block">Cancel</a></div>
+                                <div class="form-group col-md-6"><a href="../testdisplayusers.php" class="btn btn-danger btn-block">Cancel</a></div>
                             </div>
                 </form>
             </div>

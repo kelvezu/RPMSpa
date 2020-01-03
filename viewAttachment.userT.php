@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_id'];
         <div class="card-header bg-dark text-white text-white font-weight-bold">
             <div class="d-flex justify-content-between">
                 <div class="p-2">Means of Verification Attachments</div>
-                <div class="p-2"><a href="attachfileMT.php" class="btn btn-sm btn-outline-info"> Add Attachment </a></div>
+                <div class="p-2"><a href="attachfileT.php" class="btn btn-sm btn-outline-info"> Add Attachment </a></div>
             </div>
 
         </div>

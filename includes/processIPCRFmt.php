@@ -34,7 +34,7 @@ if (isset($_POST['submit_mt'])) :
 
     /* CHECK IF THE USER HAS IPCRF RECORD ALREADY  */
     if ($hasFinalIPCRF or $hasIPCRF) :
-        header('location:../ipcrf_mt.php?notif=ipcrfexist');
+        header('location:../ipcrf_mt_rate_form.php?notif=ipcrfexist');
         // echo 'User already have an Final IPCRF';
         exit();
     // elseif()
@@ -82,7 +82,7 @@ if (isset($_POST['submit_mt'])) :
 
     if ($r) :
         echo 'success';
-        header('location:../ipcrf_mt.php?notif=Success');
+        header('location:../ipcrf_mt_rate_form.php?notif=Success');
     endif;
 
 

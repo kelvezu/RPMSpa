@@ -2824,23 +2824,29 @@
                 endif;
             }
 
+            function getSchool($conn, $user)
+            {
+                $qry = "SELECT * FROM `account_tbl` WHERE `user_id` = $user";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return  $res['school_id'];
+                    endforeach;
+                else : return false;
+                endif;
+            }
 
-
-
-            /* THIS METHOD WILL PUSH ALL THE SCORE IN AN ARRAY  
-        array_push($score_array, generateScore(generateAVG($quality[$count], $efficiency[$count], $timeliness[$count]), $obj_weight[$count]));
-    }
-
-    // THIS WILL GENERATE THE SUM 
-    $final_score = (array_sum($score_array));
-    echo gettype($final_score);
-
-    $final_mt_ipcrf = "INSERT INTO `ipcrf_final_mt`(`user_id`, `position`, `sy_id`, `school_id`, `final_rating`, `adjectival_rating`, `rater_id`, `date_created`) VALUES ('$user', '$position','$sy','$school','$final_score','" . adjectivalRating(($final_score)) . "','$rater', '" . dateNow() . "')";
-    $final_ipcrf = mysqli_query($conn, $final_mt_ipcrf) or die($conn->error . $final_mt_ipcrf);
-    if ($final_ipcrf) :
-        console_log('Success!');
-    endif; */
-
+            function getRater($conn, $user)
+            {
+                $qry = "SELECT * FROM `account_tbl` WHERE `user_id` = $user";
+                $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                if ($result) :
+                    foreach ($result as $res) :
+                        return  $res['rater'];
+                    endforeach;
+                else : return false;
+                endif;
+            }
 
             function displaySchoolGradeLevel($conn, $school_grade_level)
             {
@@ -3086,6 +3092,64 @@
                 endif;
             }
 
+            function get_cot_feedback_t($conn, $user, $sy, $school, $obs_period)
+            {
+                $qry  = "SELECT * FROM `cot_t_rating_b_tbl` WHERE user_id = $user and sy = $sy and school_id = $school and obs_period = $obs_period and status = 'Active'";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+                if ($count_res > 0) {
+                    foreach ($results as $res) {
+                        return $res['comment'];
+                    }
+                }
+            }
+
+            function get_cot_feedback_mt($conn, $user, $sy, $school, $obs_period)
+            {
+                $qry  = "SELECT * FROM `cot_mt_rating_b_tbl` WHERE user_id = $user and sy = $sy and school_id = $school and obs_period = $obs_period and status = 'Active'";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+                if ($count_res > 0) {
+                    foreach ($results as $res) {
+                        return $res['comment'];
+                    }
+                }
+            }
+
+
+
+            function get_cot_average_indicator_mt($conn, $user, $sy, $school, $indicator_id)
+            {
+                // $qry  = "SELECT user_id,AVG(rating) as indicator_avg FROM `cot_mt_rating_a_tbl` where indicator_id = $indicator_id AND user_id =  $user AND sy =  $sy AND school_id = $school and `status` = 'Active'";
+                // $results = mysqli_query($conn, $qry) or die($conn->error);
+                // $count_res = mysqli_num_rows($results);
+                // if ($count_res > 0) {
+                //     foreach ($results as $res) {
+                //         return ROUND($res['indicator_avg'], 4);
+                //     }
+                // }
+
+                $qry  = "SELECT * FROM `cot_mt_indicator_ave_tbl`where user_id = $user and indicator_id =  $indicator_id and sy = $sy and school = $school and status = 'ACtive'";
+                $results = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $count_res = mysqli_num_rows($results);
+                if ($count_res > 0) {
+                    foreach ($results as $res) {
+                        return ROUND($res['average'], 3);
+                    }
+                }
+            }
+
+            function get_cot_average_indicator_t($conn, $user, $sy, $school, $indicator_id)
+            {
+                $qry  = "SELECT * FROM `cot_t_indicator_ave_tbl`where user_id = $user and indicator_id =  $indicator_id and sy = $sy and school = $school and status = 'ACtive'";
+                $results = mysqli_query($conn, $qry) or die($conn->error . $qry);
+                $count_res = mysqli_num_rows($results);
+                if ($count_res > 0) {
+                    foreach ($results as $res) {
+                        return ROUND($res['average'], 3);
+                    }
+                }
+            }
             /* 
                 THIS WILL DISPLAY THE SPECIFIC OBJECTIVE ID OF OBJECTIVE TABLES
             */

@@ -33,6 +33,7 @@ $overall_final_rating = $ipcrf->getAllFinalRating();
 $overall_adjectival_rating = adjectivalRating($overall_final_rating);
 
 $pdf = new Mpdf(['orientation' => 'L']);
+
 $pdf->WriteHTML('
 <style>
 
