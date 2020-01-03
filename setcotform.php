@@ -3,6 +3,7 @@
 include 'sampleheader.php';
 include_once 'libraries/func.lib.php';
 
+$position = $_SESSION['position'];
 
 $resultquery = $conn->query('SELECT * FROM tindicator_tbl')  or die($conn->error);
 
@@ -127,7 +128,17 @@ $(document).ready(function() {
                     </form>
         </div>
         <div class="p-2 w-100 bd-highlight">
-            <a href="teachercotrate.php" class="btn btn-outline-primary">Cot Status</a>
+            <?php 
+                if($position == "Principal"):
+                   echo '<a href="cotstatus.php" class="btn btn-outline-primary">Cot Status</a>';
+                else:
+                    echo '<a href="teachercotrate.php" class="btn btn-outline-primary">Cot Status</a>';
+                endif;
+            ?>
+
+
+
+            
         </div>
     </div>
    
