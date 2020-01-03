@@ -37,6 +37,7 @@ activeobsperiod($conn);
 
     <!-- Script for Dynamic Dropdown -->
     <script src="bootstrap4/scripts/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <!-- Script for Dynamic Dropdown -->
 
     <!-- Script for Charts  -->
