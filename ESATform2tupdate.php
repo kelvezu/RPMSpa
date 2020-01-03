@@ -153,7 +153,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
       <div class="card-footer text-muted ">
          <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
         <button type="submit" class="btn btn-success" name="updateESAT2t">Update</button>
-        <a href="" role="button" class="btn btn-danger">Cancel</a>
+      <a href="includes/processESATsurvey.php?cancel" class="btn btn-danger">Cancel All ESAT</a>
       </div>
     </div>
   </div>
@@ -162,8 +162,37 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
 </div>
 
 
+<?php if(isset($_GET['cancelAll'])):
+    showModal('cancelEsat');
+?>
+<div id="cancelEsat" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                 <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Delete Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="includes/processESATsurvey.php" method="post">
+                <div class="tomato-color font-italic text-center"><h5>Are you sure you want to cancel? Please be advised that all data you already answered wil be deleted.</h5></div>
+                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id'];?>">
+                    <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id'];?>">
+                    <input type="hidden" name="school" value="<?php echo $_SESSION['school_id'];?>">
+                    <input type="hidden" name="position" value="<?php echo $_SESSION['position'];?>">
+
+                  <div class="modal-footer justify-content-center">
+                        <div class="p-2"><button type="submit" name="deleteEsat" class="btn btn-success">Submit</button></div>
+                        <div class="p-2"><a href="esatform3.php" class="btn btn-danger">Cancel</a></div>
+                  </div>
+                    </form>
+                </div>  
+            </div>
+        </div>
+
 <br>
 <?php
+endif;
 include_once 'includes/scripts.php';
 include_once 'samplefooter.php';
 ?>

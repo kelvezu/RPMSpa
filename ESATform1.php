@@ -189,7 +189,7 @@
 
          
           <button class="btn btn-success" name="submitESAT1">Submit</button>
-          <button class="btn btn-danger " name="cancelb">Cancel</button>
+            <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
         </div>
       </div>
 

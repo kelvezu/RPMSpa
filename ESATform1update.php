@@ -5,10 +5,13 @@
   $user_id = $_SESSION['user_id'];
   $sy_id = $_SESSION['active_sy_id'];
   $school = $_SESSION['school_id'];
+  $position = $_SESSION['position'];
 
-  
-
- $ESAT_qry = $conn->query("SELECT * FROM esat1_demographicst_tbl WHERE `user_id` = '$user_id' AND sy = '$sy_id' AND school = '$school' ") or die ($conn->error);
+  if(($position == "Teacher I") || ($position == "Teacher II") || ($position == "Teacher III")):
+      $ESAT_qry = $conn->query("SELECT * FROM esat1_demographicst_tbl WHERE `user_id` = '$user_id' AND sy = '$sy_id' AND school = '$school' ") or die ($conn->error);
+  elseif(($position == "Master Teacher I") || ($position == "Master Teacher II") || ($position == "Master Teacher III") || ($position == "Master Teacher IV")):
+      $ESAT_qry = $conn->query("SELECT * FROM esat1_demographicsmt_tbl WHERE `user_id` = '$user_id' AND sy = '$sy_id' AND school = '$school' ") or die ($conn->error);
+  endif;
 
  foreach($ESAT_qry as $esat):
 

@@ -3150,3 +3150,16 @@
                     }
                 }
             }
+            /* 
+                THIS WILL DISPLAY THE SPECIFIC OBJECTIVE ID OF OBJECTIVE TABLES
+            */
+            
+            function show_obj_id_teacher($position)
+            {
+                if ($position == "Master Teacher IV" || $position == "Master Teacher III" || $position == "Master Teacher II" || $position == "Master Teacher I") :
+                    return 'mtobj_id';
+                elseif ($position == "Teacher III" || $position == "Teacher II" || $position == "Teacher I") :
+                    return 'tobj_id';
+                else :  return false;
+                endif;
+            }

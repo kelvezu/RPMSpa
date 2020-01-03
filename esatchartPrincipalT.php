@@ -1,13 +1,13 @@
 <?php
 
 include 'sampleheader.php';
-
+$teacher_id = $_SESSION['user_id'];
 if (isset($_POST['view'])) :
 
     if ((empty($_POST['sy_id'])) || (empty($_POST['school_id']))) :
         $sy = $_POST['active_sy'];
         $school = $_POST['school_id'];
-
+        
         if ($sy == 'N/A') :
             echo '<div class="red-notif-border">Please choose school year!</div>';
             include 'samplefooter.php';
@@ -36,9 +36,11 @@ if (isset($_POST['view'])) :
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
+                            <input class="btn-success text-white btn-sm" id="save-pdf" type="button" value="Save as PDF" disabled />
                                 <div id="agechart" style="width: 300px; height: 350px;"></div>
                             </div>
                             <div class="col">
+                            <input class="btn-success text-white btn-sm" id="save-pdf2" type="button" value="Save as PDF" disabled />
                                 <div id="age2chart" style="width: 700px; height: 350px;"></div>
                             </div>
                         </div>
@@ -51,6 +53,7 @@ if (isset($_POST['view'])) :
                     <div class=" text-center h4 text-white">Gender</div>
                 </div>
                 <div class="card-body">
+                
                     <div class="d-flex justify-content-center">
                         <div class="row">
                             <div class="col">
@@ -291,12 +294,31 @@ if (isset($_POST['view'])) :
                             endwhile; ?>
                 ]);
                 let options = {
-                    title: 'Age'
+                    title: '<?= displaySchool($conn,$sy)?> "Age Count Historical Data" <?= displaySY($conn,$sy) ?>'
                 };
-                let chart = new google.visualization.PieChart(document.getElementById('agechart'));
+                // let chart = new google.visualization.PieChart(document.getElementById('agechart'));
+                // chart.draw(data, options);
+
+                var container = document.getElementById('agechart');
+                var chart = new google.visualization.PieChart(document.getElementById('agechart'));
+                var btnSave = document.getElementById('save-pdf');
+
+                google.visualization.events.addListener(chart, 'ready', function() {
+                btnSave.disabled = false;
+                });
+
+                btnSave.addEventListener('click', function() {
+                var doc = new jsPDF('l');
+                doc.addImage(chart.getImageURI(), 0, 0);
+                doc.save('<?= displayname($conn, $teacher_id) ?>_IPCRF.pdf');
+                }, false);
+
                 chart.draw(data, options);
+
+
             }
         </script>
+        
 
         <script type="text/javascript">
             google.charts.load('current', {
@@ -327,9 +349,9 @@ if (isset($_POST['view'])) :
                 ]);
 
                 var options = {
-                    title: 'Age Count Historical Data',
+                    title: '<?= displaySchool($conn,$sy)?> "Age Count Historical Data" <?= displaySY($conn,$sy) ?>',
                     vAxis: {
-                        title: 'No. of Teachers'
+                        title: '<?= displaySchool($conn,$sy)?> "Age Count Historical Data" <?= displaySY($conn,$sy) ?>',
                     },
                     hAxis: {
                         title: 'Age and School Year'
@@ -349,8 +371,24 @@ if (isset($_POST['view'])) :
                     }
                 };
 
-                var chart = new google.visualization.ComboChart(document.getElementById('age2chart'));
-                chart.draw(data, options);
+                // var chart = new google.visualization.ComboChart(document.getElementById('age2chart'));
+                // chart.draw(data, options);
+
+                var container2 = document.getElementById('age2chart');
+                var chart2 = new google.visualization.ComboChart(document.getElementById('age2chart'));
+                var btnSave2 = document.getElementById('save-pdf2');
+
+                google.visualization.events.addListener(chart2, 'ready', function() {
+                btnSave2.disabled = false;
+                });
+
+                btnSave2.addEventListener('click', function() {
+                var doc2 = new jsPDF('l');
+                doc2.addImage(chart2.getImageURI(), 0, 0);
+                doc2.save('<?= displayname($conn, $teacher_id) ?>_IPCRF.pdf');
+                }, false);
+
+                chart2.draw(data, options);
             }
         </script>
 
