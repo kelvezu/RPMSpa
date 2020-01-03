@@ -12,7 +12,7 @@
   endif;
 
 
-  ?>
+  ?> 
 
 
   <div class="container col-md-6">

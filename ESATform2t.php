@@ -86,7 +86,7 @@ $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
                     <option value=2>Moderate</option>
                     <option value=1>Low</option>
                   </select>
-                </td>
+                </td> 
                 <td>
                   <div id="priodev">
                     <select name="priodev[]" class="form-control font-weight-bold" required>

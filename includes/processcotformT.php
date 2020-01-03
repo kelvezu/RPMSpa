@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
     $status = "Active";
 
 
-
+ 
     $checkCOTqry = "SELECT * FROM cot_t_rating_a_tbl WHERE sy = $sy_id AND obs_period = '$obs_period' AND school_id= $school_id AND `user_id` = '$user_id'";
     $cotquery = mysqli_query($conn, $checkCOTqry) or die($conn->error);
     $resultcount = mysqli_num_rows($cotquery);

@@ -180,7 +180,7 @@ display:none;
                         <th>Indicator Name</th>
                         <th>Rating</th>
                         </tr>
-                    </thead>
+                    </thead> 
                     <tbody>
                     <?php for ($count = 0; $count < count($indicator_id); $count++): ?>
                         <tr>

@@ -3,7 +3,7 @@ include 'sampleheader.php';
 RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
 $verifyEsat = FilterUser\FilterUser::filterEsatCbc($conn, $_SESSION['position']);
 
-$conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
+// $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
 //QUERY FOR CORE BEHAVIORAL COMPETENCIES 
 $result = $conn->query('SELECT * FROM core_behavioral_tbl')  or die($conn->error);
 $numcbc = 1;
@@ -35,12 +35,10 @@ if(isset($_POST['submitESAT3'])):
                 
                 <?php
 
-                    $cbc_id = $_POST['cbc_id'];
-                    $cbc_ind_id = $_POST['cbc_ind_id'];
-                    $cbc_score = $_POST['cbc_score'];
+                    
                     
 
-                    $esat1_query = $conn->query("SELECT * FROM esat1_demographicst_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' ");
+                    $esat1_query = $conn->query("SELECT * FROM esat1_demographicst_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' ") or die($conn->error);
                         while ($esat = $esat1_query->fetch_assoc()):
                             $age = $esat['age'];
                             $gender = $esat['gender'];
@@ -53,10 +51,7 @@ if(isset($_POST['submitESAT3'])):
                             $subject_taught = $esat['subject_taught'];
                             $grade_lvl = $esat['grade_lvl_taught'];
                             $curri = $esat['curri_class'];
-                            $region = $esat['region'];
-
-
-                    
+                            $region = $esat['region']; 
                 ?>
                     <form action="includes/processESATsurvey.php" method="POST">
        
@@ -156,7 +151,7 @@ if(isset($_POST['submitESAT3'])):
                       ?>
                 </td>
                 <?php
-                $objective_Query = $conn->query("SELECT * FROM esat2_objectivest_tbl WHERE kra_id = '$kra_id' AND tobj_id = '$tobj_id' AND `user_id` = '$user_id' ");
+                $objective_Query = $conn->query("SELECT * FROM esat2_objectivest_tbl WHERE kra_id = '$kra_id' AND tobj_id = '$tobj_id' AND `user_id` = '$user_id' ") or die($conn->error);
                         while($res = $objective_Query->fetch_assoc()):
                             $lvlcap = $res['lvlcap'];
                             $priodev = $res['priodev'];
@@ -184,39 +179,57 @@ if(isset($_POST['submitESAT3'])):
 
                 ?>
 
-                <input type="hidden" name="esat2_id[]" value="<?php echo $esat2_id;?>">
+               
                 <td>
-                  <select name="lvlcap[]" id="lvlcapp" onChange="change_cap()" class="form-control font-weight-bold" required>
-                    <option value="<?php echo $lvlcap ?>"><?php echo $lvlcap_desc ?></option>
-                   
-                  </select>
+                  <input type="hidden" name="lvlcap[]" value="<?php echo $lvlcap ?>">
+                  <input type="text" value="<?php echo $lvlcap_desc ?>" class="form-control-sm">  
                 </td>
                 <td>
-                  <div id="priodev">
-                    <select name="priodev[]" class="form-control font-weight-bold" required>
-                      <option value="<?php echo $priodev ?>"><?php echo $priodev_desc ?></option>
-                      
+                    <input type="hidden" name="priodev[]" value="<?php echo $priodev ?>">
+                    <input type="text" value="<?php echo $priodev_desc ?>" class="form-control-sm">
                     </select>
                   </div>
-
                 </td>
             </tr>
-
                 <?php endwhile; ?>
-           
                 <?php endwhile; ?>
           </tbody>
-          
         <?php
           $tobj_num = 1;
-        endwhile
-        ?>
+                endwhile; ?>
+        </table>
+                <?php
+
+                    $cbc_id = $_POST['cbc_id'];
+                    $unique_cbc_id = array_unique($cbc_id);
+                    $array_values = array_values($unique_cbc_id);
+                    $cbc_ind_id = $_POST['cbc_ind_id'];
+                    $cbc_score = $_POST['cbc_score'];
+                ?>
+                <?php pre_r($array_values) ?>
+
+                <table class="table table-hover table-responsive-sm table-sm ">
+                    <?php foreach ($_POST as $array): ?>
+
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th colspan="3"><input type="hidden" name="cbc_id[]" value="<?php echo $array_values; ?>">
+                                <?php echo displayCBCname($conn, $array_values); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="cbc_score[]" value="<?php echo $cbc_score[$count];?>"></td>
+                       
+                                <td><input type="hidden" name="cbc_ind_id[]" value="<?php echo $cbc_ind_id[$count]; ?>">
+                                    <?php echo displayCBCind($conn,$cbc_ind_id[$count]); ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    <?php endforeach; ?>
+                </table>
 
 
-
-                        
-                        </table>
-                      
                                <tfoot>
                                         <td colspan="10">
                                         <div class="d-flex justify-content-center">
@@ -257,7 +270,8 @@ endif; ?>
                 <table class="table table-hover table-responsive-sm table-sm ">
                     <!-- Start loop for  Core Behavioral Competencies -->
                     <?php
-                    //FETCH THE FIELDS FROM THE DB  
+                    //FETCH THE FIELDS FROM THE DB 
+                    $num = 1; 
                     while ($row = $result->fetch_assoc()) :
                         $cbc_id = $row['cbc_id'];
                         $cbc_name = $row['cbc_name'];
@@ -276,7 +290,7 @@ endif; ?>
                                 <!-- START OF LOOP FROM CBC INDICATOR -->
                                 <?php
                                     //QUERY FOR INDICATORS TABLE 
-                                    $num = 1;
+                                    
                                     $indresult = $conn->query("SELECT * FROM cbc_indicators_tbl WHERE cbc_id = '$cbc_id'")  or die($conn->error);
                                     //FETCH THE DATA FROM INDICATOR TABLE
                                     while ($rows = $indresult->fetch_assoc()) :
@@ -309,7 +323,9 @@ endif; ?>
                                     </td>
                             </tr>
                             <!-- END LOOP FOR THE CBC INDICATORS -->
-                        <?php $num++; endwhile ?>
+                        <?php
+                        $num++;  
+                        endwhile ?>
 
 
 
@@ -317,6 +333,7 @@ endif; ?>
                         </tbody>
                         <!-- END LOOP FOR THE CORE BEHAVIORAL COMPETENCIES -->
                     <?php
+                        
                         $numind = 1;
                     endwhile
 
