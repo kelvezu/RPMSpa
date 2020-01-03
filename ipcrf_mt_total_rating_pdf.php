@@ -197,32 +197,7 @@ $pdf->WriteHTML(
 </table>'
 );
 
-// $pdf->WriteHTML('
-// <table style="border:none; margin-top:25px;">
-//     <tr style="border:none;">
-//         <td style="border:none;">
-//             <p>
-//                 <u>' . $name . '</u>
-//                 <p><b>Ratee</b></p>
-//             </p>
-//         </td>
 
-//         <td style="border:none;">
-//             <p>
-//                 <u>' . $rater_name . '</u>
-//                 <p><b>Rater</b></p>
-//             </p>
-//         </td>
-
-//         <td style="border:none;">
-//             <p>
-//                 <u>' . $app_auth . '</u>
-//                 <p><b>Approving Authority</b></p>
-//             </p>
-//         </td>
-//     </tr>
-// </table>
-// ');
 
 $pdf->writeHTML("
 <footer>

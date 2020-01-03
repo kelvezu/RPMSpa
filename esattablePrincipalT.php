@@ -30,18 +30,7 @@ include 'sampleheader.php';
                     </select>&nbsp;&nbsp;
                 </div>
                 <!-- End of School Year Dropdown -->
-                <div class="form-group mb-2">
-                    <!-- Teacher Dropdown -->
-                    <label for="sy"><strong>Teacher:</strong></label>&nbsp;&nbsp;
-                    <?php $teacherqry = $conn->query('SELECT * FROM account_tbl WHERE position IN ("Teacher III","Teacher II","Teacher I") AND `status` = "Active"') or die($conn->error); ?>
-                    <select id="teacher_id" name="teacher_id" class="form-control">
-                        <option value="" disabled selected>--Select Teacher--</option>
-                        <?php while ($teacherrow = $teacherqry->fetch_assoc()) : ?>
-                            <option value="<?php echo $teacherrow['user_id']; ?>"><?php echo $teacherrow['firstname'] . ' ' . substr($teacherrow['middlename'], 0, 1) . '. ' . $teacherrow['surname']; ?></option>
-                        <?php endwhile; ?>
-                    </select>&nbsp;&nbsp;
-                    <!-- End of Teacher Dropdown -->
-                </div>
+                
                 <div class="form-group mb-2">
                     <a onclick="showchart()" class="btn btn-success text-white">View</a>&nbsp;&nbsp;
                     <button type="submit" name="view" class="btn btn-success">View Data in Charts</button>
@@ -64,11 +53,11 @@ include 'sampleheader.php';
 
     function showchart() {
         let sy_id = document.getElementById('sy_id').value;
-        let teacher_id = document.getElementById('teacher_id').value;
+     //   let teacher_id = document.getElementById('teacher_id').value;
         let school_id = document.getElementById('school_id').value;
         let active_sy_id = document.getElementById('active_sy').value;
 
-        if ((sy_id == "" && teacher_id == "")) {
+        if ((sy_id == "")) {
             let xmlhttp = new XMLHttpRequest();
             xmlhttp.onload = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -86,7 +75,7 @@ include 'sampleheader.php';
                     console.log(this.responseText);
                 }
             }
-            xmlhttp.open("GET", "esatajaxtablePrincipalT.php?sy=" + sy_id + "&user=" + teacher_id + "&sch=" + school_id, true);
+            xmlhttp.open("GET", "esatajaxtablePrincipalT.php?sy=" + sy_id  + "&sch=" + school_id, true);
             xmlhttp.send();
             return;
         }

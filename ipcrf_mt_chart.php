@@ -82,7 +82,7 @@ endif;
     ]);
 
     var options = {
-      title: 'IPCRF Rating',
+      title: '<?= displaySchool($conn,$sy_id)?> IPCRF Rating for <?= displaySY($conn,$sy_id) ?>',
       vAxis: {
         title: 'Rating'
       },
@@ -156,7 +156,7 @@ endif;
     ]);
 
     var options = {
-      title: 'IPCRF Rating',
+      title: '<?= displaySchool($conn,$sy_id)?> IPCRF Rating for <?= displaySY($conn,$sy_id) ?>',
       vAxis: {
         title: 'Rating'
       },

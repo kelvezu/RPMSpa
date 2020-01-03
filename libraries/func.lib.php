@@ -262,7 +262,7 @@
                             $qry = 'UPDATE sy_tbl SET `status` = "Inactive"';
                             mysqli_query($conn, $qry);
 
-                        
+
                             $qry_subject = 'UPDATE subject_tbl SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_subject) or die($conn->error);
 
@@ -278,7 +278,7 @@
                             $qry_kra = 'UPDATE kra_tbl  SET `status` = "Inactive" WHERE `status` = "Active"';
                             mysqli_query($conn, $qry_kra) or die($conn->error);
                             exit();
-                        else: 
+                        else :
                         // else : return console_log('wala kang nakaset ng sy');
                         endif;
                     // else :
@@ -1828,7 +1828,7 @@
                 $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) {
                     foreach ($result as $r) :
-                        return $r['weight'];
+                        return floatval($r['weight']);
                     endforeach;
                 }
             }
@@ -2818,7 +2818,7 @@
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) :
                     foreach ($result as $res) :
-                        return ($res['position']);
+                        return strval($res['position']);
                     endforeach;
                 else : return false;
                 endif;
@@ -3005,9 +3005,59 @@
                 $count_res = mysqli_num_rows($results);
 
                 if ($count_res > 0) {
-
                     foreach ($results as $res) {
                         return $res['user_id'];
                     }
+                }
+            }
+
+            function isNoRecord(array $record_array)
+            {
+                if (!$record_array) {
+                    echo '<p class="red-notif-border m-5"> No record! </p>';
+                    include 'samplefooter.php';
+                    exit();
+                    return;
+                }
+            }
+
+            function get_all_ipcrf_user($conn, $sy, $school)
+            {
+                $qry = "SELECT * FROM ((SELECT * FROM `ipcrf_final_mt` WHERE sy_id = $sy and school_id = $school and status = 'Active') UNION ALL (SELECT * FROM `ipcrf_final_t` WHERE sy_id = $sy and school_id = $school and status = 'Active'))a ORDER BY final_rating desc, FIELD(adjectival_rating,'Outstanding','Very Satisfactory','Satisfactory','Unsatisfactory','Poor')";
+
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+                    $array_res = [];
+                    foreach ($result as $r) {
+                        array_push($array_res, $r);
+                    }
+                    return $array_res;
+                }
+            }
+
+            function get_final_ipcrf_rating($conn, $sy, $school)
+            {
+                $qry  = "SELECT ROUND(AVG(a.final_rating),3) as overall_rating FROM (SELECT * FROM `ipcrf_final_mt` WHERE sy_id = $sy and school_id = $school and status = 'Active' UNION ALL SELECT * FROM `ipcrf_final_t` WHERE sy_id = $sy and school_id = $school and status = 'Active')a ORDER BY final_rating desc, FIELD(adjectival_rating,'Outstanding','Very Satisfactory','Satisfactory','Unsatisfactory','Poor')";
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+
+                if ($result) :
+                    foreach ($result as $r) :
+                        return floatval($r['overall_rating']);
+                    endforeach;
+                else : die($this->conn()->error . $qry);
+                endif;
+            }
+
+            function get_obj_thru_kra($conn, $kra)
+            {
+                $qry = "SELECT * FROM mtobj_tbl WHERE kra_id = $kra";
+
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+                    $array_res = [];
+                    foreach ($result as $r) {
+                        array_push($array_res, $r);
+                    }
+                    return $array_res;
                 }
             }

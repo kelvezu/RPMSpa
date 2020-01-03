@@ -82,7 +82,7 @@ endif;
     ]);
 
     var options = {
-      title: 'IPCRF Rating for <?= displaySY($conn,$sy_id) ?>',
+      title: '<?= displaySchool($conn,$sy_id)?> IPCRF Rating for <?= displaySY($conn,$sy_id) ?>',
       vAxis: {
         title: 'Rating'
       },
@@ -104,18 +104,17 @@ endif;
       }
 
     };
-    const container1 = document.getElementById('chartipcrf_ave');
-   // const chart = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave'));
-    const btnSave = document.getElementById('save-pdf');
+    var container = document.getElementById('chartipcrf_ave');
+    var chart = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave'));
+    var btnSave = document.getElementById('save-pdf');
 
     google.visualization.events.addListener(chart, 'ready', function() {
       btnSave.disabled = false;
     });
 
     btnSave.addEventListener('click', function() {
-      const doc = new jsPDF('l');
+      var doc = new jsPDF('l');
       doc.addImage(chart.getImageURI(), 0, 0);
-
       doc.save('chart.pdf');
     }, false);
 
@@ -181,25 +180,26 @@ endif;
         }
       }
     };
-    const container1 = document.getElementById('chartipcrf_ave');
-    const container2 = document.getElementById('chartIPCRF2');
-    const chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
-    const chart2 = new google.visualization.ComboChart(document.getElementById('chartipcrf_ave'));
-    const btnSave2 = document.getElementById('save-pdf2');
+    
+    var container = document.getElementById('chartIPCRF2');
+    var chart = new google.visualization.ComboChart(document.getElementById('chartIPCRF2'));
+    var btnSave = document.getElementById('save-pdf2');
 
     google.visualization.events.addListener(chart, 'ready', function() {
       btnSave.disabled = false;
     });
 
-    btnSave2.addEventListener('click', function() {
-      const doc2 = new jsPDF('l');
+    btnSave.addEventListener('click', function() {
+      var doc = new jsPDF('l');
       doc.addImage(chart.getImageURI(), 0, 0);
-      doc.addImage(chart2.getImageURI(), 0, 0);
       doc.save('<?= displayname($conn, $teacher_id) ?>_IPCRF.pdf');
     }, false);
 
     chart.draw(data, options);
     
+
+
+
 
 
   }
