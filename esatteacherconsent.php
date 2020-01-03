@@ -3,6 +3,11 @@
 
 include 'sampleheader.php';
 
+if(isset($_GET['notif'])):
+    if($_GET['notif'] == 'esatdeleted'):
+        echo "<div class='red-notif-border'>You have cancelled your esat!</div>";
+    endif;
+endif;
 ?>
 
 <div class="container">

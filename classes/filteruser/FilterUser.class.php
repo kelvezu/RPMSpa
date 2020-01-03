@@ -24,7 +24,7 @@ class FilterUser
                 $check_e1_t = mysqli_num_rows($esat_demo_T_result);
                 if ($check_e1_t > 0) :
                     echo  '<p class="green-notif-border">You have already taken the ESAT Demographics! Do you want to update your answer? Click <a href="ESATform1update.php">here.</a></p>
-                    <p class="green-notif-border">Proceed to Part II. Click <a href="ESATform2t.php">here</a></p>';
+                    <p class="green-notif-border">Proceed to Part II. Click <a href="ESATform2mt.php">here</a></p>';
                     include 'samplefooter.php';
                     exit();
                 else :
@@ -121,7 +121,8 @@ class FilterUser
                 $check_e2_mt = mysqli_num_rows($esat_objective_MT_result);
 
                 if ($check_e2_mt) :
-                    echo '<p class="green-notif-border">You have already answer the ESAT Objectives! Do you want to update your answer? Click <a href="ESATform2MTupdate.php">here.</a></p>';
+                    echo '<p class="green-notif-border">You have already answer the ESAT Objectives! Do you want to update your answer? Click <a href="ESATform2MTupdate.php">here.</a></p>
+                     <p class="green-notif-border">Proceed to Part III. Click <a href="ESATform3.php">here</a></p>';
                     directLastPage();
                     include 'samplefooter.php';
                     die();

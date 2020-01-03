@@ -102,13 +102,16 @@
             if (stripos($position, 'aster')) :
                 for ($count = 0; $count < count($user_id); $count++) {
                     $conn->query('INSERT INTO esat3_core_behavioralmt_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
+                    
                 } elseif (stripos($position, 'eacher')) :
                 for ($count = 0; $count < count($user_id); $count++) {
                     $conn->query('INSERT INTO esat3_core_behavioralt_tbl(user_id,cbc_id,cbc_ind_id,cbc_score,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $cbc_id[$count] . '","' . $cbc_ind_id[$count] . '","' . $cbc_score[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
+                    
                 } else : die($conn->error);
             endif;
 
-            directToCharts($position);
+            header("Location:../ESATform3update.php?notif=show");
+            // directToCharts($position);
         // else : return false;
         endif;
 
@@ -190,6 +193,7 @@
   
 
         if (isset($_POST['updateESAT2mt'])) :
+             $esat2_id = $_POST['esat2_id'];
             $user_id = $_POST['user_id'];
             $sy = $_POST['sy'];
             $school = $_POST['school_id'];
@@ -199,8 +203,83 @@
             $priodev = $_POST['priodev'];
             $position = $_POST['position'];
 
-            for ($count = 0; $count < count($kra_id); $count++) {
-                $conn->query('INSERT INTO esat2_objectivesmt_tbl(user_id,kra_id, mtobj_id, lvlcap, priodev,sy,position,school,`status`)VALUES("' . $user_id[$count] . '","' . $kra_id[$count] . '","' . $mtobj_id[$count] . '","' . $lvlcap[$count] . '","' . $priodev[$count] . '","' . $sy . '","' . $position . '","' . $school . '","' . $status . '")') or die($conn->error);
+            for ($count = 0; $count < count($mtobj_id); $count++) {
+                $result = mysqli_query($conn,"UPDATE esat2_objectivesmt_tbl SET kra_id = '$kra_id[$count]', mtobj_id = '$mtobj_id[$count]' , lvlcap = '$lvlcap[$count]', priodev = '$priodev[$count]' WHERE esat2_id = '$esat2_id[$count]'  ") or die($conn->error);
             }
-            header('location:../ESATform3.php');
+            header('location:../ESATform2mt.php?notif=updated');
         endif;
+
+if(isset($_POST['submit'])):
+    header("Location:../esatnotif.php");
+endif;
+
+//update3esat
+
+$cbc_score = 0;
+        if (isset($_POST['updateESAT3'])) :
+            $esat3_id = $_POST['esat3_id'];
+            $user_id = $_POST['user_id'];
+            $sy = $_POST['sy'];
+            $school = $_POST['school_id'];
+            $cbc_id = $_POST['cbc_id'];
+            $cbc_ind_id = $_POST['cbc_ind_id'];
+            $cbc_score = $_POST['cbc_score'];
+            $position = $_POST['position'];
+
+            // pre_r($_POST);
+            // exit();
+            if (stripos($position, 'aster')) :
+                for ($count = 0; $count < count($user_id); $count++) :
+                    $result = mysqli_query($conn,'UPDATE esat3_core_behavioralmt_tbl SET  cbc_id = "'.$cbc_id[$count].'", cbc_ind_id = "'.$cbc_ind_id[$count].'", cbc_score = "'.$cbc_score[$count].'" WHERE esat3_id = "'.$esat3_id[$count].'" ') or die($conn->error);
+                endfor;
+                if($result):
+                      header("Location:../ESATform3update.php?notif=show");
+                endif;
+
+                 elseif (stripos($position, 'eacher')) :
+                for ($count = 0; $count < count($user_id); $count++) :
+                    $result = mysqli_query($conn,'UPDATE esat3_core_behavioralt_tbl SET  cbc_id = "'.$cbc_id[$count].'", cbc_ind_id = "'.$cbc_ind_id[$count].'", cbc_score = "'.$cbc_score[$count].'"  WHERE esat3_id = "'.$esat3_id[$count].'" ') or die($conn->error);
+                    
+                endfor;
+                // pre_r($result);
+                // exit();
+                if($result):
+                      header("Location:../ESATform3update.php?notif=show");
+                endif;
+            
+                 else : die($conn->error);
+            endif;
+
+          
+            // directToCharts($position);
+        // else : return false;
+        endif;
+
+if(isset($_GET['cancel'])):
+ header('Location: ' . $_SERVER['HTTP_REFERER'] .'?cancelAll ');
+
+endif;
+
+if(isset($_POST['cancel'])):
+ header('Location: ' . $_SERVER['HTTP_REFERER'] .'?cancelAll ');
+
+endif;
+
+if(isset($_POST['deleteEsat'])):
+    $user_id = $_POST['user_id'];
+    $sy = $_POST['sy'];
+    $school = $_POST['school'];
+    $position = $_POST['position'];
+
+    if(($position == "Teacher I") || ($position == "Teacher II") || ($position == "Teacher III")):
+        mysqli_query($conn, "DELETE FROM  esat1_demographicst_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' AND school = '$school' AND position = '$position' ") or die ($conn->error);
+        mysqli_query($conn, "DELETE FROM  esat2_objectivest_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' AND school = '$school' AND position = '$position' ") or die ($conn->error);
+        mysqli_query($conn, "DELETE FROM  esat3_core_behavioralt_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' AND school = '$school' AND position = '$position' ") or die ($conn->error);
+        header("Location:../esatteacherconsent.php?notif=esatdeleted");
+    elseif(($position == "Master Teacher I") || ($position == "Master Teacher II") || ($position == "Master Teacher III") || ($position == "Master Teacher IV") ):
+        mysqli_query($conn, "DELETE FROM  esat1_demographicsmt_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' AND school = '$school' AND position = '$position' ") or die ($conn->error);
+        mysqli_query($conn, "DELETE FROM  esat2_objectivesmt_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' AND school = '$school' AND position = '$position' ") or die ($conn->error);
+        mysqli_query($conn, "DELETE FROM  esat3_core_behavioralmt_tbl WHERE `user_id` = '$user_id' AND sy = '$sy' AND school = '$school' AND position = '$position' ") or die ($conn->error);
+        header("Location:../esatmasterteacherconsent.php?notif=esatdeleted");
+    endif;
+endif;

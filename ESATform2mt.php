@@ -1,14 +1,17 @@
   <?php
   include 'sampleheader.php';
-
   FilterUser\FilterUser::filterEsatMT($conn, $_SESSION['position']);
   RPMSdb\RPMSdb::isEsatComplete($conn, $_SESSION['position']);
+
+
   $kra_num = 0;
   $tobj_num = 1;
   $conn = new mysqli('localhost', 'root', '', 'rpms') or die(mysqli_error($conn));
   //QUERY FOR KRA TABLE  
   $result = $conn->query('SELECT * FROM kra_tbl')  or die($conn->error);
   ?>
+
+
   <div class="container">
     
   <div class="card">
@@ -95,8 +98,9 @@
             ?>
           </table>
           <div class="card-footer text-muted ">
-            <button type="submit" class="btn btn-success btn-block my-2" name="submitESAT2mt">Submit</button>
-            <button type="submit" class="btn btn-danger btn-block my-2" name="cancel">Cancel</button>
+             <a href="javascript:history.back(1)" class="btn btn-primary">Back</a>
+            <button type="submit" class="btn btn-success" name="submitESAT2mt">Submit</button>
+            <button type="submit" class="btn btn-danger" name="cancel">Cancel</button>
           </div>
         </div>
       </form>
