@@ -3061,3 +3061,27 @@
                     return $array_res;
                 }
             }
+
+
+
+            function show_kra_average_school($conn, $sy, $school, $kra)
+            {
+                $qry  = "SELECT school_id,round(AVG(average),3) as kra_avg FROM (SELECT * FROM `ipcrf_mt` UNION ALL SELECT * FROM `ipcrf_t`)a where sy_id = $sy AND school_id = $school and `status` = 'Active' and kra_id = $kra";
+                $results = mysqli_query($conn, $qry) or die($conn->error);
+                $count_res = mysqli_num_rows($results);
+                if ($count_res > 0) {
+                    foreach ($results as $res) {
+                        return $res['kra_avg'];
+                    }
+                }
+            }
+
+            function show_ipcrf_table($position)
+            {
+                if ($position == "Master Teacher IV" || $position == "Master Teacher III" || $position == "Master Teacher II" || $position == "Master Teacher I") :
+                    return 'ipcrf_mt';
+                elseif ($position == "Teacher III" || $position == "Teacher II" || $position == "Teacher I") :
+                    return 'ipcrf_t';
+                else :  return false;
+                endif;
+            }

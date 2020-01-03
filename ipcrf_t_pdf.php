@@ -8,7 +8,12 @@ include 'classes/ipcrf/ipcrf.class.php';
 use Mpdf\Mpdf;
 use IPCRF\IPCRF;
 
-$user = $_SESSION['user_id'];
+if (isset($_GET['u_ipcrf'])) :
+    $user = $_GET['u_ipcrf'];
+else :
+    $user = $_SESSION['user_id'];
+endif;
+
 $name = displayName($conn, $user);
 $sy = $_SESSION['active_sy_id'];
 $position = $_SESSION['position'];

@@ -42,6 +42,13 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
                         <th>
                             <p>Principal Name</p>
                         </th>
+
+                        <?php foreach (kra_tbl($conn) as $kra) : ?>
+                            <th>
+                                <p>KRA <?= $kra['kra_id'] ?> </p>
+                            </th>
+                        <?php endforeach ?>
+
                         <th>
                             <p>IPCRF General Rating</p>
                         </th>
@@ -64,9 +71,9 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
                             </td>
 
                             <td>
-                                <a data-toggle="modal" data-target="#viewModal<?= $id_school ?>">
+                                <button class="btn btn-link font-weight-bold" data-toggle="modal" data-target="#viewModal<?= $id_school ?>">
                                     <?= displaySchool($conn, $id_school) ?>
-                                </a>
+                                </button>
                             </td>
 
                             <td>
@@ -74,6 +81,12 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
                                     <?= displayName($conn, displayPrincipal($conn, $id_school)) ?>
                                 </p>
                             </td>
+                            <!-- CREATE THE OVERALL KRA RATING FOR EACH SCHOOL -->
+                            <?php foreach (kra_tbl($conn) as $kra) : ?>
+                                <td>
+                                    <p> <?php echo show_kra_average_school($conn, $sy, $id_school, $kra['kra_id']) ?? "---"; ?> </p>
+                                </td>
+                            <?php endforeach ?>
 
                             <td>
                                 <p>
@@ -86,6 +99,8 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
                                     <?= $school_adjectival_rating ?>
                                 </p>
                             </td>
+
+
                         <?php endforeach;
                     $num = 1; ?>
                         </tr>
@@ -147,6 +162,12 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
                                     </p>
                                 </th>
 
+                                <th>
+                                    <p>
+                                        Action
+                                    </p>
+                                </th>
+
                             </tr>
                         </thead>
                         <?php foreach (get_all_ipcrf_user($conn, $sy, $view_school) as $users) :
@@ -182,6 +203,14 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
                                             <?= $users['adjectival_rating'] ?>
                                         </p>
                                     </td>
+
+
+                                    <td>
+                                        <p>
+                                            <a href="<?= show_ipcrf_table($users['position']) ?>_pdf.php?u_ipcrf=<?= $users['user_id'] ?>" class="btn btn-primary"><i class="fa fa-file-pdf"></i> Create PDF</a>
+                                        </p>
+                                    </td>
+
                                 <?php endforeach; ?>
                                 </tr>
                             <tfoot class="bg-dark text-white font-weight-bold">
@@ -190,7 +219,7 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
                                         <p>Overall Rating:<br>
                                             Adjectival Rating: <span class="text-success"></span></p>
                                     </td>
-                                    <td>
+                                    <td colspan="2">
                                         <p>
                                             <?= get_final_ipcrf_rating($conn, $sy, $school) ?><br>
                                             <?= adjectivalRating(get_final_ipcrf_rating($conn, $sy, $school)) ?>

@@ -1005,4 +1005,76 @@ class IPCRF
         else : die($this->conn()->error . $qry);
         endif;
     }
+
+    public function fetch_all_ipcrf_users()
+    {
+        $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a ORDER BY a.final_rating desc";
+
+        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR RESULT OF COT  */
+    public function getAllFinalRating()
+    {
+        $qry  = "SELECT round(AVG(final_rating),3) as final_rating FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a ORDER BY a.final_rating desc";
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
+
+        if ($result) :
+            foreach ($result as $r) :
+                return floatval($r['final_rating']);
+            endforeach;
+        else : die($this->conn()->error . $qry);
+        endif;
+    }
+
+    public function get_kra_average($kra_id, $user, $position)
+    {
+        if ($position == "Master Teacher IV" || $position == "Master Teacher III" || $position == "Master Teacher II" || $position == "Master Teacher I") :
+            $table = 'ipcrf_mt';
+        elseif ($position == "Teacher III" || $position == "Teacher II" || $position == "Teacher I") :
+            $table = 'ipcrf_t';
+        endif;
+
+        $qry  = "SELECT round(avg(average),3) as ave FROM `$table` WHERE sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' and kra_id = $kra_id and user_id = $user";
+        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        if ($result) {
+            foreach ($result as $r) {
+                return floatval($r['ave']);
+            }
+        }
+    }
+
+    public function get_kra_avg_rank($kra_id)
+    {
+        $qry  = "SELECT user_id,ROUND(AVG(average),3) as kra_average FROM ((SELECT * FROM ipcrf_mt where sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active') UNION ALL (SELECT * FROM ipcrf_t where sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active'))a where kra_id = $kra_id GROUP BY user_id ORDER BY average desc";
+        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        if ($result) {
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        }
+    }
+
+
+    public function getSChoolFinalRating()
+    {
+        $qry  = "SELECT school_id,round(AVG(final_rating),3) as school_final_rating FROM (SELECT * FROM `ipcrf_final_mt` UNION ALL SELECT * FROM `ipcrf_final_t`)a where sy_id = " . $this->sy . "  and status = 'Active' GROUP BY school_id ORDER BY school_final_rating desc";
+        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        if ($result) {
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return $res_array;
+        }
+    }
 }

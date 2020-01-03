@@ -284,7 +284,6 @@ $overall_adjectival_rating = adjectivalRating($overall_final_rating);
                                             </p>
                                         </td>
                                     <?php endforeach; ?>
-
                                     </tr>
                             </tbody>
                             <tfoot></tfoot>
@@ -317,7 +316,7 @@ endforeach; ?>
                 </div>
                 <div class="modal-body overflow-auto">
                     <div class="d-flex m-2 justify-content-lg-end">
-                        <a href="" class="btn btn-primary"><i class="fa fa-file-pdf"></i>Create PDF</a>
+
                     </div>
                     <table class="table table-bordered table-responsive-sm table-striped font-weight-bold text-center">
                         <thead class="thead-dark">
@@ -337,12 +336,17 @@ endforeach; ?>
                                 <th>
                                     <p>KRA Average</p>
                                 </th>
+
+                                <th>
+                                    <p>Action</p>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($ipcrf->get_kra_avg_rank($id_kra) as $kra_rank) :
                                 $r_name = displayName($conn, $kra_rank['user_id']);
-                                $avg_kra = round($kra_rank['kra_average'], 3)
+                                $avg_kra = round($kra_rank['kra_average'], 3);
+                                $position_user = getPosition($conn, $kra_rank['user_id']);
                             ?>
                                 <tr>
                                     <td>
@@ -350,7 +354,7 @@ endforeach; ?>
                                     </td>
 
                                     <td>
-                                        <p><?= getPosition($conn, $kra_rank['user_id']) ?>.</p>
+                                        <p><?= $position_user  ?></p>
                                     </td>
 
                                     <td>
@@ -361,6 +365,9 @@ endforeach; ?>
                                         <p><?= round($avg_kra * displayKRAweight($conn, $id_kra), 3) ?></p>
                                     </td>
 
+                                    <td>
+                                        <p><a href="ipcrf_mtd" class="btn btn-primary"><i class="fa fa-file-pdf"></i> Create PDF</a></p>
+                                    </td>
                                 <?php endforeach ?>
                                 </tr>
                         </tbody>
@@ -368,12 +375,11 @@ endforeach; ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
                 </div>
             </div>
         </div>
     </div>
-<?php endforeach ?>
+<?php endforeach  ?>
 
 
 <!-- END OF TOP OF KRA MODAL -->

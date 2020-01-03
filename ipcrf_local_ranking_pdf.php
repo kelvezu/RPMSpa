@@ -122,7 +122,13 @@ $pdf->writehtml('
                    </th>
                    <th>
                        <p>Position</p>
-                   </th>
+                   </th>');
+
+foreach (kra_tbl($conn) as $kra) :
+    $pdf->writehtml('<th> <p>KRA  ' . $kra['kra_id'] . ' </p></th>');
+endforeach;
+
+$pdf->writehtml('
                    <th>
                        <p>Final Rating</p>
                    </th>
@@ -163,8 +169,16 @@ foreach ($ipcrf_details as $details) :
         <p>
             ' . $user_position . '
         </p>
-    </td>
+    </td>');
 
+    foreach (kra_tbl($conn) as $kra) :
+        $kra_avg = $ipcrf->get_kra_average($kra['kra_id'], $view_user, $user_position);
+        $pdf->writehtml('   <td>
+        <p>   ' . round($kra_avg * displayKRAweight($conn, $kra['kra_id']), 3) . '   </p>
+    </td>');
+    endforeach;
+
+    $pdf->writehtml('
     <td>
         <p>
             ' . $final_rating . '
