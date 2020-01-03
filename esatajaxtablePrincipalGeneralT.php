@@ -6,7 +6,7 @@ include_once 'libraries/func.lib.php';
 $sy = $_GET['sy'];
 $school = $_GET['sch'];
 
-$qry = mysqli_query($conn, "SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' AND school = '$school'");
+$qry = mysqli_query($conn, "SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' and school ='$school'");
 
 if (mysqli_num_rows($qry) == 0) :
     echo '<div class="red-notif-border">No Records!</div>';
@@ -34,7 +34,7 @@ endif;
                     </thead>
                     <tbody>
                         <?php
-                        $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name");
+                        $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_name WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name");
                         while ($esatresult = $qry->fetch_assoc()) : ?>
                             <tr>
                                 <td><?php echo $esatresult['age_name']; ?></td>

@@ -4,17 +4,17 @@ include 'sampleheader.php';
 
 if (isset($_POST['view'])) :
 
-    if ((empty($_POST['sy_id'])) && (empty($_POST['teacher_id']))) :
+    if ((empty($_POST['sy_id'])) || (empty($_POST['school_id']))) :
         $sy = $_POST['active_sy'];
         $school = $_POST['school_id'];
 
         if ($sy == 'N/A') :
-            echo '<div class="red-notif-border">Please choose school year and teacher!</div>';
+            echo '<div class="red-notif-border">Please choose school year!</div>';
             include 'samplefooter.php';
             exit();
         endif;
 
-        $qry = mysqli_query($conn, "SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy'");
+        $qry = mysqli_query($conn, "SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' and school='$school'");
 
         if (mysqli_num_rows($qry) == 0) :
             echo '<div class="red-notif-border">No Records for the current school year!</div>';
@@ -285,7 +285,7 @@ if (isset($_POST['view'])) :
                 let data = google.visualization.arrayToDataTable([
                     ['Age', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name") or die($conn->error);
+                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_name WHERE sy = '$sy' AND school = '$school' GROUP BY age_tbl.age_name") or die($conn->error);
                             while ($AgeChart = $qry->fetch_assoc()) :
                                 echo "['" . $AgeChart['age_name'] . "', " . $AgeChart['total'] . "],";
                             endwhile; ?>
@@ -309,21 +309,21 @@ if (isset($_POST['view'])) :
                 var data = google.visualization.arrayToDataTable([
                     ['Age', 'School Year 1', 'School Year 2', 'School Year 3'],
                     <?php
-                            $age = AgeDemoFetch($conn);
-                            foreach ($age as $agedemo) :
-                                $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
-CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
-CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
-CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE age = " . $agedemo['age_id'] . "  AND sy = '$sy' AND school = '$school' group by sy") or die($conn->error);
-                                while ($AgeQry = $qry->fetch_assoc()) :
-                                    echo "['" . $agedemo['age_name'] . "', 
-    " . intval($AgeQry['sy1']) . ",  
-    " . intval($AgeQry['sy2']) . ",   
-    " . intval($AgeQry['sy3']) . "],";
-                                endwhile;
-                            endforeach;
-                            ?>
+                           // $age = AgeDemoFetch($conn);
+                           // foreach ($age as $agedemo) :
+                                $qry = $conn->query("SELECT b.age_name,COUNT(`user_id`) AS T_COUNT, 
+                                                    CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
+                                                    CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
+                                                    CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
+                                                    FROM esat1_demographicst_tbl a INNER JOIN age_tbl b on a.age = b.age_name   AND sy = '$sy' AND school = '$school' group by b.age_name,sy") or die($conn->error);
+                                        while ($AgeQry = $qry->fetch_assoc()) :
+                                            echo "['" . $AgeQry['age_name'] . "', 
+                                        " . intval($AgeQry['sy1']) . ",  
+                                        " . intval($AgeQry['sy2']) . ",   
+                                        " . intval($AgeQry['sy3']) . "],";
+                                        endwhile;
+                            //endforeach;
+                    ?>
                 ]);
 
                 var options = {
@@ -1315,12 +1315,27 @@ GROUP BY a.cbc_id") or die($conn->error . $qry);
 
     <?php
 
-        elseif ((empty($_POST['sy_id'])) || (empty($_POST['teacher_id']))) :
-            echo "<div class='red-notif-border'>Please choose school year and teacher!</div>";
+        elseif ((empty($_POST['sy_id']))) :
+            echo "<div class='red-notif-border'>Please choose school year!</div>";
 
-        else :
-            $sy_id = $_POST['sy_id'];
-            $user = $_POST['teacher_id'];
+        // $qry2 = mysqli_query($conn, "SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' and school='$school'");    
+
+        // elseif (mysqli_num_rows($qry2) == 0) :
+        //         echo '<div class="red-notif-border">No Records!</div>';
+        //         exit();
+        // endif;
+                
+
+        //     $qry2 = mysqli_query($conn, "SELECT * FROM `esat1_demographicst_tbl` WHERE sy = '$sy' and school='$school'");
+
+        //     elseif (mysqli_num_rows($qry2) == "") :
+        //         echo '<div class="red-notif-border">No Records for the current school year!</div>';
+        //         exit();
+        //    // endif;
+
+            else :
+                $sy_id = $_POST['sy_id'];
+                $school =$_POST['school_id'];
 
             ?>
 
@@ -1586,7 +1601,7 @@ GROUP BY a.cbc_id") or die($conn->error . $qry);
                 let data = google.visualization.arrayToDataTable([
                     ['Age', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY age_tbl.age_name") or die($conn->error);
+                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_name WHERE sy = '$sy_id' AND `school` = '$school' GROUP BY age_tbl.age_name") or die($conn->error);
                             while ($AgeChart = $qry->fetch_assoc()) :
                                 echo "['" . $AgeChart['age_name'] . "', " . $AgeChart['total'] . "],";
                             endwhile; ?>
@@ -1610,20 +1625,20 @@ GROUP BY a.cbc_id") or die($conn->error . $qry);
                 var data = google.visualization.arrayToDataTable([
                     ['Age', 'School Year 1', 'School Year 2', 'School Year 3'],
                     <?php
-                            $age = AgeDemoFetch($conn);
-                            foreach ($age as $agedemo) :
-                                $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
-CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
-CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
-CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE age = " . $agedemo['age_id'] . "  AND sy = '$sy_id' AND `user_id` = '$user'  group by sy") or die($conn->error);
-                                while ($AgeQry = $qry->fetch_assoc()) :
-                                    echo "['" . $agedemo['age_name'] . "', 
-    " . intval($AgeQry['sy1']) . ",  
-    " . intval($AgeQry['sy2']) . ",   
-    " . intval($AgeQry['sy3']) . "],";
+                           // $age = AgeDemoFetch($conn);
+                            //foreach ($age as $agedemo) :
+                                $qry = $conn->query("SELECT b.age_name,COUNT(`user_id`) AS T_COUNT, 
+                                CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
+                                CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
+                                CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
+                                FROM esat1_demographicst_tbl a INNER JOIN age_tbl b on a.age = b.age_name   AND sy = '$sy_id' AND `school` = '$school'  group by b.age_name,sy") or die($conn->error);
+                                                                while ($AgeQry = $qry->fetch_assoc()) :
+                                                                    echo "['" . $AgeQry['age_name'] . "', 
+                                    " . intval($AgeQry['sy1']) . ",  
+                                    " . intval($AgeQry['sy2']) . ",   
+                                    " . intval($AgeQry['sy3']) . "],";
                                 endwhile;
-                            endforeach;
+                            //endforeach;
                             ?>
                 ]);
 
@@ -1669,7 +1684,7 @@ FROM esat1_demographicst_tbl WHERE age = " . $agedemo['age_id'] . "  AND sy = '$
                 let data = google.visualization.arrayToDataTable([
                     ['Gender', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT esat1_demographicst_tbl.gender, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.gender") or die($conn->error);
+                            $qry = $conn->query("SELECT esat1_demographicst_tbl.gender, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY esat1_demographicst_tbl.gender") or die($conn->error);
                             while ($GenderChart = $qry->fetch_assoc()) :
                                 echo "['" . $GenderChart['gender'] . "', " . intval($GenderChart['total']) . "],";
                             endwhile; ?>
@@ -1701,7 +1716,7 @@ FROM esat1_demographicst_tbl WHERE age = " . $agedemo['age_id'] . "  AND sy = '$
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE gender = '" . $genderdemo['gender_name'] . "'  AND sy = '$sy_id' AND `user_id` = '$user' group by sy") or die($conn->error);
+FROM esat1_demographicst_tbl WHERE gender = '" . $genderdemo['gender_name'] . "'  AND sy = '$sy_id' AND `school` = '$school'  group by sy") or die($conn->error);
                                 while ($GenderQry = $qry->fetch_assoc()) :
                                     echo "['" . $genderdemo['gender_name'] . "', 
     " . intval($GenderQry['sy1']) . ",  
@@ -1754,7 +1769,7 @@ FROM esat1_demographicst_tbl WHERE gender = '" . $genderdemo['gender_name'] . "'
                 let data = google.visualization.arrayToDataTable([
                     ['Employment Status', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT esat1_demographicst_tbl.employment_status, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.employment_status") or die($conn->error);
+                            $qry = $conn->query("SELECT esat1_demographicst_tbl.employment_status, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY esat1_demographicst_tbl.employment_status") or die($conn->error);
                             while ($employStatus = $qry->fetch_assoc()) :
                                 echo "['" . $employStatus['employment_status'] . "', " . $employStatus['total'] . "],";
                             endwhile; ?>
@@ -1784,7 +1799,7 @@ FROM esat1_demographicst_tbl WHERE gender = '" . $genderdemo['gender_name'] . "'
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE employment_status = '" . $employdemo['emp_status'] . "'  AND sy = '$sy_id' AND `user_id` = '$user' group by sy") or die($conn->error);
+FROM esat1_demographicst_tbl WHERE employment_status = '" . $employdemo['emp_status'] . "'  AND sy = '$sy_id' AND `school` = '$school'  group by sy") or die($conn->error);
                                 while ($EmployQry = $qry->fetch_assoc()) :
                                     echo "['" . $employdemo['emp_status'] . "', 
     " . intval($EmployQry['sy1']) . ",  
@@ -1836,7 +1851,7 @@ FROM esat1_demographicst_tbl WHERE employment_status = '" . $employdemo['emp_sta
                 let data = google.visualization.arrayToDataTable([
                     ['Position', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT esat1_demographicst_tbl.position, COUNT(esat1_demographicst_tbl.user_id)total FROM  esat1_demographicst_tbl WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.position ORDER BY esat1_demographicst_tbl.position desc") or die($conn->error);
+                            $qry = $conn->query("SELECT esat1_demographicst_tbl.position, COUNT(esat1_demographicst_tbl.user_id)total FROM  esat1_demographicst_tbl WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY esat1_demographicst_tbl.position ORDER BY esat1_demographicst_tbl.position desc") or die($conn->error);
                             while ($positionQry = $qry->fetch_assoc()) :
                                 echo "['" . $positionQry['position'] . "', " . $positionQry['total'] . "],";
                             endwhile; ?>
@@ -1868,7 +1883,7 @@ FROM esat1_demographicst_tbl WHERE employment_status = '" . $employdemo['emp_sta
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE position = '" . $positiondemo['position_name'] . "'  AND sy = '$sy_id' AND `user_id` = '$user' group by sy") or die($conn->error);
+FROM esat1_demographicst_tbl WHERE position = '" . $positiondemo['position_name'] . "'  AND sy = '$sy_id' AND `school` = '$school'  group by sy") or die($conn->error);
                                 while ($PositionQry = $qry->fetch_assoc()) :
                                     echo "['" . $positiondemo['position_name'] . "', 
     " . intval($PositionQry['sy1']) . ",  
@@ -1920,7 +1935,7 @@ FROM esat1_demographicst_tbl WHERE position = '" . $positiondemo['position_name'
                 let data = google.visualization.arrayToDataTable([
                     ['Highest Degree Obtained', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT esat1_demographicst_tbl.highest_degree, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY esat1_demographicst_tbl.highest_degree") or die($conn->error);
+                            $qry = $conn->query("SELECT esat1_demographicst_tbl.highest_degree, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY esat1_demographicst_tbl.highest_degree") or die($conn->error);
                             while ($highestChart = $qry->fetch_assoc()) :
                                 echo "['" . $highestChart['highest_degree'] . "', " . $highestChart['total'] . "],";
                             endwhile; ?>
@@ -1952,7 +1967,7 @@ FROM esat1_demographicst_tbl WHERE position = '" . $positiondemo['position_name'
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE highest_degree = '" . $highestdegreedemo['degree_name'] . "'  AND sy = '$sy_id' AND `user_id` = '$user' group by sy") or die($conn->error);
+FROM esat1_demographicst_tbl WHERE highest_degree = '" . $highestdegreedemo['degree_name'] . "'  AND sy = '$sy_id' AND `school` = '$school'  group by sy") or die($conn->error);
                                 while ($HighestQry = $qry->fetch_assoc()) :
                                     echo "['" . $highestdegreedemo['degree_name'] . "', 
     " . intval($HighestQry['sy1']) . ",  
@@ -2003,7 +2018,7 @@ FROM esat1_demographicst_tbl WHERE highest_degree = '" . $highestdegreedemo['deg
                 let data = google.visualization.arrayToDataTable([
                     ['Total Number of Years in Teaching', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT totalyear_tbl.totalyear_name,COUNT(esat1_demographicst_tbl.user_id)total from esat1_demographicst_tbl INNER JOIN totalyear_tbl on esat1_demographicst_tbl.totalyear=totalyear_tbl.totalyear_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY totalyear_tbl.totalyear_name") or die($conn->error);
+                            $qry = $conn->query("SELECT totalyear_tbl.totalyear_name,COUNT(esat1_demographicst_tbl.user_id)total from esat1_demographicst_tbl INNER JOIN totalyear_tbl on esat1_demographicst_tbl.totalyear=totalyear_tbl.totalyear_id WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY totalyear_tbl.totalyear_name") or die($conn->error);
                             while ($TotalYear = $qry->fetch_assoc()) :
                                 echo "['" . $TotalYear['totalyear_name'] . "', " . $TotalYear['total'] . "],";
                             endwhile; ?>
@@ -2034,7 +2049,7 @@ FROM esat1_demographicst_tbl WHERE highest_degree = '" . $highestdegreedemo['deg
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE totalyear = " . $totalyeardemo['totalyear_id'] . "  AND sy = '$sy_id' AND `user_id` = '$user' group by sy") or die($conn->error);
+FROM esat1_demographicst_tbl WHERE totalyear = " . $totalyeardemo['totalyear_id'] . "  AND sy = '$sy_id' AND `school` = '$school'  group by sy") or die($conn->error);
                                 while ($TotalQry = $qry->fetch_assoc()) :
                                     echo "['" . $totalyeardemo['totalyear_name'] . "', 
     " . intval($TotalQry['sy1']) . ",  
@@ -2085,7 +2100,7 @@ FROM esat1_demographicst_tbl WHERE totalyear = " . $totalyeardemo['totalyear_id'
                 let data = google.visualization.arrayToDataTable([
                     ['Subject Taught', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT subject_tbl.subject_name, COUNT(esat1_demographicst_tbl.user_id)total, esat1_demographicst_tbl.* FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY subject_tbl.subject_name") or die($conn->error);
+                            $qry = $conn->query("SELECT subject_tbl.subject_name, COUNT(esat1_demographicst_tbl.user_id)total, esat1_demographicst_tbl.* FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY subject_tbl.subject_name") or die($conn->error);
                             while ($SubjectTaught = $qry->fetch_assoc()) :
                                 echo "['" . $SubjectTaught['subject_name'] . "', " . $SubjectTaught['total'] . "],";
                             endwhile; ?>
@@ -2115,7 +2130,7 @@ FROM esat1_demographicst_tbl WHERE totalyear = " . $totalyeardemo['totalyear_id'
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY subject_tbl.subject_name") or die($conn->error);
+FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.subject_taught LIKE CONCAT('%', subject_tbl.subject_name, '%') WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY subject_tbl.subject_name") or die($conn->error);
                             while ($SubjectTaughtQry = $qry->fetch_assoc()) :
                                 echo "['" . $SubjectTaughtQry['subject_name'] . "', 
     " . intval($SubjectTaughtQry['sy1']) . ",  
@@ -2166,7 +2181,7 @@ FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.s
                 let data = google.visualization.arrayToDataTable([
                     ['Grade Level Taught', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT gradelvltaught_tbl.gradelvltaught_name, COUNT(esat1_demographicst_tbl.user_id)total FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die($conn->error);
+                            $qry = $conn->query("SELECT gradelvltaught_tbl.gradelvltaught_name, COUNT(esat1_demographicst_tbl.user_id)total FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die($conn->error);
                             while ($GradelvlTaught = $qry->fetch_assoc()) :
                                 echo "['" . $GradelvlTaught['gradelvltaught_name'] . "', " . $GradelvlTaught['total'] . "],";
                             endwhile; ?>
@@ -2196,7 +2211,7 @@ FROM esat1_demographicst_tbl INNER JOIN subject_tbl ON esat1_demographicst_tbl.s
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-    FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die($conn->error);
+    FROM gradelvltaught_tbl INNER JOIN esat1_demographicst_tbl ON esat1_demographicst_tbl.grade_lvl_taught LIKE CONCAT('%', gradelvltaught_tbl.gradelvltaught_id, '%') WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY gradelvltaught_tbl.gradelvltaught_name") or die($conn->error);
                             while ($GradelvlTaughtQry = $qry->fetch_assoc()) :
                                 echo "['" . $GradelvlTaughtQry['gradelvltaught_name'] . "', 
     " . intval($GradelvlTaughtQry['sy1']) . ",  
@@ -2248,7 +2263,7 @@ CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END
                 let data = google.visualization.arrayToDataTable([
                     ['Curricular Class of School', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT curriclass_tbl.curriclass_name,COUNT(DISTINCT esat1_demographicst_tbl.user_id)total FROM esat1_demographicst_tbl INNER JOIN curriclass_tbl ON esat1_demographicst_tbl.curri_class = curriclass_tbl.curriclass_id WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY curriclass_tbl.curriclass_name") or die($conn->error);
+                            $qry = $conn->query("SELECT curriclass_tbl.curriclass_name,COUNT(DISTINCT esat1_demographicst_tbl.user_id)total FROM esat1_demographicst_tbl INNER JOIN curriclass_tbl ON esat1_demographicst_tbl.curri_class = curriclass_tbl.curriclass_id WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY curriclass_tbl.curriclass_name") or die($conn->error);
                             while ($CurriClass = $qry->fetch_assoc()) :
                                 echo "['" . $CurriClass['curriclass_name'] . "', " . $CurriClass['total'] . "],";
                             endwhile; ?>
@@ -2279,7 +2294,7 @@ CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE curri_class = " . $curridemo['curriclass_id'] . "  AND sy = '$sy_id' AND `user_id` = '$user' group by sy") or die($conn->error);
+FROM esat1_demographicst_tbl WHERE curri_class = " . $curridemo['curriclass_id'] . "  AND sy = '$sy_id' AND `school` = '$school'  group by sy") or die($conn->error);
                                 while ($CurriQry = $qry->fetch_assoc()) :
                                     echo "['" . $curridemo['curriclass_name'] . "', 
     " . intval($CurriQry['sy1']) . ",  
@@ -2331,7 +2346,7 @@ FROM esat1_demographicst_tbl WHERE curri_class = " . $curridemo['curriclass_id']
                 let data = google.visualization.arrayToDataTable([
                     ['Region', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT *,region_tbl.region_name, COUNT(esat1_demographicst_tbl.user_id)total from region_tbl INNER JOIN esat1_demographicst_tbl ON region_tbl.reg_id = esat1_demographicst_tbl.region WHERE sy = '$sy_id' AND `user_id` = '$user' GROUP BY region_tbl.region_name") or die($conn->error);
+                            $qry = $conn->query("SELECT *,region_tbl.region_name, COUNT(esat1_demographicst_tbl.user_id)total from region_tbl INNER JOIN esat1_demographicst_tbl ON region_tbl.reg_id = esat1_demographicst_tbl.region WHERE sy = '$sy_id' AND `school` = '$school'  GROUP BY region_tbl.region_name") or die($conn->error);
                             while ($Region = $qry->fetch_assoc()) :
                                 echo "['" . $Region['region_name'] . "', " . $Region['total'] . "],";
                             endwhile; ?>
@@ -2362,7 +2377,7 @@ FROM esat1_demographicst_tbl WHERE curri_class = " . $curridemo['curriclass_id']
 CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
 CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-FROM esat1_demographicst_tbl WHERE region = " . $regiondemo['reg_id'] . "  AND sy = '$sy_id' AND `user_id` = '$user' group by sy") or die($conn->error);
+FROM esat1_demographicst_tbl WHERE region = " . $regiondemo['reg_id'] . "  AND sy = '$sy_id' AND `school` = '$school'  group by sy") or die($conn->error);
                                 while ($regionQry = $qry->fetch_assoc()) :
                                     echo "['" . $regiondemo['region_name'] . "', 
     " . intval($regionQry['sy1']) . ",  
@@ -2417,14 +2432,14 @@ FROM esat1_demographicst_tbl WHERE region = " . $regiondemo['reg_id'] . "  AND s
                     <?php
 
                             $qry = mysqli_query($conn, "SELECT a.tobj_id, b.low as L_LOW, c.low as L_MODERATE, d.low as L_HIGH, e.low as L_VERY_HIGH, f.low as P_LOW, g.low as P_MODERATE, h.low as P_HIGH, i.low as P_VERY_HIGH from tobj_tbl a 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id 
 GROUP BY a.tobj_id, b.low, c.low, d.low, e.low") or die($conn->error . $qry);
 
                             foreach ($qry as $result) :
@@ -2488,14 +2503,14 @@ GROUP BY a.tobj_id, b.low, c.low, d.low, e.low") or die($conn->error . $qry);
                     <?php
 
                             $qry = mysqli_query($conn, "SELECT a.tobj_id, b.low as L_LOW, c.low as L_MODERATE, d.low as L_HIGH, e.low as L_VERY_HIGH, f.low as P_LOW, g.low as P_MODERATE, h.low as P_HIGH, i.low as P_VERY_HIGH from tobj_tbl a 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id 
-LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 AND sy = '$sy_id' AND `user_id` = '$user' GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 1 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as b on a.tobj_id =b.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 2 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as c on a.tobj_id =c.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 3 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as d on a.tobj_id =d.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE lvlcap = 4 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as e on a.tobj_id =e.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 1 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as f on a.tobj_id =f.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 2 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as g on a.tobj_id =g.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 3 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as h on a.tobj_id =h.tobj_id 
+LEFT JOIN (select tobj_id,count(DISTINCT user_id)low from esat2_objectivest_tbl WHERE priodev = 4 AND sy = '$sy_id' AND `school` = '$school'  GROUP BY tobj_id,lvlcap) as i on a.tobj_id =i.tobj_id 
 GROUP BY a.tobj_id, b.low, c.low, d.low, e.low") or die($conn->error . $qry);
 
                             foreach ($qry as $result) :
@@ -2565,7 +2580,7 @@ CASE WHEN sum(cbc_score)=2 THEN count(user_id) end as sc2,
 CASE WHEN sum(cbc_score)=3 THEN count(user_id) end as sc3, 
 CASE WHEN sum(cbc_score)=4 THEN count(user_id) end as sc4, 
 CASE WHEN sum(cbc_score)=5 THEN count(user_id) end as sc5 
-FROM esat3_core_behavioralt_tbl  GROUP BY cbc_id,user_id)a WHERE sy = '$sy_id' AND `user_id` = '$user'
+FROM esat3_core_behavioralt_tbl  GROUP BY cbc_id,user_id)a WHERE sy = '$sy_id' AND `school` = '$school' 
 GROUP BY a.cbc_id") or die($conn->error . $qry);
 
                             foreach ($CoreBehavioralqry as $resultQry) :
