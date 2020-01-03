@@ -50,7 +50,7 @@ if (isset($_POST['updateSUB'])) {
     }
 }
 
-//REMOVE SUBJECT FROM SELECTION
+//REMOVE SUBJECT FROM SELECTION 
 if (isset($_GET['deleteSJ'])) {
     $subject_id = $_GET['deleteSJ'];
     mysqli_query($conn, "UPDATE  subject_tbl SET `status`='Inactive' WHERE subject_id=$subject_id") or die($conn->error);
@@ -67,13 +67,20 @@ if (isset($_GET['unremovesub'])) {
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
+      //DELETE subject
+if (isset($_GET['deleteSBJ'])) {
+    $subject_id = $_GET['deleteSBJ'];
+     mysqli_query($conn, "DELETE FROM subject_tbl WHERE subject_id=$subject_id") or die($conn->error);
+    $_SESSION['message'] = 'subject has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
 
 if (isset($_GET['subjectstatus'])) :
     mysqli_query($conn, "UPDATE subject_tbl SET `status` = 'Active'") or die($conn->error);
     $_SESSION['message'] = 'Subjects successfully unremoved!!';
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
-
 endif;
 
 
@@ -138,7 +145,14 @@ if (isset($_GET['unremoveage'])) {
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
-
+  //DELETE age
+  if (isset($_GET['deleteAG'])) {
+    $age_id = $_GET['deleteAG'];
+     mysqli_query($conn, "DELETE FROM age_tbl WHERE age_id=$age_id") or die($conn->error);
+    $_SESSION['message'] = 'age has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
 if (isset($_GET['agestatus'])) :
     mysqli_query($conn, "UPDATE age_tbl SET `status` = 'Active'") or die($conn->error);
     $_SESSION['message'] = 'Age successfully unremoved!!';
@@ -202,6 +216,16 @@ if (isset($_GET['unremovegen'])) {
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
+  //DELETE gender
+  if (isset($_GET['deleteGEN'])) {
+    $gender_id = $_GET['deleteGEN'];
+     mysqli_query($conn, "DELETE FROM gender_tbl WHERE gender_id=$gender_id") or die($conn->error);
+    $_SESSION['message'] = 'gender has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
+
+
 
 //SAVE THE DATA FOR POSITION
 
@@ -316,7 +340,14 @@ if (isset($_GET['unremovetot'])) {
     $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
-
+  //DELETE totalyear
+  if (isset($_GET['deleteTOT'])) {
+    $totalyear_id = $_GET['deleteTOT'];
+     mysqli_query($conn, "DELETE FROM totalyear_tbl WHERE totalyear_id=$totalyear_id") or die($conn->error);
+    $_SESSION['message'] = 'totalyear has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
+    header("location:../ESAT.php");
+}
 if (isset($_GET['totalyear'])) :
     mysqli_query($conn, "UPDATE totalyear_tbl SET `status` = 'Active'") or die($conn->error);
     $_SESSION['message'] = 'Total Year Options successfully unremoved!!';
@@ -384,6 +415,15 @@ if (isset($_GET['unremoveglt'])) {
     mysqli_query($conn, "UPDATE  gradelvltaught_tbl SET `status`='Active' WHERE gradelvltaught_id=$gradelvltaught_id") or die($conn->error);
     $_SESSION['message'] = 'Grade Level Taught option has been added to the selection successfully!';
     $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+}
+
+  //DELETE gradelvltaught
+  if (isset($_GET['deleteGRA'])) {
+    $gradelvltaught_id = $_GET['deleteGRA'];
+     mysqli_query($conn, "DELETE FROM gradelvltaught_tbl WHERE gradelvltaught_id=$gradelvltaught_id") or die($conn->error);
+    $_SESSION['message'] = 'gradelvltaught has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
     header("location:../ESAT.php");
 }
 
@@ -455,6 +495,15 @@ if (isset($_GET['unremovecurr'])) {
     mysqli_query($conn, "UPDATE  curriclass_tbl SET `status`='Active' WHERE curriclass_id=$curriclass_id") or die($conn->error);
     $_SESSION['message'] = 'Curricular Classification option has been added to the selection successfully!';
     $_SESSION['msg_type'] = 'green-notif-border';
+    header("location:../ESAT.php");
+}
+
+  //DELETE curriclass
+  if (isset($_GET['deleteCUR'])) {
+    $curriclass_id = $_GET['deleteCUR'];
+     mysqli_query($conn, "DELETE FROM curriclass_tbl WHERE curriclass_id=$curriclass_id") or die($conn->error);
+    $_SESSION['message'] = 'curriclass has been removed from the selection!';
+    $_SESSION['msg_type'] = 'red-notif-border';
     header("location:../ESAT.php");
 }
 

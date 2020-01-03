@@ -22,7 +22,7 @@ if (isset($_GET['delete'])) {
                 <div class="card-body">
                     <div class="h4 breadcrumb alert alert-danger text-center">Remove Total Year Confirmation</div>
                     <input type="hidden" name="totalyear_id" value="<?php echo $totalyear_id; ?>" />
-                    <p class="h5">Do you want to remove <b><?php echo $totalyear_name; ?></b> from the database?</p>
+                    <p class="h5">Do you want to remove <b><?php echo $totalyear_name; ?></b> from the selection?</p>
                     <div class="row my-4">
                         <div class="col-md-6">
                             <a href="../includes/processESAT.php?deleteTY=<?php echo $totalyear_id; ?>" class="btn btn-danger btn-block">Remove</a>

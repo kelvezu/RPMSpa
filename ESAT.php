@@ -589,6 +589,7 @@ $(document).ready(function() {
                                         <td>
                                             <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp
                                             <a href="includes/processESAT.php?unremovesub=<?php echo $row['subject_id']; ?>" class="btn btn-info text-decoration-none ">Set to active</a>
+                                            <a href="delete/delsubject.php?delete=<?php echo $row['subject_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a>
                                         </td>
                                     <?php else : echo 'Error' ?>
                                     <?php endif; ?>
@@ -645,6 +646,7 @@ $(document).ready(function() {
                             <td class="tomato-color"><?= $row['status'] ?></td>
                             <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
                                 <a href="includes/processESAT.php?unremoveage=<?php echo $row['age_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                <a href="delete/delage.php?delete=<?php echo $row['age_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a>
                             </td>
                         <?php
                                 else : echo '<td>Error in age</td>';
@@ -700,6 +702,7 @@ $(document).ready(function() {
                                         <td class="tomato-color"><?= $row['status'] ?></td>
                                         <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
                                             <a href="includes/processESAT.php?unremovegen=<?php echo $row['gender_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                            <a href="delete/delgender.php?delete=<?php echo $row['gender_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a>
 
 
                                         <?php endif; ?>
@@ -798,6 +801,8 @@ $(document).ready(function() {
                                         <td class="tomato-color"><?= $row['status'] ?></td>
                                         <td><a href="update/updatetotalyear.php?edit=<?php echo $row['totalyear_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
                                             <a href="includes/processESAT.php?unremovetot=<?php echo $row['totalyear_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                            <a href="delete/deltotalyear.php?delete=<?php echo $row['totalyear_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a>
+
                                         <?php
                                                 else : echo 'Error';
                                                 endif;
@@ -853,6 +858,9 @@ $(document).ready(function() {
                                         <td class="tomato-color"><?= $row['status'] ?></td>
                                         <td><a href="update/updateglt.php?edit=<?php echo $row['gradelvltaught_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
                                             <a href="includes/processESAT.php?unremoveglt=<?php echo $row['gradelvltaught_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                            <a href="delete/delgradelvltaught.php?delete=<?php echo $row['gradelvltaught_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a>
+
+
                                         <?php
                                                 else : echo '<td><p class="tomato-color">SQL Error!</p></td>';
                                                 endif;
@@ -910,6 +918,9 @@ $(document).ready(function() {
                                         <td class="tomato-color"><?= $row['status'] ?></td>
                                         <td><a href="update/updatecurri.php?edit=<?php echo $row['curriclass_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp
                                             <a href="includes/processESAT.php?unremovecurr=<?php echo $row['curriclass_id']; ?>" class="btn btn-info text-decoration-none ">Set to Active</a>
+                                            <a href="delete/delcurriclass.php?delete=<?php echo $row['curriclass_id']; ?>" class="btn btn-danger text-decoration-none ">Delete</a>
+
+
                                         <?php
                                                 else : echo '<td><p class="tomato-color">SQL Error!</p></td>';
                                                 endif; ?>

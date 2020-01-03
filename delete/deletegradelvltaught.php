@@ -21,7 +21,7 @@ if (isset($_GET['delete'])) {
                 <div class="card-body">
                     <div class="h4 breadcrumb alert alert-danger text-center">Remove Grade Level Taught Confirmation</div>
                     <input type="hidden" name="gradelvltaught_id" value="<?php echo $gradelvltaught_id; ?>" />
-                    <p class="h5">Do you want to remove <b><?php echo $gradelvltaught_name; ?></b> from the database?</p>
+                    <p class="h5">Do you want to remove <b><?php echo $gradelvltaught_name; ?></b> from the selection?</p>
                     <div class="row my-4">
                         <div class="col-md-6">
                             <a href="../includes/processESAT.php?deleteGLT=<?php echo $gradelvltaught_id; ?>" class="btn btn-danger btn-block">Remove</a>
