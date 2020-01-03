@@ -1020,6 +1020,20 @@ class IPCRF
         }
     }
 
+    public function fetch_all_ipcrf_users_unapproved()
+    {
+        $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a WHERE doc_status = 'For Approval' ORDER BY a.final_rating desc";
+
+        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
     /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR RESULT OF COT  */
     public function getAllFinalRating()
     {

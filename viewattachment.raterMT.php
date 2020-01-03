@@ -238,33 +238,48 @@ $cot_count  = $ipcrf->fetchObsPeriodinCOT('cot_mt_rating_a_tbl');
                                 <?php
                                 $fetch_main_status = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $mov['mtobj_id'], $mov['kra_id']);
                                 if ($fetch_main_status) :
-                                    foreach ($fetch_main_status as $m_stats) :
-                                        $m_status = $m_stats['doc_status']; ?>
-                                        <p>
-                                            <?php if ($m_status == "For Approval") : ?>
-                                                <button class="btn btn-secondary btn-sm btn-block  text-white">
-                                                    <?php echo trim($m_status); ?>
-                                                </button>
-                                            <?php elseif ($m_status == "Approved") : ?>
-                                                <button class="btn btn-success btn-sm btn-block text-white">
-                                                    <?php echo trim($m_status); ?>
-                                                </button>
-                                            <?php elseif ($m_status == "Disapproved") : ?>
-                                                <button class="btn btn-danger btn-sm btn-block text-white">
-                                                    <?php echo trim($m_status); ?>
-                                                </button>
-                                            <?php elseif ($m_status == "For Revision") : ?>
-                                                <button class="btn btn-warning btn-sm btn-block text-white">
-                                                    <?php echo trim($m_status); ?>
-                                                </button>
-                                            <?php endif; ?>
-                                        </p>
+                                    if ($mov['mov_type'] == "COT") :
+                                        echo ('<p class="text-center">' . get_cot_average_indicator_mt($conn, $user_id, $_SESSION['active_sy_id'], $_SESSION['school_id'], $mov['indicator_id']) . '</p>');
+                                    else :
+                                        foreach ($fetch_main_status as $m_stats) :
+                                            $m_status = $m_stats['doc_status']; ?>
+                                            <p>
+                                                <?php if ($m_status == "For Approval") : ?>
+                                                    <button class="btn btn-secondary btn-sm btn-block  text-white">
+                                                        <?php echo trim($m_status); ?>
+                                                    </button>
+                                                <?php elseif ($m_status == "Approved") : ?>
+                                                    <button class="btn btn-success btn-sm btn-block text-white">
+                                                        <?php echo trim($m_status); ?>
+                                                    </button>
+                                                <?php elseif ($m_status == "Disapproved") : ?>
+                                                    <button class="btn btn-danger btn-sm btn-block text-white">
+                                                        <?php echo trim($m_status); ?>
+                                                    </button>
+                                                <?php elseif ($m_status == "For Revision") : ?>
+                                                    <button class="btn btn-warning btn-sm btn-block text-white">
+                                                        <?php echo trim($m_status); ?>
+                                                    </button>
+                                                <?php endif; ?>
+                                            </p>
                                     <?php endforeach;
-                                else : ?>
+                                    endif;
+                                else :
+                                    ?>
                                     <p class="text-center font-weight-bold"> ----- </p>
 
-                                <?php endif; ?>
+                                <?php endif;  ?>
                                 <!-- END COLUMN FOR MAIN MOV STATUS  -->
+                                <?php /* foreach (mtobj_tbl($conn) as $obj) :
+                                    if ($obj['mov_type'] == "COT") : ?>
+                                        <p>I'm a cot</p>
+
+                                    <?php elseif ($obj['mov_type'] == "ATTACHMENT") : ?>
+
+                                        <p>I'm a attachment</p>
+
+                                <?php endif;
+                                endforeach; */ ?>
                             </td>
                             <td>
                                 <!-- COLUMN FOR SUPP MOV -->
@@ -453,16 +468,24 @@ foreach ($cot_count as $c_count) : ?>
                                                 <?= $cot['rating'] ?>
                                             </p>
                                         </td>
+                                    <?php endforeach; ?>
                                     </tr>
-
-                                <?php endforeach;
-                            else : ?>
-                                <p class="red-notif-border">
-                                    No record!
-                                </p>
-                            <?php endif; ?>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <textarea class="form-control" disabled><?= get_cot_feedback_mt($conn, $user_id, $_SESSION['active_sy_id'], $_SESSION['school_id'], $c_count['obs_period']) ?></textarea>
+                                </td>
+                            </tr>
+
+                        </tfoot>
                     </table>
+
+                <?php else : ?>
+                    <p class="red-notif-border">
+                        No record!
+                    </p>
+                <?php endif; ?>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

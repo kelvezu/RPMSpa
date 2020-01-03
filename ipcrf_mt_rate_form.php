@@ -5,6 +5,7 @@ use RPMSdb\RPMSdb;
 
 include 'sampleheader.php';
 
+
 $num = 1;
 $kra_num = 0;
 $tobj_num = 1;
@@ -16,8 +17,6 @@ $school = ($_SESSION['school_id']) ? $_SESSION['school_id'] : "No Rater!";
 $rater = ($_SESSION['user_id']) ? $_SESSION['rater'] : "No Rater!";
 $app_auth = ($_SESSION['approving_authority']) ? $_SESSION['approving_authority'] : "No Approving Authority!";
 
-
-
 if (isset($_POST['select_user'])) :
     $user = $_POST['user_id'];
     $position = displayPosition($conn, $user);
@@ -28,6 +27,16 @@ endif;
 ?>
 
 <div class="container mb-5">
+    <?php
+    if (!empty($_GET['notif'])) {
+        $notif = ($_GET['notif']);
+        if ($notif == "Success") {
+            echo '<p class="green-notif-border">IPCRF approved!</p>';
+        } elseif ($notif == "ipcrfexist") {
+            echo '<p class="red-notif-border">IPCRF already exist!</p>';
+        }
+    }
+    ?>
     <div class="card">
         <div class="card-header">
             <p>Master Teacher with MOV's</p>
@@ -65,7 +74,8 @@ endif;
 <div class="container-fluid">
     <!-- <?php echo $position ?> -->
     <?php if (!isset($kras)) : ?>
-        <p class="text-center red-notif-border m-5">No Record!</p>
+        <!-- <p class="text-center red-notif-border m-5">No Record!</p> -->
+        ---
     <?php
         include 'samplefooter.php';
         exit();
@@ -118,7 +128,7 @@ endif;
                 </th> -->
             </tr>
         </thead>
-        <form action="includes/processIPCRFt.php" method="post">
+        <form action="includes/processIPCRFmt.php" method="post">
             <input type="hidden" name="user" value="<?php echo $user ?>">
             <input type="hidden" name="position" value="<?php echo $position ?>">
             <input type="hidden" name="sy" value="<?php echo $sy ?>">

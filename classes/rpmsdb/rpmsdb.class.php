@@ -1315,7 +1315,7 @@ class RPMSdb
         endif;
     }
 
-        public static function fetchSpecificTindicatorPeriod($conn, $sy, $school, $user, $obs)
+    public static function fetchSpecificTindicatorPeriod($conn, $sy, $school, $user, $obs)
     {
         $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user' AND obs_period = '$obs' GROUP by indicator_id";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -1341,7 +1341,7 @@ class RPMSdb
         endif;
     }
 
-    public static function fetchSpecificMTindicatorPeriod($conn, $sy, $school, $user,$obs)
+    public static function fetchSpecificMTindicatorPeriod($conn, $sy, $school, $user, $obs)
     {
         $qry = "SELECT * FROM `cot_mt_rating_a_tbl` WHERE SY = '$sy' and school_id = '$school' and `user_id` = '$user'  AND obs_period = '$obs' GROUP by indicator_id";
         $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
@@ -2111,7 +2111,7 @@ class RPMSdb
         endif;
     }
 
-     public static function fetchCOTratingAll($conn, $sy, $school, $table_name1)
+    public static function fetchCOTratingAll($conn, $sy, $school, $table_name1)
     {
         $result_arr = [];
         $qry1 = "SELECT * FROM `$table_name1` WHERE sy = $sy AND school_id = $school";
