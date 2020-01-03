@@ -23,10 +23,14 @@ if (isset($_POST['submit'])) :
     $password = defaultPwd();
     $activation_code = uniqid(rand('1000', '9999'));
 
- 
 
-    $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,added_by,school_id,activation_code,`status`) VALUES( '.$prc_id.' , '".$surname."', '".$firstname."', '".$middlename."', '".$position."', '".$email."', '".$contact."', '".$gender."', '".$birthdate."',  '".$username."', '".$password."', '.$added_by.', '.$school.',  '".$activation_code."', '".$status."')";
-    $insert_Qry = mysqli_query($conn,$sql) or die ($conn->error);
+ 
+        
+    $sql = "INSERT INTO account_tbl(prc_id,surname,firstname,middlename,position,email,contact,gender,birthdate,username,userpassword,added_by,school_id,activation_code,`status`) VALUES( '$prc_id' , '".$surname."', '".$firstname."', '".$middlename."', '".$position."', '".$email."', '".$contact."', '".$gender."', '".$birthdate."',  '".$username."', '".$password."', '$added_by', '$school',  '".$activation_code."', '".$status."') ";
+ 
+     $insert_Qry = mysqli_query($conn,$sql) or die ($conn->error.$sql);
+            
+    
 
                     $lastId = mysqli_insert_id($conn);
                     $pwd = 'Welcome' . date('Y');
@@ -38,7 +42,7 @@ if (isset($_POST['submit'])) :
                     Your Password is ' . $pwd . '. <br>
                     Please click this link to complete this registation <br>' . $url . '</div>';
 
-                    if ($resultInsert == true) :
+                    if ($insert_Qry == true) :
                         $mail = new PHPMailer();
                         $mail->isSMTP();
                         $mail->Host = 'smtp.gmail.com';
@@ -62,9 +66,8 @@ if (isset($_POST['submit'])) :
                             exit();
                         endif;
                     endif;
-
-                    header("Location:../signup2.php?signup=success&uname=" . $username);
-                    exit();
+    
+        
 else:
     header("Location:../signup2.php?error");
     exit();
