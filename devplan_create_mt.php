@@ -3,6 +3,23 @@
 use DevPlan\DevPlan;
 
 include 'sampleheader.php';
+
+if (isset($_GET['notif'])) :
+    $notif = $_GET['notif'];
+
+    if ($notif == 'recordexist') :
+        echo '<p class="green-notif-border">You have already submitted your Development Plan</p>';
+        include 'samplefooter.php';
+        exit();
+
+    elseif ($notif == 'success') :
+        echo '<p class="green-notif-border">Development Plan has been created!</p>';
+        include 'samplefooter.php';
+        exit();
+    endif;
+endif;
+
+
 $user = $_SESSION['user_id'];
 $sy = $_SESSION['active_sy_id'];
 $school = $_SESSION['school_id'];
@@ -37,20 +54,7 @@ endif;
 ?>
 
 <?php
-if (isset($_GET['notif'])) :
-    $notif = $_GET['notif'];
 
-    if ($notif == 'recordexist') :
-        echo '<p class="green-notif-border">You have already submitted your Development Plan</p>';
-        include 'samplefooter.php';
-        exit();
-
-    elseif ($notif == 'success') :
-        echo '<p class="green-notif-border">Development Plan has been created!</p>';
-        include 'samplefooter.php';
-        exit();
-    endif;
-endif;
 
 ?>
 

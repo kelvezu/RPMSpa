@@ -265,7 +265,6 @@ class Dashboard
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                             <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
                             <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                            <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
                         </div>
                     </li>
 
@@ -350,8 +349,7 @@ class Dashboard
                                 <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
                                 <a class="dropdown-item" href="viewgendevplanmt.php">View Master Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="gendevplanT.php">Create Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="gendevplanMT.php">Create Master Teacher General Development Plan</a>
+                                
                             </div>
                         </li>
 
@@ -450,8 +448,7 @@ class Dashboard
                                 <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
                                 <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
+                               
                             </div>
                         </li>
 
@@ -563,7 +560,7 @@ class Dashboard
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                     <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
                                     <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
-                                    <a class="dropdown-item" href="#">Create IPCRF Development Plan</a>
+                                    <a class="dropdown-item" href="devplan_create_mt.php">Create IPCRF Development Plan</a>
                                 </div>
                             </li>
 s
@@ -655,7 +652,7 @@ s
                                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                         <a class="dropdown-item" href="#">My Teacher Development Plan-IPCRF</a>
                                         <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
-                                        <a class="dropdown-item" href="#">Create IPCRF Development Plan</a>
+                                        <a class="dropdown-item" href="devplan_create_t.php">Create IPCRF Development Plan</a>
                                     </div>
                                 </li>
 

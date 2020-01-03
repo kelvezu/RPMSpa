@@ -6,7 +6,10 @@ include '../libraries/func.lib.php';
 $conn = mysqli_connect("localhost", "root", "", "rpms");
 
 //ADD MOV
-if (isset($_POST['save'])) {
+
+
+if(isset($_POST['save'])){    
+    
     $school_grade_lvl = $_POST['sgl'];
     $school_curriclass =  $_POST['school_curri'];
     $school_no = $_POST['school_no'];
@@ -17,16 +20,10 @@ if (isset($_POST['save'])) {
     $div_id = $_POST['division'];
     $muni_id = $_POST['municipality'] ?? "NULL";
 
-   
-    $validate = $conn->query("SELECT * FROM school_tbl");
-        while($row = $validate->fetch_assoc()){
-            $exist_school_no = $row['school_no'];
-            $exist_school_name = $row['school_name'];
-            $exist_tel_no = $row['tel_no'];
-            $exist_tel_no2 = $row['tel_no2'];
-        
-        
-    if(($school_no == $exist_school_no) || ($school_name == $exist_school_name) || ($tel_no == $exist_tel_no) || ($tel_no2 == $exist_tel_no2) ){
+    $validate = mysqli_query($conn,"SELECT * FROM school_tbl WHERE school_no = '$school_no'") or die($conn->error);
+    $count_result = mysqli_num_rows($validate);
+
+    if($count_result > 0){
         header("location:../school.php?notif=taken");
         exit();
     }elseif(ctype_space($school_no) || ctype_space($school_name) || ctype_space($tel_no) || ctype_space($tel_no2)){
@@ -35,7 +32,7 @@ if (isset($_POST['save'])) {
     }elseif($tel_no == $tel_no2){
         header("location:../school.php?notif=duplicate");
         exit();
-    }elseif((strlen($school_no)) < 8 || (strlen($school_name)) < 8) {
+    }elseif((strlen($school_no)) < 7 || (strlen($school_name)) < 5) {
         header("location:../school.php?notif=charNumber");
         exit();
     }else{
@@ -49,9 +46,10 @@ if (isset($_POST['save'])) {
       
         header('location:../school.php?notif=error');
     }
+        
+    }
 }
-}
-}
+
 //DELETE MOV
 if (isset($_GET['delete'])) {
     $school_id = $_GET['delete'];

@@ -543,7 +543,7 @@ class RPMSdb
     public static function displayMasterList($conn)
     {
         $user_arr = [];
-        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","School Head","Principal","Asst. Superintendent","Principal - OIC") ORDER BY `user_id` desc  ';
+        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "Active" AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","School Head","Principal","Asst Superintendent","Principal - OIC") ORDER BY `user_id` desc  ';
         $result = mysqli_query($conn, $totalqry);
         $total = mysqli_num_rows($result);
         if ($total > 0) :
@@ -561,7 +561,7 @@ class RPMSdb
     public static function displayVacantList($conn)
     {
         $user_arr = [];
-        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "For Transfer" AND school_id is NULL  AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","Principal","Asst. Superintendent","School Head") ORDER BY `user_id` desc  ';
+        $totalqry = 'SELECT * FROM account_tbl WHERE  `status` = "For Transfer" AND school_id is NULL  AND position IN ("Teacher I", "Teacher II", "Teacher III","Master Teacher I", "Master Teacher II", "Master Teacher III", "Master Teacher IV","Principal","Asst Superintendent","School Head") ORDER BY `user_id` desc  ';
         $result = mysqli_query($conn, $totalqry);
         $total = mysqli_num_rows($result);
         if ($total) :

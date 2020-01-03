@@ -27,18 +27,38 @@
                                     ?> <table class="table table-hover table-borderless table-sm">
                                         <thead class="thead-dark">
                                             <tr>
-                                                <th>Teacher's Name</th>
+                                                
+                                                <th><input type="checkbox" class="chk_boxes" label="check all"  />Check All - Teacher's Name</th>
                                                 <th>Position</th>
                                                 <th>Status</th>
                                                 <th>Select School</th>
                                             </tr>
                                         </thead>
+        <script>
+            $(function() {
+    $('.chk_boxes').click(function() {
+        $('.chk_boxes1').prop('checked', this.checked);
+    });
+});
+        </script>
                                         <div class="card-body text-dark">
+                                            <tbody>
                                             <?php
                                                 foreach ($teacherresults as $teacher) : ?>
                                                 <tr>
-                                                    <td class="text-nowrap"><input  type="checkbox" class=" form-check-input" name="teacher[]" value="<?php echo $teacher['user_id'] ?>" /> <?php echo '- ' . $teacher['firstname'] . ' ' . substr($teacher['middlename'], 0, 1) . '. ' . $teacher['surname']; ?></td>
-                                                    <td><?php echo $teacher['position']; ?></td>
+                                                    <td><input  type="checkbox" class="chk_boxes1" name="teacher[]" value="<?php echo $teacher['user_id'] ?>" /> <?php echo '- ' . $teacher['firstname'] . ' ' . substr($teacher['middlename'], 0, 1) . '. ' . $teacher['surname']; ?></td>
+                                                    <td>
+                                                        <select name="position" class="form-control-sm">
+                                                            <option value="<?php echo $teacher['position']; ?>"><?php echo $teacher['position']; ?></option>
+                                                            <?php
+                                                                $position_Qry = $conn->query("SELECT * FROM position_tbl");
+                                                                    foreach ($position_Qry as $pos):
+                                                            ?>
+                                                            <option value="<?php echo $pos['position_name'] ?>"><?php echo $pos['position_name'] ?></option>
+                                                        
+                                                                    <?php endforeach; ?>
+                                                        </select>
+                                                        </td>
                                                     <td><?= $teacher['status'] ?></td>
                                                     <td>
                                                         <select required name="school_id[]" class="form-control-sm">
@@ -50,6 +70,7 @@
                                                     </td>
                                                 <?php endforeach; ?>
                                                 </tr>
+                                        </tbody>
                                                 <tr>
                                                     <?php echo !empty($teacherresults) ? '<td colspan="4" align="center"><button name="btn-t" class="btn btn-info btn-block btn-sm"><b>Submit</b></button></td>' : false ?>
                                                 </tr>

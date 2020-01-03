@@ -192,7 +192,7 @@ endif;
                                 </div>
                                 <div class="modal-body">
                                     Are you sure you want to set the school year? Please note that you will be forced log out by the system if you proceed.
-                                    <?= $sy_id; ?>
+                                   
                                 </div>
                                 <div class="modal-footer">
                                     <form action="" method="post">

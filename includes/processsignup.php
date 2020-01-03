@@ -59,17 +59,17 @@ if (isset($_POST['submit'])) :
                         $mail->Body    = $output;
 
                         if (!$mail->send()) :
-                            header("Location../signup2.php?signup=mailerror");
+                            header("Location../signup2.php?notif=mailerror");
                             exit();
                         else:
-                            header("Location:../signup2.php?signup=success&uname=" . $username);
+                            header("Location:../signup2.php?notif=success&uname=" . $username);
                             exit();
                         endif;
                     endif;
     
         
 else:
-    header("Location:../signup2.php?error");
+    header("Location:../signup2.php?notif=error");
     exit();
 endif;
 

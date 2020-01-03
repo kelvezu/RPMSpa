@@ -365,8 +365,11 @@ $(document).ready(function() {
                     echo 'invalid period!';
                 endif;
 
+               
+
 
                 $resultqry = $conn->query($periodqry)  or die($conn->error);
+              
                 ?>
                 <!-- LEGEND OF COT RUBRICS-->
                 <div class="container">
@@ -419,7 +422,7 @@ $(document).ready(function() {
 
                     <?php
                     $indicator_no = 1;
-                    while ($row = $resultqry->fetch_assoc()) :
+                    while ($row = $resultquery->fetch_assoc()) :
                     ?>
 
 

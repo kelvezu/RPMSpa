@@ -7,7 +7,8 @@ include '../libraries/func.lib.php';
 include '../classes/devplan/devplan.class.php';
 
 if (isset($_POST['submit_dp'])) :
-     pre_r($_POST);
+    //  pre_r($_POST);
+    //  die();
 
     $user = $_POST['user'];
     $sy = $_POST['sy'];
