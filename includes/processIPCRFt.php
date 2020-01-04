@@ -7,6 +7,60 @@ include '../libraries/func.lib.php';
 include '../classes/ipcrf/ipcrf.class.php';
 $score_array = [];
 
+if (isset($_GET['user_update'])) :
+
+    $user = $_GET['user_update'];
+    $sy = $_GET['sy'];
+    $school = $_GET['school'];
+    $app_auth = $_GET['app_auth'];
+    pre_r($_GET);
+    $qry  = "UPDATE `ipcrf_t` SET doc_status = 'Approved',approving_authority = $app_auth WHERE `user_id` = $user and sy_id = $sy and school_id = $school";
+    $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+    if ($result) {
+        $qry2  = "UPDATE `ipcrf_final_t` SET doc_status = 'Approved',approving_authority = $app_auth WHERE `user_id` = $user and sy_id = $sy and school_id = $school";
+        $result2 = mysqli_query($conn, $qry2) or die($conn->error . $qry2);
+        if ($result2) {
+            header("location:../ipcrf_approval.php?notif=success&user=$user");
+        }
+    }
+endif;
+
+if (isset($_POST['user_decline'])) :
+
+    $user = $_POST['user'];
+    $sy = $_POST['sy'];
+    $school = $_POST['school'];
+    $app_auth = $_POST['app_auth'];
+    $comment = filter_input_string($_POST['comment']);
+    pre_r($_POST);
+    $qry  = "UPDATE `ipcrf_t` SET doc_status = 'Declined', comment = '$comment' WHERE `user_id` = $user and sy_id = $sy and school_id = $school";
+    $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+    if ($result) {
+        $qry2  = "UPDATE `ipcrf_final_t` SET doc_status = 'Declined',comment = '$comment' WHERE `user_id` = $user and sy_id = $sy and school_id = $school";
+        $result2 = mysqli_query($conn, $qry2) or die($conn->error . $qry2);
+        if ($result2) {
+            header("location:../ipcrf_approval.php?notif=success&user=$user");
+        }
+    }
+endif;
+
+if (isset($_GET['user_for_approval'])) :
+    $user = $_GET['user_for_approval'];
+    $sy = $_GET['sy'];
+    $school = $_GET['school'];
+    $app_auth = $_GET['app_auth'];
+    pre_r($_GET);
+    $qry  = "UPDATE `ipcrf_t` SET doc_status = 'For Approval'  WHERE `user_id` = $user and sy_id = $sy and school_id = $school";
+    $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
+    if ($result) {
+        $qry2  = "UPDATE `ipcrf_final_t` SET doc_status = 'For Approval', `user_id` = $user and sy_id = $sy and school_id = $school";
+        $result2 = mysqli_query($conn, $qry2) or die($conn->error . $qry2);
+        if ($result2) {
+            header("location:../ipcrf_approval.php?notif=success&user=$user");
+        }
+    }
+endif;
+
 
 if (isset($_POST['submit_t'])) :
     $user = $_POST['user'];
@@ -34,7 +88,7 @@ if (isset($_POST['submit_t'])) :
 
     /* CHECK IF THE USER HAS IPCRF RECORD ALREADY  */
     if ($hasFinalIPCRF or $hasIPCRF) :
-        header('location:../ipcrf_t.php?notif=ipcrfexist');
+        header('location:../ipcrf_mt_rate_form.php?notif=ipcrfexist');
         // echo 'User already have an Final IPCRF';
         exit();
     // elseif()

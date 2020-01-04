@@ -964,7 +964,7 @@ class IPCRF
     {
         $qry = "SELECT * FROM `$table` WHERE sy_id = " . $this->sy . " and school_id = " . $this->school . " and status = 'Active' AND user_id = $user";
 
-        $result = mysqli_query($this->conn(), $qry) or console_log($$this->conn()->error);
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error . $qry);
         if ($result) {
             $array_res = [];
             foreach ($result as $r) {
@@ -1010,7 +1010,7 @@ class IPCRF
     {
         $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a ORDER BY a.final_rating desc";
 
-        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error);
         if ($result) {
             $array_res = [];
             foreach ($result as $r) {
@@ -1024,6 +1024,20 @@ class IPCRF
     {
         $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a WHERE doc_status = 'For Approval' ORDER BY a.final_rating desc";
 
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+    public function fetch_all_ipcrf_users_declined()
+    {
+        $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a WHERE doc_status = 'Declined' ORDER BY a.final_rating desc";
+
         $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
         if ($result) {
             $array_res = [];
@@ -1033,6 +1047,22 @@ class IPCRF
             return $array_res;
         }
     }
+
+    public function fetch_ipcrf_ratee_declined()
+    {
+        $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a WHERE doc_status = 'Declined' AND rater_id = " . $this->user . " ORDER BY a.final_rating desc";
+
+        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        if ($result) {
+            $array_res = [];
+            foreach ($result as $r) {
+                array_push($array_res, $r);
+            }
+            return $array_res;
+        }
+    }
+
+
 
     /* THIS FUNCTION WILL SHOW THE AVERAGE THE OF THE INDICATOR RESULT OF COT  */
     public function getAllFinalRating()
