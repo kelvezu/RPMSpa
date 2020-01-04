@@ -96,7 +96,7 @@
                         <span>
                             <?php
                             if (isset($_SESSION['first_period'])) :
-                                displayDate($_SESSION['first_period']);
+                                echo displayDate($_SESSION['first_period']);
                             endif;
                             ?>
                         </span>

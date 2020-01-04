@@ -34,7 +34,7 @@ if (isset($_GET['delete'])) {
                     <a href="../includes/processusers.php?delete=<?php echo $user_id; ?>" class="btn btn-danger btn-block">Delete</a>
                 </div>
                 <div class="col-md-6">
-                    <a href="../displayusers.php" class="btn btn-primary btn-block">Cancel</a>
+                    <a href="../testdisplayusers.php" class="btn btn-primary btn-block">Cancel</a>
                 </div>
             </div>
         </div>

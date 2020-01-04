@@ -261,7 +261,7 @@ console.log(columns);
                                     isError = true;
                                 }
                                 // THIS POSITION WILL CHECKED IF POSITIONS ARE VALID 
-                                if (columns[4] == 'Master Teacher IV' || columns[4] == 'Master Teacher III' || columns[4] == 'Master Teacher II' || columns[4] == 'Master Teacher I' || columns[4] == 'Teacher III' || columns[4] == 'Teacher II' || columns[4] == 'Teacher I' || columns[4] == 'School Head') {
+                                if (columns[4] == 'Master Teacher IV' || columns[4] == 'Master Teacher III' || columns[4] == 'Master Teacher II' || columns[4] == 'Master Teacher I' || columns[4] == 'Teacher III' || columns[4] == 'Teacher II' || columns[4] == 'Teacher I' || columns[4] == 'School Head' || columns[4] == 'Asst Superintendent') {
                                     true;
                                 } else {
                                     columns[4] = "<p class='text-danger'>Invalid Position</p>";

@@ -97,7 +97,19 @@ activeobsperiod($conn);
             <p class="red-notif-border">
                 School year is not set.
             </p>
+<?php endif;
+    endif; ?>
 
+    <?php if(empty($_SESSION['first_period']) || empty($_SESSION['second_period']) || empty($_SESSION['third_period']) || empty($_SESSION['final_period'])):
+        if($_SESSION['position'] == "Principal") :?>
+            <p class="red-notif-border m-5">
+                Classroom Observation period is not set. Click <a href="setobsperiod.php">here</a> to set the Classroom Observation Period.
+            </p>
+        <?php elseif(($_SESSION['position'] == "School Head") || ($_SESSION['position'] == "Asst Superintendent") || ($_SESSION['position'] == "Master Teacher IV") || ($_SESSION['position'] == "Master Teacher III") || ($_SESSION['position'] == "Master Teacher II") || ($_SESSION['position'] == "Master Teacher I") || ($_SESSION['position'] == "Teacher III") || ($_SESSION['position'] == "Teacher II") || ($_SESSION['position'] == "Teacher I")) : ?>
 
-    <?php endif;
+             <p class="red-notif-border">
+                Classroom Observation Period is not set.
+            </p>
+        <?php else: false; ?>   
+<?php endif;
     endif; ?>

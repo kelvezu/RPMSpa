@@ -3,6 +3,25 @@
 use DevPlan\DevPlan;
 
 include 'sampleheader.php';
+
+
+
+if (isset($_GET['notif'])) :
+    $notif = $_GET['notif'];
+
+    if ($notif == 'recordexist') :
+        echo '<p class="green-notif-border">You have already submitted your Development Plan</p>';
+        include 'samplefooter.php';
+        exit();
+
+    elseif ($notif == 'success') :
+        echo '<p class="green-notif-border">Development Plan has been created!</p>';
+        include 'samplefooter.php';
+        exit();
+    endif;
+endif;
+
+
 $user = $_SESSION['user_id'];
 $sy = $_SESSION['active_sy_id'];
 $school = $_SESSION['school_id'];
@@ -13,11 +32,13 @@ $objective_table = 'esat2_objectivest_tbl';
 $core_behavioral_table = 'esat3_core_behavioralt_tbl';
 $devplan = new DevPlan($user, $sy, $school, $position);
 $strength_objective = $devplan->fetchStrengthOBJ($objective_table);
+
 $devneed_objective = $devplan->fetchDevNeedOBJ($objective_table);
 $strength_behavioral = $devplan->fetchCoreBehavioralStr($core_behavioral_table);
 $devneed_behavioral = $devplan->fetchCoreBehavioralDevNeed($core_behavioral_table);
 
 // CHECK IF THERE ARE EXISTING RECORD
+
 $check_dp_str = $devplan->checkOBJ_dp('devplant_a1_strength_tbl');
 $check_dp_devneed = $devplan->checkOBJ_dp('devplant_a2_devneeds_tbl');
 $check_dp_actionplan = $devplan->checkOBJ_dp('devplant_a3_actionplan_tbl');
@@ -36,23 +57,7 @@ endif;
 // pre_r($strength_objective);
 ?>
 
-<?php
-if (isset($_GET['notif'])) :
-    $notif = $_GET['notif'];
 
-    if ($notif == 'recordexist') :
-        echo '<p class="green-notif-border">You have already submitted your Development Plan</p>';
-        include 'samplefooter.php';
-        exit();
-
-    elseif ($notif == 'success') :
-        echo '<p class="green-notif-border">Development Plan has been created!</p>';
-        include 'samplefooter.php';
-        exit();
-    endif;
-endif;
-
-?>
 
 <?php if (isset($_POST['create_dp_t'])) : ?>
     <?php showModal('myModal') ?>
@@ -380,6 +385,7 @@ endif;
                                 <label class="font-weight-bold">Select your strength: </label>
                                 <!-- STRENGTH -->
                                 <ul>
+                                    
                                     <?php if ($strength_objective) : foreach ($strength_objective as $str_obj) :
                                             $obj = $str_obj['tobj_id'];
                                             $kra = $str_obj['kra_id']; ?>

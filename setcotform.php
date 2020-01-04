@@ -379,11 +379,12 @@ $(document).ready(function() {
                         elseif ($intdate >= $first_period_int) :
                             $periodqry = 'SELECT * FROM tindicator_tbl WHERE period1=1';
                         else :
-                            echo 'invalid period!';
+                            $periodqry = 'invalid period!';
                         endif;
 
-                      
+                    
                         $resultqry = $conn->query($periodqry)  or die($conn->error);
+                       
                         ?>
                         <br>
 <!-- LEGEND OF COT RUBRICS-->
@@ -437,7 +438,7 @@ $(document).ready(function() {
 
                             <?php
                             $indicator_no = 1;
-                            while ($row = $resultqry->fetch_assoc()) :
+                            while ($row = $resultquery->fetch_assoc()) :
                                 ?>
 
 

@@ -148,9 +148,9 @@ class Dashboard
                 <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                        <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
+                        <a class="dropdown-item" href="viewdevplanTadmin.php">View Teacher Development Plan-IPCRF</a>
                         <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
-                        <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
+                        <a class="dropdown-item" href="viewdevplanMTadmin.php">VIew Master Teacher Development Plan-IPCRF</a>
                         <a class="dropdown-item" href="viewgendevplanmt.php">View Master Teacher General Development Plan</a>
                     </div>
                 </li>
@@ -218,7 +218,7 @@ class Dashboard
                         <a href="#" class="dropdown-item">Master Teacher IPCRF Summary Rating</a>
                         <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
                         <a href="#" class="dropdown-item">Master Teacher Recommended for Promotion</a>
-                        <a href="#" class="dropdown-item">Seminar List</a>
+                       
                     </div>
                 </li>
 
@@ -264,9 +264,8 @@ class Dashboard
                     <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                         <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                            <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
+                            <a class="dropdown-item" href="viewdevplanMTprincipal.php">VIew Master Teacher Development Plan-IPCRF</a>
                             <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                            <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
                         </div>
                     </li>
 
@@ -301,7 +300,7 @@ class Dashboard
                             <a href="#" class="dropdown-item">Master Teacher IPCRF with MOV Rating</a>
                             <a href="#" class="dropdown-item">Master Teacher IPCRF Summary Rating</a>
                             <a href="#" class="dropdown-item">Master Teacher Recommended for Promotion</a>
-                            <a href="#" class="dropdown-item">Seminar List</a>
+                            
                         </div>
                     </li>
     
@@ -336,12 +335,11 @@ class Dashboard
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
+                                <a class="dropdown-item" href="viewdevplanTprincipal.php">View Teacher Development Plan-IPCRF</a>
                                 <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
+                                <a class="dropdown-item" href="viewdevplanMTprincipal.php">VIew Master Teacher Development Plan-IPCRF</a>
                                 <a class="dropdown-item" href="viewgendevplanmt.php">View Master Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="gendevplanT.php">Create Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="gendevplanMT.php">Create Master Teacher General Development Plan</a>
+                                
                             </div>
                         </li>
 
@@ -388,7 +386,7 @@ class Dashboard
                                 <a href="#" class="dropdown-item">Master Teacher IPCRF Summary Rating</a>
                                 <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
                                 <a href="#" class="dropdown-item">Master Teacher Recommended for Promotion</a>
-                                <a href="#" class="dropdown-item">Seminar List</a>
+                                
                             </div>
                         </li>
         
@@ -435,8 +433,7 @@ class Dashboard
                                 <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
                                 <a class="dropdown-item" href="#">VIew Master Teacher Development Plan-IPCRF</a>
                                 <a class="dropdown-item" href="#">View Master Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="#">Create Teacher General Development Plan</a>
-                                <a class="dropdown-item" href="#">Create Master Teacher General Development Plan</a>
+                               
                             </div>
                         </li>
 
@@ -480,7 +477,7 @@ class Dashboard
                                 <a href="#" class="dropdown-item">Master Teacher IPCRF Summary Rating</a>
                                 <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
                                 <a href="#" class="dropdown-item">Master Teacher Recommended for Promotion</a>
-                                <a href="#" class="dropdown-item">Seminar List</a>
+                                
                             </div>
                         </li>
 
@@ -530,9 +527,9 @@ class Dashboard
                             <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                                 <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                    <a class="dropdown-item" href="#">View Teacher Development Plan-IPCRF</a>
+                                    <a class="dropdown-item" href="viewdevplanMT.php">View Teacher Development Plan-IPCRF</a>
                                     <a class="dropdown-item" href="viewgendevplant.php">View Teacher General Development Plan</a>
-                                    <a class="dropdown-item" href="#">Create IPCRF Development Plan</a>
+                                    <a class="dropdown-item" href="devplan_create_mt.php">Create IPCRF Development Plan</a>
                                 </div>
                             </li>
 s
@@ -555,7 +552,7 @@ s
                                     <a href="#" class="dropdown-item">Teacher IPCRF with MOV Rating</a>
                                     <a href="#" class="dropdown-item">Teacher IPCRF Summary Rating</a>
                                     <a href="#" class="dropdown-item">Teacher Recommended for Promotion</a>
-                                    <a href="#" class="dropdown-item">Seminar List</a>
+                                  
                                 </div>
                             </li>
 
@@ -611,9 +608,9 @@ s
                                 <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
                                     <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
-                                        <a class="dropdown-item" href="#">My Teacher Development Plan-IPCRF</a>
+                                        <a class="dropdown-item" href="viewdevplanT.php">My Teacher Development Plan-IPCRF</a>
                                         <a class="dropdown-item" href="#">View Teacher General Development Plan</a>
-                                        <a class="dropdown-item" href="#">Create IPCRF Development Plan</a>
+                                        <a class="dropdown-item" href="devplan_create_t.php">Create IPCRF Development Plan</a>
                                     </div>
                                 </li>
 
@@ -633,7 +630,7 @@ s
                                         <a href="#" class="dropdown-item">My IPCRF with MOV Rating</a>
                                         <a href="#" class="dropdown-item">My IPCRF Summary Rating</a>
                                         <a href="#" class="dropdown-item">My Recommended for Promotion</a>
-                                        <a href="#" class="dropdown-item">Seminar List</a>
+                                        
                                     </div>
                                 </li>
                 

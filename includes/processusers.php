@@ -13,7 +13,7 @@ if(isset($_GET['delete'])){
     $conn->query("DELETE FROM account_tbl WHERE user_id=$id") or die($conn->error);
     $_SESSION['message'] = 'Account has been deleted!';
     $_SESSION['msg_type'] = 'danger';
-    header("location:../displayusers.php");
+    header("location:../testdisplayusers.php");
     
 }
 
@@ -31,7 +31,7 @@ if(isset($_POST['update'])){
     
     $_SESSION['message'] = 'Account has been updated!';
     $_SESSION['msg_type'] = 'success';
-    header("location:../displayusers.php");
+    header("location:../testdisplayusers.php");
 }
 
 ?>
