@@ -283,6 +283,20 @@ class Dashboard
                         </div>
                 </li>
 
+                <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
+                    <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                    <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
+                    <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="cotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
+                    <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
+                    <a href="pmcf.php" class="dropdown-item">PMCF</a>
+                    <a href="mrf.php" class="dropdown-item">MRF</a>
+                    </div>
+                </li>
+
+
                   <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
@@ -363,6 +377,20 @@ class Dashboard
                     </li>
 
                     <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
+                    <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                    <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
+                    <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="cotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
+                    <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
+                    <a href="pmcf.php" class="dropdown-item">PMCF</a>
+                    <a href="mrf.php" class="dropdown-item">MRF</a>
+                    </div>
+                </li>
+
+
+                    <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                 <a class="dropdown-item" href="ipcrfAveTprincipal.php">View Teacher IPCRF Rating</a>
@@ -433,6 +461,19 @@ class Dashboard
                                
                             </div>
                         </li>
+                        <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
+                    <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                    <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
+                    <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="cotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
+                    <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
+                    <a href="pmcf.php" class="dropdown-item">PMCF</a>
+                    <a href="mrf.php" class="dropdown-item">MRF</a>
+                    </div>
+                </li>
+
 
                         <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> COT </a>
@@ -512,6 +553,19 @@ class Dashboard
                                 <a class="dropdown-item" href="viewattachment.userMT.php">View MOV</a>
                             </div>
                     </li>
+
+                    <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
+                    <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                    <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
+                    <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="cotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
+                    <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
+                    <a href="pmcf.php" class="dropdown-item">PMCF</a>
+                    <a href="mrf.php" class="dropdown-item">MRF</a>
+                    </div>
+                </li>
 
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-edit"></i> IPCRF </a>
@@ -601,6 +655,19 @@ s
                                 <a class="dropdown-item" href="ipcrf_t_display.php">View IPCRF</a>
                             </div>
                         </li>
+                        <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-folder"></i> RPMS Forms</a>
+                    <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
+                    <a href="ESATform1.php" class="dropdown-item">ESAT Form</a>
+                    <a href="cotformT.php" class="dropdown-item">Teacher COT Rating Sheet</a>
+                    <a href="cotformMT.php" class="dropdown-item">Master Teacher COT Rating Sheet</a>
+                    <a href="tipcrf.php" class="dropdown-item">Teacher IPCRF Rating Sheet</a>
+                    <a href="mtipcrf.php" class="dropdown-item">Master Teacher IPCRF Rating Sheet</a>
+                    <a href="pmcf.php" class="dropdown-item">PMCF</a>
+                    <a href="mrf.php" class="dropdown-item">MRF</a>
+                    </div>
+                </li>
+
                 
                                 <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-chalkboard"></i> Development Plan</a>
@@ -618,6 +685,8 @@ s
                                         <a class="dropdown-item" href="cotAveT.php">View My Average COT</a>
                                     </div>
                                 </li>
+
+                                
             
                                 <li class="nav-item dropdown active">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-print"></i> Reports</a>

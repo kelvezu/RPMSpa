@@ -3163,3 +3163,18 @@
                 else :  return false;
                 endif;
             }
+
+           
+
+             function fetch_cot_rating_t($conn, $obs_period,$indicator,$sy,$school)
+            {
+                $qry = "SELECT ROUND(avg(rating),2) as avg_rating FROM `cot_t_rating_a_tbl` WHERE obs_period = $obs_period and  indicator_id = $indicator and sy = $sy and school_id = $school and status = 'Active'";
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+                    
+                    foreach ($result as $r) {
+                        return $r['avg_rating'];
+                    }
+                  
+                }
+            }

@@ -8,6 +8,7 @@ include 'includes/conn.inc.php';
 
 $sy_id = $_GET['sy'];
 $school = $_GET['sch'];
+$num = 1;
 
 
 $cot_array = [];
@@ -22,13 +23,13 @@ else :
     endforeach;
 endif;
 
-$indicator_arr = RPMSdb::ViewAdminTindicator($conn, $sy_id, $school);
+$indicator_arr = fetchTindicator($conn);
 $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
 ?>
 
 <div class="container">
 
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-censer">
         <img src="img\deped.png" width="100" height="100" class="rounded-circle">
     </div>
 
@@ -65,16 +66,61 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
                         <th>COT Average</th>
                     </tr>
                 </thead>
-                <?php
-                $num = 1;
-                foreach ($indicator_arr as $ind) :
-                    ?>
+               
                     <tbody>
+                        <?php if($indicator_arr): foreach($indicator_arr as $ind):
+                            $ind_id = $ind['indicator_id'];
+                            ?>
+                            <tr>
+                                <td>
+                                    <p><?= $num++ ?></p>
+                                </td>
+
+                                <td>
+                                    <p><?= displayTindicator($conn,$ind_id) ?></p>
+                                </td>
+
+                                <?php for($count = 1; $count <= 4; $count++): $obs_per = $count; ?>
+                                <td>
+                                    <p><?php
+                                    /* 'obs period: '.$count.' indi:'.$ind_id */ 
+                                        echo (fetch_cot_rating_t($conn,$obs_per,$ind_id,$sy_id,$school)) ? '<p>'.fetch_cot_rating_t($conn,$obs_per,$ind_id,$sy_id,$school).'</p>' : "<p class='text-danger'>N/A</p>" ;
+                                    ?></p>
+                                </td>
+
+                                <td>
+                                    <p></p>
+                                </td>
+
+
+
+                                <?php endfor; ?>
+                                  <?php endforeach; ?>
+                            </tr>   
+                      
+                       <?php else: ?>
+                          <td colspan="10">
+                                <p>
+                                    No Record!
+                                </p>
+                         </td>
+                    
+                        <?php endif; ?>
+                    </tbody>
+                   
+            </table>
+        </div>
+    </div>
+</div>
+
+   <?php /*
+                $num =
+                foreach ($indicator_arr as $ind) :  ?>
+                         <?php 1; foreach ($obs_period_arr as $obsper) : ?>
                         <tr>
                             <td class="font-weight-bold"><?= $num++ . '.'; ?></td>
                             <td class="font-italic"><?= displayTindicator($conn, $ind['indicator_id']); ?></td>
-                            <?php foreach ($obs_period_arr as $obsper) : ?>
-
+                           
                                 <td class="text-center text-success">
 
                                     <?php
@@ -115,21 +161,9 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
                                             else :  echo "<p class='font-weight-bold text-danger'>N/A</p>";
                                             endif; ?>
                                 </td>
-
-
-
-
-
-                            <?php endforeach; ?>
+                           
                             <td class="text-center font-weight-bold text-success">
                                 <?php echo rawRate(fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
+                                 <?php endforeach; ?>
                         </tr>
-                    </tbody>
-                <?php endforeach; ?>
-            </table>
-        </div>
-    </div>
-
-
-
-</div>
+                        <?php endforeach; */ ?> 
