@@ -176,6 +176,7 @@ class Dashboard
                             <div class="dropdown-menu  border border-dark" aria-labelledby="dropdown03">
                                 <a class="dropdown-item" href="ipcrfAveAdminT.php">View Teacher IPCRF Rating</a>
                                 <a class="dropdown-item" href="ipcrfAveAdminMT.php">View Master Teacher IPCRF Rating</a>
+                                <a class="dropdown-item" href="ipcrf_school_ranking.php">View School Ranking thru IPCRF</a>
                             </div>
                         </li>
     
@@ -246,7 +247,7 @@ class Dashboard
             ';
             $nav .= '</ul>';
 
-        elseif ($_SESSION['position'] == "Superintendent" or $_SESSION['position'] == "Assistant Superintendent" or $_SESSION['position'] == "Asst. Superintendent") :
+        elseif ($_SESSION['position'] == "Superintendent" or $_SESSION['position'] == "Assistant Superintendent" or $_SESSION['position'] == "Asst Superintendent") :
             $nav .= '<ul class="navbar-nav mr-auto " >';
             $nav .= '  
                     <li class="nav-item active">
@@ -405,6 +406,8 @@ class Dashboard
                                 <a href="selecttratee.php" class="dropdown-item">Select Teacher to Rate</a>
                                 <a href="viewattachment.ratermt.php" class="dropdown-item">View MOV Attachments of Ratee</a>
                                 <a href="ipcrf_mt_rate_form.php" class="dropdown-item">View IPCRF of Ratee</a>
+                                <a href="ipcrf_local_ranking.php" class="dropdown-item">View IPCRF Ranking</a>
+                                <a href="ipcrf_approval.php" class="dropdown-item">Approve IPCRF</a>
                             </div>
                         </li>
         

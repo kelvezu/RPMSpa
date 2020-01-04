@@ -2820,7 +2820,6 @@
                     foreach ($result as $res) :
                         return strval($res['position']);
                     endforeach;
-                else : return false;
                 endif;
             }
 
@@ -3088,6 +3087,15 @@
                     return 'ipcrf_mt';
                 elseif ($position == "Teacher III" || $position == "Teacher II" || $position == "Teacher I") :
                     return 'ipcrf_t';
+                endif;
+            }
+
+            function show_ipcrf_process($position)
+            {
+                if ($position == "Master Teacher IV" || $position == "Master Teacher III" || $position == "Master Teacher II" || $position == "Master Teacher I") :
+                    return 'processIPCRFmt.php';
+                elseif ($position == "Teacher III" || $position == "Teacher II" || $position == "Teacher I") :
+                    return 'processIPCRFt.php';
                 else :  return false;
                 endif;
             }
@@ -3153,7 +3161,7 @@
             /* 
                 THIS WILL DISPLAY THE SPECIFIC OBJECTIVE ID OF OBJECTIVE TABLES
             */
-            
+
             function show_obj_id_teacher($position)
             {
                 if ($position == "Master Teacher IV" || $position == "Master Teacher III" || $position == "Master Teacher II" || $position == "Master Teacher I") :
