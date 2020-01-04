@@ -1625,11 +1625,11 @@
 
             function fetchIndicatorAVGAdmint($conn, $indicator, $sy, $school)
             {
-                $qry = "SELECT AVG(average) AS T_AVERAGE FROM `cot_t_indicator_ave_tbl` where indicator_id = $indicator  and `sy` = $sy and `school` = $school and `status` = 'Active'";
+                $qry = "SELECT indicator_id, ROUND(AVG(rating),2) AS T_AVERAGE FROM `cot_t_rating_a_tbl` where indicator_id = $indicator  and `sy` = $sy and `school_id` = $school and `status` = 'Active' group by indicator_id";
                 $result  = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) :
                     foreach ($result as $res) :
-                        return round(floatval($res['T_AVERAGE']), 3);
+                        return (floatval($res['T_AVERAGE']));
                     endforeach;
                 else : return false;
                 endif;

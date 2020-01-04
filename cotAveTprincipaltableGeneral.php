@@ -81,20 +81,17 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
                                 </td>
 
                                 <?php for($count = 1; $count <= 4; $count++): $obs_per = $count; ?>
-                                <td>
+                                <td class="text-center">
                                     <p><?php
                                     /* 'obs period: '.$count.' indi:'.$ind_id */ 
                                         echo (fetch_cot_rating_t($conn,$obs_per,$ind_id,$sy_id,$school)) ? '<p>'.fetch_cot_rating_t($conn,$obs_per,$ind_id,$sy_id,$school).'</p>' : "<p class='text-danger'>N/A</p>" ;
                                     ?></p>
                                 </td>
-
-                                <td>
-                                    <p></p>
-                                </td>
-
-
-
                                 <?php endfor; ?>
+
+                                  <td class="text-center">
+                                    <p><?php echo fetchIndicatorAVGAdmint($conn, $ind_id, $sy_id, $school) ? '<p>' .fetchIndicatorAVGAdmint($conn, $ind_id, $sy_id, $school).'</p>' : "<p class='text-danger'>N/A</p>";  ?></p>
+                                </td>
                                   <?php endforeach; ?>
                             </tr>   
                       
