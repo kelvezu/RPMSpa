@@ -4,9 +4,15 @@ include 'sampleheader.php';
 
 use IPCRF\IPCRF;
 
+if(isset($_POST['sy_select_btn'])): 
+    $sy = $_POST['sy_select'];
+else:
+    $sy = $_SESSION['active_sy_id'];
+endif;
+
 $user = $_SESSION['user_id'];
 $name = displayName($conn, $user);
-$sy = $_SESSION['active_sy_id'];
+
 $position = $_SESSION['position'];
 $school = $_SESSION['school_id'];
 $rater =  $_SESSION['rater'];
@@ -28,9 +34,29 @@ $ipcrf_user = $ipcrf->fetch_ipcrf_users($ipcrf_final_tbl);
 
 
 <div class="container-fluid">
+    
     <h4 class="text-center bg-dark text-white p-3">INDIVIDUAL PERFORMANCE COMMITMENT AND REVIEW FORM – Master Teacher I-IV (High-Proficient Teachers)</h4>
+<div class="d-flex justify-content-center">
+    <div class="p-2"> 
+        <a href="ipcrf_mt_total_rating_pdf.php" class="btn btn-primary m-3"><i class="fa fa-file-pdf"></i> Save as PDF</a>
+        
+    </div>
+    <div class="p-2">
+                    <label for="">Select School Year:</label>
+                    <form  method="post">
+                        <select name="sy_select" class="form-control-sm">
+                            <option value="" disabled selected>Select SY</option>
+                            <?php $syQry = $conn->query("SELECT * FROM sy_tbl");
+                                foreach ($syQry as $sy_id):  ?>
+                                     <option value="<?php echo $sy_id['sy_id'] ?>"><?php echo $sy_id['sy_desc'] ?></option>
+                                <?php endforeach; ?>
+                        </select>
+                        <button type="submit" name="sy_select_btn" class="btn btn-primary btn-sm">Display Ranking</button>
+                    </form>
+                </div>
+</div>
 
-    <a href="ipcrf_mt_total_rating_pdf.php" class="btn btn-primary m-3"><i class="fa fa-file-pdf"></i> Save as PDF</a>
+   
 
     <table class="table table-bordered" cellpadding="5">
         <tr>

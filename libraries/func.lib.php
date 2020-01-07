@@ -461,7 +461,7 @@
             function displaySY($conn, $sy_id)
             {
                 $qry = "SELECT * FROM sy_tbl WHERE sy_id = $sy_id";
-                $result = mysqli_query($conn, $qry);
+                $result = mysqli_query($conn, $qry) or die($conn->error.$qry);
                 if ($result) :
                     foreach ($result as $res) :
                         return $res['sy_desc'];
@@ -3186,3 +3186,5 @@
                   
                 }
             }
+
+          

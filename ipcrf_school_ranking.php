@@ -3,8 +3,16 @@
 use IPCRF\IPCRF;
 
 include 'sampleheader.php';
+
+if(isset($_POST['sy_select_btn'])): 
+    $sy = $_POST['sy_select'];
+else:
+    $sy = $_SESSION['active_sy_id'];
+endif;
+
+
 $user = $_SESSION['user_id'];
-$sy = $_SESSION['active_sy_id'];
+
 $position = $_SESSION['position'];
 $school = $_SESSION['school_id'];
 $rater =  $_SESSION['rater'];
@@ -19,10 +27,28 @@ $ipcrf_school = $ipcrf->fetch_all_ipcrf_users();
     <!-- THIS FUNCTION WILL CHECK IF THERE ARE RECORDS -->
     <?php isNoRecord($ipcrf_details); ?>
 
+<div class="d-flex justify-content-between">
+                <div class="m-2">
+                    <label for="">Select School Year:</label>
+                    <form action="" method="post">
 
-    <div>
-        <a href="ipcrf_school_ranking_pdf.php" class="btn btn-primary"><i class="fa fa-file-pdf"></i> Create PDF</a>
-    </div>
+                    <select name="sy_select" class="form-control-sm">
+                        <option value="" disabled selected>Select SY</option>
+                        <?php $syQry = $conn->query("SELECT * FROM sy_tbl");
+                            foreach ($syQry as $sy_id):?>
+                                <option value="<?php echo $sy_id['sy_id'] ?>"><?php echo $sy_id['sy_desc'] ?></option>
+                            <?php endforeach; ?>
+                    </select>
+
+                    <button type="submit" name="sy_select_btn" class="btn btn-primary btn-sm">Display Ranking</button>
+                        
+                    </form>
+                    
+                </div>
+            <div class="m-2">
+                <a href="ipcrf_school_ranking_pdf.php" class="btn btn-primary"><i class="fa fa-file-pdf"></i> Create PDF</a>
+                            </div>
+</div>
     <br>
     <div class="card">
         <div class="card-header">

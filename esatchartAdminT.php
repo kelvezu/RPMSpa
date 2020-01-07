@@ -281,7 +281,7 @@ if (isset($_POST['view'])) :
                 let data = google.visualization.arrayToDataTable([
                     ['Age', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy' GROUP BY age_tbl.age_name") or die($conn->error);
+                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_name WHERE sy = '$sy' GROUP BY age_tbl.age_name") or die($conn->error);
                             while ($AgeChart = $qry->fetch_assoc()) :
                                 echo "['" . $AgeChart['age_name'] . "', " . $AgeChart['total'] . "],";
                             endwhile; ?>
@@ -305,20 +305,19 @@ if (isset($_POST['view'])) :
                 var data = google.visualization.arrayToDataTable([
                     ['Age', 'School Year 1', 'School Year 2', 'School Year 3'],
                     <?php
-                            $age = AgeDemoFetch($conn);
-                            foreach ($age as $agedemo) :
-                                $qry = $conn->query("SELECT COUNT(`user_id`) AS T_COUNT, 
+                            
+                                $qry = $conn->query("SELECT b.age_name,COUNT(`user_id`) AS T_COUNT, 
           CASE WHEN sy = '" . $_SESSION['active_sy_id'] . "' THEN  COUNT(`user_id`)  END AS sy1,
           CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-1 THEN COUNT(`user_id`) END AS sy2, 
           CASE WHEN sy = ('" . $_SESSION['active_sy_id'] . "')-2 THEN COUNT(`user_id`) END AS sy3  
-          FROM esat1_demographicst_tbl WHERE age = " . $agedemo['age_id'] . "  AND sy = '$sy' group by sy") or die($conn->error);
+          FROM esat1_demographicst_tbl a inner join age_tbl b WHERE a.age = b.age_name  AND sy = '$sy' group by sy,b.age_name") or die($conn->error);
                                 while ($AgeQry = $qry->fetch_assoc()) :
-                                    echo "['" . $agedemo['age_name'] . "', 
+                                    echo "['" . $AgeQry['age_name'] . "', 
                 " . intval($AgeQry['sy1']) . ",  
                 " . intval($AgeQry['sy2']) . ",   
                 " . intval($AgeQry['sy3']) . "],";
                                 endwhile;
-                            endforeach;
+                            
                             ?>
                 ]);
 
@@ -1581,7 +1580,7 @@ if (isset($_POST['view'])) :
                 let data = google.visualization.arrayToDataTable([
                     ['Age', 'No. of Teacher'],
                     <?php
-                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_id WHERE sy = '$sy_id' AND school = '$school' GROUP BY age_tbl.age_name") or die($conn->error);
+                            $qry = $conn->query("SELECT age_tbl.age_name, COUNT(esat1_demographicst_tbl.user_id) total FROM esat1_demographicst_tbl INNER JOIN age_tbl age_tbl on esat1_demographicst_tbl.age = age_tbl.age_name WHERE sy = '$sy_id' AND school = '$school' GROUP BY age_tbl.age_name") or die($conn->error);
                             while ($AgeChart = $qry->fetch_assoc()) :
                                 echo "['" . $AgeChart['age_name'] . "', " . $AgeChart['total'] . "],";
                             endwhile; ?>
