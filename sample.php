@@ -365,11 +365,11 @@ $enddate = $_SESSION['end_date'];
 $int_start = strtotime(intval($today_date));
 $int_end = strtotime(intval($enddate));
 
-echo 'TODAY DATE: ' . $today_date . ' END DATE: ' . $enddate . BR;
+// echo 'TODAY DATE: ' . $today_date . ' END DATE: ' . $enddate . BR;
 
 
-var_dump($int_start);
-var_dump($int_end);
+// var_dump($int_start);
+// var_dump($int_end);
 // var_dump($int_end);
 
 
@@ -377,18 +377,59 @@ var_dump($int_end);
 
 
 
-if ($int_start >= $int_end) :
-    echo "tpos na school year doi!";
-else : echo 'error';
-endif;
+// if ($int_start >= $int_end) :
+//     echo "tpos na school year doi!";
+// else : echo 'error';
+// endif;
+
+
 
 
 ?>
+<input type="text" id="search-name" value="">
+<button id="btn-submit">Submit</button>
+
+<div id="acc-tbl">
+    <!-- insert account table here -->
+</div>
 
 <?php
 //endforeach;
 ?>
 </select>
+
+
+<script>
+    // const sampleID = document.getElementById("sample-id");
+    // console.log(sampleID);
+
+    // const sampleID = document.getElementById("sample-id");
+    // console.log(sampleID.innerText = "tite");
+
+
+    const searchName = document.getElementById("search-name");
+    const btnSubmit = document.getElementById("btn-submit");
+    btnSubmit.addEventListener("click", searchAcc);
+
+    function postname(e) {
+
+        e.preventDefault;
+        console.log(searchVal);
+        // console.log(searchNameVal);
+    }
+
+    function searchAcc() {
+        // e.preventDefault;
+        const searchVal = searchName.value;
+        const xhr = new XMLHttpRequest();
+        console.log(xhr);
+        xhr.onload = function() {
+            document.getElementById("acc-tbl").innerHTML = this.responseText;
+        }
+        xhr.open("GET", "sss.php?name=" + searchVal);
+        xhr.send();
+    }
+</script>
 
 
 

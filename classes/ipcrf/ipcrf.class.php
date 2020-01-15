@@ -1038,7 +1038,7 @@ class IPCRF
     {
         $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a WHERE doc_status = 'Declined' ORDER BY a.final_rating desc";
 
-        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error);
         if ($result) {
             $array_res = [];
             foreach ($result as $r) {
@@ -1052,7 +1052,7 @@ class IPCRF
     {
         $qry = "SELECT * FROM ((SELECT * FROM ipcrf_final_mt WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active') UNION ALL (SELECT * FROM ipcrf_final_t WHERE sy_id = " . $this->sy . " AND school_id = " . $this->school . " AND status = 'Active'))a WHERE doc_status = 'Declined' AND rater_id = " . $this->user . " ORDER BY a.final_rating desc";
 
-        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        $result = mysqli_query($this->conn(), $qry) or die($this->conn()->error);
         if ($result) {
             $array_res = [];
             foreach ($result as $r) {
@@ -1119,6 +1119,19 @@ class IPCRF
                 array_push($res_array, $r);
             }
             return $res_array;
+        }
+    }
+
+    public function api_account_tbl()
+    {
+        $qry  = "SELECT * FROM account_tbl";
+        $result = mysqli_query($this->conn(), $qry) or die($$this->conn()->error);
+        if ($result) {
+            $res_array = [];
+            foreach ($result as $r) {
+                array_push($res_array, $r);
+            }
+            return ($res_array);
         }
     }
 }

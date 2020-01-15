@@ -36,11 +36,8 @@ $num = 1;
                 </thead>
 
                 <tbody>
-
                     <?php if ($user_ipcrf) : foreach ($user_ipcrf as $users) :
-                            $user = $users['user_id'];
-
-                    ?>
+                            $user = $users['user_id']; ?>
                             <tr>
                                 <td>
                                     <p><?= $num++ ?></p>
@@ -60,6 +57,7 @@ $num = 1;
                     else : ?>
                             <td colspan="10" class="text-center text-danger font-weight-bold">No available IPCRF to Approved</td>
                             </tr>
+
                         <?php endif; ?>
                 </tbody>
 
@@ -73,10 +71,9 @@ $num = 1;
     $position_view = displayPosition($conn, $user);
     $table = show_ipcrf_table($position_view);
     $ipcrf_view = $ipcrf->fetch_ipcrf_user_details($table, $user);
-
 ?>
     <!-- modal for ipcrf  -->
-    <div id="ipcrf_modal<?= $user ?>" class="tite bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div id="ipcrf_modal<?= $user ?>" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content ">
@@ -207,11 +204,11 @@ $num = 1;
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <a class="btn btn-primary" href="includes/<?= show_ipcrf_process($position_view) ?>?user_update=<?= $user ?>&sy=<?= $sy ?>&school=<?= $school ?>&app_auth=<?= $user_id ?>">Approve</a>
+                    <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a class="btn btn-primary" href="includes/<= /* show_ipcrf_process($position_view) ?>?user_update=<= $user >&sy=<= $sy >&school=<= $school >&app_auth=< $user_id */ ?>">Approve</a> -->
 
-                    <!-- <a class="btn btn-danger" href="includes/<?php /* show_ipcrf_process($position_view) ?>?user_decline=<?= $user ?>&sy=<?= $sy ?>&school=<?= $school ?>&app_auth=<?= $user_id */ ?>">Decline</a> -->
-                    <button class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#exampleModal<?= $user ?>">Declined</button>
+                    <a class="btn btn-success" href="includes/<?php echo     show_ipcrf_process(getPosition($conn, $user)) ?>?user_for_approval=<?= $user ?>&sy=<?= $sy ?>&school=<?= $school ?>&app_auth=<?= $user_id ?>">Set to for Approval</a>
+                    <!-- <button class="btn btn-danger" data-dismiss="modal" data-toggle="modal" data-target="#exampleModal<?= $user ?>">Declined</button> -->
                 </div>
             </div>
         </div>
@@ -248,8 +245,7 @@ $num = 1;
     <?php
     ?>
     </div>
-<?php endforeach ?>
-
+<?php endforeach; ?>
 <!-- modal for ipcrf  -->
 
 

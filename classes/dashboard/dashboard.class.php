@@ -236,14 +236,13 @@ class Dashboard
                     <a href="displaymtindicator.php" class="dropdown-item">Master Teacher COT Indicator List</a>
                     <a href="displayperftindicator.php" class="dropdown-item">Teacher Performance Indicator List</a>
                     <a href="displayperfmtindicator.php" class="dropdown-item">Master Teacher Performance Indicator List</a>
-                    <a href="displaytkramov.php" class="dropdown-item">Teacher KRA and Objective Details</a>
-                    <a href="displaymtkramov.php" class="dropdown-item">Master Teacher Objective Details</a>
+                    <a href="displaytkramov.php" class="dropdown-item">KRA and Objective Details for Teacher I-III</a>
+                    <a href="displaymtkramov.php" class="dropdown-item">KRA and Objective Details for Master Teacher I-IV</a>
                     <a href="displaytmov.php" class="dropdown-item">Teacher MOV Details</a>
                     <a href="displaymtmov.php" class="dropdown-item">Master Teacher MOV Details</a>
                     <a href="displayseminar.php" class="dropdown-item">Seminar List</a>
                     </div>
                 </li>
-
             ';
             $nav .= '</ul>';
 
