@@ -66,51 +66,51 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
                         <th>COT Average</th>
                     </tr>
                 </thead>
-               
-                    <tbody>
-                        <?php if($indicator_arr): foreach($indicator_arr as $ind):
+
+                <tbody>
+                    <?php if ($indicator_arr) : foreach ($indicator_arr as $ind) :
                             $ind_id = $ind['indicator_id'];
-                            ?>
+                    ?>
                             <tr>
                                 <td>
                                     <p><?= $num++ ?></p>
                                 </td>
 
                                 <td>
-                                    <p><?= displayTindicator($conn,$ind_id) ?></p>
+                                    <p><?= displayTindicator($conn, $ind_id) ?></p>
                                 </td>
 
-                                <?php for($count = 1; $count <= 4; $count++): $obs_per = $count; ?>
-                                <td class="text-center">
-                                    <p><?php
-                                    /* 'obs period: '.$count.' indi:'.$ind_id */ 
-                                        echo (fetch_cot_rating_t($conn,$obs_per,$ind_id,$sy_id,$school)) ? '<p>'.fetch_cot_rating_t($conn,$obs_per,$ind_id,$sy_id,$school).'</p>' : "<p class='text-danger'>N/A</p>" ;
-                                    ?></p>
-                                </td>
+                                <?php for ($count = 1; $count <= 4; $count++) : $obs_per = $count; ?>
+                                    <td class="text-center">
+                                        <p><?php
+                                            /* 'obs period: '.$count.' indi:'.$ind_id */
+                                            echo (fetch_cot_rating_t($conn, $obs_per, $ind_id, $sy_id, $school)) ? '<p>' . fetch_cot_rating_t($conn, $obs_per, $ind_id, $sy_id, $school) . '</p>' : "<p class='text-danger'>N/A</p>";
+                                            ?></p>
+                                    </td>
                                 <?php endfor; ?>
 
-                                  <td class="text-center">
-                                    <p><?php echo fetchIndicatorAVGAdmint($conn, $ind_id, $sy_id, $school) ? '<p>' .fetchIndicatorAVGAdmint($conn, $ind_id, $sy_id, $school).'</p>' : "<p class='text-danger'>N/A</p>";  ?></p>
+                                <td class="text-center">
+                                    <p><?php echo fetchIndicatorAVGAdmint($conn, $ind_id, $sy_id, $school) ? '<p>' . fetchIndicatorAVGAdmint($conn, $ind_id, $sy_id, $school) . '</p>' : "<p class='text-danger'>N/A</p>";  ?></p>
                                 </td>
-                                  <?php endforeach; ?>
-                            </tr>   
-                      
-                       <?php else: ?>
-                          <td colspan="10">
+                            <?php endforeach; ?>
+                            </tr>
+
+                        <?php else : ?>
+                            <td colspan="10">
                                 <p>
                                     No Record!
                                 </p>
-                         </td>
-                    
+                            </td>
+
                         <?php endif; ?>
-                    </tbody>
-                   
+                </tbody>
+
             </table>
         </div>
     </div>
 </div>
 
-   <?php /*
+<?php /*
                 $num =
                 foreach ($indicator_arr as $ind) :  ?>
                          <?php 1; foreach ($obs_period_arr as $obsper) : ?>
@@ -163,4 +163,4 @@ $obs_period_arr =  showObsPeriodAveAdminT($conn, $sy_id, $school);
                                 <?php echo rawRate(fetchIndicatorAVGAdmint($conn, $ind['indicator_id'], $sy_id, $school), $position) ?? "<p class='font-weight-bold text-danger'>N/A</p>" ?></td>
                                  <?php endforeach; ?>
                         </tr>
-                        <?php endforeach; */ ?> 
+                        <?php endforeach; */ ?>

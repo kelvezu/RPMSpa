@@ -184,55 +184,55 @@ include_once 'sampleheader.php'; ?>
 
         </div>
 
-<!-- IPCRF Summary -->
+        <!-- IPCRF Summary -->
 
-<div class="col">
-                <!-- Card -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="d-flex">
-                            <div class="w-100">
-                                <h6><i class="fa fa-users"></i> IPCRF Rating Per Schools</h6>
-                            </div>
+        <div class="col">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <h6><i class="fa fa-users"></i> IPCRF Rating Per Schools</h6>
                         </div>
                     </div>
-                    <!-- Card Body -->
-                    <div class="card-body box">
-                        <div id="teacher_count_table">
-                            <table class=" table table-sm table-responsive-sm table-hover ">
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>School Name</th>
-                                        <th>Rating</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="box">
-                                    <?php
-                                    //  and $sch_t['T'] || $sch_t['MT']
-                                    $num = 1;
-                                    $ipcrf_total = RPMSdb::ipcrfsum($conn);
-                                    foreach ($ipcrf_total as $ipcrf_t) :
-                                        if (!empty($ipcrf_t['school_id'])) : ?>
-                                            <td><?= $num++ ?></td>
-                                            <td><?= displaySchool($conn, $ipcrf_t['school_id']); ?></td>
-                                            <td class="font-weight-bold text-success"><?= $ipcrf_t['rating'] ?></td>
-                                            
-                                        <?php endif ?>
-                                </tbody>
-                            <?php endforeach; ?>
-                            </table>
-                        </div>
-
-                    </div>
-                    <!-- end of card-body -->
                 </div>
-                <!-- end of card -->
+                <!-- Card Body -->
+                <div class="card-body box">
+                    <div id="teacher_count_table">
+                        <table class=" table table-sm table-responsive-sm table-hover ">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>School Name</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody class="box">
+                                <?php
+                                //  and $sch_t['T'] || $sch_t['MT']
+                                $num = 1;
+                                $ipcrf_total = RPMSdb::ipcrfsum($conn);
+                                foreach ($ipcrf_total as $ipcrf_t) :
+                                    if (!empty($ipcrf_t['school_id'])) : ?>
+                                        <td><?= $num++ ?></td>
+                                        <td><?= displaySchool($conn, $ipcrf_t['school_id']); ?></td>
+                                        <td class="font-weight-bold text-success"><?= $ipcrf_t['rating'] ?></td>
+
+                                    <?php endif ?>
+                            </tbody>
+                        <?php endforeach; ?>
+                        </table>
+                    </div>
+
+                </div>
+                <!-- end of card-body -->
             </div>
+            <!-- end of card -->
+        </div>
 
 
-        
-<!-- End of IPCRF -->
+
+        <!-- End of IPCRF -->
 
 
 
@@ -277,7 +277,7 @@ include_once 'sampleheader.php'; ?>
         <!-- End Table for Principal List  -->
         <!-- End of First Row -->
     </div>
-    <br/>
+    <br />
     <!-- Second Row -->
     <div class="row">
         <!-- 1st column of 2nd row -->
@@ -299,7 +299,7 @@ include_once 'sampleheader.php'; ?>
         <!-- End of 1st column of 2nd row  -->
 
         <!--  2nd column of 2nd row -->
-        <br/>                        
+        <br />
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -317,7 +317,7 @@ include_once 'sampleheader.php'; ?>
         </div>
         <!-- End of 2nd column of 2nd row   -->
     </div>
-    <br/>
+    <br />
     <!-- End of Second Row -->
     <div class="row">
         <div class="col">
@@ -350,7 +350,7 @@ include_once 'sampleheader.php'; ?>
         <!-- End Table for Principal List  -->
     </div>
 
-    <br/>
+    <br />
     <div class="row">
         <div class="col">
             <!-- Card -->
@@ -379,8 +379,8 @@ include_once 'sampleheader.php'; ?>
                 </div>
             </div>
         </div>
-        <br/>
-                
+        <br />
+
 
         <!-- End Table for Principal List  -->
     </div>
@@ -406,9 +406,9 @@ include_once 'sampleheader.php'; ?>
                 <!-- end of card-body -->
             </div>
             <!-- end of card -->
-        </div>  
-<!-- End of Teacher Average IPCRF Summary -->
-<!-- Master Teacher Average IPCRF Summary -->
+        </div>
+        <!-- End of Teacher Average IPCRF Summary -->
+        <!-- Master Teacher Average IPCRF Summary -->
 
         <div class="col">
             <!-- Card -->
@@ -427,10 +427,10 @@ include_once 'sampleheader.php'; ?>
                 <!-- end of card-body -->
             </div>
             <!-- end of card -->
-        </div>  
+        </div>
         <!-- End of Teacher Average IPCRF Summary -->
     </div>
-        
+
 </div>
 
 <!-- End of main container -->
@@ -844,7 +844,7 @@ include_once 'sampleheader.php'; ?>
     function ipcrfchartT() {
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable([
-            ['obj_id', 'Quality', 'Efficiency', 'Timeliness','Average'],
+            ['obj_id', 'Quality', 'Efficiency', 'Timeliness', 'Average'],
             <?php
 
             $qry = $conn->query("SELECT obj_id,
@@ -882,7 +882,7 @@ include_once 'sampleheader.php'; ?>
             },
             series: {
                 3: {
-                type: 'line'
+                    type: 'line'
                 }
             }
         };
@@ -906,7 +906,7 @@ include_once 'sampleheader.php'; ?>
     function ipcrfchartMT() {
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable([
-            ['obj_id', 'Quality', 'Efficiency', 'Timeliness','Average'],
+            ['obj_id', 'Quality', 'Efficiency', 'Timeliness', 'Average'],
             <?php
 
             $qry = $conn->query("SELECT obj_id,
@@ -944,7 +944,7 @@ include_once 'sampleheader.php'; ?>
             },
             series: {
                 3: {
-                type: 'line'
+                    type: 'line'
                 }
             }
         };
@@ -959,5 +959,5 @@ include_once 'sampleheader.php'; ?>
 
 <?php include_once 'samplefooter.php' ?>
 <script>
-    // annBtnShow.click(fetchAnnouncement());
+    annBtnShow.click(fetchAnnouncement());
 </script>

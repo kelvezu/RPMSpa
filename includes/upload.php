@@ -28,6 +28,7 @@ if (isset($_POST['submit'])) :
     $obj_id = $_POST['obj'];
     $description = $_POST['description'];
     $mov_type = $_POST['mov_type'];
+    $date_attached = dateNow();
 
 
     if (in_array($fileActualExt, $allowed)) :
@@ -47,13 +48,13 @@ if (isset($_POST['submit'])) :
 
                     if ($mov_type == "main_mov") :
                         for ($count = 0; $count < count($obj_id); $count++) :
-                            $qry = "INSERT INTO `mov_main_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`)
-                             VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id')";
+                            $qry = "INSERT INTO `mov_main_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`,`date_attached`)
+                             VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id','$date_attached')";
                             $mov_attach_qry = mysqli_query($conn, $qry) or die($conn->error);
                         endfor;
                     elseif ($mov_type == "supp_mov") :
                         for ($count = 0; $count < count($obj_id); $count++) :
-                            $qry = "INSERT INTO `mov_supp_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`) VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id')";
+                            $qry = "INSERT INTO `mov_supp_t_attach_tbl`(`mov_id`, `file_type`, `mov_type`, `kra_id`, `obj_id`, `user_id`, `position`, `rater_id`, `school_id`, `sy_id`,`date_attached`) VALUES ('$last_id','$fileActualExt','$mov_type'," . displayKRAidofTobj($conn, $obj_id[$count]) . ",'$obj_id[$count]','$user_id','$position','$rater_id','$school_id','$sy_id','$date_attached')";
                             $mov_attach_qry = mysqli_query($conn, $qry) or die($conn->error);
                         endfor;
                     else : die('Error');

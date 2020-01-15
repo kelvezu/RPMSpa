@@ -5,9 +5,12 @@ use RPMSdb\RPMSdb;
 $num = 1;
 include 'sampleheader.php';
 $KRAandOBJ = displayKRAandOBJ($conn, $_SESSION['position']);
+$cot_obj = displayKRAandOBJ($conn, $_SESSION['position']);
 $main_mov_file = 'main_mov';
 $supp_mov_file = 'supp_mov';
 $user_id = $_SESSION['user_id'];
+$active_sy_id = $_SESSION['active_sy_id'];
+$school_id = $_SESSION['school_id'];
 ?>
 <div class="container-fluid">
     <div class="card">
@@ -25,7 +28,6 @@ $user_id = $_SESSION['user_id'];
                         <th>#</th>
                         <th class="text-nowrap">Key Result Area</th>
                         <th>Objectives</th>
-                        <th>COT</th>
                         <th class="text-nowrap">Main MOV</th>
                         <th class="text-nowrap">Attachment Status</th>
                         <th class="text-nowrap">Supporting MOV</th>
@@ -47,111 +49,252 @@ $user_id = $_SESSION['user_id'];
                             </td>
                             <!-- DISPLAY KRA LIST -->
                             <td>
-                                <p data-toggle="tooltip" data-placement="top" title="<?= displayKRA($conn, $kra['mtobj_id']) ?>" class="text-wrap">
-                                    <?= displayKRA($conn, $kra['kra_id']) ?>
+                                <details>
+                                    <summary>KRA <?= $kra['kra_id'] ?></summary>
+                                    <p><?= displayKRA($conn, $kra['mtobj_id']) ?></p>
+                                </details>
                                 </p>
                             </td>
                             <!-- ------------------- -->
 
                             <!-- DISPLAY OBJECTIVE -->
                             <td>
-                                <p data-toggle="tooltip" data-placement="top" title="<?= displayObjectiveMT($conn, $kra['mtobj_id']) ?>">Objective <?= $kra['mtobj_id'] ?></p>
+                                <p>
+                                    <details>
+                                        <summary>Objective <?= $kra['mtobj_id'] ?></summary>
+                                        <p><?= displayObjectiveMT($conn, $kra['mtobj_id']) ?></p>
+                                    </details>
+                                </p>
                             </td>
                             <!-- ----------------- -->
 
-                            <!-- DISPLAY COT -->
-                            <td>COT 1</td>
-                            <!-- ----------- -->
+
 
                             <!-- DISPLAY MAIN ATTACHMENT -->
                             <td class="text-justify">
                                 <?php
-                                    $main_mov =  rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+                                // OBJECTIVE FOR MAIN MOV COT
+                                if ($kra['classroom_observable'] == "Yes") :
+                                    $cot_count = fullCOTCountmt($conn, $user_id, $active_sy_id, $school_id);
+                                    if ($cot_count) : ?>
+                                        <button data-toggle="modal" data-target="#cot_modal" class="btn btn-primary">COT Ratings</button>
 
-                                    if (isset($main_mov)) :
-                                        foreach ($main_mov as $mmov) : ?>
-                                        <p>
-                                            <button data-toggle="modal" data-target="#updateModal<?= $mmov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm">
-                                                <?= displayMOVfileMT($conn, $mmov['mov_id']) ?>
-                                                <a href="includes/processattachuser.php?type=main&attach_mov_id=<?= $mmov['mov_id'] ?>" class="fa fa-times text-danger"></a>
-                                            </button>
-                                        </p>
-
-                                        <!--Main MOV Modal -->
-                                        <div class="modal fade" id="updateModal<?= $mmov['mov_id'] .   $kra['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
+                                        <div id="cot_modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Update Attachments</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
+                                                    <div class="container-fluid">
                                                         <div class="card">
-                                                            <div class="card-header bg-light">
-                                                                <p><b>Attached in KRA <?= $kra['kra_id'] ?>: </b>"<i><?= displayKRA($conn, $kra['kra_id']) ?></i>"</p>
-                                                                <b>Attached in Objective <?= $kra['mtobj_id'] ?>: </b>
-                                                                "<i><?= displayObjectiveMT($conn, $kra['mtobj_id']) ?></i>"
+                                                            <div class="card-header">
+                                                                COT RATING
                                                             </div>
                                                             <div class="card-body">
-                                                                <div class="card">
-                                                                    <div class="card-header bg-dark text-white">
-                                                                        <div class="d-flex justify-content-between">
-                                                                            <div class="p-2">
-                                                                                <p><b>File name:</b>
-                                                                                    <?php echo displayMOVfileMT($conn, $mmov['mov_id']) ?></p>
-                                                                            </div>
-                                                                            <form action="includes/processAttachUser.php" method="POST">
-                                                                                <input type="hidden" value="<?= $mmov['user_id'] ?>" name="user_id">
-                                                                                <input type="hidden" value="<?= $mmov['sy_id'] ?>" name="sy_id">
-                                                                                <input type="hidden" value="<?= $mmov['school_id'] ?>" name="school_id">
-                                                                                <input type="hidden" value="<?= $mmov['mov_id'] ?>" name="mov_id">
-                                                                                <input type="hidden" value="<?= $kra['mtobj_id'] ?>" name="obj_id">
-                                                                                <input type="hidden" value="<?= $mmov['mov_type'] ?>" name="mov_type">
-                                                                                <div class="p-2"><button type="submit" class="btn btn-sm btn-outline-danger" name="remove_mt_attach">Remove Attachment</button></div>
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="card-body">
-                                                                        <form action="includes/processupdateattachment.php" method="post">
-                                                                            <div class="row">
-                                                                                <div class="col">
-                                                                                    <p><b>Attachment</b>
-                                                                                        <p><?= (displayFileMT($conn, $mmov['mov_id'])); ?></p>
-                                                                                    </p>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="card-footer alert alert-dark">
-                                                                                <p class="text-justify">
-                                                                                    <b>Description:</b>
-                                                                                    <p class="text-justify">" <i><?php echo displayFileDescMT($conn, $mmov['mov_id'])  ?></i> "</p>
-                                                                                </p>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
+                                                                <table class="table table-bordered">
+                                                                    <thead class="thead-dark text-center">
+                                                                        <tr>
+                                                                            <th>
+                                                                                <p>KRA</p>
+                                                                            </th>
+
+                                                                            <th>
+                                                                                <p>Objective</p>
+                                                                            </th>
+
+                                                                            <th>
+                                                                                <p>Indicator</p>
+                                                                            </th>
+
+                                                                            <?php foreach ($cot_count as $cc) : ?>
+                                                                                <th>
+                                                                                    <p>COT <?= $cc['obs_period'] ?></p>
+                                                                                </th>
+                                                                            <?php endforeach ?>
+
+                                                                            <th>
+                                                                                <p>Average</p>
+                                                                            </th>
+
+                                                                        </tr>
+                                                                    </thead>
+
+                                                                    <tbody class="tbody-dark text-center">
+
+                                                                        <?php foreach ($cot_obj as $cot_r) : if ($cot_r['classroom_observable'] == "Yes") : ?>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <p><?php echo $cot_r['kra_id'] ?></p>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <p>
+                                                                                            <details>
+                                                                                                <summary>
+                                                                                                    Objective <?php echo $cot_r['mtobj_id'] ?>
+                                                                                                </summary>
+
+                                                                                                <p>
+                                                                                                    <?php echo displayObjectiveMT($conn, $cot_r['mtobj_id']) ?>
+                                                                                                </p>
+                                                                                            </details>
+
+                                                                                        </p>
+                                                                                    </td>
+
+                                                                                    <td>
+                                                                                        <p>
+                                                                                            <details>
+                                                                                                <summary>
+                                                                                                    Indicator <?php echo $cot_r['indicator_id'] ?>
+                                                                                                </summary>
+
+                                                                                                <p>
+                                                                                                    <?php echo displayMTindicator($conn, $cot_r['indicator_id']) ?>
+                                                                                                </p>
+                                                                                            </details>
+
+                                                                                        </p>
+                                                                                    </td>
+
+                                                                                    <?php foreach ($cot_count as $cc) :  ?>
+                                                                                        <td>
+                                                                                            <?php //if ($cot_r['classroom_observable'] == "Yes") : 
+                                                                                            ?>
+                                                                                            <p>
+
+                                                                                                <?php $indicator_rating = fetch_cot_rating_mt($conn, $cc['obs_period'],  $cot_r['indicator_id'], $active_sy_id, $school_id) ?>
+                                                                                                <?php if ($indicator_rating) : ?>
+                                                                                                    <p><?php echo $indicator_rating  ?></p>
+                                                                                                <?php else : ?>
+                                                                                                    <p class="text-danger">N/A</p>
+                                                                                                <?php endif; ?>
+                                                                                            </p>
+                                                                                            <?php //endif; 
+                                                                                            ?>
+                                                                                        </td>
+                                                                                    <?php
+                                                                                    endforeach; ?>
+
+                                                                                    <td>
+                                                                                        <p>
+                                                                                            <?php
+                                                                                            $indicator_average = fetch_indicator_avg_mt($conn, $user_id,  $cot_r['indicator_id'], $active_sy_id, $school_id);
+                                                                                            if ($indicator_average) : ?>
+                                                                                                <p><?php echo $indicator_average  ?></p>
+                                                                                            <?php else : ?>
+                                                                                                <p class="text-danger">N/A</p>
+                                                                                            <?php endif; ?>
+                                                                                        </p>
+                                                                                    </td>
+                                                                            <?php endif;
+                                                                        endforeach ?>
+                                                                                </tr>
+                                                                    </tbody>
+                                                                </table>
+
                                                             </div>
                                                         </div>
-                                                        <!-- End of Card -->
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
-                                                        <!-- <a class="btn btn-outline-primary btn-sm" href="downloadmt.php?file=<?php //$smov['attachment'] 
-                                                                                                                                                ?>">View File</a> -->
-
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- End tag of Update Modal -->
 
-                                    <?php endforeach;
-                                        else : ?>
-                                    <p class="text-center font-weight-bold"> ----- </p>
-                                <?php endif; ?>
+                                        <?php
+                                    endif;
+
+                                // OBJECTIVE FOR MAIN MOV ATTACHMENT
+                                elseif ($kra['classroom_observable'] == "No") :
+                                    // echo "this is Attachment";
+                                    $main_mov = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+
+
+                                    if (isset($main_mov)) :
+                                        foreach ($main_mov as $mmov) : ?>
+                                            <p>
+                                                <button data-toggle="modal" data-target="#updateModal<?= $mmov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm">
+                                                    <?= displayMOVfileMT($conn, $mmov['mov_id']) ?>
+                                                    <a href="includes/processattachuser.php?type=main&attach_mov_id=<?= $mmov['mov_id'] ?>" class="fa fa-times text-danger"></a>
+                                                </button>
+                                            </p>
+
+                                            <!--Main MOV Modal -->
+                                            <div class="modal fade" id="updateModal<?= $mmov['mov_id'] .   $kra['mtobj_id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Update Attachments</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="card">
+                                                                <div class="card-header bg-light">
+                                                                    <p><b>Attached in KRA <?= $kra['kra_id'] ?>: </b>"<i><?= displayKRA($conn, $kra['kra_id']) ?></i>"</p>
+                                                                    <b>Attached in Objective <?= $kra['mtobj_id'] ?>: </b>
+                                                                    "<i><?= displayObjectiveMT($conn, $kra['mtobj_id']) ?></i>"
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="card">
+                                                                        <div class="card-header bg-dark text-white">
+                                                                            <div class="d-flex justify-content-between">
+                                                                                <div class="p-2">
+                                                                                    <p><b>File name:</b>
+                                                                                        <?php echo displayMOVfileMT($conn, $mmov['mov_id']) ?></p>
+                                                                                </div>
+                                                                                <form action="includes/processAttachUser.php" method="POST">
+                                                                                    <input type="hidden" value="<?= $mmov['user_id'] ?>" name="user_id">
+                                                                                    <input type="hidden" value="<?= $mmov['sy_id'] ?>" name="sy_id">
+                                                                                    <input type="hidden" value="<?= $mmov['school_id'] ?>" name="school_id">
+                                                                                    <input type="hidden" value="<?= $mmov['mov_id'] ?>" name="mov_id">
+                                                                                    <input type="hidden" value="<?= $kra['mtobj_id'] ?>" name="obj_id">
+                                                                                    <input type="hidden" value="<?= $mmov['mov_type'] ?>" name="mov_type">
+                                                                                    <div class="p-2"><button type="submit" class="btn btn-sm btn-outline-danger" name="remove_mt_attach">Remove Attachment</button></div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <form action="includes/processupdateattachment.php" method="post">
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <p><b>Attachment</b>
+                                                                                            <p><?= (displayFileMT($conn, $mmov['mov_id'])); ?></p>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-footer alert alert-dark">
+                                                                                    <p class="text-justify">
+                                                                                        <b>Description:</b>
+                                                                                        <p class="text-justify">" <i><?php echo displayFileDescMT($conn, $mmov['mov_id'])  ?></i> "</p>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End of Card -->
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                                                            <!-- <a class="btn btn-outline-primary btn-sm" href="downloadmt.php?file=<?php //$smov['attachment'] 
+                                                                                                                                        ?>">View File</a> -->
+
+                                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End tag of Update Modal -->
+
+                                        <?php endforeach;
+                                    else : ?>
+                                        <p class="text-center font-weight-bold"> ----- </p>
+                                <?php endif;
+
+
+                                endif; ?>
                             </td>
                             <!-- -------------------------------- -->
 
@@ -159,10 +302,10 @@ $user_id = $_SESSION['user_id'];
                             <td>
                                 <!-- COLUMN FOR MAIN MOV STATUS -->
                                 <?php
-                                    $fetch_main_status = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
-                                    if ($fetch_main_status) :
-                                        foreach ($fetch_main_status as $m_stats) :
-                                            $m_status = $m_stats['doc_status']; ?>
+                                $fetch_main_status = rpmsdb::fetch_MAIN_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+                                if ($fetch_main_status) :
+                                    foreach ($fetch_main_status as $m_stats) :
+                                        $m_status = $m_stats['doc_status']; ?>
                                         <p>
                                             <?php if ($m_status == "For Approval") : ?>
                                                 <button class="btn btn-info btn-sm btn-block  text-white">
@@ -183,7 +326,7 @@ $user_id = $_SESSION['user_id'];
                                             <?php endif; ?>
                                         </p>
                                     <?php endforeach;
-                                        else : ?>
+                                else : ?>
                                     <p class="text-center font-weight-bold"> ----- </p>
 
                                 <?php endif; ?>
@@ -194,11 +337,11 @@ $user_id = $_SESSION['user_id'];
                             <td class=" text-justify">
                                 <!-- COLUMN FOR SUPP MOV -->
                                 <?php
-                                    $supp_mov =  rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+                                $supp_mov =  rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
 
-                                    if ($supp_mov) :
-                                        foreach ($supp_mov as $smov) :
-                                            ?>
+                                if ($supp_mov) :
+                                    foreach ($supp_mov as $smov) :
+                                ?>
                                         <p class="text-justify text-nowrap">
 
                                             <button data-toggle="modal" data-target="#updateModal<?= $smov['mov_id'] . $kra['mtobj_id'] ?>" class="btn btn-outline-primary btn-sm">
@@ -289,8 +432,8 @@ $user_id = $_SESSION['user_id'];
                                         <!-- End tag of Update Modal -->
 
                                     <?php
-                                            endforeach;
-                                        else : ?>
+                                    endforeach;
+                                else : ?>
                                     <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
 
@@ -306,10 +449,10 @@ $user_id = $_SESSION['user_id'];
                             <td class="text-center">
                                 <!-- COLUMN FOR SUPP MOV STATUS -->
                                 <?php
-                                    $fetch_supp_status = rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
-                                    if ($fetch_supp_status) :
-                                        foreach ($fetch_supp_status as $s_stats) :
-                                            $s_status = $s_stats['doc_status']; ?>
+                                $fetch_supp_status = rpmsdb::fetch_SUPP_MT_MOV_ATT($conn, $user_id, $_SESSION['school_id'], $_SESSION['active_sy_id'], $kra['mtobj_id'], $kra['kra_id']);
+                                if ($fetch_supp_status) :
+                                    foreach ($fetch_supp_status as $s_stats) :
+                                        $s_status = $s_stats['doc_status']; ?>
                                         <p>
                                             <?php if ($s_status == "For Approval") : ?>
                                                 <button class="btn btn-info btn-sm btn-block  text-white">
@@ -330,7 +473,7 @@ $user_id = $_SESSION['user_id'];
                                             <?php endif; ?>
                                         </p>
                                     <?php endforeach;
-                                        else : ?>
+                                else : ?>
                                     <p class="text-center font-weight-bold"> ----- </p>
                                 <?php endif; ?>
                                 <!-- END COLUMN FOR SUPP MOV STATUS  -->

@@ -78,8 +78,8 @@ if (isset($_POST['save'])) :
                 $rater3 = $_POST['observer3'] ?? "";
                 $date = date("Y/m/d");
                 $user_id = $_POST['tobserved'] ?? "";
-                $subject = $_POST['tsubject'];
-                $gradelvltaught = $_POST['tgradelvltaught'];
+                $subject = $_POST['tsubject'] ?? "";
+                $gradelvltaught = $_POST['tgradelvltaught'] ?? "";
                 $obs_period = intval($_POST['obs']);
                 $indicator_id = $_POST['mtindicator_id'];
                 $indicator_name = $_POST['mtindicator_name'];
@@ -91,12 +91,20 @@ if (isset($_POST['save'])) :
                 $cot_qry = $conn->query("SELECT * FROM cot_mt_rating_a_tbl WHERE sy = '$sy_id' AND obs_period = '$obs_period' AND school_id= '$school_id' AND `user_id` = '$user_id'");
                 $cot_exist = $cot_qry->num_rows;
 
+                if (empty($subject)) :
+                    $error_array[] = "Please select a subject!";
+                endif;
+
+                if (empty($gradelvltaught)) :
+                    $error_array[] = "Please select Grade Level Taught!";
+                endif;
+
                 if ($cot_exist > 0) :
                     $error_array[] = "Teacher has been rated for the specific observation period.";
                 endif;
 
                 if (empty($user_id)) :
-                    $error_array[] = "No Teacher selected!";
+                    $error_array[] = "Please select a teacher to rate!";
                 endif;
 
                 if (!empty($error_array)) :
@@ -260,8 +268,6 @@ if (isset($_POST['save'])) :
                 <input type="hidden" name="sy" value="<?php echo $_SESSION['active_sy_id']; ?>" />
                 <input type="hidden" name="school_id" value="<?php echo $_SESSION['school_id']; ?>" />
 
-
-
                 <div class="row">
                     <div class="col-lg-6">
                         <label><b>OBSERVER 1: </b></label>&nbsp;
@@ -308,7 +314,7 @@ if (isset($_POST['save'])) :
 
                     <div class="col-lg-6">
                         <label><b>TEACHER OBSERVED:</b> </label>
-                        <select name="tobserved" required class="form-control-sm">
+                        <select name="tobserved" class="form-control-sm" required>
                             <?php if (isset($user_id)) : ?>
                                 <option value="<?php echo $user_id ?? ""; ?>" disabled selected><?php echo displayName($conn, $user_id) ?? "Select Teacher"; ?></option>
                             <?php else : ?>
@@ -372,7 +378,7 @@ if (isset($_POST['save'])) :
                         <label>
                             <b>SUBJECT:</b>
                         </label>
-                        <select name="tsubject" required class="form-control-sm">
+                        <select name="tsubject" class="form-control-sm" required>
                             <?php if (isset($subject)) : ?>
                                 <option value="<?php echo $subject ?? ""; ?>" disabled selected><?php echo displaySubject($conn, $subject) ?? "Select Subject"; ?></option>
                             <?php else : ?>

@@ -461,7 +461,7 @@
             function displaySY($conn, $sy_id)
             {
                 $qry = "SELECT * FROM sy_tbl WHERE sy_id = $sy_id";
-                $result = mysqli_query($conn, $qry) or die($conn->error.$qry);
+                $result = mysqli_query($conn, $qry) or die($conn->error . $qry);
                 if ($result) :
                     foreach ($result as $res) :
                         return $res['sy_desc'];
@@ -1892,6 +1892,36 @@
                 endif;
             }
 
+            // this function will count the total COT of the master teacher
+            function fullCOTCountmt($conn, $user_id, $sy, $school)
+            {
+                $qry = "SELECT obs_period FROM `cot_mt_rating_a_tbl` WHERE `user_id` = $user_id AnD sy = $sy AND school_id = $school AND status = 'Active' GROUP BY obs_period";
+                $result = mysqli_query($conn, $qry) or die($conn->$qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return ($count_arr);
+                endif;
+            }
+
+            // this function will count the total COT of the master teacher
+            function fullCOTCountt($conn, $user_id, $sy, $school)
+            {
+                $qry = "SELECT * FROM `cot_t_rating_a_tbl` WHERE `user_id` = $user_id AnD sy = $sy AND school_id = $school and status = 'Active' GROUP BY obs_period";
+                $result = mysqli_query($conn, $qry) or die($conn->$qry);
+                if ($result) :
+                    $count_arr = [];
+                    foreach ($result as $r) :
+                        array_push($count_arr, $r);
+                    endforeach;
+                    return ($count_arr);
+                endif;
+            }
+
+
+
             function AVGofTIndicatorAVG($conn, $sy, $school, $indicator)
             {
                 $qry = " SELECT ROUND(AVG(average),3) as AVE,sy FROM `cot_t_indicator_ave_tbl` WHERE sy = $sy and school = $school AND indicator_id = $indicator";
@@ -3172,19 +3202,54 @@
                 endif;
             }
 
-           
 
-             function fetch_cot_rating_t($conn, $obs_period,$indicator,$sy,$school)
+
+            function fetch_cot_rating_t($conn, $obs_period, $indicator, $sy, $school)
             {
                 $qry = "SELECT ROUND(avg(rating),2) as avg_rating FROM `cot_t_rating_a_tbl` WHERE obs_period = $obs_period and  indicator_id = $indicator and sy = $sy and school_id = $school and status = 'Active'";
                 $result = mysqli_query($conn, $qry);
                 if ($result) {
-                    
+
                     foreach ($result as $r) {
                         return $r['avg_rating'];
                     }
-                  
                 }
             }
 
-          
+            function fetch_cot_rating_mt($conn, $obs_period, $indicator, $sy, $school)
+            {
+                $qry = "SELECT ROUND(avg(rating),2) as avg_rating FROM `cot_mt_rating_a_tbl` WHERE obs_period = $obs_period and  indicator_id = $indicator and sy = $sy and school_id = $school and status = 'Active'";
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+
+                    foreach ($result as $r) {
+                        return floatval($r['avg_rating']);
+                    }
+                }
+            }
+
+
+
+            function fetch_indicator_avg_mt($conn, $user,  $indicator, $sy, $school)
+            {
+                $qry = "  SELECT indicator_id, ROUND(AVG(rating),3) AS indicator_average FROM `cot_mt_rating_a_tbl` WHERE user_id = $user  and sy = $sy and school_id =  $school and status = 'Active' and indicator_id = $indicator";
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+
+                    foreach ($result as $r) {
+                        return floatval($r['indicator_average']);
+                    }
+                }
+            }
+
+            function fetch_indicator_avg_t($conn, $user,  $indicator, $sy, $school)
+            {
+                $qry = "  SELECT indicator_id, ROUND(AVG(rating),3) AS indicator_average FROM `cot_t_rating_a_tbl` WHERE user_id = $user  and sy = $sy and school_id =  $school and status = 'Active' and indicator_id = $indicator";
+                $result = mysqli_query($conn, $qry);
+                if ($result) {
+
+                    foreach ($result as $r) {
+                        return floatval($r['indicator_average']);
+                    }
+                }
+            }

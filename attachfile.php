@@ -111,7 +111,7 @@ endif;
 
                                 <input type="file" name="file" class=" btn btn-outline-success form-control" required><br>
                                 <label for="desc"><strong>Choose MOV Type:</strong></label><br>
-                                <select name="mov_type" class="form-control" required>
+                                <select id="mov_type" name="mov_type" class="form-control" required>
                                     <option value="" disabled selected>--Select MOV Type--</option>
                                     <option name="main_mov" value="main_mov">Main MOV</option>
                                     <option name="supp_mov" value="supp_mov">Supporting MOV</option>
@@ -123,23 +123,47 @@ endif;
 
                         <div class="col">
                             <label for="selectkra"><strong>Choose Objective</strong></label><br>
+                            <div id="main_obj_list">
 
-                            <?php
-                            $obj_id = 0;
-                            $qry = $conn->query("SELECT * FROM tobj_tbl");
-                            while ($resultQry = $qry->fetch_assoc()) :
-                                $kra_id = $resultQry['kra_id'];
-                                $obj_id = $resultQry['tobj_id'];
-                                // if ($resultQry['mov_type'] == "ATTACHMENT") :
+                                <?php
+                                $obj_id = 0;
+                                $qry = $conn->query("SELECT * FROM tobj_tbl");
+                                while ($resultQry = $qry->fetch_assoc()) :
+                                    $kra_id = $resultQry['kra_id'];
+                                    $obj_id = $resultQry['tobj_id'];
+                                    if ($resultQry['classroom_observable'] == "No") :
 
-                            ?>
+                                ?>
+                                        <input type="checkbox" name="obj[]" value="<?php echo $obj_id; ?>" /><?php echo "<a data-toggle='tooltip' data-placement='top' title='" . displayKRA($conn, $kra_id) . "'>KRA " . $kra_id . "</a> - <a data-toggle='tooltip' data-placement='top' title='" . displayObjectiveT($conn, $obj_id) . "'>Objective " . $obj_id . "</a>"; ?><br>
+
+                                <?php endif;
+                                endwhile; ?>
+
+                            </div>
+
+                            <div id="supp_obj_list">
+
+                                <?php
+                                $obj_id = 0;
+                                $qry = $conn->query("SELECT * FROM tobj_tbl");
+                                while ($resultQry = $qry->fetch_assoc()) :
+                                    $kra_id = $resultQry['kra_id'];
+                                    $obj_id = $resultQry['tobj_id'];
+                                    //if ($resultQry['classroom_observable'] == "No") :
+
+                                ?>
                                     <input type="checkbox" name="obj[]" value="<?php echo $obj_id; ?>" /><?php echo "<a data-toggle='tooltip' data-placement='top' title='" . displayKRA($conn, $kra_id) . "'>KRA " . $kra_id . "</a> - <a data-toggle='tooltip' data-placement='top' title='" . displayObjectiveT($conn, $obj_id) . "'>Objective " . $obj_id . "</a>"; ?><br>
 
-                            <?php //endif;
-                            endwhile; ?>
-                            <button type="submit" name="submit" class="btn btn-success">Upload</button>
+                                <?php //endif;
+                                endwhile; ?>
+
+                            </div>
+
+
+
                         </div>
                     </div>
+                    <button type="submit" name="submit" class="btn btn-success">Upload</button>
                 </div>
             </div>
         </div>
@@ -151,6 +175,28 @@ endif;
 
 
 </form>
+
+<script>
+    const mov_type = document.querySelector('#mov_type');
+    const obj_option = document.querySelector('#obj_option');
+    const main_obj_list = document.querySelector('#main_obj_list');
+    const supp_obj_list = document.querySelector('#supp_obj_list');
+    main_obj_list.style.display = "none";
+    supp_obj_list.style.display = "none";
+
+
+    mov_type.addEventListener('click', showObjOptions);
+
+    function showObjOptions() {
+        if (mov_type.value == "main_mov") {
+            main_obj_list.style.display = "block";
+            supp_obj_list.style.display = "none";
+        } else if (mov_type.value == "supp_mov") {
+            main_obj_list.style.display = "none";
+            supp_obj_list.style.display = "block";
+        }
+    }
+</script>
 
 <?php
 

@@ -79,8 +79,8 @@ if (isset($_POST['save'])) :
                 $rater3 = $_POST['observer3'] ?? "";
                 $date = date("Y/m/d");
                 $user_id = $_POST['tobserved'] ?? "";
-                $subject = $_POST['tsubject'];
-                $gradelvltaught = $_POST['tgradelvltaught'];
+                $subject = $_POST['tsubject'] ?? "";
+                $gradelvltaught = $_POST['tgradelvltaught'] ?? "";
                 $obs_period = intval($_POST['obs']);
                 $indicator_id = $_POST['indicator_id'];
                 $indicator_name = $_POST['indicator_name'];
@@ -97,8 +97,18 @@ if (isset($_POST['save'])) :
                 endif;
 
                 if (empty($user_id)) :
-                    $error_array[] = "No Teacher selected!";
+                    $error_array[] = "Please select a teacher to rate!";
                 endif;
+
+                if (empty($subject)) :
+                    $error_array[] = "Please select a subject!";
+                endif;
+
+
+                if (empty($gradelvltaught)) :
+                    $error_array[] = "Please select grade level taught!";
+                endif;
+
 
                 if (!empty($error_array)) :
                     echo '<ul class="red-notif-border text-justify">';
@@ -225,13 +235,13 @@ if (isset($_POST['save'])) :
 <?php endif; ?>
 
 <div class="container">
-      <?php 
-                if($position == "Principal"):
-                   echo '<a href="cotstatus.php" class="btn btn-outline-primary">Cot Status</a>';
-                else:
-                    echo '<a href="teachercotrate.php" class="btn btn-outline-primary">Cot Status</a>';
-                endif;
-            ?>
+    <?php
+    if ($position == "Principal") :
+        echo '<a href="cotstatus.php" class="btn btn-outline-primary">Cot Status</a>';
+    else :
+        echo '<a href="teachercotrate.php" class="btn btn-outline-primary">Cot Status</a>';
+    endif;
+    ?>
 
     <div>
         <?php

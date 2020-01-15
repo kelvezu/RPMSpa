@@ -139,7 +139,7 @@ endif;
                 <?php foreach ($kras as $kra) :
                     $kra_id = $kra['kra_id'];
                     $obj_id = $kra['mtobj_id'];
-                    $mov_type = $kra['mov_type'];
+                    $mov_type = $kra['classroom_observable'];
                 ?>
                     <tr>
                         <td>
@@ -148,7 +148,13 @@ endif;
                         <!-- KRA  -->
                         <td rowspan="4">
                             <p class="font-weight-bold">
-                                <?php echo trim(displayKRA($conn, $kra_id)); ?>
+                                <details>
+                                    <summary> <?php echo "KRA " . $kra_id ?> </summary>
+                                    <p>
+                                        <?php echo trim(displayKRA($conn, $kra_id)); ?>
+                                    </p>
+                                </details>
+
                             </p>
                         </td>
                         <!-- END OF KRA -->
@@ -156,7 +162,15 @@ endif;
 
                         <!-- DISPLAY OBJECTIVE -->
                         <td>
-                            <p class=" font-italic"><?php echo $obj_id . ' - ' . displayObjectivemT($conn, $obj_id); ?></p>
+                            <p class=" font-italic">
+                                <details>
+                                    <summary><?php echo "Objective " . $obj_id ?></summary>
+                                    <p>
+                                        <?php echo displayObjectivemT($conn, $obj_id); ?>
+                                    </p>
+                                </details>
+
+                            </p>
                         </td>
                         <!-- END DISPLAY OBJECTIVE  -->
 
