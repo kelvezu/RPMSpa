@@ -94,7 +94,7 @@ if (isset($_GET['unremoveage'])) {
     $age_id = $_GET['unremoveage'];
     $conn->query("UPDATE  age_tbl SET `status`='Active' WHERE age_id=$age_id") or die($conn->error);
     $_SESSION['message'] = 'Age option successfully unremoved!';
-    $_SESSION['msg_type'] = 'red-notif-border';
+    $_SESSION['msg_type'] = 'green-notif-border';
     header("location:../ESAT.php");
 }
 
@@ -107,11 +107,11 @@ if (isset($_POST['gendersave'])) {
 
     if ($query_run) {
         $_SESSION['message'] = "Gender Option Successfully Added!";
-        $_SESSION['msg_type'] = "success";
+        $_SESSION['msg_type'] = "green-notif-border";
         header('location:../ESAT.php');
     } else {
         $_SESSION['message'] = "Data Insertion Failed";
-        $_SESSION['msg_type'] = "danger";
+        $_SESSION['msg_type'] = "red-notif-border";
         header('location:../ESAT.php');
     }
 }
@@ -126,12 +126,12 @@ if (isset($_POST['updateGEN'])) {
     header("location:../ESAT.php");
 }
 
-//DELETE GENDER
-if (isset($_GET['deleteGD'])) {
+//REMOVE GENDER
+if (isset($_GET['unremovegen'])) {
     $gender_id = $_GET['deleteGD'];
     $conn->query("DELETE FROM gender_tbl WHERE gender_id=$gender_id") or die($conn->error);
     $_SESSION['message'] = 'Gender has been deleted!';
-    $_SESSION['msg_type'] = 'danger';
+    $_SESSION['msg_type'] = 'red-notif-border';
     header("location:../ESAT.php");
 }
 
@@ -144,11 +144,11 @@ if (isset($_POST['positionsave'])) {
 
     if ($query_run) {
         $_SESSION['message'] = "Position Successfully Inserted!";
-        $_SESSION['msg_type'] = "success";
+        $_SESSION['msg_type'] = "green-notif-border";
         header('location:../ESAT.php');
     } else {
         $_SESSION['message'] = "Data Insertion Failed";
-        $_SESSION['msg_type'] = "danger";
+        $_SESSION['msg_type'] = "red-notif-border";
         header('location:../ESAT.php');
     }
 }

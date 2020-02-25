@@ -368,7 +368,7 @@ include 'includes/header.php';
                <tbody class=" text-dark">
                     <tr>  <?php if($row['status'] == "Active"): ?>
                         <td><?php echo $row['subject_name'];  ?></td>
-                        <td><?= $row['status'] ?></td>
+                        <td><b><?= $row['status'] ?></b></td>
                         <td> 
                             <a href="update/updatesubject.php?edit=<?php echo $row['subject_id'] ?>" class="btn btn-success  text-decoration-none ">Update</a> &nbsp 
                             <a href="delete/deletesubject.php?delete=<?php echo $row['subject_id'];?>" class="btn  btn-danger text-decoration-none ">Remove</a>
@@ -419,7 +419,7 @@ include 'includes/header.php';
                <tbody>
                     <tr>
                         <td><?php echo $row['age_name'] ?></td>
-                        <td><?= $row['status'] ?></td>
+                        <td><b><?= $row['status'] ?></b></td>
                         <td><a href="update/updateage.php?edit=<?php echo $row['age_id'] ?>" class="btn btn-success text-decoration-none ">Update</a> &nbsp 
                         <a href="delete/deleteage.php?delete=<?php echo $row['age_id'];?>" class="btn btn-danger text-decoration-none ">Remove</a></td>
 
@@ -457,6 +457,7 @@ include 'includes/header.php';
                <thead class="bg-info">
                 <tr>
                     <th>Options</th>
+                    <th>Status</th>
                     <th >Actions</th>
                 </tr>
                 </thead>
@@ -465,11 +466,24 @@ include 'includes/header.php';
                     foreach($qry_run as $row)
                     { 
                 ?>
-               <tbody >
+               <tbody ><?php if($row['status'] == "Active"): ?>
                     <tr>
                         <td><?php echo $row['gender_name']?></td>
+                        <td><b><?= $row['status'] ?></b></td>
                         <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-sm btn-outline-primary text-decoration-none ">Update</a> &nbsp 
-                        <a href="delete/deletegender.php?delete=<?php echo $row['gender_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Delete</a></td>
+                        <a href="delete/deletegender.php?delete=<?php echo $row['gender_id'];?>" class="btn btn-sm btn-outline-danger text-decoration-none ">Remove</a></td>
+
+                    <?php elseif($row['status'] == "Inactive"): ?>
+
+                    <td><strike><?php echo $row['gender_name'] ?></strike></td>
+                        <td class="tomato-color"><?= $row['status'] ?></td>
+                        <td><a href="update/updategender.php?edit=<?php echo $row['gender_id'] ?>" class=" btn btn-success text-decoration-none ">Update</a> &nbsp 
+                        <a href="includes/processESAT.php?unremovegen=<?php echo $row['gender_id'];?>" class="btn btn-info text-decoration-none ">Unremove</a>
+                    <?php else:echo 'Error'; ?>
+                    
+
+
+                    <?php endif; ?>
                     </tr>
                </tbody>
                <?php

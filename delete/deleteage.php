@@ -1,5 +1,5 @@
 <?php
-include_once 'includes.php';
+
 
 if (isset($_GET['delete'])) {
     $age_id = $_GET['delete'];
@@ -8,10 +8,6 @@ if (isset($_GET['delete'])) {
     $record = mysqli_fetch_array($query);
     $age_name = $record['age_name'];
 }
-
-
-
-
 ?>
 
 <main>
